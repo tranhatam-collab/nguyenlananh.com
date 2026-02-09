@@ -1,0 +1,5 @@
+# Canonicalize to www (nếu anh dùng www là chuẩn)
+https://nguyenlananh.com/* https://www.nguyenlananh.com/:splat 301
+
+# Optional: nếu ai gõ /index.html thì về /
+/index.html / 301

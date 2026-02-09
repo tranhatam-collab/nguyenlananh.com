@@ -83,19 +83,30 @@
 
   <style>
     :root{
-      --bg: #ffffff;
-      --card: rgba(255,255,255,.72);
-      --text: #0f172a;
-      --muted:#475569;
-      --line: rgba(15,23,42,.10);
+  --a1:#7c3aed;
+  --a2:#06b6d4;
+  --a3:#22c55e;
+  --a4:#f97316;
 
-      --a1:#7c3aed; /* violet */
-      --a2:#06b6d4; /* cyan */
-      --a3:#22c55e; /* green */
-      --a4:#f97316; /* orange */
+  --shadow: 0 14px 40px rgba(2,6,23,.10);
+  --shadow2: 0 10px 24px rgba(2,6,23,.10);
 
-      --shadow: 0 14px 40px rgba(2,6,23,.10);
-      --shadow2: 0 10px 24px rgba(2,6,23,.10);
+  --r-xl: 26px;
+  --r-lg: 18px;
+  --r-md: 14px;
+
+  --max: 1120px;
+}
+
+.btn{
+  transition: background .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+
+.btn.active{
+  background: rgba(124,58,237,.12);
+  border-color: rgba(124,58,237,.32);
+  box-shadow: 0 6px 18px rgba(124,58,237,.18);
+}
 
       --r-xl: 26px;
       --r-lg: 18px;
@@ -1498,6 +1509,32 @@
         btn.setAttribute("aria-pressed","true");
       });
     });
+        // ====== Writings filter ======
+    const list = document.getElementById("writingList");
+    const filterBtns = document.querySelectorAll("[data-filter]");
+
+    function applyFilter(kind){
+      if(!list) return;
+      const items = Array.from(list.querySelectorAll("[data-kind]"));
+      items.forEach(it=>{
+        const k = it.getAttribute("data-kind");
+        const show = (kind === "all") || (k === kind);
+        it.style.display = show ? "" : "none";
+      });
+      filterBtns.forEach(b=>{
+        b.classList.remove("active");
+        if(b.getAttribute("data-filter") === kind) b.classList.add("active");
+      });
+    }
+
+    filterBtns.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        applyFilter(btn.getAttribute("data-filter"));
+      });
+    });
+
+    // default
+    applyFilter("all");
   </script>
 </body>
 </html>

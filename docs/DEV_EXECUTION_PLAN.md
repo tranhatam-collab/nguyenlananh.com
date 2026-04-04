@@ -117,3 +117,18 @@ Goal: Chuyển tài liệu chiến lược thành backlog triển khai rõ ngư�
 - [ ] Trang pháp lý: privacy, terms, disclaimer có đủ.
 - [ ] Contact form hoạt động và có điểm nhận thông tin rõ ràng.
 - [ ] Mobile reading experience đạt chuẩn (font, spacing, line-height).
+
+---
+
+## 6. Mail Ops Baseline (Production)
+
+- [x] Mailbox chính: `lienhe@nguyenlananh.com`.
+- [x] Alias contact: `contact@nguyenlananh.com` -> `lienhe@nguyenlananh.com`.
+- [x] Alias admin: `admin@nguyenlananh.com` -> `lienhe@nguyenlananh.com`.
+- [x] SPF: `v=spf1 mx a:mail.iai.one ~all`.
+- [x] DMARC: `v=DMARC1; p=quarantine; rua=mailto:dmarc@iai.one; fo=1`.
+- [x] DKIM selector: `dkim._domainkey.nguyenlananh.com` (Mailcow key).
+- [x] MX direct mail: `nguyenlananh.com MX 10 mail.iai.one`.
+
+Ghi chú vận hành:
+- Cloudflare Email Routing đã tắt và MX inbound đang chạy direct qua `mail.iai.one`.

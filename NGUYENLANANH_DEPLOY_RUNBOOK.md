@@ -42,6 +42,11 @@ This runbook accompanies the NGUYENLANANH_MASTER_WEBSITE_SPEC.md and NGUYENLANAN
 - [ ] Build script available (if using a framework) and passes locally
 - [ ] Health checks script ready (basic curl checks for key routes)
 - [ ] Rollback plan ready (git tag or release point)
+- [ ] Mail routing gate passed:
+  - `contact@nguyenlananh.com` và `admin@nguyenlananh.com` trỏ về `lienhe@nguyenlananh.com`
+  - SPF/DMARC/DKIM đã publish
+  - Cloudflare Email Routing đã tắt để MX có thể đổi sang `mail.iai.one`
+  - Status hiện tại (2026-04-04): đã hoàn tất, MX đang là `mail.iai.one`
 
 ---
 
@@ -94,6 +99,9 @@ Where PR_BODY can be the contents of NGUYENLANANH_DEPLOY_RUNBOOK.md or summary o
 - Ensure internal links resolve without 4xx/5xx
 - Confirm analytics events fire on key actions
 - Confirm CMS content published and accessible in prod
+- Confirm mail ingress:
+  - `dig MX nguyenlananh.com` trả về `mail.iai.one`
+  - gửi test vào `contact@nguyenlananh.com` và `admin@nguyenlananh.com` đều nhận tại `lienhe@nguyenlananh.com`
 
 ---
 

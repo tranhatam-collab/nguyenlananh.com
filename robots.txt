@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.nguyenlananh.com/sitemap.xml
+
+Host: https://www.nguyenlananh.com/

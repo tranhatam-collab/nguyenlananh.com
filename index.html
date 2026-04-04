@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="color-scheme" content="light" />
 
-  <title>Nguyễn Lan Anh | Giữ nhịp để không ai phải bỏ rơi chính mình</title>
-  <meta name="description" content="Không gian yên để dừng lại, thở, và đi tiếp đúng nhịp. Trạm Đừng Nghỉ Ước Mơ, bài viết, cộng đồng và liên hệ." />
+  <title>Nguyenlananh.com | Đi vào bên trong để tái thiết cuộc đời</title>
+  <meta name="description" content="Nơi bắt đầu hành trình nhìn lại chính mình, gỡ những vòng lặp đang chi phối cuộc đời, tái thiết đời sống từ nội tâm, hành vi, môi trường sống và hành động thực tế." />
   <link rel="canonical" href="https://www.nguyenlananh.com/" />
   <meta name="robots" content="index,follow" />
 
@@ -17,16 +17,18 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Nguyễn Lan Anh" />
-  <meta property="og:title" content="Nguyễn Lan Anh | Giữ nhịp để không ai phải bỏ rơi chính mình" />
-  <meta property="og:description" content="Một nơi đủ yên để dừng lại, thở, và đi tiếp đúng nhịp của mình." />
+  <meta property="og:title" content="Nguyenlananh.com | Đi vào bên trong để làm chủ lại cuộc đời" />
+  <meta property="og:description" content="Một nền tảng nội dung và đồng hành dành cho những ai muốn sống sâu hơn, thật hơn, và có ý nghĩa hơn." />
   <meta property="og:url" content="https://www.nguyenlananh.com/" />
+  <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Nguyễn Lan Anh | Giữ nhịp" />
-  <meta name="twitter:description" content="Không gian yên để dừng lại, thở, và đi tiếp đúng nhịp." />
+  <meta name="twitter:title" content="Nguyenlananh.com | Đi vào bên trong để tái thiết cuộc đời" />
+  <meta name="twitter:description" content="Nơi bắt đầu hành trình nhìn lại chính mình, gỡ những vòng lặp đang chi phối cuộc đời, tái thiết đời sống từ nội tâm, hành vi, môi trường sống và hành động thực tế." />
+  <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
 
-  <meta name="theme-color" content="#7c3aed" />
+  <meta name="theme-color" content="#111827" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -35,45 +37,56 @@
     "@graph":[
       {
         "@type":"Organization",
-        "name":"Nguyễn Lan Anh",
+        "@id":"https://www.nguyenlananh.com/#organization",
+        "name":"Nguyenlananh.com",
         "url":"https://www.nguyenlananh.com/",
         "email":"lienhe@nguyenlananh.com"
       },
       {
-        "@type":"WebSite",
+        "@type":"Person",
+        "@id":"https://www.nguyenlananh.com/#person",
         "name":"Nguyễn Lan Anh",
+        "url":"https://www.nguyenlananh.com/"
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://www.nguyenlananh.com/#website",
+        "name":"Nguyenlananh.com",
         "url":"https://www.nguyenlananh.com/",
         "inLanguage":"vi",
         "potentialAction":{
           "@type":"SearchAction",
-          "target":"https://www.nguyenlananh.com/#writings",
+          "target":"https://www.nguyenlananh.com/#content?query={query}",
           "query-input":"required name=query"
         }
       },
       {
         "@type":"WebPage",
+        "@id":"https://www.nguyenlananh.com/#webpage",
         "name":"Trang chủ",
         "url":"https://www.nguyenlananh.com/",
         "inLanguage":"vi",
-        "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"}
+        "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"},
+        "about":{"@id":"https://www.nguyenlananh.com/#organization"},
+        "author":{"@id":"https://www.nguyenlananh.com/#person"}
       },
       {
         "@type":"FAQPage",
         "mainEntity":[
           {
             "@type":"Question",
-            "name":"Không gian này có hứa hẹn chuyển hóa nhanh không?",
-            "acceptedAnswer":{"@type":"Answer","text":"Không. Đây là một nơi giữ nhịp: dừng lại, thở, làm một bước nhỏ, rồi đi tiếp."}
+            "name":"Nguyenlananh.com là gì?",
+            "acceptedAnswer":{"@type":"Answer","text":"Một nền tảng nội dung và đồng hành để đi vào bên trong, gỡ những vòng lặp đang chi phối cuộc đời, và tái thiết đời sống từ nhận thức đến hành động thực tế."}
           },
           {
             "@type":"Question",
-            "name":"Trạm Đừng Nghỉ Ước Mơ gồm những gì?",
-            "acceptedAnswer":{"@type":"Answer","text":"Bốn phần: Tiệm Cà Phê Ước Mơ, Trạm Xăng, FOST, và Phòng Thư Giãn."}
+            "name":"Phương pháp ở đây là gì?",
+            "acceptedAnswer":{"@type":"Answer","text":"Quan sát, cảm nhận, hành động, chuyển hóa: đi từ nhìn lại chính mình và đời sống thực, tới bước hành động nhỏ nhưng thật."}
           },
           {
             "@type":"Question",
-            "name":"Cộng đồng có bán khóa học hay quảng cáo không?",
-            "acceptedAnswer":{"@type":"Answer","text":"Không bán. Không quảng cáo. Không phán xét. Chỉ gặp nhau định kỳ và đi tiếp cùng nhịp."}
+            "name":"Bắt đầu từ đâu?",
+            "acceptedAnswer":{"@type":"Answer","text":"Bắt đầu bằng việc nhận ra vòng lặp của mình, rồi chọn một bước hành động nhỏ có thể làm ngay trong đời sống thường ngày."}
           }
         ]
       }
@@ -83,36 +96,30 @@
 
   <style>
     :root{
-  --a1:#7c3aed;
-  --a2:#06b6d4;
-  --a3:#22c55e;
-  --a4:#f97316;
+      --a1:#111827;
+      --a2:#7c3aed;
+      --a3:#06b6d4;
+      --a4:#f97316;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:rgba(15,23,42,.12);
+      --card:rgba(255,255,255,.88);
+      --shadow:0 14px 40px rgba(2,6,23,.10);
+      --shadow2:0 10px 24px rgba(2,6,23,.10);
+      --r-xl:26px;
+      --r-lg:18px;
+      --r-md:14px;
+      --max:1120px;
+    }
 
-  --shadow: 0 14px 40px rgba(2,6,23,.10);
-  --shadow2: 0 10px 24px rgba(2,6,23,.10);
+    .btn{
+      transition: background .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
+    }
 
-  --r-xl: 26px;
-  --r-lg: 18px;
-  --r-md: 14px;
-
-  --max: 1120px;
-}
-
-.btn{
-  transition: background .15s ease, border-color .15s ease, transform .12s ease, box-shadow .15s ease;
-}
-
-.btn.active{
-  background: rgba(124,58,237,.12);
-  border-color: rgba(124,58,237,.32);
-  box-shadow: 0 6px 18px rgba(124,58,237,.18);
-}
-
-      --r-xl: 26px;
-      --r-lg: 18px;
-      --r-md: 14px;
-
-      --max: 1120px;
+    .btn.active{
+      background: rgba(124,58,237,.12);
+      border-color: rgba(124,58,237,.32);
+      box-shadow: 0 6px 18px rgba(124,58,237,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -754,7 +761,7 @@
   <header class="topbar" role="banner">
     <div class="container">
       <div class="navwrap">
-        <a class="brand" href="#top" aria-label="Về đầu trang">
+        <a class="brand" href="/" aria-label="Về trang chủ">
           <div class="mark" aria-hidden="true"></div>
           <div class="name">
             <strong>Nguyễn Lan Anh</strong>
@@ -763,22 +770,23 @@
         </a>
 
         <nav class="navlinks" aria-label="Điều hướng chính">
-          <a href="#about">Giới thiệu</a>
-          <a href="#station">Trạm</a>
-          <a href="#writings">Bài viết</a>
-          <a href="#community">Cộng đồng</a>
-          <a href="#contact">Liên hệ</a>
-          <a href="/en/" title="Trang tiếng Anh (sẽ làm sau)" aria-label="Trang tiếng Anh (sẽ làm sau)">EN (sắp có)</a>
+          <a href="/">Trang chủ</a>
+          <a href="/hanh-trinh/">Hành trình</a>
+          <a href="/phuong-phap/">Phương pháp</a>
+          <a href="/chuong-trinh/">Chương trình</a>
+          <a href="/bai-viet/">Bài viết</a>
+          <a href="/lien-he/">Liên hệ</a>
+          <a href="/en/" title="English page">EN</a>
         </nav>
 
         <div class="actions">
           <div class="lang" aria-label="Chọn ngôn ngữ">
             <button class="chip active" type="button" aria-pressed="true" data-lang="vi">VI</button>
-            <button class="chip" type="button" data-lang="en" disabled title="Sẽ mở khi hoàn thiện trang EN">EN</button>
+            <button class="chip" type="button" data-lang="en">EN</button>
           </div>
 
-          <button class="btn" type="button" id="quickStation" aria-label="Mở nhanh Trạm">
-            Vào Trạm
+          <button class="btn" type="button" id="quickStation" aria-label="Mở nhanh content">
+            Vào nội dung
           </button>
 
           <button class="hamburger" type="button" id="hamburger" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false">
@@ -797,12 +805,13 @@
         <button class="btn" type="button" id="closeDrawer" aria-label="Đóng menu">Đóng</button>
       </div>
       <nav aria-label="Điều hướng di động">
-        <a href="#about" data-close>Giới thiệu</a>
-        <a href="#station" data-close>Trạm Đừng Nghỉ Ước Mơ</a>
-        <a href="#writings" data-close>Bài viết</a>
-        <a href="#community" data-close>Cộng đồng</a>
-        <a href="#contact" data-close>Liên hệ</a>
-        <a href="/en/" data-close title="Trang tiếng Anh (sẽ làm sau)">EN (sắp có)</a>
+        <a href="/" data-close>Trang chủ</a>
+        <a href="/hanh-trinh/" data-close>Hành trình</a>
+        <a href="/phuong-phap/" data-close>Phương pháp</a>
+        <a href="/chuong-trinh/" data-close>Chương trình</a>
+        <a href="/bai-viet/" data-close>Bài viết</a>
+        <a href="/lien-he/" data-close>Liên hệ</a>
+        <a href="/en/" data-close title="English page">EN</a>
       </nav>
       <div class="foot">Mọi thứ ở đây đi chậm. Vừa đủ. Để bạn không bỏ rơi chính mình.</div>
     </div>
@@ -813,52 +822,65 @@
     <section class="hero" id="top" aria-label="Trang chủ">
       <div class="heroGrid">
         <article class="heroCard reveal">
-          <div class="kicker"><b>Giữ nhịp</b> để không ai phải bỏ rơi chính mình</div>
-          <h1>Giữ nhịp để không ai phải bỏ rơi chính mình.</h1>
+          <div class="kicker"><b>Nguyenlananh.com</b> Đi vào bên trong để tái thiết cuộc đời</div>
+          <h1>Sống hết một đời mà chưa từng hiểu mình<br/>mới là điều đáng tiếc nhất</h1>
           <p class="lead">
-            Có những lúc, chúng ta không cần thêm lời khuyên, không cần thêm động lực, chỉ cần một nơi đủ yên để dừng lại, thở, và đi tiếp đúng nhịp của mình.
-            Nguyễn Lan Anh tạo ra không gian này cho những người vẫn còn ước mơ nhưng đã mệt vì phải gồng.
+            Bạn không thiếu khả năng.<br/>
+            Bạn chỉ đang mắc kẹt trong những vòng lặp chưa được gọi tên.
+          </p>
+          <!-- Illustration for hero to enhance engagement -->
+          <figure class="hero-ill" style="text-align:center; margin:20px auto 0;">
+            <img src="/assets/images/illustration-inside.svg" alt="Illustration ngữ cảnh đi vào bên trong" style="max-width:640px; width:100%; height:auto; display:block;" />
+          </figure>
+          <p class="lead" style="margin-top:12px;">
+            Có những điều bạn đã biết.<br/>
+            Nhưng cuộc đời bạn vẫn không thay đổi.
+          </p>
+          <p class="lead" style="margin-top:12px;">
+            Có những câu hỏi bạn đã từng nghĩ tới:<br/>
+            “Tôi muốn sống khác”<br/>
+            “Tôi muốn sống có ý nghĩa hơn”<br/>
+            “Có con đường nào khác không?”
+          </p>
+          <p class="lead" style="margin-top:12px;">
+            Câu trả lời là: Có.<br/><br/>
+            Nhưng không phải ở bên ngoài.<br/>
+            Mà bắt đầu từ bên trong bạn.
           </p>
 
-          <ul class="bullets" aria-label="Thông điệp chính">
-            <li><span class="dot" aria-hidden="true"></span><span>Bạn không cần trở thành ai khác.</span></li>
-            <li><span class="dot" aria-hidden="true"></span><span>Chỉ cần không bỏ rơi chính mình.</span></li>
-          </ul>
-
           <div class="heroActions">
-            <button class="cta" type="button" data-jump="#station">Bắt đầu từ Trạm</button>
-            <button class="ghost" type="button" data-jump="#writings">Đọc một bài viết</button>
-            <button class="ghost" type="button" data-jump="#contact">Viết cho Lan Anh</button>
+            <button class="cta" type="button" data-jump="#path">Khám phá hành trình</button>
+            <button class="ghost" type="button" data-jump="#problem">Bắt đầu từ đây</button>
           </div>
         </article>
 
-        <aside class="heroSide reveal" aria-label="Đi nhanh theo nhịp">
-          <p class="miniTitle">Đi nhanh theo nhịp</p>
-          <p class="miniText">Nếu hôm nay bạn mệt, hãy chọn một điểm dừng nhỏ. Không cần làm lớn.</p>
+        <aside class="heroSide reveal" aria-label="Định vị website">
+          <p class="miniTitle">Bản chất website</p>
+          <p class="miniText">Không phải để trở thành ai đó. Mà để trở về đúng là mình.</p>
 
           <div class="cards" role="list">
             <div class="card" role="listitem">
               <div class="row">
-                <h3>1 phút để thở</h3>
-                <span class="tag">Rất nhỏ</span>
+                <h3>Vấn đề</h3>
+                <span class="tag">Lúc phải nhìn lại</span>
               </div>
-              <p>Hít vào chậm. Thở ra dài. Nhắc mình: “Tôi vẫn ở đây.”</p>
+              <p>Bạn vẫn đang sống, nhưng không còn thật sự sống.</p>
             </div>
 
             <div class="card" role="listitem">
               <div class="row">
-                <h3>1 dòng để viết</h3>
-                <span class="tag">Vừa đủ</span>
+                <h3>Con đường</h3>
+                <span class="tag">Bắt đầu từ bên trong</span>
               </div>
-              <p>Viết một câu: “Điều quan trọng nhất tôi không muốn quên là…”</p>
+              <p>Đi vào bên trong không phải trốn đời. Mà để làm chủ lại cuộc đời.</p>
             </div>
 
             <div class="card" role="listitem">
               <div class="row">
-                <h3>1 bước để đi tiếp</h3>
-                <span class="tag">Có thật</span>
+                <h3>Phương pháp</h3>
+                <span class="tag">Bước nhỏ nhưng thật</span>
               </div>
-              <p>Chọn một việc nhỏ trong 24 giờ tới. Làm xong là đủ.</p>
+              <p>Quan sát, cảm nhận, hành động, chuyển hóa.</p>
             </div>
           </div>
         </aside>
@@ -866,395 +888,535 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" aria-label="Giới thiệu">
+    <section id="problem" aria-label="Vấn đề">
       <div class="sectionHead">
         <div>
-          <h2>Giới thiệu</h2>
-          <p class="sub">Lan Anh không “chữa lành” bạn. Lan Anh chỉ giữ nhịp, để dòng trong bạn không bị cắt.</p>
+          <h2>Vấn đề</h2>
+          <p class="sub">Bạn vẫn đang sống. Nhưng không còn thật sự sống.</p>
         </div>
       </div>
 
       <div class="grid2">
         <div class="panel reveal">
-          <h3>Lan Anh là ai?</h3>
+          <h3>Có những giai đoạn</h3>
           <p>
-            Lan Anh không phải là người chữa lành. Cũng không phải người truyền cảm hứng.
-            Lan Anh chỉ là người giữ nhịp.
+            Bạn làm mọi thứ đúng… nhưng vẫn thấy sai.
           </p>
-          <ul class="list">
-            <li>Đã đi rất xa, nhưng quên mất mình đã từng mơ gì.</li>
-            <li>Vẫn sống tử tế, nhưng thấy dòng chảy trong mình bị chặn.</li>
-            <li>Muốn đi tiếp, nhưng không muốn chạy nữa.</li>
+          <ul class="list" aria-label="Các dấu hiệu">
+            <li>Bạn có đủ… nhưng vẫn trống.</li>
+            <li>Bạn cố gắng… nhưng càng rối.</li>
+            <li>Bạn tiến lên… nhưng không biết đang đi đâu.</li>
           </ul>
+          <p style="margin-top:10px;">
+            Bên ngoài vẫn diễn ra.<br/>
+            Nhưng bên trong bắt đầu vỡ.
+          </p>
         </div>
 
         <div class="panel reveal">
-          <h3>Niềm tin rất đơn giản</h3>
+          <h3>Bạn bắt đầu thấy</h3>
           <p>
-            Không cần thay đổi cuộc đời. Chỉ cần đừng cắt dòng.
-            Có những ngày, “đi tiếp” không phải là chạy nhanh hơn, mà là quay lại đúng nhịp của mình.
+            Những thứ tưởng nhỏ, nhưng lặp lại mãi.
+          </p>
+          <ul class="list" aria-label="Các vòng lặp">
+            <li>Những cảm xúc không gọi được tên.</li>
+            <li>Những vòng lặp lặp lại.</li>
+            <li>Những quyết định sai nhưng vẫn lặp lại.</li>
+            <li>Một phiên bản mình không thực sự muốn trở thành.</li>
+          </ul>
+          <p style="margin-top:10px;">
+            Đây không phải là thất bại.<br/><br/>
+            Đây là lúc cuộc đời buộc bạn phải nhìn lại.
           </p>
           <div class="heroActions" style="margin-top:14px;">
-            <button class="ghost" type="button" data-jump="#station">Vào Trạm</button>
-            <button class="ghost" type="button" data-jump="#community">Xem Cộng đồng</button>
+            <button class="ghost" type="button" data-jump="#truth">Đi tiếp</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- STATION -->
-    <section id="station" aria-label="Trạm Đừng Nghỉ Ước Mơ">
+    <!-- TRUTH -->
+    <section id="truth" aria-label="Sự thật">
       <div class="sectionHead">
         <div>
-          <h2>Trạm Đừng Nghỉ Ước Mơ</h2>
-          <p class="sub">Một không gian nhỏ để dừng lại một chút, để không bỏ quên điều quan trọng nhất trong mình.</p>
+          <h2>Sự thật</h2>
+          <p class="sub">Bạn không thiếu kiến thức. Bạn thiếu khả năng nhìn ra điều gì đang chi phối mình.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <h3>Điều đang vận hành bạn</h3>
+          <p>Bạn tưởng rằng bạn đang làm chủ cuộc đời mình.</p>
+          <p style="margin-top:10px;">Nhưng có những thứ đang vận hành bạn:</p>
+          <ul class="list" aria-label="Những thứ vận hành ngầm">
+            <li>niềm tin cũ</li>
+            <li>ký ức cũ</li>
+            <li>phản xạ vô thức</li>
+            <li>những điều bạn chưa từng nhìn thẳng</li>
+          </ul>
+        </div>
+
+        <div class="panel reveal">
+          <h3>Quyền chọn lại</h3>
+          <p>
+            Khi bạn nhìn ra, bạn bắt đầu có quyền chọn lại.
+          </p>
+          <div class="heroActions" style="margin-top:14px;">
+            <button class="ghost" type="button" data-jump="#path">Xem con đường</button>
+            <button class="ghost" type="button" data-jump="#method">Xem phương pháp</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PATH -->
+    <section id="path" aria-label="Con đường">
+      <div class="sectionHead">
+        <div>
+          <h2>Con đường</h2>
+          <p class="sub">Đi vào bên trong không phải là trốn khỏi cuộc đời. Mà là quay lại để làm chủ cuộc đời.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <h3>Đó là hành trình</h3>
+          <ul class="list" aria-label="Các bước của hành trình">
+            <li>nhìn thẳng vào những gì bạn đang né tránh</li>
+            <li>nhận ra những gì đang vận hành bạn</li>
+            <li>gỡ những rào cản bạn tưởng là “chính mình”</li>
+            <li>đi qua những điểm nghẽn sâu nhất</li>
+          </ul>
+        </div>
+
+        <div class="panel reveal">
+          <h3>Không dễ. Nhưng thật.</h3>
+          <p>Đây không phải là con đường dễ.</p>
+          <p style="margin-top:10px;">Nhưng là con đường thật.</p>
+          <p style="margin-top:10px;">Và là con đường duy nhất giúp bạn không lặp lại chính mình.</p>
+          <div class="heroActions" style="margin-top:14px;">
+            <button class="ghost" type="button" data-jump="#method">Bắt đầu bằng phương pháp</button>
+            <button class="ghost" type="button" data-jump="#contact">Liên hệ đồng hành</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHOD -->
+    <section id="method" aria-label="Phương pháp">
+      <div class="sectionHead">
+        <div>
+          <h2>Phương pháp</h2>
+          <p class="sub">Bạn không thay đổi bằng cách nghĩ thêm. Bạn thay đổi khi quan sát, cảm nhận, hành động, chuyển hóa.</p>
         </div>
       </div>
 
       <div class="panel reveal" style="margin-bottom:12px;">
         <p style="margin:0; color:rgba(15,23,42,.78); line-height:1.7;">
-          Trạm không hứa hẹn thành công nhanh, chuyển hóa tức thì, hay câu trả lời đúng cho mọi người.
-          Trạm chỉ giữ 4 điều rất rõ. Bạn chọn 1 điều hôm nay là đủ.
+          Không phải việc lớn. Mà là những bước nhỏ nhưng thật, đủ để đời sống bắt đầu chảy lại.
         </p>
       </div>
 
       <div class="stationGrid">
-        <article class="stationCard reveal" id="station-coffee">
+        <article class="stationCard reveal" id="method-observe">
           <header>
             <div style="display:flex; align-items:center; gap:10px;">
-              <div class="icon" aria-hidden="true">☕</div>
-              <h3>Tiệm Cà Phê Ước Mơ</h3>
+              <div class="icon" aria-hidden="true">1</div>
+              <h3>Quan sát</h3>
             </div>
-            <span class="pill">Nói ra một ước mơ</span>
+            <span class="pill">Nhìn lại</span>
           </header>
-          <p>Nơi nói ra những ước mơ còn dang dở và chọn lại một bước rất nhỏ để đi tiếp.</p>
+          <p>Nhìn lại chính mình, hành vi, môi trường sống, và những gì bạn đang lặp lại mỗi ngày.</p>
           <div class="linkrow">
-            <button class="smallLink" type="button" data-jump="#writings">Đọc bài viết liên quan</button>
-            <button class="smallLink" type="button" data-jump="#contact">Gửi một dòng</button>
-          </div>
-        </article>
-
-        <article class="stationCard reveal" id="station-fuel">
-          <header>
-            <div style="display:flex; align-items:center; gap:10px;">
-              <div class="icon" aria-hidden="true">⛽</div>
-              <h3>Trạm Xăng</h3>
-            </div>
-            <span class="pill">Giúp nhau vừa đủ</span>
-          </header>
-          <p>Nơi người có thể giúp gặp người cần giúp theo cách an toàn, vừa đủ, không lệ thuộc.</p>
-          <div class="linkrow">
-            <button class="smallLink" type="button" data-jump="#community">Xem nhịp sinh hoạt</button>
+            <button class="smallLink" type="button" data-jump="#content">Đọc bài viết</button>
             <button class="smallLink" type="button" data-jump="#contact">Liên hệ</button>
           </div>
         </article>
 
-        <article class="stationCard reveal" id="station-fost">
+        <article class="stationCard reveal" id="method-feel">
           <header>
             <div style="display:flex; align-items:center; gap:10px;">
-              <div class="icon" aria-hidden="true">🥣</div>
-              <h3>FOST · Food of Your Soul</h3>
+              <div class="icon" aria-hidden="true">2</div>
+              <h3>Cảm nhận</h3>
             </div>
-            <span class="pill">Nuôi dòng chảy</span>
+            <span class="pill">Chạm vào đời sống thật</span>
           </header>
-          <p>Những “món ăn” tinh thần đơn giản mỗi tuần để nuôi dưỡng dòng chảy bên trong.</p>
+          <p>Cảm nhận không gian, đồ vật, và chính mình. Không cần gồng, không cần ép.</p>
           <div class="linkrow">
-            <button class="smallLink" type="button" data-jump="#writings">Xem bài “món ăn”</button>
-            <button class="smallLink" type="button" data-jump="#contact">Nhận nhịp tuần</button>
+            <button class="smallLink" type="button" data-jump="#cleaning">Môn học dọn dẹp</button>
+            <button class="smallLink" type="button" data-jump="#contact">Liên hệ</button>
           </div>
         </article>
 
-        <article class="stationCard reveal" id="station-relax">
+        <article class="stationCard reveal" id="method-action">
           <header>
             <div style="display:flex; align-items:center; gap:10px;">
-              <div class="icon" aria-hidden="true">🌿</div>
-              <h3>Phòng Thư Giãn</h3>
+              <div class="icon" aria-hidden="true">3</div>
+              <h3>Hành động</h3>
             </div>
-            <span class="pill">Thở · Viết · Sáng tạo</span>
+            <span class="pill">Bước nhỏ nhưng thật</span>
           </header>
-          <p>Không gian để thở, viết, sáng tạo, và tìm người cùng nhịp.</p>
+          <p>Dọn lại căn phòng. Sắp xếp lại cuộc sống. Làm việc bằng tay. Hành động đều đặn.</p>
           <div class="linkrow">
-            <button class="smallLink" type="button" data-jump="#community">Tìm người đi cùng</button>
-            <button class="smallLink" type="button" data-jump="#contact">Đặt lịch nhắn</button>
+            <button class="smallLink" type="button" data-jump="#broom">Cái chổi</button>
+            <button class="smallLink" type="button" data-jump="#contact">Liên hệ</button>
+          </div>
+        </article>
+
+        <article class="stationCard reveal" id="method-transform">
+          <header>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="icon" aria-hidden="true">4</div>
+              <h3>Chuyển hóa</h3>
+            </div>
+            <span class="pill">Nhận ra - điều chỉnh - đi tiếp</span>
+          </header>
+          <p>Không gồng. Không ép. Không giả. Chỉ là nhận ra, điều chỉnh, và đi tiếp.</p>
+          <div class="linkrow">
+            <button class="smallLink" type="button" data-jump="#invite">Lời mời</button>
+            <button class="smallLink" type="button" data-jump="#contact">Liên hệ</button>
           </div>
         </article>
       </div>
     </section>
 
-    <!-- WRITINGS -->
-    <section id="writings" aria-label="Bài viết">
+    <!-- CLEANING -->
+    <section id="cleaning" aria-label="Môn học dọn dẹp">
       <div class="sectionHead">
         <div>
-          <h2>Bài viết</h2>
-          <p class="sub">Không để dạy bạn sống thế nào. Chỉ để bạn thấy mình, dừng lại lâu hơn một chút, rồi đi tiếp.</p>
-        </div>
-      </div>
-
-            <div class="panel reveal" style="margin-bottom:12px;">
-        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-          <p style="margin:0; color:rgba(15,23,42,.78); line-height:1.7; max-width:72ch;">
-            Chọn một bài để đọc chậm. Mỗi bài đều có một hành động rất nhỏ để bạn làm ngay trong ngày, để dòng chảy không bị cắt.
-          </p>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn" type="button" data-filter="all">Tất cả</button>
-            <button class="btn" type="button" data-filter="short">Bài ngắn</button>
-            <button class="btn" type="button" data-filter="long">Bài dài</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="wGrid" id="writingList">
-        <!-- SHORT -->
-        <article class="post reveal" data-kind="short" id="bai-ngan-1">
-          <div class="meta">
-            <span class="pill">Bài ngắn</span><span>·</span><span>Hành động rất nhỏ</span>
-          </div>
-          <h3>Một việc nhỏ để dòng chảy không bị cắt</h3>
-          <p>
-            Khi bạn thấy mình “đang chạy”, hãy chọn một điều thật nhỏ để làm chậm lại. Không cần sửa đời. Chỉ cần giữ nhịp.
-          </p>
-          <p class="do"><strong>Hành động:</strong> Viết 1 câu trong ghi chú: “Hôm nay tôi chỉ cần…” rồi làm đúng 1 việc đó.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station">Chọn một điểm dừng ở Trạm</button>
-            <button class="ghost" type="button" data-jump="#contact">Viết cho Lan Anh</button>
-          </div>
-        </article>
-
-        <!-- LONG 1 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-1">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Đi Tiếp Mà Không Chạy Nữa</h3>
-          <p>
-            Có những giai đoạn, “mạnh mẽ” không còn là tăng tốc. Mạnh mẽ là biết dừng đúng lúc, để không bỏ rơi phần quan trọng nhất trong mình.
-            Bạn có thể đã quen với việc gồng, quen với việc “cố thêm chút nữa”. Nhưng có một ranh giới rất mỏng: cố thêm một chút để đi tiếp, hay cố thêm một chút để đứt nhịp.
-            Nếu hôm nay bạn đang mệt, điều bạn cần đôi khi không phải là động lực. Mà là một khoảng yên đủ thật để thở, để nghe mình, rồi bước tiếp một bước nhỏ.
-          </p>
-          <p>
-            Dừng không phải là thua. Dừng là chọn lại tốc độ phù hợp với dòng chảy bên trong. Khi bạn đi đúng nhịp, bạn không cần chứng minh. Bạn chỉ cần có mặt.
-            Và khi bạn có mặt, bạn sẽ thấy điều gì đang khiến mình kiệt: không phải vì bạn yếu, mà vì bạn đã chạy quá lâu trên một nhịp không phải của mình.
-          </p>
-          <p class="do"><strong>Hành động (10 phút tối nay):</strong> Tắt thông báo. Ngồi yên. Thở chậm 10 nhịp. Rồi viết 3 câu: “Tôi đang chạy vì điều gì?”, “Tôi sợ điều gì nếu dừng?”, “Một bước nhỏ nhất tôi có thể làm ngày mai là gì?”</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-relax">Vào Phòng Thư Giãn</button>
-            <button class="ghost" type="button" data-jump="#station-coffee">Ghé Tiệm Cà Phê Ước Mơ</button>
-          </div>
-        </article>
-
-        <!-- LONG 2 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-2">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Khi Bạn Mệt Vì Phải Gồng</h3>
-          <p>
-            Có một kiểu mệt không đến từ công việc nhiều. Nó đến từ việc bạn phải “đóng vai ổn” quá lâu. Bạn vẫn tử tế. Vẫn làm đúng.
-            Nhưng bên trong, bạn thấy dòng chảy của mình như bị chặn lại bởi những câu “phải”, “nên”, “cố lên”, “ai cũng vậy”.
-          </p>
-          <p>
-            Gồng là một dạng bảo vệ. Nó giúp bạn vượt qua những ngày khó. Nhưng nếu gồng trở thành mặc định, bạn sẽ quên mất cảm giác thả lỏng.
-            Và bạn bắt đầu nghĩ rằng: muốn sống tốt, mình phải luôn căng. Sự thật là: muốn sống bền, mình phải biết mềm.
-          </p>
-          <p class="do"><strong>Hành động (3 phút):</strong> Đặt tay lên ngực. Hít vào 4 nhịp. Thở ra 6 nhịp. Rồi nói thầm: “Tôi cho phép mình bớt gồng một chút.”</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-relax">Chọn một khoảng thở</button>
-            <button class="ghost" type="button" data-jump="#community">Tìm người cùng nhịp</button>
-          </div>
-        </article>
-
-        <!-- LONG 3 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-3">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Đã Đi Rất Xa Nhưng Quên Mình Từng Mơ Gì</h3>
-          <p>
-            Có những người không lạc đường vì đi sai. Họ lạc vì đi đúng quá lâu theo bản đồ của người khác.
-            Bạn làm tốt, đạt được nhiều thứ, nhưng đôi lúc vẫn thấy một khoảng trống lạ: “Vậy rồi sao?”.
-          </p>
-          <p>
-            Ước mơ không chết vì bạn bận. Ước mơ chỉ tắt khi bạn thôi nhắc tên nó.
-            Và đôi khi, điều bạn cần không phải là một ước mơ lớn. Chỉ là một mảnh nhỏ của ước mơ cũ, để bạn cầm lại, và đi tiếp một bước rất nhỏ.
-          </p>
-          <p class="do"><strong>Hành động (1 trang giấy):</strong> Viết 10 điều bạn từng muốn (đừng phán xét). Khoanh tròn 1 điều còn “ấm”. Chọn 1 hành động trong 7 ngày tới để chạm nhẹ vào điều đó.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-coffee">Vào Tiệm Cà Phê Ước Mơ</button>
-            <button class="ghost" type="button" data-jump="#contact">Gửi 1 dòng cho Lan Anh</button>
-          </div>
-        </article>
-
-        <!-- LONG 4 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-4">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Không Cần Thay Đổi Cuộc Đời. Chỉ Cần Đừng Cắt Dòng</h3>
-          <p>
-            Người ta hay nghĩ muốn tốt lên phải đổi đời: đổi việc, đổi thành phố, đổi mối quan hệ, đổi bản thân.
-            Nhưng có khi, điều cần đổi chỉ là cách bạn đối xử với dòng chảy bên trong: bạn có cho nó đi tiếp không, hay bạn chặn nó bằng những ngày tự bỏ rơi mình?
-          </p>
-          <p>
-            Đừng cắt dòng nghĩa là: dù ngày có xấu, bạn vẫn giữ lại một điều nhỏ khiến bạn sống được.
-            Một bữa ăn tử tế. Một cuộc đi bộ. Một trang viết. Một cuộc gọi ngắn. Một lần ngủ sớm.
-            Nhỏ thôi, nhưng đều. Nhỏ thôi, nhưng thật.
-          </p>
-          <p class="do"><strong>Hành động (24 giờ):</strong> Chọn 1 việc “giữ dòng” (ăn, ngủ, thở, viết, đi bộ). Làm nó trước khi làm các việc khác. Chỉ 1 việc.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-fost">Nhận một “món ăn” tinh thần</button>
-            <button class="ghost" type="button" data-jump="#station-relax">Chọn một khoảng thở</button>
-          </div>
-        </article>
-
-        <!-- LONG 5 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-5">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Giữ Nhịp Là Một Kỹ Năng</h3>
-          <p>
-            Giữ nhịp không phải là “tự trấn an” cho qua. Giữ nhịp là một kỹ năng sống bền: biết khi nào tăng, khi nào giảm, khi nào dừng.
-            Người có nhịp không phải người không bao giờ rối. Họ chỉ rối nhưng không bỏ mình. Họ quay về nhanh hơn.
-          </p>
-          <p>
-            Kỹ năng giữ nhịp bắt đầu từ việc bạn nhìn thấy tín hiệu: cơ thể căng, tâm trí nhanh, nhịp thở nông, ngủ kém, cáu.
-            Khi bạn thấy tín hiệu, bạn không cần “sửa” ngay. Bạn chỉ cần “điều chỉnh” một chút. Một chút mỗi ngày sẽ trở thành một đời sống mới.
-          </p>
-          <p class="do"><strong>Hành động (nhịp 3-3-3):</strong> 3 phút thở, 3 dòng viết, 3 việc nhỏ ngày mai. Làm xong là đủ.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#community">Gặp người cùng nhịp</button>
-            <button class="ghost" type="button" data-jump="#station">Chọn một điểm dừng</button>
-          </div>
-        </article>
-
-        <!-- LONG 6 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-6">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Giúp Nhau Vừa Đủ, Không Lệ Thuộc</h3>
-          <p>
-            Có những mối quan hệ làm mình ấm lên. Và có những mối quan hệ làm mình “mất nhịp” vì nợ nhau quá nhiều: nợ cảm xúc, nợ thời gian, nợ lời hứa.
-            Giúp nhau vừa đủ là giữ ranh giới lành: tôi có mặt, nhưng tôi không gánh thay đời bạn. Và bạn cũng không gánh thay đời tôi.
-          </p>
-          <p>
-            Khi giúp vừa đủ, người nhận không thấy mình nhỏ lại. Người giúp không thấy mình cạn kiệt. Cả hai vẫn đứng vững.
-            Vừa đủ là một dạng tử tế trưởng thành.
-          </p>
-          <p class="do"><strong>Hành động (1 câu ranh giới):</strong> Viết một câu bạn sẽ dùng khi cần: “Mình rất muốn giúp, và mình giúp được trong phạm vi…”. Lưu lại.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-fuel">Vào Trạm Xăng</button>
-            <button class="ghost" type="button" data-jump="#contact">Hỏi Lan Anh một câu</button>
-          </div>
-        </article>
-
-        <!-- LONG 7 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-7">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Một Nơi Đủ Yên Để Dừng Lại</h3>
-          <p>
-            Không phải ai cũng có một nơi để “được yếu” mà không bị phán xét.
-            Có người sống giữa đám đông nhưng luôn phải mạnh. Có người làm tốt mọi thứ nhưng không biết kể mình đang mệt cho ai nghe.
-          </p>
-          <p>
-            Một nơi đủ yên không phải nơi giải quyết hết vấn đề. Chỉ là nơi bạn được thở lại, và nghe rõ mình.
-            Khi bạn nghe rõ mình, bạn sẽ biết bước tiếp nhỏ nhất là gì. Và bạn sẽ bớt hoảng.
-          </p>
-          <p class="do"><strong>Hành động (tạo “góc yên”):</strong> Chọn một góc nhỏ (bàn, ghế, cửa sổ). Đặt một vật nhắc nhở. Mỗi ngày ngồi đó 5 phút. Không làm gì. Chỉ thở.</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#station-relax">Vào Phòng Thư Giãn</button>
-            <button class="ghost" type="button" data-jump="#writings">Đọc tiếp một bài</button>
-          </div>
-        </article>
-
-        <!-- LONG 8 -->
-        <article class="post reveal" data-kind="long" id="bai-dai-8">
-          <div class="meta">
-            <span class="pill">Bài dài</span><span>·</span><span>Chiêm nghiệm + Thực hành</span>
-          </div>
-          <h3>Không Tìm Người Dẫn Đường. Chỉ Tìm Người Đi Cùng</h3>
-          <p>
-            Khi mệt, ta dễ muốn một ai đó nói cho mình phải làm gì. Nhưng càng lớn, ta càng hiểu: không ai sống thay mình được.
-            Ta không cần “guru”. Ta chỉ cần một người đi cùng nhịp: để nhắc nhau quay về, để cùng giữ đều.
-          </p>
-          <p>
-            Đi cùng không có nghĩa là giống nhau. Đi cùng nghĩa là tôn trọng tốc độ của nhau.
-            Và mỗi lần gặp nhau, ta chỉ cần nói thật: tuần rồi mình đã làm gì, né gì, rồi tuần này mình giữ nhịp ra sao.
-          </p>
-          <p class="do"><strong>Hành động (một lời hẹn nhỏ):</strong> Chọn 1 người bạn tin. Nhắn: “Tuần này mình chỉ muốn check-in 10 phút. Không cần giải pháp. Chỉ nghe nhau.”</p>
-          <div class="heroActions" style="margin-top:12px;">
-            <button class="ghost" type="button" data-jump="#community">Vào Cộng đồng</button>
-            <button class="ghost" type="button" data-jump="#contact">Viết cho Lan Anh</button>
-          </div>
-        </article>
-      </div>
-
-      <div class="panel reveal" style="margin-top:12px;">
-        <h3>Logic nội dung</h3>
-        <p>
-          Bài viết → dẫn về Trạm. Trạm → dẫn về Cộng đồng. Cộng đồng → quay lại bài viết.
-          Một vòng lặp tự nhiên, không cần quảng cáo.
-        </p>
-        <div class="heroActions" style="margin-top:12px;">
-          <button class="ghost" type="button" data-jump="#station">Quay về Trạm</button>
-          <button class="ghost" type="button" data-jump="#community">Xem Cộng đồng</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMMUNITY -->
-    <section id="community" aria-label="Cộng đồng">
-      <div class="sectionHead">
-        <div>
-          <h2>Cộng đồng</h2>
-          <p class="sub">Không dành cho tất cả mọi người. Dành cho ai muốn giữ nhịp đều, không ồn ào, và đi cùng nhau.</p>
+          <h2>Môn học dọn dẹp</h2>
+          <p class="sub">Căn phòng của bạn đang nói điều gì về bạn?</p>
         </div>
       </div>
 
       <div class="grid2">
         <div class="panel reveal">
-          <h3>Ai phù hợp?</h3>
-          <ul class="list">
-            <li>Muốn giữ nhịp đều.</li>
-            <li>Không thích ồn ào.</li>
-            <li>Không tìm người dẫn đường, chỉ tìm người đi cùng.</li>
-          </ul>
-          <p style="margin-top:12px; color:rgba(15,23,42,.78); line-height:1.7;">
-            Không bán. Không quảng cáo. Không phán xét.
+          <p>
+            Bạn có thể không để ý.<br/>
+            Nhưng môi trường sống luôn phản chiếu nội tâm.
           </p>
+          <p style="margin-top:10px;">
+            Một căn phòng bừa bộn không chỉ là bừa bộn.
+          </p>
+          <ul class="list" aria-label="Nó là">
+            <li>sự trì hoãn</li>
+            <li>sự né tránh</li>
+            <li>sự quá tải</li>
+            <li>sự rối bên trong</li>
+          </ul>
         </div>
 
-               <div class="panel reveal">
-          <h3>Nhịp sinh hoạt</h3>
+        <div class="panel reveal">
+          <p>Khi bạn bắt đầu dọn dẹp:</p>
+          <p style="margin-top:10px;">
+            Bạn không chỉ dọn đồ.<br/>
+            Bạn đang:
+          </p>
+          <ul class="list" aria-label="Bạn đang dọn lại">
+            <li>dọn lại suy nghĩ</li>
+            <li>dọn lại cảm xúc</li>
+            <li>dọn lại cuộc đời</li>
+          </ul>
+          <p style="margin-top:10px;">
+            Nhà sạch để nuôi dưỡng, tái tạo, hồi phục, và mở ra dòng sống mới.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BROOM -->
+    <section id="broom" aria-label="Cái chổi">
+      <div class="sectionHead">
+        <div>
+          <h2>Cái chổi</h2>
+          <p class="sub">Một thứ rất nhỏ. Nhưng có thể thay đổi cả cuộc đời.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <p>Cái chổi.</p>
+          <p style="margin-top:10px;">Bạn có thể từng:</p>
+          <ul class="list" aria-label="Bạn có thể từng">
+            <li>ghét nó</li>
+            <li>tránh nó</li>
+            <li>coi thường nó</li>
+          </ul>
+        </div>
+        <div class="panel reveal">
+          <p>Nhưng khi bạn thật sự cầm nó… bạn bắt đầu hiểu:</p>
+          <ul class="list" aria-label="Bạn bắt đầu hiểu">
+            <li>kỷ luật là gì</li>
+            <li>lao động là gì</li>
+            <li>hiện diện là gì</li>
+            <li>làm chủ là gì</li>
+          </ul>
+          <p style="margin-top:10px;">
+            Không cần hào nhoáng. Chỉ cần thật.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LABOR -->
+    <section id="labor" aria-label="Lao động và sự sống">
+      <div class="sectionHead">
+        <div>
+          <h2>Lao động và sự sống</h2>
+          <p class="sub">Làm điều bình thường một cách trọn vẹn.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <p>Bạn không cần làm điều lớn lao để thay đổi cuộc đời.</p>
+          <p style="margin-top:10px;">
+            Bạn cần làm điều bình thường một cách trọn vẹn.
+          </p>
+          <p style="margin-top:10px;">
+            Quét lá.<br/>
+            Lau nhà.<br/>
+            Sắp xếp đồ.<br/>
+            Làm việc bằng tay.
+          </p>
+        </div>
+        <div class="panel reveal">
+          <p>Không phải để xong việc. Mà để:</p>
+          <ul class="list" aria-label="Để">
+            <li>quay lại với chính mình</li>
+            <li>mở lại dòng sống</li>
+            <li>khôi phục năng lượng</li>
+            <li>kết nối lại với thực tại</li>
+          </ul>
+          <p style="margin-top:10px;">Khi bạn làm đúng cách, mọi thứ bắt đầu chảy lại.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section id="values" aria-label="Giá trị thật">
+      <div class="sectionHead">
+        <div>
+          <h2>Giá trị thật</h2>
+          <p class="sub">Giá trị nội tại là thứ bạn có thể xây lại.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <p>Tiền. Tài sản. Địa vị. Danh vọng.</p>
+          <p style="margin-top:10px;">Không giữ được bạn khi cuộc đời rung lắc.</p>
+        </div>
+        <div class="panel reveal">
+          <p>Thứ còn lại là:</p>
+          <ul class="list" aria-label="Thứ còn lại">
+            <li>sự vững bên trong</li>
+            <li>khả năng nhìn rõ</li>
+            <li>khả năng thích nghi</li>
+            <li>trí tuệ thật</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVEST -->
+    <section id="invest" aria-label="Đầu tư">
+      <div class="sectionHead">
+        <div>
+          <h2>Đầu tư</h2>
+          <p class="sub">Đầu tư quan trọng nhất là nâng cấp nhận thức của chính bạn.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <p>Bạn đã đầu tư rất nhiều thứ:</p>
+          <ul class="list" aria-label="Bạn đã đầu tư">
+            <li>thời gian</li>
+            <li>công sức</li>
+            <li>tiền bạc</li>
+          </ul>
+          <p style="margin-top:10px;">Nhưng bạn đã đầu tư đúng chưa?</p>
+        </div>
+        <div class="panel reveal">
+          <p>Đầu tư quan trọng nhất:</p>
+          <p style="margin-top:10px;">
+            không phải kỹ năng.<br/>
+            không phải bằng cấp.
+          </p>
+          <p style="margin-top:10px;">
+            mà là: nâng cấp nhận thức của chính bạn.
+          </p>
+          <p style="margin-top:10px;">
+            Khi bạn thay đổi ở bên trong, cuộc đời bạn thay đổi ở bên ngoài.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVITE -->
+    <section id="invite" aria-label="Lời mời">
+      <div class="sectionHead">
+        <div>
+          <h2>Lời mời</h2>
+          <p class="sub">Bạn không cần chắc chắn. Bạn chỉ cần bắt đầu.</p>
+        </div>
+      </div>
+
+      <div class="panel reveal">
+        <p>
+          Nếu bạn đọc tới đây và thấy có điều gì đó chạm, đừng bỏ qua.
+        </p>
+        <p style="margin-top:10px;">
+          Không phải ai cũng tới điểm này. Không phải ai cũng sẵn sàng nhìn lại.
+        </p>
+        <p style="margin-top:10px;">
+          Bạn không cần chắc chắn. Bạn chỉ cần bắt đầu.
+        </p>
+        <div class="heroActions" style="margin-top:14px;">
+          <button class="cta" type="button" data-jump="#path">Xem hành trình</button>
+          <button class="ghost" type="button" data-jump="#method">Tìm con đường của mình</button>
+          <button class="ghost" type="button" data-jump="#contact">Liên hệ đồng hành</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section id="content" aria-label="Bài viết">
+      <div class="sectionHead">
+        <div>
+          <h2>Bài viết</h2>
+          <p class="sub">Bắt đầu từ một bài. Và đi tiếp bằng một bước thật.</p>
+        </div>
+      </div>
+
+      <div class="panel reveal" style="margin-bottom:12px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+          <p style="margin:0; color:rgba(15,23,42,.78); line-height:1.7; max-width:72ch;">
+            Chọn một series để đọc theo trật tự. Mỗi bài đều dẫn về một hành động thực tế.
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn" type="button" data-filter="all">Tất cả</button>
+            <button class="btn" type="button" data-filter="awake">Thức tỉnh</button>
+            <button class="btn" type="button" data-filter="matter">Vật thể</button>
+            <button class="btn" type="button" data-filter="inner">Nội tâm</button>
+            <button class="btn" type="button" data-filter="action">Hành động</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wGrid" id="writingList">
+        <article class="post reveal" data-kind="awake" id="series-awaken-1">
+          <div class="meta">
+            <span class="pill">Thức tỉnh</span><span>·</span><span>Series 1</span>
+          </div>
+          <h3>Điều đáng tiếc nhất của một đời người</h3>
           <p>
-            Cộng đồng vận hành theo nhịp rất đơn giản: gặp nhau định kỳ, chia sẻ mình đã làm gì, né gì, rồi lại đi tiếp.
-            Không cần nói hay. Chỉ cần thật.
+            Đáng tiếc nhất không phải thất bại, mà là sống một đời mà chưa từng hiểu mình đang sống vì điều gì.
+          </p>
+          <p class="do"><strong>Hành động:</strong> Viết ra 3 vòng lặp bạn đang lặp lại gần nhất.</p>
+          <div class="heroActions" style="margin-top:12px;">
+            <button class="ghost" type="button" data-jump="#method">Quay về phương pháp</button>
+            <button class="ghost" type="button" data-jump="#contact">Viết cho Lan Anh</button>
+          </div>
+        </article>
+
+        <article class="post reveal" data-kind="matter" id="series-matter-1">
+          <div class="meta">
+            <span class="pill">Vật thể</span><span>·</span><span>Series 2</span>
+          </div>
+          <h3>Môn học dọn dẹp</h3>
+          <p>
+            Dọn dẹp không phải chuyện nhà cửa. Nó là cách bạn đọc được mức độ hỗn loạn đang vận hành bên trong mình.
+          </p>
+          <p>
+            Đồ vật, không gian và thói quen là dữ liệu. Chúng cho thấy bạn đang sống ra sao mỗi ngày.
+          </p>
+          <p class="do"><strong>Hành động:</strong> Chọn 1 góc trong phòng và tái thiết nó trong 10 phút.</p>
+          <div class="heroActions" style="margin-top:12px;">
+            <button class="ghost" type="button" data-jump="#method-action">Xem bước hành động</button>
+            <button class="ghost" type="button" data-jump="#contact">Nhận chương trình</button>
+          </div>
+        </article>
+
+        <article class="post reveal" data-kind="inner" id="series-inner-1">
+          <div class="meta">
+            <span class="pill">Nội tâm</span><span>·</span><span>Series 3</span>
+          </div>
+          <h3>Tôi đang đi con đường gì?</h3>
+          <p>
+            Nếu không biết mình đang đi con đường nào, mọi thành tựu đều có thể biến thành một dạng lạc đường rất tinh vi.
+          </p>
+          <p>
+            Câu hỏi không phải là bạn đã làm đủ chưa. Câu hỏi là: việc bạn làm có còn nuôi đúng hướng sống của bạn không?
+          </p>
+          <p class="do"><strong>Hành động:</strong> Viết một câu: “Con đường tôi muốn đi là…”</p>
+          <div class="heroActions" style="margin-top:12px;">
+            <button class="ghost" type="button" data-jump="#insight-series">Mở chuỗi sâu</button>
+            <button class="ghost" type="button" data-jump="#contact">Đăng ký chương trình</button>
+          </div>
+        </article>
+
+        <article class="post reveal" data-kind="action" id="series-action-1">
+          <div class="meta">
+            <span class="pill">Hành động</span><span>·</span><span>Series 4</span>
+          </div>
+          <h3>Điều đáng tiếc nhất không phải thất bại</h3>
+          <p>
+            Mà là sống hết một đời mà chưa từng hiểu mình. Một nhận thức mới cần được biến thành hành động mới.
+          </p>
+          <p>
+            Bắt đầu bằng một việc nhỏ, làm đều, và đo lại cuộc đời bằng chất lượng hiện diện.
+          </p>
+          <p class="do"><strong>Hành động:</strong> Chọn 1 bước trong 24 giờ tới và làm xong trước khi làm việc khác.</p>
+          <div class="heroActions" style="margin-top:12px;">
+            <button class="ghost" type="button" data-jump="#contact">Bắt đầu từ liên hệ</button>
+            <button class="ghost" type="button" data-jump="#contact">Gửi 1 dòng cho Lan Anh</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="panel reveal" style="margin-top:12px;">
+        <h3>Chuỗi nội dung</h3>
+        <p>
+          Thức tỉnh → Vật thể → Nội tâm → Hành động. Mỗi bài chỉ cần kéo người đọc đi thêm một bước thật.
+        </p>
+        <div class="heroActions" style="margin-top:12px;">
+          <button class="ghost" type="button" data-jump="#method">Quay về phương pháp</button>
+          <button class="ghost" type="button" data-jump="#contact">Nhận chương trình</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSIGHT SERIES -->
+    <section id="insight-series" aria-label="Chuỗi sâu">
+      <div class="sectionHead">
+        <div>
+          <h2>Chuỗi sâu</h2>
+          <p class="sub">Bốn series cốt lõi để khai thác chiều sâu nhận thức, dọn dẹp, vật thể và tái thiết.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel reveal">
+          <h3>Series 1</h3>
+          <ul class="list">
+            <li>Điều đáng tiếc nhất của một đời người.</li>
+            <li>Vòng lặp, nợ cuộc đời, và nhận thức chưa được nhìn thấy.</li>
+            <li>Định vị lại điểm bắt đầu.</li>
+          </ul>
+        </div>
+
+        <div class="panel reveal">
+          <h3>Series 2</h3>
+          <p>
+            Môn học dọn dẹp. Làm việc với vật thể, môi trường và đồ đạc để đọc lại đời sống thực.
           </p>
 
-          <div class="rules" aria-label="Quy tắc cộng đồng">
-            <div class="rule">
-              <div class="n" aria-hidden="true">1</div>
-              <p><strong>Đi chậm.</strong> Không thúc nhau “phải tốt lên”. Mỗi người giữ nhịp của mình.</p>
-            </div>
-            <div class="rule">
-              <div class="n" aria-hidden="true">2</div>
-              <p><strong>Vừa đủ.</strong> Giúp nhau theo cách an toàn, không tạo lệ thuộc.</p>
-            </div>
-            <div class="rule">
-              <div class="n" aria-hidden="true">3</div>
-              <p><strong>Không phán xét.</strong> Không dạy đời. Không “bạn nên”. Chỉ chia sẻ trải nghiệm thật.</p>
-            </div>
-            <div class="rule">
-              <div class="n" aria-hidden="true">4</div>
-              <p><strong>Quay về Trạm.</strong> Bài viết → Trạm → Cộng đồng → lại về bài viết. Vòng lặp tự nhiên.</p>
-            </div>
-          </div>
-
           <div class="heroActions" style="margin-top:14px;">
-            <button class="ghost" type="button" data-jump="#writings">Đọc bài viết</button>
-            <button class="ghost" type="button" data-jump="#station">Chọn một điểm dừng</button>
+            <button class="ghost" type="button" data-jump="#content">Đọc bài viết</button>
+            <button class="ghost" type="button" data-jump="#contact">Đăng ký nhận lộ trình</button>
           </div>
         </div>
       </div>
@@ -1265,7 +1427,7 @@
       <div class="sectionHead">
         <div>
           <h2>Liên hệ</h2>
-          <p class="sub">Nếu bạn muốn viết cho Lan Anh, hãy viết khi bạn thật sự muốn nói điều gì đó. Lan Anh đọc chậm.</p>
+          <p class="sub">Nếu bạn muốn đi sâu hơn, hãy để lại một dòng. Đó là điểm bắt đầu cho funnel chuyển đổi.</p>
         </div>
       </div>
 
@@ -1274,7 +1436,7 @@
           <h3>Email</h3>
           <p>
             📩 <strong>lienhe@nguyenlananh.com</strong><br />
-            Lan Anh chỉ trả lời khi thấy mình có thể giúp đúng.
+            Dùng cho liên hệ, đăng ký, và trao đổi chương trình.
           </p>
 
           <div class="copyRow">
@@ -1284,7 +1446,7 @@
           </div>
 
           <p style="margin-top:12px; color:rgba(15,23,42,.70); font-size:13px; line-height:1.6;">
-            Gợi ý: Bạn chỉ cần viết 3 dòng: (1) bạn đang ở đâu, (2) bạn mệt vì điều gì, (3) bạn muốn giữ lại điều gì.
+            Gợi ý: Bạn chỉ cần viết 3 dòng: bạn đang ở đâu, đang mắc kẹt ở đâu, và muốn đi đâu.
           </p>
         </div>
 
@@ -1326,22 +1488,24 @@
       <div class="fwrap">
         <div>
           <div style="font-weight:700; color:rgba(15,23,42,.80);">Nguyễn Lan Anh</div>
-          <div>© <span id="year"></span> · Giữ nhịp để không ai phải bỏ rơi chính mình.</div>
+          <div>© <span id="year"></span> · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</div>
         </div>
 
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <a href="#about">Giới thiệu</a>
-          <a href="#station">Trạm</a>
-          <a href="#writings">Bài viết</a>
-          <a href="#community">Cộng đồng</a>
-          <a href="#contact">Liên hệ</a>
+          <a href="/gioi-thieu/">Giới thiệu</a>
+          <a href="/hanh-trinh/">Hành trình</a>
+          <a href="/phuong-phap/">Phương pháp</a>
+          <a href="/chuong-trinh/">Chương trình</a>
+          <a href="/bai-viet/">Bài viết</a>
+          <a href="/lien-he/">Liên hệ</a>
         </div>
       </div>
 
       <div style="margin-top:10px; color:rgba(15,23,42,.55); line-height:1.6;">
-        <span>Internal links chuẩn VI/EN: </span>
-        <span class="mono" style="padding:6px 10px;">/ (VI)</span>
-        <span class="mono" style="padding:6px 10px;">/en/ (EN sắp có)</span>
+        <span>Legal: </span>
+        <a href="/chinh-sach-bao-mat/" class="mono" style="padding:6px 10px;">Chính sách bảo mật</a>
+        <a href="/dieu-khoan/" class="mono" style="padding:6px 10px;">Điều khoản sử dụng</a>
+        <a href="/mien-tru-trach-nhiem/" class="mono" style="padding:6px 10px;">Miễn trừ trách nhiệm</a>
       </div>
     </div>
   </footer>
@@ -1402,9 +1566,7 @@
     });
 
     $("#quickStation")?.addEventListener("click", ()=>{
-      const el = $("#station");
-      if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-      shutDrawer();
+      window.location.href = "/bai-viet/";
     });
 
     // ====== Reveal on scroll ======
@@ -1503,13 +1665,13 @@
     // ====== Language buttons placeholder ======
     $$("[data-lang]").forEach(btn=>{
       btn.addEventListener("click", ()=>{
-        // VI is active for now. EN later.
+        // VI is active for now. EN route can be wired later.
         $$(".chip").forEach(b=> b.classList.remove("active"));
         btn.classList.add("active");
         btn.setAttribute("aria-pressed","true");
       });
     });
-        // ====== Writings filter ======
+    // ====== Content filter ======
     const list = document.getElementById("writingList");
     const filterBtns = document.querySelectorAll("[data-filter]");
 
@@ -1535,6 +1697,34 @@
 
     // default
     applyFilter("all");
+
+    // ====== Analytics hooks ======
+    const track = (name, data={}) => {
+      window.dispatchEvent(new CustomEvent("nla:track", { detail: { name, ...data } }));
+    };
+
+    ["#method", "#content", "#insight-series", "#contact"].forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el) {
+        const id = sel.slice(1);
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              track("section_view", { section: id });
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.35 });
+        obs.observe(el);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      const cta = e.target.closest("button, a");
+      if (!cta) return;
+      const label = (cta.textContent || "").trim().slice(0, 80);
+      if (label) track("cta_click", { label });
+    });
   </script>
 </body>
 </html>

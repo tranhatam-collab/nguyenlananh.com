@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Notebook with question symbol">
+  <rect width="1200" height="675" fill="#efe7dc"/>
+  <rect x="280" y="130" width="640" height="420" rx="20" fill="#fff" stroke="#b8ab99"/>
+  <path d="M590 300 C590 250 640 230 680 250 C712 266 714 310 680 330 C642 352 620 372 620 404" fill="none" stroke="#6a5c4a" stroke-width="24"/>
+  <circle cx="620" cy="450" r="14" fill="#6a5c4a"/>
+</svg>

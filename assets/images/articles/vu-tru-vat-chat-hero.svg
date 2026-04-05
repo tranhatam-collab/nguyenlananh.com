@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Quiet temple interior">
+  <rect width="1200" height="675" fill="#d7d0c5"/>
+  <rect x="260" y="120" width="680" height="440" rx="20" fill="#b7ac9d"/>
+  <rect x="520" y="240" width="160" height="220" rx="22" fill="#8f8476"/>
+  <path d="M760 120 L940 120 L790 560 L720 560 Z" fill="#ece5d8" opacity="0.7"/>
+</svg>

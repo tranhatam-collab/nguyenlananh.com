@@ -230,6 +230,26 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
 .list{ margin:10px 0 0; padding-left:18px; color: rgba(15,23,42,.74); line-height:1.65; }
 .actionsRow{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
 
+.articleBody p{ margin-top: 12px; }
+.articleMedia{
+  margin: 14px 0;
+  border:1px solid var(--line);
+  border-radius: 18px;
+  overflow:hidden;
+  background: rgba(255,255,255,.9);
+  box-shadow: var(--shadow2);
+}
+.articleMedia img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.articleMedia figcaption{
+  font-size: 12px;
+  color: rgba(15,23,42,.62);
+  padding: 10px 12px 12px;
+}
+
 footer{
   border-top:1px solid var(--line);
   background: rgba(255,255,255,.75);

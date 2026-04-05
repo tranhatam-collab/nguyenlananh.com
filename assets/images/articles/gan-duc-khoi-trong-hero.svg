@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Cloudy water settling clear">
+  <rect width="1200" height="675" fill="#e4ecef"/>
+  <rect x="420" y="120" width="360" height="460" rx="28" fill="#f6fbfc" stroke="#94aab2"/>
+  <rect x="430" y="300" width="340" height="260" rx="18" fill="#a3b5bb" opacity="0.65"/>
+  <rect x="430" y="460" width="340" height="100" rx="18" fill="#d4e4e8" opacity="0.75"/>
+</svg>

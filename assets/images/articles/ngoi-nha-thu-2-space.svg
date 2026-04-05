@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Minimal desk with lamp">
+  <rect width="1200" height="675" fill="#edf0ea"/>
+  <rect x="240" y="390" width="720" height="120" rx="14" fill="#c9aa7f"/>
+  <rect x="350" y="250" width="260" height="120" fill="#d7e4eb"/>
+  <rect x="770" y="230" width="20" height="160" fill="#4b4f4d"/>
+  <circle cx="780" cy="210" r="30" fill="#f3e0a4"/>
+  <rect x="650" y="320" width="120" height="60" rx="8" fill="#8fae88"/>
+</svg>

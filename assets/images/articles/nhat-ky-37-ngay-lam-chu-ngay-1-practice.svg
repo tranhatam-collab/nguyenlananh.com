@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Small first step path">
+  <rect width="1200" height="675" fill="#e7efe8"/>
+  <path d="M120 620 C300 520 430 470 620 410 C760 360 930 260 1080 120" fill="none" stroke="#7a8f74" stroke-width="28"/>
+  <circle cx="470" cy="470" r="26" fill="#354f38"/>
+  <circle cx="500" cy="450" r="10" fill="#d9e7d6"/>
+</svg>

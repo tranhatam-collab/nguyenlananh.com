@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Forest stream">
+  <rect width="1200" height="675" fill="#c9d9c8"/>
+  <path d="M50 460 C260 360 430 520 640 410 C830 310 1010 390 1180 300" fill="none" stroke="#76a6b5" stroke-width="42"/>
+  <circle cx="250" cy="500" r="44" fill="#879a7f"/>
+  <circle cx="740" cy="470" r="34" fill="#879a7f"/>
+  <circle cx="940" cy="350" r="28" fill="#879a7f"/>
+</svg>

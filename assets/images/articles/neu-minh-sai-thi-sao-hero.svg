@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Person at a forked path">
+  <rect width="1200" height="675" fill="#d8ddcf"/>
+  <path d="M600 675 L520 430 L680 430 Z" fill="#9fa88d"/>
+  <path d="M600 430 C520 360 470 300 430 220" stroke="#8b9477" stroke-width="30" fill="none"/>
+  <path d="M600 430 C690 350 760 270 840 180" stroke="#8b9477" stroke-width="30" fill="none"/>
+  <circle cx="600" cy="410" r="18" fill="#3f4738"/>
+</svg>

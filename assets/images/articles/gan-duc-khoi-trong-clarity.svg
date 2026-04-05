@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Light through glass cleaned">
+  <rect width="1200" height="675" fill="#eef2f3"/>
+  <rect x="200" y="90" width="800" height="500" rx="24" fill="#f8fbfc" stroke="#b9c7cc"/>
+  <rect x="270" y="150" width="220" height="380" fill="#c7d4d9" opacity="0.55"/>
+  <rect x="510" y="150" width="220" height="380" fill="#dfe9ec" opacity="0.8"/>
+  <rect x="750" y="150" width="180" height="380" fill="#f4f9fb" opacity="0.95"/>
+</svg>

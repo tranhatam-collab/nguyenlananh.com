@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Bright tidy workspace">
+  <rect width="1200" height="675" fill="#e8ece7"/>
+  <rect x="250" y="120" width="700" height="430" rx="20" fill="#f7faf8" stroke="#b8c4bc"/>
+  <rect x="300" y="360" width="600" height="110" rx="12" fill="#d0b690"/>
+  <rect x="330" y="180" width="250" height="130" fill="#dceff4"/>
+  <rect x="730" y="280" width="60" height="80" rx="8" fill="#7fa17e"/>
+</svg>

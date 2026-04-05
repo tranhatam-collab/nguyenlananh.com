@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Split messy and clean desk comparison">
+  <rect width="1200" height="675" fill="#f0ece4"/>
+  <rect x="90" y="120" width="500" height="430" rx="20" fill="#d6c6b2"/>
+  <rect x="130" y="360" width="420" height="120" rx="12" fill="#b79168"/>
+  <rect x="160" y="220" width="80" height="60" fill="#8a7661"/>
+  <rect x="260" y="250" width="110" height="70" fill="#7f6a53"/>
+  <rect x="380" y="210" width="130" height="85" fill="#927f6b"/>
+  <rect x="610" y="120" width="500" height="430" rx="20" fill="#f8faf8"/>
+  <rect x="650" y="360" width="420" height="120" rx="12" fill="#c9a77b"/>
+  <rect x="700" y="200" width="210" height="120" fill="#dcebf0"/>
+  <rect x="930" y="300" width="60" height="70" rx="10" fill="#7da17d"/>
+</svg>

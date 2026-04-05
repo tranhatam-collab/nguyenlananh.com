@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Person in open nature sunlight">
+  <rect width="1200" height="675" fill="#dfead7"/>
+  <circle cx="930" cy="150" r="70" fill="#f7e58f"/>
+  <path d="M0 480 C220 410 410 430 620 380 C840 330 1000 370 1200 320 L1200 675 L0 675 Z" fill="#9dbc8d"/>
+  <rect x="570" y="360" width="20" height="95" fill="#3d5640"/>
+  <circle cx="580" cy="336" r="20" fill="#3d5640"/>
+</svg>

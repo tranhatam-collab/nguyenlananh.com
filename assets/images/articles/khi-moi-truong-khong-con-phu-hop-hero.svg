@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Person alone in dark office">
+  <rect width="1200" height="675" fill="#2f3137"/>
+  <rect x="220" y="120" width="760" height="420" rx="18" fill="#40444d"/>
+  <rect x="320" y="380" width="560" height="90" rx="12" fill="#5a4f45"/>
+  <rect x="520" y="300" width="18" height="80" fill="#1f2127"/>
+  <circle cx="529" cy="276" r="18" fill="#1f2127"/>
+  <rect x="360" y="200" width="220" height="140" fill="#3f525b" opacity="0.45"/>
+</svg>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Members Home | Nguyenlananh.com</title>
+  <meta name="description" content="Members dashboard home. Bạn đã vào hệ hành trình." />
+  <link rel="canonical" href="https://www.nguyenlananh.com/members/" />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body data-page="members-home">
+  <header class="topbar" role="banner">
+    <div class="container"><div class="navwrap"><a class="brand" href="/members/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Members</strong><span>Journey System</span></div></a><nav class="navlinks" aria-label="Members nav"><a href="/members/dashboard/">Dashboard</a><a href="/members/journey/">Journey</a><a href="/members/practice/">Practice</a><a href="/members/deep/">Deep</a><a href="/members/experience/">Experience</a><a href="/members/pro/">Pro</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Đăng xuất</button></div></div></div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Bạn đã vào hệ</span>
+      <h1 style="margin-top:8px;">Welcome back</h1>
+      <p class="sub">Email: <strong data-member-email>-</strong> · Gói: <span data-member-plan>-</span> · Hạn tới: <span data-member-expire>-</span></p>
+      <p id="magicError" class="note hidden" style="margin-top:8px; color:#b91c1c;"></p>
+      <div style="margin-top:14px;">
+        <div class="progressTrack"><span data-progress-bar></span></div>
+        <p class="note" style="margin-top:8px;">Tiến trình hiện tại: <strong data-progress-percent>0%</strong></p>
+      </div>
+      <div class="actionsRow">
+        <a class="cta" href="/members/journey/">Start Journey</a>
+        <a class="ghost" href="/members/practice/">Daily Practice</a>
+      </div>
+    </section>
+
+    <section class="kpiRow">
+      <article class="kpi"><strong>Day 1–7</strong><span>Nhìn lại</span></article>
+      <article class="kpi"><strong>Day 7–21</strong><span>Gỡ vòng lặp</span></article>
+      <article class="kpi"><strong>Day 21–90</strong><span>Xây hệ sống mới</span></article>
+    </section>
+  </main>
+
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Khi bạn sẵn sàng, hãy bước.</div></div></footer>
+  <script src="/assets/site.js"></script>
+  <script src="/assets/members.js"></script>
+</body>
+</html>

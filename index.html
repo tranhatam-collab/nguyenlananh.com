@@ -775,6 +775,7 @@
           <a href="/phuong-phap/">Phương pháp</a>
           <a href="/chuong-trinh/">Chương trình</a>
           <a href="/bai-viet/">Bài viết</a>
+          <a href="/join/">Join</a>
           <a href="/lien-he/">Liên hệ</a>
           <a href="/en/" title="English page">EN</a>
         </nav>
@@ -785,8 +786,8 @@
             <button class="chip" type="button" data-lang="en">EN</button>
           </div>
 
-          <button class="btn" type="button" id="quickStation" aria-label="Mở nhanh content">
-            Vào nội dung
+          <button class="btn" type="button" id="quickStation" aria-label="Mở nhanh membership">
+            Bắt đầu 3 USD
           </button>
 
           <button class="hamburger" type="button" id="hamburger" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false">
@@ -810,6 +811,7 @@
         <a href="/phuong-phap/" data-close>Phương pháp</a>
         <a href="/chuong-trinh/" data-close>Chương trình</a>
         <a href="/bai-viet/" data-close>Bài viết</a>
+        <a href="/join/" data-close>Join</a>
         <a href="/lien-he/" data-close>Liên hệ</a>
         <a href="/en/" data-close title="English page">EN</a>
       </nav>
@@ -850,7 +852,7 @@
 
           <div class="heroActions">
             <button class="cta" type="button" data-jump="#path">Khám phá hành trình</button>
-            <button class="ghost" type="button" data-jump="#problem">Bắt đầu từ đây</button>
+            <a class="ghost" href="/join/">Bắt đầu từ 3 USD</a>
           </div>
         </article>
 
@@ -1003,7 +1005,7 @@
           <p style="margin-top:10px;">Và là con đường duy nhất giúp bạn không lặp lại chính mình.</p>
           <div class="heroActions" style="margin-top:14px;">
             <button class="ghost" type="button" data-jump="#method">Bắt đầu bằng phương pháp</button>
-            <button class="ghost" type="button" data-jump="#contact">Liên hệ đồng hành</button>
+            <a class="ghost" href="/join/">Mở khóa toàn bộ hành trình</a>
           </div>
         </div>
       </div>
@@ -1289,7 +1291,7 @@
         <div class="heroActions" style="margin-top:14px;">
           <button class="cta" type="button" data-jump="#path">Xem hành trình</button>
           <button class="ghost" type="button" data-jump="#method">Tìm con đường của mình</button>
-          <button class="ghost" type="button" data-jump="#contact">Liên hệ đồng hành</button>
+          <a class="ghost" href="/join/">Không đọc thêm. Bắt đầu.</a>
         </div>
       </div>
     </section>
@@ -1591,7 +1593,7 @@
     });
 
     $("#quickStation")?.addEventListener("click", ()=>{
-      window.location.href = "/bai-viet/";
+      window.location.href = "/join/";
     });
 
     // ====== Reveal on scroll ======

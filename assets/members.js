@@ -29,7 +29,7 @@
     }
   };
 
-  const PAYPAL_BUSINESS = "lienhe@nguyenlananh.com";
+  const PAYPAL_BUSINESS = "pay@nguyenlananh.com";
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));

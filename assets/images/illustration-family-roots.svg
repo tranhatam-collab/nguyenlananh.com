@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#F5EFE8"/>
+  <path d="M790 180L540 370H1040L790 180Z" fill="#D6C2A9" stroke="#3F3B37" stroke-width="3"/>
+  <rect x="595" y="370" width="390" height="250" rx="12" fill="#EEE1CF" stroke="#3F3B37" stroke-width="3"/>
+  <rect x="742" y="478" width="96" height="142" rx="8" fill="#D5B58C" stroke="#3F3B37" stroke-width="3"/>
+  <circle cx="514" cy="560" r="52" fill="#D7C0A0" stroke="#3F3B37" stroke-width="3" opacity="0.95"/>
+  <circle cx="390" cy="656" r="40" fill="#D7C0A0" stroke="#3F3B37" stroke-width="3" opacity="0.8"/>
+  <circle cx="622" cy="668" r="36" fill="#D7C0A0" stroke="#3F3B37" stroke-width="3" opacity="0.75"/>
+  <path d="M514 612L390 656" stroke="#3F3B37" stroke-width="3"/>
+  <path d="M514 612L622 668" stroke="#3F3B37" stroke-width="3"/>
+  <circle cx="1104" cy="540" r="52" fill="#C28D5D" stroke="#3F3B37" stroke-width="3" opacity="0.9"/>
+  <circle cx="1222" cy="644" r="38" fill="#C28D5D" stroke="#3F3B37" stroke-width="3" opacity="0.72"/>
+  <path d="M1104 592L1222 644" stroke="#3F3B37" stroke-width="3"/>
+  <path d="M1104 488C1140 434 1190 376 1270 308" stroke="#A16207" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="1270" cy="308" r="28" fill="#A16207" fill-opacity="0.18" stroke="#A16207" stroke-width="4"/>
+  <text x="150" y="170" fill="#111827" font-family="Georgia, serif" font-size="52">Gia dinh va goc re</text>
+  <text x="150" y="228" fill="#475569" font-family="Georgia, serif" font-size="24">nhin lai dieu dang truyen qua nhau</text>
+</svg>

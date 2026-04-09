@@ -91,3 +91,26 @@ Locked member track nên có:
 - Không dùng ngôn ngữ bán hàng mạnh.
 - Luôn kết bài bằng bước hành động nhỏ nhưng thật.
 - Với nội dung liên quan thân thể, cảm xúc, bệnh tật hoặc hồi phục: chỉ được viết như góc nhìn tự thân, không thay thế chăm sóc y tế hay trị liệu chuyên môn.
+
+---
+
+## 7. Membership Deep Topics (locked)
+
+Lộ trình chuyên đề sâu cho thành viên sau đăng ký:
+
+1. `Bản đồ vòng lặp và điểm nghẽn sâu`
+2. `Âm thanh tự thân và tiếng nói bên trong`
+3. `Gia đình và những điều đang truyền qua nhau`
+4. `Đồng hành cùng trẻ em mà không làm gãy tự nhiên`
+
+Ba chủ đề đang thiếu và đã được khóa bổ sung:
+
+- `Bản đồ vòng lặp và điểm nghẽn sâu`
+- `Gia đình và những điều đang truyền qua nhau`
+- `Đồng hành cùng trẻ em mà không làm gãy tự nhiên`
+
+Nguyên tắc:
+
+- không mở chuyên đề trẻ em trước khi có nền cá nhân và gia đình
+- không tách giáo dục trẻ em khỏi đời sống thật của người lớn
+- mỗi chuyên đề thành viên phải có ảnh minh họa, alt text và image brief như một sản phẩm hoàn chỉnh

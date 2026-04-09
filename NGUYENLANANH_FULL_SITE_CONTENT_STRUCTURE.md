@@ -70,6 +70,19 @@ Ghi chú khóa:
 - Bài `Âm thanh tự thân: khi một tiếng hát trở thành cách trở về` là bản public ngắn, ưu tiên kéo về `join`.
 - Chuyên đề sâu hơn được triển khai trong membership route `/members/deep/am-thanh-tu-than/` và mở nhánh `ca-nhan`, `gia-dinh`, `tre-em` ở phase sau.
 
+## P4 - Membership deep roadmap (locked)
+37. Bản đồ vòng lặp và điểm nghẽn sâu
+38. Gia đình và những điều đang truyền qua nhau
+39. Đồng hành cùng trẻ em mà không làm gãy tự nhiên
+
+Ghi chú khóa:
+- đây là các chuyên đề thành viên, không phải bài public indexable
+- route đang dùng:
+  - `/members/deep/ban-do-vong-lap/`
+  - `/members/deep/gia-dinh-va-goc-re/`
+  - `/members/deep/tre-em-va-khong-gian-lon-len/`
+- thứ tự vào chuyên đề phải theo roadmap trong `members/deep`
+
 ---
 
 ## 3. Internal Linking Rules (bắt buộc)

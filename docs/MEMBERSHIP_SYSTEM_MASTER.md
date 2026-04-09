@@ -101,15 +101,32 @@ Core script:
 
 Membership không chỉ là quyền truy cập. Về nội dung, hệ này sẽ mở dần các chuyên đề sâu trong `members/deep`.
 
-Chuyên đề ưu tiên tiếp theo:
+Lộ trình khóa hiện tại:
 
+- `Bản đồ vòng lặp và điểm nghẽn sâu`
+  - route: `/members/deep/ban-do-vong-lap/`
+  - vai trò: chuyên đề gốc để gọi tên trigger, phản ứng, cách tự bảo vệ và cái giá đang trả
 - `Âm thanh tự thân và tiếng nói bên trong`
-  - public teaser trên homepage + 1 bài public ngắn
-  - locked route đề xuất: `/members/deep/am-thanh-tu-than/`
-  - mở rộng sau đó theo 3 nhánh: `ca-nhan`, `gia-dinh`, `tre-em`
+  - route: `/members/deep/am-thanh-tu-than/`
+  - public teaser trên homepage + 1 bài public ngắn đã có
+  - mở rộng theo 3 nhánh: `ca-nhan`, `gia-dinh`, `tre-em`
+- `Gia đình và những điều đang truyền qua nhau`
+  - route: `/members/deep/gia-dinh-va-goc-re/`
+  - vai trò: nhìn lại hệ gia đình như môi trường đầu tiên của niềm tin, phản xạ và vai trò sống
+- `Đồng hành cùng trẻ em mà không làm gãy tự nhiên`
+  - route: `/members/deep/tre-em-va-khong-gian-lon-len/`
+  - vai trò: mở hướng cá nhân -> gia đình -> trẻ em bằng môi trường sống, vật thể, nhịp sống và hành động thật
+
+Thứ tự đi vào bắt buộc:
+
+1. `Bản đồ vòng lặp và điểm nghẽn sâu`
+2. `Âm thanh tự thân và tiếng nói bên trong`
+3. `Gia đình và những điều đang truyền qua nhau`
+4. `Đồng hành cùng trẻ em mà không làm gãy tự nhiên`
 
 Nguyên tắc khóa:
 
 - không biến members area thành thư viện bài đọc rời rạc
 - mỗi chuyên đề phải có: intro, modules, practice, caution note, CTA quay về dashboard
 - các chuyên đề liên quan thân tâm phải có disclaimer rõ: không thay thế chăm sóc y tế hay trị liệu chuyên môn
+- lớp `members/deep/` phải thể hiện đây là một roadmap 90 ngày, không phải danh sách bài đọc ngẫu nhiên

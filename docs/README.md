@@ -24,6 +24,9 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 18. `contracts/paypal-api-examples.http`
 19. `contracts/paypal-backend-test-matrix.md`
 20. `contracts/paypal-backend-smoke.sh`
+21. `contracts/reference-backend/README.md`
+22. `contracts/reference-backend/event-router-skeleton.mjs`
+23. `contracts/reference-backend/service-skeleton.mjs`
 
 ## Mục đích từng file
 
@@ -47,6 +50,7 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 - `contracts/paypal-api-examples.http`: ví dụ request/response để dev import vào REST Client/Postman.
 - `contracts/paypal-backend-test-matrix.md`: ma trận test bắt buộc trước khi bật live checkout auto.
 - `contracts/paypal-backend-smoke.sh`: script smoke test endpoint khi backend staging đã bật.
+- `contracts/reference-backend/*`: skeleton code tham chiếu cho handler create/capture/webhook/resend + event router.
 
 ## Ghi chú
 

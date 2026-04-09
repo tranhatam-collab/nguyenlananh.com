@@ -1,6 +1,6 @@
 # CMS_CONTENT_MODEL.md
 
-Version: 1.0  
+Version: 1.1  
 Scope: Bài viết, chuyên mục, series, chương trình, quote, FAQ.
 
 ---
@@ -27,6 +27,10 @@ Scope: Bài viết, chuyên mục, series, chương trình, quote, FAQ.
 - `category` (relation -> categories)
 - `tags` (array string)
 - `featured_image` (asset)
+- `featured_image_alt` (string)
+- `featured_image_caption` (string)
+- `featured_image_seo_filename` (string)
+- `image_prompt_brief` (text)
 - `featured` (boolean)
 - `pillar_post` (boolean)
 - `series_name` (relation -> series)
@@ -34,6 +38,7 @@ Scope: Bài viết, chuyên mục, series, chương trình, quote, FAQ.
 - `seo_title` (string)
 - `seo_description` (text)
 - `og_image` (asset)
+- `og_image_alt` (string)
 - `published_at` (datetime)
 - `updated_at` (datetime)
 
@@ -84,6 +89,8 @@ Không tạo category ngoài danh sách lock trong giai đoạn đầu.
 
 - Mỗi post phải có: `category`, `series_name`, `seo_title`, `seo_description`.
 - Mỗi post phải có ít nhất 1 ảnh đại diện.
+- Mỗi post phải có `featured_image_alt` và `featured_image_seo_filename`.
+- Mỗi post handoff phải có image brief rõ để content/dev/SEO dùng cùng một hình.
 - Mỗi post phải có tối thiểu 3 liên kết nội bộ:
 - 1 bài cùng chuyên mục.
 - 1 bài nền tảng.

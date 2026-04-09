@@ -96,3 +96,20 @@ Core script:
 2. True magic-email delivery (no manual copy)
 3. Retention emails (welcome / day 1 / day 3 / weekly)
 4. Upgrade triggers tied to behavior events
+
+## 9. Deep Topic Tracks (next content layer)
+
+Membership không chỉ là quyền truy cập. Về nội dung, hệ này sẽ mở dần các chuyên đề sâu trong `members/deep`.
+
+Chuyên đề ưu tiên tiếp theo:
+
+- `Âm thanh tự thân và tiếng nói bên trong`
+  - public teaser trên homepage + 1 bài public ngắn
+  - locked route đề xuất: `/members/deep/am-thanh-tu-than/`
+  - mở rộng sau đó theo 3 nhánh: `ca-nhan`, `gia-dinh`, `tre-em`
+
+Nguyên tắc khóa:
+
+- không biến members area thành thư viện bài đọc rời rạc
+- mỗi chuyên đề phải có: intro, modules, practice, caution note, CTA quay về dashboard
+- các chuyên đề liên quan thân tâm phải có disclaimer rõ: không thay thế chăm sóc y tế hay trị liệu chuyên môn

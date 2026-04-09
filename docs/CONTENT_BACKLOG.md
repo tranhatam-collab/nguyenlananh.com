@@ -1,6 +1,6 @@
 # CONTENT_BACKLOG.md
 
-Version: 1.0  
+Version: 1.1  
 Mục tiêu: publish bộ nội dung đủ tạo định vị nhận thức ngay từ giai đoạn đầu.
 
 ---
@@ -53,8 +53,41 @@ Mục tiêu: publish bộ nội dung đủ tạo định vị nhận thức ngay
 
 ---
 
-## 5. Editorial Guardrails
+## 5. Cụm nội dung mới: Âm thanh tự thân (pending approval)
+
+Mục tiêu của cụm này:
+- mở thêm một cánh cửa đi vào bên trong qua giọng hát, hơi thở, cảm nhận thân thể và sáng tạo tự thân
+- giữ đúng tinh thần website: thật, sâu, bình tĩnh, có bước đi thực tế
+- không biến website thành trang chữa bệnh, trang tâm linh hóa âm thanh, hay lớp thanh nhạc
+
+Bài public nên hoàn thiện trước:
+1. Âm thanh tự thân: khi một tiếng hát trở thành cách trở về
+
+Roadmap bài chuyên sâu sau đó:
+- Cất giọng và đi qua nỗi sợ bị phán xét
+- Âm thanh, hơi thở và sự hiện diện trong thân thể
+- Giọng hát như tấm gương của niềm tin giới hạn
+- Khi thân thể yếu đi, điều gì còn có thể mở lại dòng sống
+- Thực hành 7 ngày mở lại tiếng nói bên trong
+- Nhật ký âm thanh tự thân: từ ngẫu hứng đến kỷ luật nhẹ nhàng
+- Không hát để đúng. Hát để thật
+
+Ngôn ngữ khóa:
+- dùng `trải nghiệm tự thân`, `thực hành âm thanh`, `làm việc với thân tâm`, `mở lại dòng sống`
+- tránh dùng `chữa bệnh`, `trị liệu`, `đả thông`, `năng lượng vũ trụ` như một khẳng định chuyên môn
+- nếu nhắc tới năng lượng, luân xa hoặc trải nghiệm rung động, phải đặt trong ngữ cảnh cảm nhận cá nhân, không tuyên bố phổ quát
+
+Locked member track nên có:
+- Âm thanh tự thân và tiếng nói bên trong
+- module cá nhân
+- module gia đình
+- module trẻ em
+
+---
+
+## 6. Editorial Guardrails
 
 - Không giọng hô hào, phán xét, thần bí.
 - Không dùng ngôn ngữ bán hàng mạnh.
 - Luôn kết bài bằng bước hành động nhỏ nhưng thật.
+- Với nội dung liên quan thân thể, cảm xúc, bệnh tật hoặc hồi phục: chỉ được viết như góc nhìn tự thân, không thay thế chăm sóc y tế hay trị liệu chuyên môn.

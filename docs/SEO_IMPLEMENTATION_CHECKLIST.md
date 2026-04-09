@@ -1,6 +1,6 @@
 # SEO_IMPLEMENTATION_CHECKLIST.md
 
-Version: 1.0
+Version: 1.1
 
 ---
 
@@ -43,6 +43,20 @@ Validation bằng Rich Results Test trước release.
 - [ ] Chỉ 1 `h1`.
 - [ ] Có slug ngắn, rõ nghĩa.
 - [ ] Ảnh có `alt` text mô tả đúng ngữ cảnh.
+- [ ] Ảnh có filename SEO không dấu, rõ nghĩa.
+- [ ] Có image brief để tránh lệch visual tone.
+- [ ] OG image cùng chủ đề với featured image.
+
+---
+
+## 4A. Image SEO Rules (global)
+
+- [ ] Mỗi bài public có ít nhất 1 featured image.
+- [ ] `alt` text tự nhiên, không nhồi keyword.
+- [ ] `caption` nếu dùng phải cùng tone thương hiệu.
+- [ ] Filename ảnh dùng không dấu, chữ thường, nối bằng `-`.
+- [ ] Ảnh nén tốt, kích thước hợp lý, không làm chậm mobile.
+- [ ] Ảnh không lệch visual direction của website.
 
 ---
 

@@ -21,6 +21,9 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 15. `contracts/paypal-event-email-map.json`
 16. `contracts/paypal-membership-implementation-notes.md`
 17. `contracts/paypal-membership-schema-patch.sql`
+18. `contracts/paypal-api-examples.http`
+19. `contracts/paypal-backend-test-matrix.md`
+20. `contracts/paypal-backend-smoke.sh`
 
 ## Mục đích từng file
 
@@ -41,6 +44,9 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 - `contracts/paypal-event-email-map.json`: mapping chuẩn từ PayPal/internal events sang email template IDs.
 - `contracts/paypal-membership-implementation-notes.md`: state machine, idempotency, webhook security, test matrix.
 - `contracts/paypal-membership-schema-patch.sql`: patch schema cho paypal_orders/webhook_events/idempotency/email_jobs.
+- `contracts/paypal-api-examples.http`: ví dụ request/response để dev import vào REST Client/Postman.
+- `contracts/paypal-backend-test-matrix.md`: ma trận test bắt buộc trước khi bật live checkout auto.
+- `contracts/paypal-backend-smoke.sh`: script smoke test endpoint khi backend staging đã bật.
 
 ## Ghi chú
 

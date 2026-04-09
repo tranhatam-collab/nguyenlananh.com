@@ -1,0 +1,106 @@
+### Variables
+@baseUrl = https://www.nguyenlananh.com
+@idempotencyKeyCreate = nla-create-ord-001
+@idempotencyKeyCapture = nla-capture-ord-001
+
+### 1) Create Order
+POST {{baseUrl}}/api/paypal/create-order
+Content-Type: application/json
+X-Idempotency-Key: {{idempotencyKeyCreate}}
+
+{
+  "email": "member@example.com",
+  "plan_code": "year1",
+  "locale": "vi",
+  "success_url": "https://www.nguyenlananh.com/join/?status=success",
+  "cancel_url": "https://www.nguyenlananh.com/join/?status=cancel",
+  "metadata": {
+    "source": "join-page",
+    "campaign": "membership-launch"
+  }
+}
+
+### Expected 201
+# {
+#   "internal_order_id": "ord_01JABCDEF23",
+#   "paypal_order_id": "5O190127TN364715T",
+#   "status": "PAYER_ACTION_REQUIRED",
+#   "approve_url": "https://www.paypal.com/checkoutnow?...",
+#   "amount": 3,
+#   "currency": "USD"
+# }
+
+
+### 2) Capture Order
+POST {{baseUrl}}/api/paypal/capture-order
+Content-Type: application/json
+X-Idempotency-Key: {{idempotencyKeyCapture}}
+
+{
+  "internal_order_id": "ord_01JABCDEF23",
+  "paypal_order_id": "5O190127TN364715T"
+}
+
+### Expected 200
+# {
+#   "internal_order_id": "ord_01JABCDEF23",
+#   "paypal_order_id": "5O190127TN364715T",
+#   "capture_id": "7B1234567D8901234",
+#   "capture_status": "COMPLETED",
+#   "fulfillment_status": "FULFILLED",
+#   "user_id": "usr_01J...",
+#   "membership_type": "year1",
+#   "expires_at": "2027-04-09T12:00:00.000Z",
+#   "queued_email_templates": [
+#     "T03_PAYMENT_RECEIPT",
+#     "T01_WELCOME_MAGIC_LINK"
+#   ]
+# }
+
+
+### 3) Resend Magic Link
+POST {{baseUrl}}/api/auth/magic-links/resend
+Content-Type: application/json
+
+{
+  "email": "member@example.com",
+  "locale": "en-US",
+  "redirect_to": "https://www.nguyenlananh.com/en/members/"
+}
+
+### Expected 202
+# {
+#   "queued": true,
+#   "template_id": "T02_MAGIC_LINK_RESEND",
+#   "expires_in_minutes": 15
+# }
+
+
+### 4) PayPal Webhook (raw event payload)
+POST {{baseUrl}}/api/paypal/webhook
+Content-Type: application/json
+PayPal-Transmission-Id: 00000000-aaaa-bbbb-cccc-111111111111
+PayPal-Transmission-Time: 2026-04-09T04:00:00Z
+PayPal-Transmission-Sig: <signature>
+PayPal-Cert-Url: https://api-m.paypal.com/v1/notifications/certs/CERT-1234
+PayPal-Auth-Algo: SHA256withRSA
+PayPal-Webhook-Id: <your-webhook-id>
+
+{
+  "id": "WH-1234567890",
+  "event_type": "PAYMENT.CAPTURE.COMPLETED",
+  "resource": {
+    "id": "7B1234567D8901234",
+    "supplementary_data": {
+      "related_ids": {
+        "order_id": "5O190127TN364715T"
+      }
+    }
+  }
+}
+
+### Expected 202
+# {
+#   "accepted": true,
+#   "event_id": "WH-1234567890"
+# }

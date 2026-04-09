@@ -166,17 +166,23 @@ for (const viFile of VI_FILES) {
   viHtml = ensureLangScript(viHtml);
   writeFile(viFile, viHtml);
 
-  let enHtml = viHtml;
+  const enFile = viFile === 'index.html' ? 'en/index.html' : `en/${viFile}`;
+  const enPath = path.join(ROOT, enFile);
+  const hasExistingEn = fs.existsSync(enPath);
+
+  // Preserve manually curated English copy when present.
+  let enHtml = hasExistingEn ? fs.readFileSync(enPath, 'utf8') : viHtml;
   enHtml = setHtmlLang(enHtml, 'en-US');
   enHtml = upsertCanonical(enHtml, `${DOMAIN}${enRoute}`);
   enHtml = upsertOgUrl(enHtml, `${DOMAIN}${enRoute}`);
   enHtml = stripAlternateTags(enHtml);
   enHtml = insertAlternateTags(enHtml, viRoute, enRoute);
   enHtml = rewriteInternalHrefs(enHtml, 'en');
-  enHtml = translateCommonUI(enHtml);
+  if (!hasExistingEn) {
+    enHtml = translateCommonUI(enHtml);
+  }
   enHtml = ensureLangScript(enHtml);
 
-  const enFile = viFile === 'index.html' ? 'en/index.html' : `en/${viFile}`;
   writeFile(enFile, enHtml);
 }
 

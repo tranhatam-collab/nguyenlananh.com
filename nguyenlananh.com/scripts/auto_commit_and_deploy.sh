@@ -22,6 +22,8 @@ git push origin main
 echo "Change committed and pushed. Triggering Cloudflare deploy..."
 if [ -x ./scripts/deploy_cloudflare.sh ]; then
   ./scripts/deploy_cloudflare.sh
+elif [ -x ./nguyenlananh.com/scripts/deploy_cloudflare.sh ]; then
+  ./nguyenlananh.com/scripts/deploy_cloudflare.sh
 else
   echo "deploy script not found or not executable. Please run manually: ./scripts/deploy_cloudflare.sh"
 fi

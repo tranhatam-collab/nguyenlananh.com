@@ -17,6 +17,10 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 11. `QA_ACCEPTANCE_CHECKLIST.md`
 12. `MEMBERSHIP_SYSTEM_MASTER.md`
 13. `MEMBERSHIP_DB_SCHEMA.sql`
+14. `contracts/paypal-membership-openapi.yaml`
+15. `contracts/paypal-event-email-map.json`
+16. `contracts/paypal-membership-implementation-notes.md`
+17. `contracts/paypal-membership-schema-patch.sql`
 
 ## Mục đích từng file
 
@@ -33,6 +37,10 @@ Bộ tài liệu này dùng để triển khai website `nguyenlananh.com` theo �
 - `QA_ACCEPTANCE_CHECKLIST.md`: checklist nghiệm thu trước khi launch.
 - `MEMBERSHIP_SYSTEM_MASTER.md`: kiến trúc membership, flow join/pay/magic-link, khóa route và roadmap phase 2.
 - `MEMBERSHIP_DB_SCHEMA.sql`: schema DB chuẩn cho backend membership (users/payments/sessions/content_access/magic_links).
+- `contracts/paypal-membership-openapi.yaml`: skeleton API contract cho create-order/capture-order/webhook/magic-link resend.
+- `contracts/paypal-event-email-map.json`: mapping chuẩn từ PayPal/internal events sang email template IDs.
+- `contracts/paypal-membership-implementation-notes.md`: state machine, idempotency, webhook security, test matrix.
+- `contracts/paypal-membership-schema-patch.sql`: patch schema cho paypal_orders/webhook_events/idempotency/email_jobs.
 
 ## Ghi chú
 

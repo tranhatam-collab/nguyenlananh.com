@@ -1,0 +1,255 @@
+{
+  "version": "1.0.0",
+  "default_locale": "vi",
+  "supported_locales": ["vi", "en-US"],
+  "templates": {
+    "T01_WELCOME_MAGIC_LINK": "Welcome + Magic Link",
+    "T02_MAGIC_LINK_RESEND": "Magic Link Resend",
+    "T03_PAYMENT_RECEIPT": "Payment Receipt",
+    "T04_PAYMENT_FAILED": "Payment Failed",
+    "T05_DAY1_START": "Day 1 Journey Start",
+    "T06_DAY3_RETENTION": "Day 3 Retention",
+    "T07_WEEKLY_CHECKIN": "Weekly Check-in",
+    "T08_RENEWAL_D14": "Renewal Reminder D-14",
+    "T09_RENEWAL_D3": "Renewal Reminder D-3",
+    "T10_MEMBERSHIP_EXPIRED": "Membership Expired",
+    "T11_REFUND_COMPLETED": "Refund Completed",
+    "T12_CONTACT_AUTO_REPLY": "Contact Auto-reply",
+    "T13_INTERNAL_PAYMENT_ALERT": "Internal Payment Alert",
+    "T14_INTERNAL_WEBHOOK_SECURITY": "Internal Webhook Security Warning",
+    "T15_INTERNAL_MANUAL_REVIEW": "Internal Manual Review"
+  },
+  "paypal_events": [
+    {
+      "event_type": "CHECKOUT.ORDER.APPROVED",
+      "source": "paypal_webhook",
+      "actions": [
+        {
+          "type": "STATE_UPDATE",
+          "set": { "payment_status": "approved" }
+        },
+        {
+          "type": "SCHEDULE_INTERNAL_EVENT",
+          "internal_event": "ORDER_APPROVED_NOT_CAPTURED_TIMEOUT",
+          "delay_minutes": 30
+        }
+      ]
+    },
+    {
+      "event_type": "PAYMENT.CAPTURE.COMPLETED",
+      "source": "paypal_webhook",
+      "actions": [
+        {
+          "type": "STATE_UPDATE",
+          "set": {
+            "payment_status": "captured",
+            "fulfillment_status": "pending"
+          }
+        },
+        {
+          "type": "FULFILL_MEMBERSHIP",
+          "plan_map": {
+            "year1": { "duration_days": 365 },
+            "year2": { "duration_days": 365 },
+            "year3": { "duration_days": 365 }
+          }
+        },
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T03_PAYMENT_RECEIPT",
+          "recipient": "payer_email",
+          "send_mode": "immediate"
+        },
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T01_WELCOME_MAGIC_LINK",
+          "recipient": "payer_email",
+          "send_mode": "immediate"
+        },
+        {
+          "type": "SCHEDULE_INTERNAL_EVENT",
+          "internal_event": "MEMBERSHIP_DAY1",
+          "delay_hours": 24
+        },
+        {
+          "type": "SCHEDULE_INTERNAL_EVENT",
+          "internal_event": "MEMBERSHIP_DAY3",
+          "delay_hours": 72
+        }
+      ]
+    },
+    {
+      "event_type": "PAYMENT.CAPTURE.DENIED",
+      "source": "paypal_webhook",
+      "actions": [
+        {
+          "type": "STATE_UPDATE",
+          "set": { "payment_status": "denied" }
+        },
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T04_PAYMENT_FAILED",
+          "recipient": "payer_email",
+          "send_mode": "immediate"
+        },
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T13_INTERNAL_PAYMENT_ALERT",
+          "recipient": "ops_internal",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "PAYMENT.CAPTURE.REFUNDED",
+      "source": "paypal_webhook",
+      "actions": [
+        {
+          "type": "STATE_UPDATE",
+          "set": {
+            "payment_status": "refunded",
+            "membership_status": "revoked"
+          }
+        },
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T11_REFUND_COMPLETED",
+          "recipient": "payer_email",
+          "send_mode": "immediate"
+        }
+      ]
+    }
+  ],
+  "internal_events": [
+    {
+      "event_type": "MAGIC_LINK_RESEND_REQUESTED",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T02_MAGIC_LINK_RESEND",
+          "recipient": "user_email",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_DAY1",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T05_DAY1_START",
+          "recipient": "user_email",
+          "send_mode": "scheduled"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_DAY3",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T06_DAY3_RETENTION",
+          "recipient": "user_email",
+          "send_mode": "scheduled"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_WEEKLY",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T07_WEEKLY_CHECKIN",
+          "recipient": "user_email",
+          "send_mode": "scheduled_recurring"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_RENEWAL_D14",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T08_RENEWAL_D14",
+          "recipient": "user_email",
+          "send_mode": "scheduled"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_RENEWAL_D3",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T09_RENEWAL_D3",
+          "recipient": "user_email",
+          "send_mode": "scheduled"
+        }
+      ]
+    },
+    {
+      "event_type": "MEMBERSHIP_EXPIRED",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T10_MEMBERSHIP_EXPIRED",
+          "recipient": "user_email",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "CONTACT_FORM_SUBMITTED",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T12_CONTACT_AUTO_REPLY",
+          "recipient": "contact_email",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "WEBHOOK_SIGNATURE_INVALID",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T14_INTERNAL_WEBHOOK_SECURITY",
+          "recipient": "dev_ops_internal",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "CAPTURE_COMPLETED_FULFILLMENT_FAILED",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T15_INTERNAL_MANUAL_REVIEW",
+          "recipient": "dev_ops_internal",
+          "send_mode": "immediate"
+        }
+      ]
+    },
+    {
+      "event_type": "ORDER_APPROVED_NOT_CAPTURED_TIMEOUT",
+      "actions": [
+        {
+          "type": "QUEUE_EMAIL",
+          "template_id": "T13_INTERNAL_PAYMENT_ALERT",
+          "recipient": "ops_internal",
+          "send_mode": "immediate",
+          "condition": "payment_status != captured"
+        }
+      ]
+    }
+  ],
+  "dispatch_rules": {
+    "locale_strategy": "user.preferred_language -> request.accept_language -> default_locale",
+    "dedupe_key": "template_id + recipient + order_id + capture_id",
+    "retry_policy": {
+      "max_retries": 3,
+      "backoff_minutes": [5, 30, 120]
+    }
+  }
+}

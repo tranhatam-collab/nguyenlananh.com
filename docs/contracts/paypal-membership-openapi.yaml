@@ -1,0 +1,363 @@
+openapi: 3.1.0
+info:
+  title: Nguyenlananh Membership Payment API
+  version: 1.0.0
+  summary: Skeleton API contract for PayPal checkout + membership fulfillment + bilingual email automation.
+servers:
+  - url: https://www.nguyenlananh.com
+    description: Production
+  - url: https://staging.nguyenlananh.com
+    description: Staging
+
+tags:
+  - name: PayPal
+  - name: Auth
+
+paths:
+  /api/paypal/create-order:
+    post:
+      tags: [PayPal]
+      summary: Create a PayPal order for membership checkout
+      description: |
+        Creates `internal_order_id` and calls PayPal Orders API v2.
+        Must be idempotent by `X-Idempotency-Key`.
+      operationId: createPayPalOrder
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+        '409':
+          description: Duplicate idempotency key with different payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/paypal/capture-order:
+    post:
+      tags: [PayPal]
+      summary: Capture a PayPal order after payer approval
+      description: |
+        Captures by `paypal_order_id`. Must be idempotent.
+        Fulfillment + email queueing happens only when PayPal capture status is COMPLETED.
+      operationId: capturePayPalOrder
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureOrderRequest'
+      responses:
+        '200':
+          description: Capture processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaptureOrderResponse'
+        '409':
+          description: Already captured or state conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/paypal/webhook:
+    post:
+      tags: [PayPal]
+      summary: Receive PayPal webhook events
+      description: |
+        Raw PayPal webhook endpoint.
+        Signature verification is mandatory before any state mutation.
+      operationId: handlePayPalWebhook
+      parameters:
+        - $ref: '#/components/parameters/PayPalTransmissionId'
+        - $ref: '#/components/parameters/PayPalTransmissionTime'
+        - $ref: '#/components/parameters/PayPalTransmissionSig'
+        - $ref: '#/components/parameters/PayPalCertUrl'
+        - $ref: '#/components/parameters/PayPalAuthAlgo'
+        - $ref: '#/components/parameters/PayPalWebhookId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '202':
+          description: Event accepted for async processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookAcceptedResponse'
+        '401':
+          description: Signature invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/auth/magic-links/resend:
+    post:
+      tags: [Auth]
+      summary: Re-issue one-time login magic link
+      description: Queue email template T02 after successful generation.
+      operationId: resendMagicLink
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MagicLinkResendRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MagicLinkResendResponse'
+
+components:
+  parameters:
+    IdempotencyKey:
+      name: X-Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 128
+    PayPalTransmissionId:
+      name: PayPal-Transmission-Id
+      in: header
+      required: true
+      schema:
+        type: string
+    PayPalTransmissionTime:
+      name: PayPal-Transmission-Time
+      in: header
+      required: true
+      schema:
+        type: string
+    PayPalTransmissionSig:
+      name: PayPal-Transmission-Sig
+      in: header
+      required: true
+      schema:
+        type: string
+    PayPalCertUrl:
+      name: PayPal-Cert-Url
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uri
+    PayPalAuthAlgo:
+      name: PayPal-Auth-Algo
+      in: header
+      required: true
+      schema:
+        type: string
+    PayPalWebhookId:
+      name: PayPal-Webhook-Id
+      in: header
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    CreateOrderRequest:
+      type: object
+      required: [email, plan_code, locale]
+      properties:
+        email:
+          type: string
+          format: email
+        plan_code:
+          $ref: '#/components/schemas/PlanCode'
+        locale:
+          $ref: '#/components/schemas/LocaleCode'
+        success_url:
+          type: string
+          format: uri
+          example: https://www.nguyenlananh.com/join/?status=success
+        cancel_url:
+          type: string
+          format: uri
+          example: https://www.nguyenlananh.com/join/?status=cancel
+        metadata:
+          type: object
+          additionalProperties: true
+
+    CreateOrderResponse:
+      type: object
+      required:
+        - internal_order_id
+        - paypal_order_id
+        - status
+        - approve_url
+        - amount
+        - currency
+      properties:
+        internal_order_id:
+          type: string
+          example: ord_01JABCDEF23
+        paypal_order_id:
+          type: string
+          example: 5O190127TN364715T
+        status:
+          type: string
+          enum: [CREATED, PAYER_ACTION_REQUIRED]
+        approve_url:
+          type: string
+          format: uri
+        amount:
+          type: number
+          format: double
+          example: 3
+        currency:
+          type: string
+          example: USD
+
+    CaptureOrderRequest:
+      type: object
+      required: [internal_order_id, paypal_order_id]
+      properties:
+        internal_order_id:
+          type: string
+        paypal_order_id:
+          type: string
+        payer_id:
+          type: string
+          description: Optional; included when frontend sends back payer info.
+
+    CaptureOrderResponse:
+      type: object
+      required:
+        - internal_order_id
+        - paypal_order_id
+        - capture_status
+        - fulfillment_status
+      properties:
+        internal_order_id:
+          type: string
+        paypal_order_id:
+          type: string
+        capture_id:
+          type: string
+          nullable: true
+        capture_status:
+          type: string
+          enum: [COMPLETED, DENIED, PENDING]
+        fulfillment_status:
+          type: string
+          enum: [FULFILLED, NOT_FULFILLED]
+        user_id:
+          type: string
+          nullable: true
+        membership_type:
+          $ref: '#/components/schemas/PlanCode'
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        queued_email_templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateId'
+
+    WebhookAcceptedResponse:
+      type: object
+      required: [accepted, event_id]
+      properties:
+        accepted:
+          type: boolean
+          example: true
+        event_id:
+          type: string
+          description: PayPal event.id
+
+    MagicLinkResendRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+        locale:
+          $ref: '#/components/schemas/LocaleCode'
+        redirect_to:
+          type: string
+          format: uri
+          nullable: true
+
+    MagicLinkResendResponse:
+      type: object
+      required: [queued, template_id]
+      properties:
+        queued:
+          type: boolean
+          example: true
+        template_id:
+          $ref: '#/components/schemas/TemplateId'
+        expires_in_minutes:
+          type: integer
+          example: 15
+
+    PlanCode:
+      type: string
+      enum: [year1, year2, year3]
+
+    LocaleCode:
+      type: string
+      enum: [vi, en-US]
+
+    TemplateId:
+      type: string
+      enum:
+        - T01_WELCOME_MAGIC_LINK
+        - T02_MAGIC_LINK_RESEND
+        - T03_PAYMENT_RECEIPT
+        - T04_PAYMENT_FAILED
+        - T05_DAY1_START
+        - T06_DAY3_RETENTION
+        - T07_WEEKLY_CHECKIN
+        - T08_RENEWAL_D14
+        - T09_RENEWAL_D3
+        - T10_MEMBERSHIP_EXPIRED
+        - T11_REFUND_COMPLETED
+        - T12_CONTACT_AUTO_REPLY
+        - T13_INTERNAL_PAYMENT_ALERT
+        - T14_INTERNAL_WEBHOOK_SECURITY
+        - T15_INTERNAL_MANUAL_REVIEW
+
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true

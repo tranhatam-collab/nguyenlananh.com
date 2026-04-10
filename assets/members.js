@@ -34,6 +34,38 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
+  function isEnglishPath(pathname) {
+    return (pathname || "").startsWith("/en/");
+  }
+
+  function memberStrings(pathname = window.location.pathname) {
+    if (isEnglishPath(pathname)) {
+      return {
+        magicNotFound: "Magic link was not found.",
+        magicUsed: "This magic link was already used.",
+        magicExpired: "Magic link expired (15 minutes).",
+        invalidEmail: "Please enter a valid email to receive your magic link.",
+        copied: "Copied",
+        copyAction: "Copy magic link",
+        copyFailed: "Unable to copy",
+        journeyDone: "Completed",
+        noJournal: "No journal entries yet. Write one honest line to begin."
+      };
+    }
+
+    return {
+      magicNotFound: "Không tìm thấy magic link.",
+      magicUsed: "Magic link đã được dùng.",
+      magicExpired: "Magic link đã hết hạn (15 phút).",
+      invalidEmail: "Vui lòng nhập email hợp lệ để nhận magic link.",
+      copied: "Đã sao chép",
+      copyAction: "Sao chép magic link",
+      copyFailed: "Không thể sao chép",
+      journeyDone: "Đã hoàn thành",
+      noJournal: "Chưa có nhật ký. Viết một dòng thật để bắt đầu."
+    };
+  }
+
   function readJSON(key, fallback) {
     try {
       const raw = localStorage.getItem(key);
@@ -62,9 +94,26 @@
     return `${y}-${m}-${d}`;
   }
 
+  function isMembersPath(pathname) {
+    return /^\/(en\/)?members(\/|$)/.test(pathname || "");
+  }
+
+  function isPublicMembersLanding(pathname) {
+    return ["/members", "/members/", "/en/members", "/en/members/"].includes(pathname || "");
+  }
+
+  function dashboardPathForPath(pathname) {
+    return (pathname || "").startsWith("/en/") ? "/en/members/dashboard/" : "/members/dashboard/";
+  }
+
+  function joinPathForPath(pathname) {
+    return (pathname || "").startsWith("/en/") ? "/en/join/" : "/join/";
+  }
+
   function safeNextPath(pathname) {
     if (!pathname || typeof pathname !== "string") return "/members/dashboard/";
-    if (!pathname.startsWith("/members")) return "/members/dashboard/";
+    if (!isMembersPath(pathname)) return dashboardPathForPath(pathname);
+    if (isPublicMembersLanding(pathname)) return dashboardPathForPath(pathname);
     return pathname;
   }
 
@@ -95,21 +144,22 @@
     return pending[token];
   }
 
-  function consumeMagicEntry(token) {
+  function consumeMagicEntry(token, pathname = window.location.pathname) {
+    const strings = memberStrings(pathname);
     const pending = getPendingStore();
     const entry = pending[token];
     if (!entry) {
-      return { ok: false, reason: "Không tìm thấy magic link." };
+      return { ok: false, reason: strings.magicNotFound };
     }
 
     if (entry.used) {
-      return { ok: false, reason: "Magic link đã được dùng." };
+      return { ok: false, reason: strings.magicUsed };
     }
 
     if (Date.now() > entry.expiresAt) {
       delete pending[token];
       savePendingStore(pending);
-      return { ok: false, reason: "Magic link đã hết hạn (15 phút)." };
+      return { ok: false, reason: strings.magicExpired };
     }
 
     entry.used = true;
@@ -190,6 +240,7 @@
   }
 
   function renderSessionInfo(session) {
+    const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi-VN";
     $$('[data-member-email]').forEach((el) => {
       el.textContent = session.email;
     });
@@ -198,7 +249,7 @@
     });
     $$('[data-member-expire]').forEach((el) => {
       const date = new Date(session.expiresAt);
-      el.textContent = date.toLocaleDateString("vi-VN");
+      el.textContent = date.toLocaleDateString(locale);
     });
   }
 
@@ -214,18 +265,19 @@
   }
 
   function initJourneyPage() {
+    const strings = memberStrings();
     const progress = getProgress();
     $$('[data-journey-stage]').forEach((btn) => {
       const stage = btn.getAttribute("data-journey-stage");
       if (progress.journey[stage]) {
-        btn.textContent = "Đã hoàn thành";
+        btn.textContent = strings.journeyDone;
         btn.closest("li")?.classList.add("done");
       }
 
       btn.addEventListener("click", () => {
         progress.journey[stage] = true;
         saveProgress(progress);
-        btn.textContent = "Đã hoàn thành";
+        btn.textContent = strings.journeyDone;
         btn.closest("li")?.classList.add("done");
         renderProgress();
       });
@@ -263,6 +315,7 @@
   }
 
   function initExperiencePage() {
+    const strings = memberStrings();
     const progress = getProgress();
     const list = $("#journalList");
     const form = $("#journalForm");
@@ -273,7 +326,7 @@
       list.innerHTML = "";
       const notes = progress.experience.notes || [];
       if (!notes.length) {
-        list.innerHTML = '<li class="checkItem">Chưa có nhật ký. Viết một dòng thật để bắt đầu.</li>';
+        list.innerHTML = `<li class="checkItem">${strings.noJournal}</li>`;
         return;
       }
       notes.slice().reverse().forEach((item) => {
@@ -299,6 +352,7 @@
   }
 
   function initJoinPage() {
+    const strings = memberStrings();
     const session = getSession();
     const activeBlock = $("#alreadyMember");
     const joinBlock = $("#joinFlow");
@@ -348,7 +402,7 @@
     confirmBtn?.addEventListener("click", () => {
       const email = (emailInput?.value || "").trim().toLowerCase();
       if (!email || !email.includes("@")) {
-        alert("Vui lòng nhập email hợp lệ để nhận magic link.");
+        alert(strings.invalidEmail);
         return;
       }
 
@@ -359,7 +413,7 @@
         nextPath: safeNextPath(nextFromQuery)
       });
 
-      const loginUrl = `${window.location.origin}/members/?magic=${entry.token}&next=${encodeURIComponent(entry.nextPath)}`;
+      const loginUrl = `${window.location.origin}${dashboardPathForPath(window.location.pathname)}?magic=${entry.token}&next=${encodeURIComponent(entry.nextPath)}`;
       if (magicOutput) magicOutput.textContent = loginUrl;
       magicBox?.classList.remove("hidden");
     });
@@ -369,12 +423,12 @@
       if (!text) return;
       try {
         await navigator.clipboard.writeText(text);
-        copyMagic.textContent = "Đã sao chép";
+        copyMagic.textContent = strings.copied;
         setTimeout(() => {
-          copyMagic.textContent = "Sao chép magic link";
+          copyMagic.textContent = strings.copyAction;
         }, 1200);
       } catch (_err) {
-        copyMagic.textContent = "Không thể sao chép";
+        copyMagic.textContent = strings.copyFailed;
       }
     });
 
@@ -386,7 +440,7 @@
     const token = params.get("magic");
     if (!token) return;
 
-    const result = consumeMagicEntry(token);
+    const result = consumeMagicEntry(token, window.location.pathname);
     if (!result.ok) {
       const errorBox = $("#magicError");
       if (errorBox) {
@@ -403,14 +457,14 @@
     renderSessionInfo(session);
 
     const next = safeNextPath(params.get("next") || result.entry.nextPath);
-    window.location.replace(next || "/members/dashboard/");
+    window.location.replace(next || dashboardPathForPath(window.location.pathname));
   }
 
   function attachLogout() {
     const logout = $("#logoutBtn");
     logout?.addEventListener("click", () => {
       clearSession();
-      window.location.href = "/join/";
+      window.location.href = joinPathForPath(window.location.pathname);
     });
   }
 
@@ -418,7 +472,7 @@
     const session = getSession();
     if (!session) {
       const next = encodeURIComponent(window.location.pathname);
-      window.location.href = `/join/?next=${next}`;
+      window.location.href = `${joinPathForPath(window.location.pathname)}?next=${next}`;
       return;
     }
 
@@ -441,7 +495,7 @@
       return;
     }
 
-    if (window.location.pathname.startsWith("/members")) {
+    if (isMembersPath(window.location.pathname) && !isPublicMembersLanding(window.location.pathname)) {
       initMembersArea();
     }
   }

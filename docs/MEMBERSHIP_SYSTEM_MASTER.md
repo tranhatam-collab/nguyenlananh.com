@@ -28,7 +28,11 @@ Locked layer:
 
 - `/members/`
 - `/members/dashboard/`
+- `/members/start/`
 - `/members/journey/`
+- `/members/journey/day-1/`
+- `/members/journey/day-2/`
+- `/members/journey/day-7/`
 - `/members/practice/`
 - `/members/deep/`
 - `/members/experience/`
@@ -43,6 +47,14 @@ Premium layer (Phase 2 structure):
 - `/members/pro/creation/`
 - `/members/pro/wealth/`
 
+Creator internal layer:
+
+- `/members/creator/`
+- `/members/creator/guidelines/`
+- `/members/creator/submit/`
+- `/members/creator/revenue-share/`
+- `/members/creator/library/`
+
 ## 3. Day-1 Features (Implemented)
 
 - Join page with 3 pricing levels (3, 60, 99 USD)
@@ -55,6 +67,8 @@ Premium layer (Phase 2 structure):
 - Journey stage completion (3 phases)
 - Daily practice checklist persistence
 - Experience journal (local persistence)
+- Creator internal routes and workflow placeholders (member-only)
+- EN copy and member-flow language consistency pass for core routes
 
 ## 4. Tech Notes
 
@@ -130,3 +144,9 @@ Nguyên tắc khóa:
 - mỗi chuyên đề phải có: intro, modules, practice, caution note, CTA quay về dashboard
 - các chuyên đề liên quan thân tâm phải có disclaimer rõ: không thay thế chăm sóc y tế hay trị liệu chuyên môn
 - lớp `members/deep/` phải thể hiện đây là một roadmap 90 ngày, không phải danh sách bài đọc ngẫu nhiên
+
+## 10. Admin + Creator Foundation (handoff)
+
+Admin/creator foundation for live-day handoff is locked in:
+
+- `docs/MEMBERSHIP_ADMIN_CREATOR_FOUNDATION_LIVE_TODAY.md`

@@ -37,6 +37,11 @@ Target admin routes (skeleton-ready):
 - `/admin/creators/`
 - `/admin/settings/`
 
+Route status (2026-04-10 live pass):
+
+- skeleton placeholders created for all routes above
+- EN mirror placeholders created at `/en/admin/*`
+
 Module intent:
 
 - `dashboard`: operational status, review queues, risk alerts

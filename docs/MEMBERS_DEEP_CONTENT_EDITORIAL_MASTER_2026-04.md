@@ -111,15 +111,15 @@ Style ảnh thống nhất:
 
 Đề xuất thêm để hoàn thiện trục cá nhân - gia đình - trẻ em:
 
-1. `ranh-gioi-mem-trong-gia-dinh`
+1. `ranh-gioi-mem-trong-gia-dinh` - DONE
 - ranh giới lành mạnh không đối đầu
 - nói thật mà không công kích
 
-2. `doi-thoai-chua-lanh-trong-nha`
+2. `doi-thoai-chua-lanh-trong-nha` - DONE
 - kỹ năng đối thoại khi có xung đột
 - giảm phản ứng, tăng lắng nghe chủ động
 
-3. `tre-em-va-nhip-song-so`
+3. `tre-em-va-nhip-song-so` - DONE
 - quản trị màn hình, nhịp học, nhịp nghỉ
 - tạo môi trường phát triển tự nhiên thời số hóa
 

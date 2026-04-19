@@ -3,53 +3,112 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Members Start | Nguyenlananh.com</title>
-  <meta name="description" content="Điểm bắt đầu cho thành viên: hiểu hệ, luật chơi, và bước vào ngày đầu tiên của hành trình." />
+  <title>Bắt đầu đồng hành | Nguyenlananh.com</title>
+  <meta name="description" content="Xác nhận email, hoàn thiện profile đồng hành cơ bản, xem các chuỗi đang mở, rồi mới mở khóa quyền lợi thành viên đã trả phí." />
   <link rel="canonical" href="https://www.nguyenlananh.com/members/start/" />
   <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/members/start/" />
   <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/members/start/" />
   <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/members/start/" />
   <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/members/start/" />
+
+
+
+
+
+
   <meta name="robots" content="noindex,follow" />
   <link rel="stylesheet" href="/assets/site.css" />
 </head>
 <body data-page="members-start">
   <header class="topbar" role="banner">
-    <div class="container"><div class="navwrap"><a class="brand" href="/members/dashboard/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Bắt đầu</strong><span>Journey System</span></div></a><nav class="navlinks" aria-label="Members nav"><a href="/members/start/">Bắt đầu</a><a href="/members/journey/">Hành trình</a><a href="/members/practice/">Thực hành</a><a href="/members/deep/">Chuyên đề sâu</a><a href="/members/experience/">Trải nghiệm</a><a href="/members/pro/">Nâng cấp</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Đăng xuất</button></div></div></div>
+    <div class="container"><div class="navwrap"><a class="brand" href="/members/start/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Bắt đầu</strong><span>Đồng hành trước, mở khóa sau</span></div></a><nav class="navlinks" aria-label="Members nav"><a href="/members/start/">Bắt đầu</a><a href="/members/dashboard/">Bảng điều khiển</a><a href="/members/journey/">Hành trình</a><a href="/members/practice/">Thực hành</a><a href="/members/deep/">Chuyên sâu</a><a href="/members/pro/">Chương trình sâu</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Đăng xuất</button></div></div></div>
   </header>
 
   <main class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Module 0</span>
-      <h1 style="margin-top:8px;">Bạn đã bước vào một hệ khác</h1>
-      <p class="sub">Bạn không mua một khóa học. Bạn vừa bước vào một hệ mà nếu đi đúng, bạn sẽ không quay lại con người cũ nữa.</p>
-      <div class="actionsRow">
-        <a class="cta" href="/members/journey/day-1/">Bắt đầu ngày 1</a>
-        <a class="ghost" href="/members/dashboard/">Về dashboard</a>
-      </div>
+      <span class="badge">Bước 1 - vào hệ</span>
+      <h1 style="margin-top:8px;">Bạn đã vào được bên trong</h1>
+      <p class="sub">Email của bạn là <strong data-member-email>-</strong>. Bây giờ hãy xác nhận vị trí hiện tại của mình, hoàn thiện profile cơ bản, rồi mới mở khóa phần trả phí nếu thấy đúng lúc.</p>
+      <div id="magicError" class="statusBanner hidden" role="status"></div>
+      <div id="startGateNotice" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
     </section>
 
-    <section class="grid2">
+    <section id="profileGate" class="panel">
+      <h3>Profile đồng hành cơ bản</h3>
+      <p class="note">Không cần viết dài. Chỉ cần đủ rõ để hệ biết bạn đang ở đâu trước khi mở phần sau.</p>
+      <form id="profileForm">
+        <div class="field">
+          <label for="profileFullName">Tên bạn muốn được gọi</label>
+          <input id="profileFullName" type="text" required placeholder="Nguyen Lan Anh" />
+        </div>
+        <div class="field">
+          <label for="profileCurrentState">Bạn đang đi qua điều gì</label>
+          <textarea id="profileCurrentState" rows="3" required placeholder="Tôi đang mắc trong một vòng lặp..."></textarea>
+        </div>
+        <div class="field">
+          <label for="profileDesiredShift">Bạn muốn thay đổi điều gì</label>
+          <textarea id="profileDesiredShift" rows="3" required placeholder="Tôi muốn nhìn rõ và sống đúng hơn..."></textarea>
+        </div>
+        <div class="field">
+          <label for="profileCompanionRhythm">Nhịp đồng hành bạn cần</label>
+          <textarea id="profileCompanionRhythm" rows="2" required placeholder="Chậm, rõ, đều, không áp lực..."></textarea>
+        </div>
+        <div id="profileStatus" class="statusBanner hidden" role="status"></div>
+        <div class="actionsRow">
+          <button class="cta" type="submit">Lưu profile và đi tiếp</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="sequencePreview" class="grid2 hidden" style="margin-top:12px;">
       <article class="panel">
-        <h3>Điều cần hiểu ngay</h3>
+        <h3>Chuỗi đang mở cho bạn</h3>
         <ul class="list">
-          <li>Bạn không thiếu kiến thức, động lực hay khả năng.</li>
-          <li>Bạn đang mắc kẹt vì vòng lặp, mô thức, môi trường, và cách mình vận hành chính mình.</li>
-          <li>Hệ này không dạy để biết. Hệ này dẫn để làm thật.</li>
+          <li>Hành trình 90 ngày để nhìn - gỡ - xây</li>
+          <li>Thực hành mỗi ngày để giữ nhịp thật</li>
+          <li>Các tuyến chuyên sâu về vòng lặp, gia đình, trẻ em, môi trường sống</li>
+          <li>Tầng mở rộng cho các chương trình chuyên sâu hơn về sau</li>
         </ul>
       </article>
       <article class="panel">
-        <h3>Luật chơi</h3>
-        <p>Nếu bạn đọc cho biết, không có gì xảy ra.</p>
-        <p style="margin-top:10px;">Nếu bạn làm thật, mọi thứ sẽ thay đổi.</p>
-        <p style="margin-top:10px;">Mỗi ngày chỉ cần đọc 1 phần, làm 1 việc, ghi lại 1 dòng.</p>
+        <h3>Tóm tắt profile hiện tại</h3>
+        <ul class="list">
+          <li><strong>Tên:</strong> <span data-profile-name>-</span></li>
+          <li><strong>Hiện tại:</strong> <span data-profile-state>-</span></li>
+          <li><strong>Muốn dịch chuyển:</strong> <span data-profile-shift>-</span></li>
+          <li><strong>Nhịp cần:</strong> <span data-profile-rhythm>-</span></li>
+        </ul>
       </article>
+    </section>
+
+    <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
+      <h3>Mở khóa tầng thành viên đã trả phí</h3>
+      <p>Bước này là <strong>2 USD qua PayPal</strong>. Sau khi mở khóa, bạn sẽ thấy đủ toàn bộ quyền lợi của gói thành viên đã trả phí trước đây bắt đầu từ 3 USD.</p>
+      <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
+      <div class="actionsRow" style="margin-top:12px;">
+        <a id="unlockPayNow" class="cta" href="#" target="_blank" rel="noopener">Mở PayPal 2 USD</a>
+        <button id="confirmPaid" class="ghost" type="button">Tôi đã thanh toán</button>
+      </div>
+      <div class="actionsRow" style="margin-top:10px;">
+        <button id="copyUpgradeEmail" class="btn" type="button">Sao chép email thanh toán</button>
+      </div>
+      <div id="unlockStatus" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
+    </section>
+
+    <section id="paidMemberStart" class="panel hidden" style="margin-top:12px;">
+      <h3>Tầng thành viên đã trả phí đã mở</h3>
+      <p>Bạn đã mở khóa phần lợi ích cốt lõi bên trong. Từ đây bạn có thể vào bảng điều khiển, Hành trình, Thực hành và các chuỗi chuyên môn đang mở.</p>
+      <div class="actionsRow">
+        <a class="cta" href="/members/dashboard/">Mở bảng điều khiển</a>
+        <a class="ghost" href="/members/journey/day-1/">Bắt đầu ngày 1</a>
+      </div>
     </section>
   </main>
 
-  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Không cần hoàn hảo. Chỉ cần thật.</div></div></footer>
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Vào hệ nhẹ trước. Mở khóa sau.</div></div></footer>
   <script src="/assets/site.js"></script>
-  <script src="/assets/members.js?v=46757a2"></script>
+  <script src="/assets/members.js?v=20260417b"></script>
+    <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>
 </body>
 </html>

@@ -1,133 +1,212 @@
 (() => {
-  const KEY = 'nla_lang_pref';
-  const REDIRECT_ONCE_KEY = 'nla_lang_redirect_once';
+  const STORAGE_KEY = "nla_lang_pref";
+  const REDIRECT_ONCE_KEY = "nla_lang_redirect_once";
+  const FALLBACK_CONFIG = {
+    defaultLocale: "vi",
+    locales: [
+      { code: "vi", htmlLang: "vi", pathSegment: "", switchLabel: "VI", browserCodes: ["vi", "vi-vn"] },
+      { code: "en", htmlLang: "en-US", pathSegment: "en", switchLabel: "EN-US", browserCodes: ["en", "en-us", "en-gb"] }
+    ],
+    autoRedirect: {
+      allowedBasePrefixes: ["/", "/hanh-trinh/", "/phuong-phap/", "/bai-viet/", "/gioi-thieu/", "/du-an/"],
+      blockedBasePrefixes: [
+        "/join/",
+        "/members/",
+        "/admin/",
+        "/faq/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/api/"
+      ]
+    },
+    switch: {
+      floatingDefault: true,
+      disableWhenEmbedded: true
+    }
+  };
 
-  const path = window.location.pathname || '/';
-  if (path.startsWith('/cdn-cgi/')) return;
+  const CONFIG = window.NLA_I18N_CONFIG || FALLBACK_CONFIG;
+  const LOCALES = Array.isArray(CONFIG.locales) && CONFIG.locales.length > 0 ? CONFIG.locales : FALLBACK_CONFIG.locales;
+  const DEFAULT_LOCALE = CONFIG.defaultLocale || FALLBACK_CONFIG.defaultLocale;
+  const AUTO_REDIRECT = CONFIG.autoRedirect || FALLBACK_CONFIG.autoRedirect;
+  const SWITCH_OPTIONS = CONFIG.switch || FALLBACK_CONFIG.switch;
 
-  function getCurrentLang() {
-    return path === '/en' || path.startsWith('/en/') ? 'en' : 'vi';
+  const path = normalizePath(window.location.pathname || "/");
+  if (path.startsWith("/cdn-cgi/")) return;
+
+  function normalizePath(value) {
+    let next = String(value || "/").trim() || "/";
+    if (!next.startsWith("/")) next = `/${next}`;
+    if (next !== "/" && !next.endsWith("/") && !/\.[a-z0-9]+$/i.test(next)) next = `${next}/`;
+    return next;
+  }
+
+  function localeByCode(code) {
+    return LOCALES.find((locale) => locale.code === code) || null;
+  }
+
+  function currentLocale() {
+    for (const locale of LOCALES) {
+      if (!locale.pathSegment) continue;
+      const prefix = `/${locale.pathSegment}/`;
+      if (path === prefix || path.startsWith(prefix)) return locale;
+    }
+    return localeByCode(DEFAULT_LOCALE) || LOCALES[0];
+  }
+
+  function stripLocalePrefix(pathname) {
+    const normalized = normalizePath(pathname);
+    for (const locale of LOCALES) {
+      if (!locale.pathSegment) continue;
+      const prefix = `/${locale.pathSegment}/`;
+      if (normalized === prefix) return "/";
+      if (normalized.startsWith(prefix)) {
+        return normalizePath(`/${normalized.slice(prefix.length)}`);
+      }
+    }
+    return normalized;
+  }
+
+  function localizedPath(basePath, localeCode) {
+    const locale = localeByCode(localeCode) || localeByCode(DEFAULT_LOCALE) || LOCALES[0];
+    const normalized = normalizePath(basePath);
+    if (!locale.pathSegment) return normalized;
+    if (normalized === "/") return `/${locale.pathSegment}/`;
+    return `/${locale.pathSegment}${normalized}`;
   }
 
   function detectBrowserLang() {
-    const langs = [];
-    if (Array.isArray(navigator.languages)) langs.push(...navigator.languages);
-    if (navigator.language) langs.push(navigator.language);
+    const browserLangs = [];
+    if (Array.isArray(navigator.languages)) browserLangs.push(...navigator.languages);
+    if (navigator.language) browserLangs.push(navigator.language);
 
-    for (const raw of langs) {
-      const l = String(raw || '').toLowerCase();
-      if (l.startsWith('vi')) return 'vi';
-      if (l.startsWith('en')) return 'en';
+    for (const raw of browserLangs) {
+      const value = String(raw || "").toLowerCase();
+      const match = LOCALES.find((locale) => (locale.browserCodes || []).some((candidate) => value.startsWith(candidate)));
+      if (match) return match.code;
     }
-    return 'vi';
+
+    return DEFAULT_LOCALE;
   }
 
-  function toVi(pathname) {
-    if (pathname === '/en' || pathname === '/en/') return '/';
-    if (pathname.startsWith('/en/')) return `/${pathname.slice(4)}`;
-    return pathname;
+  function counterpart(localeCode) {
+    return localizedPath(stripLocalePrefix(path), localeCode);
   }
 
-  function toEn(pathname) {
-    if (pathname === '/' || pathname === '') return '/en/';
-    if (pathname === '/en' || pathname.startsWith('/en/')) return pathname;
-    return `/en${pathname}`;
-  }
-
-  function counterpart(lang) {
-    return lang === 'en' ? toEn(path) : toVi(path);
-  }
-
-  function goTo(lang) {
-    try { localStorage.setItem(KEY, lang); } catch (_e) {}
-    const target = counterpart(lang);
+  function goTo(localeCode) {
+    const locale = localeByCode(localeCode);
+    if (!locale) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, locale.code);
+    } catch (_error) {}
+    const target = counterpart(locale.code);
     if (!target || target === path) return;
-    window.location.href = `${target}${window.location.search || ''}${window.location.hash || ''}`;
+    window.location.href = `${target}${window.location.search || ""}${window.location.hash || ""}`;
   }
 
-  function shouldAutoRedirect(stored) {
-    const current = getCurrentLang();
-    if (stored === current) return false;
-    if (sessionStorage.getItem(REDIRECT_ONCE_KEY) === '1') return false;
-    if (window.location.search.includes('lang=')) return false;
+  function hasEmbeddedSwitch() {
+    return Boolean(document.querySelector("[data-lang]"));
+  }
+
+  function shouldInstallFloatingSwitch() {
+    if (SWITCH_OPTIONS.floatingDefault === false) return false;
+    if (document.body?.dataset.langSwitch === "off") return false;
+    if (SWITCH_OPTIONS.disableWhenEmbedded !== false && hasEmbeddedSwitch()) return false;
     return true;
+  }
+
+  function canAutoRedirect(basePath) {
+    if (window.location.search.includes("lang=")) return false;
+    if (sessionStorage.getItem(REDIRECT_ONCE_KEY) === "1") return false;
+
+    const normalizedBase = normalizePath(basePath);
+    if ((AUTO_REDIRECT.blockedBasePrefixes || []).some((prefix) => normalizedBase.startsWith(prefix))) {
+      return false;
+    }
+    return (AUTO_REDIRECT.allowedBasePrefixes || []).some((prefix) => prefix === "/" ? normalizedBase === "/" : normalizedBase.startsWith(prefix));
   }
 
   function autoRedirect() {
     let stored = null;
-    try { stored = localStorage.getItem(KEY); } catch (_e) {}
+    try {
+      stored = localStorage.getItem(STORAGE_KEY);
+    } catch (_error) {}
 
     if (!stored) {
       stored = detectBrowserLang();
-      try { localStorage.setItem(KEY, stored); } catch (_e) {}
+      try {
+        localStorage.setItem(STORAGE_KEY, stored);
+      } catch (_error) {}
     }
 
-    if (stored !== 'vi' && stored !== 'en') stored = 'vi';
+    const current = currentLocale();
+    if (!stored || stored === current.code) return;
 
-    if (shouldAutoRedirect(stored)) {
-      const target = counterpart(stored);
-      if (target && target !== path) {
-        sessionStorage.setItem(REDIRECT_ONCE_KEY, '1');
-        window.location.replace(`${target}${window.location.search || ''}${window.location.hash || ''}`);
-      }
-    }
-  }
+    const basePath = stripLocalePrefix(path);
+    if (!canAutoRedirect(basePath)) return;
 
-  function installSwitch() {
-    const box = document.createElement('div');
-    box.setAttribute('aria-label', 'Language switch');
-    box.style.position = 'fixed';
-    box.style.right = '14px';
-    box.style.bottom = '14px';
-    box.style.zIndex = '9999';
-    box.style.display = 'flex';
-    box.style.gap = '6px';
-    box.style.padding = '6px';
-    box.style.border = '1px solid rgba(15,23,42,.18)';
-    box.style.borderRadius = '999px';
-    box.style.background = 'rgba(255,255,255,.92)';
-    box.style.backdropFilter = 'blur(8px)';
-    box.style.boxShadow = '0 10px 22px rgba(2,6,23,.12)';
+    const target = counterpart(stored);
+    if (!target || target === path) return;
 
-    const current = getCurrentLang();
-
-    const mkBtn = (lang, label) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = label;
-      b.style.border = '1px solid rgba(15,23,42,.18)';
-      b.style.borderRadius = '999px';
-      b.style.padding = '6px 10px';
-      b.style.fontSize = '12px';
-      b.style.cursor = 'pointer';
-      b.style.background = current === lang ? 'rgba(15,23,42,.9)' : 'rgba(255,255,255,.95)';
-      b.style.color = current === lang ? '#fff' : '#111827';
-      b.addEventListener('click', () => goTo(lang));
-      return b;
-    };
-
-    box.appendChild(mkBtn('vi', 'VI'));
-    box.appendChild(mkBtn('en', 'EN-US'));
-
-    document.body.appendChild(box);
+    sessionStorage.setItem(REDIRECT_ONCE_KEY, "1");
+    window.location.replace(`${target}${window.location.search || ""}${window.location.hash || ""}`);
   }
 
   function wireExistingButtons() {
-    const current = getCurrentLang();
-    document.querySelectorAll('[data-lang]').forEach((btn) => {
-      const lang = (btn.getAttribute('data-lang') || '').toLowerCase();
-      const isActive = lang === current;
-      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      if (btn.classList) btn.classList.toggle('active', isActive);
-      btn.addEventListener('click', () => {
-        if (lang === 'vi' || lang === 'en') goTo(lang);
+    const current = currentLocale();
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      const code = (button.getAttribute("data-lang") || "").toLowerCase();
+      const active = code === current.code;
+      button.setAttribute("aria-pressed", active ? "true" : "false");
+      button.classList.toggle("active", active);
+      button.addEventListener("click", () => {
+        if (localeByCode(code)) goTo(code);
       });
     });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function installFloatingSwitch() {
+    if (!shouldInstallFloatingSwitch()) return;
+
+    const current = currentLocale();
+    const wrapper = document.createElement("div");
+    wrapper.setAttribute("aria-label", "Language switch");
+    wrapper.style.position = "fixed";
+    wrapper.style.right = "14px";
+    wrapper.style.bottom = "14px";
+    wrapper.style.zIndex = "9999";
+    wrapper.style.display = "flex";
+    wrapper.style.gap = "6px";
+    wrapper.style.padding = "6px";
+    wrapper.style.border = "1px solid rgba(15,23,42,.18)";
+    wrapper.style.borderRadius = "999px";
+    wrapper.style.background = "rgba(255,255,255,.92)";
+    wrapper.style.backdropFilter = "blur(8px)";
+    wrapper.style.boxShadow = "0 10px 22px rgba(2,6,23,.12)";
+
+    for (const locale of LOCALES) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = locale.switchLabel || locale.code.toUpperCase();
+      button.style.border = "1px solid rgba(15,23,42,.18)";
+      button.style.borderRadius = "999px";
+      button.style.padding = "6px 10px";
+      button.style.fontSize = "12px";
+      button.style.cursor = "pointer";
+      button.style.background = current.code === locale.code ? "rgba(15,23,42,.9)" : "rgba(255,255,255,.95)";
+      button.style.color = current.code === locale.code ? "#fff" : "#111827";
+      button.addEventListener("click", () => goTo(locale.code));
+      wrapper.appendChild(button);
+    }
+
+    document.body.appendChild(wrapper);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
     autoRedirect();
     wireExistingButtons();
-    installSwitch();
+    installFloatingSwitch();
   });
 })();

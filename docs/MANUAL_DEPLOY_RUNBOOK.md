@@ -1,8 +1,8 @@
 # MANUAL_DEPLOY_RUNBOOK.md
 
-Version: 1.0  
+Version: 2.0  
 Status: READY FOR TEAM USE  
-Purpose: runbook ngắn để publish production cho `nguyenlananh.com` bằng 1 lệnh an toàn từ root repo.
+Purpose: runbook ngắn để publish production cho `nguyenlananh.com` bằng dist sạch, tránh kéo file nháp hoặc scope ngoài ý muốn vào release.
 
 ---
 
@@ -10,7 +10,7 @@ Purpose: runbook ngắn để publish production cho `nguyenlananh.com` bằng 1
 
 Tài liệu này chuẩn hóa cách publish production để team không phải nhớ nhiều bước rời rạc.
 
-Sau khi code/content đã được commit sạch trên `main`, lệnh chuẩn là:
+Sau khi code/content đã được commit sạch trên `main`, lệnh chuẩn vẫn là:
 
 ```bash
 ./scripts/publish_prod.sh
@@ -37,17 +37,35 @@ Khuyến nghị:
 
 ## 3. Hai script chuẩn
 
-### 3.1. Deploy thẳng lên Cloudflare Pages
+### 3.1. Chuẩn bị dist sạch
+
+```bash
+node scripts/prepare_release_dist.mjs
+```
+
+Script này:
+
+- copy đúng allowlist path dùng để live
+- bỏ file nháp dạng `* 2.*`, `* 3.*`, `* 4.*`
+- trả về một thư mục `/tmp/nla-release-dist.*`
+- giữ policy cache để HTML revalidate ngay sau deploy
+
+### 3.2. Deploy thẳng lên Cloudflare Pages
 
 ```bash
 ./scripts/deploy_cloudflare.sh
 ```
 
 Dùng khi:
-- `main` đã được push
-- chỉ cần bắn production thủ công
+- cần bắn production thủ công
+- muốn deploy từ dist sạch thay vì root repo
 
-### 3.2. Publish một lệnh
+Script này giờ sẽ:
+
+1. tự build dist sạch bằng `scripts/prepare_release_dist.mjs` nếu `BUILD_DIR` chưa được set
+2. deploy dist đó lên Cloudflare Pages
+
+### 3.3. Publish một lệnh
 
 ```bash
 ./scripts/publish_prod.sh
@@ -66,23 +84,22 @@ Script này sẽ:
 
 ## 4. Env chuẩn
 
-Biến môi trường bắt buộc:
+Biến môi trường thường dùng:
 
 ```bash
-export CLOUDFLARE_ACCOUNT_ID=your_account_id
+export CLOUDFLARE_PAGES_PROJECT=nguyenlananh-com
 ```
 
 Tùy chọn:
 
 ```bash
-export CLOUDFLARE_PAGES_PROJECT=nguyenlananh-com
-export BUILD_DIR=.
+export BUILD_DIR=/path/to/custom/dist
 ```
 
 Mặc định hiện tại:
 
 - project: `nguyenlananh-com`
-- build dir: `.`
+- build dir: auto-generated release dist trong `/tmp`
 
 ---
 
@@ -100,6 +117,14 @@ git pull --rebase
 
 ```bash
 ./scripts/deploy_cloudflare.sh
+```
+
+### Trường hợp cần inspect dist trước khi deploy
+
+```bash
+DIST_DIR="$(node scripts/prepare_release_dist.mjs)"
+echo "$DIST_DIR"
+wrangler pages deploy "$DIST_DIR" --project-name nguyenlananh-com --branch main --commit-dirty=true
 ```
 
 ---
@@ -130,6 +155,12 @@ curl -I https://www.nguyenlananh.com/join/
 
 Khi có route mới, kiểm tra thêm route mới ngay sau deploy.
 
+Kỳ vọng hiện tại cho HTML:
+
+```text
+cache-control: public, max-age=0, must-revalidate
+```
+
 ---
 
 ## 8. Lưu ý hiện trạng repo
@@ -140,8 +171,9 @@ Không để các file đó đi vào flow publish ngẫu nhiên.
 
 Vì vậy:
 
-- luôn commit có chủ đích
-- chỉ publish khi `git status` sạch
+- `publish_prod.sh` vẫn yêu cầu `git status` sạch
+- `deploy_cloudflare.sh` dùng dist sạch để giảm nguy cơ kéo file ngoài scope vào production
+- với deploy khẩn cấp, vẫn phải tự chịu trách nhiệm về diff đang có trên máy local
 
 ---
 

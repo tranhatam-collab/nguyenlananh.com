@@ -13,14 +13,18 @@
   # NOTE: index.html uses inline <style> and inline <script> => allow 'unsafe-inline'
   Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests
 
-  # Default caching
-  Cache-Control: public, max-age=3600
+  # Default caching for HTML and public documents:
+  # always revalidate so production reflects a new deploy immediately.
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/*
+  Cache-Control: public, max-age=600, stale-while-revalidate=86400
 
 /index.html
-  Cache-Control: public, max-age=300
+  Cache-Control: public, max-age=0, must-revalidate
 
 /en/index.html
-  Cache-Control: public, max-age=300
+  Cache-Control: public, max-age=0, must-revalidate
 
 /robots.txt
   Cache-Control: public, max-age=86400

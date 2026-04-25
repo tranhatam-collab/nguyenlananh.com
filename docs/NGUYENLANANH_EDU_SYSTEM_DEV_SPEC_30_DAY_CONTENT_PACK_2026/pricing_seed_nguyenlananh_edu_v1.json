@@ -1,0 +1,17 @@
+{
+  "project": "nguyenlananh.com",
+  "currency_primary": "USD",
+  "pricing_rule": "annual_2_months_free = monthly_price * 10; launch_annual is optional promotional price",
+  "plans": [
+    {"id":"free","name":"Free Member","access_level":0,"status":"live","weekly_usd":null,"monthly_usd":0,"annual_usd":0,"launch_annual_usd":0},
+    {"id":"start","name":"START","access_level":1,"status":"live","weekly_usd":7,"monthly_usd":19,"annual_usd":190,"launch_annual_usd":152},
+    {"id":"foundation","name":"FOUNDATION","access_level":2,"status":"live","weekly_usd":14,"monthly_usd":39,"annual_usd":390,"launch_annual_usd":312},
+    {"id":"discipline","name":"DISCIPLINE","access_level":3,"status":"live","weekly_usd":21,"monthly_usd":59,"annual_usd":590,"launch_annual_usd":472},
+    {"id":"rebuild","name":"REBUILD","access_level":4,"status":"private","weekly_usd":35,"monthly_usd":99,"annual_usd":990,"launch_annual_usd":792},
+    {"id":"inner_master","name":"INNER MASTER","access_level":5,"status":"private","weekly_usd":49,"monthly_usd":149,"annual_usd":1490,"launch_annual_usd":1192},
+    {"id":"creator","name":"CREATOR","access_level":6,"status":"private","weekly_usd":63,"monthly_usd":199,"annual_usd":1990,"launch_annual_usd":1592},
+    {"id":"mentor","name":"MENTOR","access_level":7,"status":"invite_only","weekly_usd":null,"monthly_usd":299,"annual_usd":2990,"launch_annual_usd":2392},
+    {"id":"pro_group","name":"PRO GROUP","access_level":8,"status":"invite_only","weekly_usd":null,"monthly_usd":499,"annual_usd":4990,"launch_annual_usd":3992},
+    {"id":"inner_circle","name":"INNER CIRCLE","access_level":9,"status":"application","weekly_usd":null,"monthly_usd":null,"annual_usd":null,"launch_annual_usd":null}
+  ]
+}

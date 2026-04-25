@@ -1,0 +1,37 @@
+{
+  "code": "NLA-90D-2026-000001",
+  "type": "learning_certificate",
+  "status": "active",
+  "issuer": {
+    "name": "nguyenlananh.com",
+    "verificationLayer": "vc.vetuonglai.com",
+    "issuerUrl": "https://nguyenlananh.com"
+  },
+  "holder": {
+    "displayName": "Private Holder",
+    "privacyMode": "public_minimal"
+  },
+  "achievement": {
+    "name": "90-Day Journey Certificate",
+    "program": "Nguyen Lan Anh 90-Day Learning Journey",
+    "level": "completed",
+    "completionDate": "2026-06-30",
+    "language": "vi"
+  },
+  "evidence": {
+    "completionRate": 0.87,
+    "assessmentScore": 84,
+    "practiceSubmissions": 72,
+    "publicSummary": "Completed required learning, practice submissions and milestone assessment.",
+    "evidenceHash": "sha256:REPLACE_WITH_HASH_OF_PRIVATE_EVIDENCE_PACKAGE"
+  },
+  "verification": {
+    "url": "https://vc.vetuonglai.com/v/NLA-90D-2026-000001",
+    "issuedAt": "2026-06-30T10:00:00+07:00",
+    "lastUpdatedAt": "2026-06-30T10:00:00+07:00"
+  },
+  "disclaimer": {
+    "vi": "Chứng nhận này xác minh việc hoàn thành một lộ trình học, thực hành và đánh giá trong hệ thống. Đây không phải văn bằng nhà nước, chứng chỉ hành nghề, tư vấn y tế, tư vấn tâm lý hoặc cam kết kết quả cá nhân.",
+    "en": "This record verifies completion of a learning, practice and assessment path. It is not a government degree, professional license, medical advice, psychological advice, or guarantee of personal outcomes."
+  }
+}

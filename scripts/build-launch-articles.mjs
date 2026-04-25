@@ -363,7 +363,7 @@ function renderArticlePage(article, articles, locale) {
     mainEntityOfPage: canonical,
     articleSection: categoryLabel,
     image: OG_IMAGE,
-    author: { '@type': 'Person', name: 'Nguyễn Lan Anh' },
+    author: { '@type': 'Person', name: isVi ? 'Nguyễn Lan Anh' : 'Lan Anh Nguyen' },
     publisher: { '@type': 'Organization', name: 'Nguyenlananh.com', url: DOMAIN }
   };
 

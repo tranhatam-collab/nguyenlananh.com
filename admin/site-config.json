@@ -1,0 +1,34 @@
+{
+  "site": {
+    "brand": "Nguyễn Lan Anh",
+    "tagline": "Đi vào bên trong để tái thiết cuộc đời",
+    "support_email": "lienhe@nguyenlananh.com"
+  },
+  "homepage": {
+    "hero_vi": "Đi vào bên trong để tái thiết cuộc đời.",
+    "hero_en": "Rebuild your life from within.",
+    "subline_vi": "Không phải để trở nên tốt hơn. Mà để hiểu rõ mình đang sống thế nào.",
+    "subline_en": "Not to become better. But to understand how you are living.",
+    "cta_vi": "Bắt đầu từ một bài viết",
+    "cta_en": "Start with a piece"
+  },
+  "members": {
+    "public_cta_vi": "Đăng ký thành viên",
+    "public_cta_en": "Register for free",
+    "free_path_note_vi": "Không vào bằng giá. Vào bằng một quan hệ đồng hành.",
+    "free_path_note_en": "Not by price. Enter through a free companion path.",
+    "paid_gate_note_vi": "Giá không xuất hiện ở trang công khai. Chỉ hiện sau khi đã kích hoạt tài khoản.",
+    "paid_gate_note_en": "Price is hidden on public pages. It appears after account activation."
+  },
+  "launch": {
+    "collection_slug": "articles",
+    "series_code": "launch-10-inner-clarity",
+    "category": "di-vao-ben-trong",
+    "visibility": "published",
+    "language": "vi,en"
+  },
+  "admin": {
+    "session_minutes": 480,
+    "data_ttl_days": 30
+  }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Thử lại thanh toán | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body data-page="payment-return" data-payment-status="retry">
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Nguyễn Lan Anh</strong><span>Đi vào bên trong để làm chủ lại cuộc đời</span></div></a>
+        <div class="actions"><a class="btn" href="/join/">Quay lại join</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <h1>Thanh toán chưa hoàn tất</h1>
+      <p class="sub">Hãy bắt đầu lại từ trang join để tạo một order sạch và tránh double-charge.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Trạng thái giao dịch</h3>
+      <div id="paymentReturnStatus" class="statusBanner">Cần thử lại.</div>
+      <p id="paymentReturnSummary" class="note" style="margin-top:10px;">Nếu giao dịch đã trừ tiền nhưng chưa active, webhook và email receipt sẽ là nguồn xác nhận cuối.</p>
+      <div id="magicBox" class="hidden">
+        <div id="magicOutput" class="code"></div>
+        <button id="copyMagic" class="btn" type="button">Sao chép magic link</button>
+      </div>
+      <div class="actionsRow">
+        <a id="paymentPrimaryLink" class="cta" href="/join/">Bắt đầu lại</a>
+        <a class="ghost" href="/lien-he/">Liên hệ hỗ trợ</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/site.js"></script>
+  <script src="/assets/payments.js?v=20260417b"></script>
+</body>
+</html>

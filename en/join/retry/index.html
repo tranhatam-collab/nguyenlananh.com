@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Retry payment | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body data-page="payment-return" data-payment-status="retry">
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Lan Anh Nguyen</strong><span>Go within to take back your life</span></div></a>
+        <div class="actions"><a class="btn" href="/en/join/">Back to join</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <h1>Payment not completed</h1>
+      <p class="sub">Start again from join so the system can create a clean order and avoid duplicate capture attempts.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Payment status</h3>
+      <div id="paymentReturnStatus" class="statusBanner">Retry needed.</div>
+      <p id="paymentReturnSummary" class="note" style="margin-top:10px;">If money was captured but access is still missing, the webhook and receipt email remain the final source of truth.</p>
+      <div id="magicBox" class="hidden">
+        <div id="magicOutput" class="code"></div>
+        <button id="copyMagic" class="btn" type="button">Copy magic link</button>
+      </div>
+      <div class="actionsRow">
+        <a id="paymentPrimaryLink" class="cta" href="/en/join/">Start again</a>
+        <a class="ghost" href="/en/lien-he/">Contact support</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/site.js"></script>
+  <script src="/assets/payments.js?v=20260417b"></script>
+</body>
+</html>

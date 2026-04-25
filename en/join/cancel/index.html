@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Payment cancelled | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body data-page="payment-return" data-payment-status="cancel">
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Lan Anh Nguyen</strong><span>Go within to take back your life</span></div></a>
+        <div class="actions"><a class="btn" href="/en/join/">Back to join</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <h1>You cancelled the payment</h1>
+      <p class="sub">No membership access is granted until the payment is completed.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Payment status</h3>
+      <div id="paymentReturnStatus" class="statusBanner">Cancelled.</div>
+      <p id="paymentReturnSummary" class="note" style="margin-top:10px;">Return to join and choose another payment method when ready.</p>
+      <div id="magicBox" class="hidden">
+        <div id="magicOutput" class="code"></div>
+        <button id="copyMagic" class="btn" type="button">Copy magic link</button>
+      </div>
+      <div class="actionsRow">
+        <a id="paymentPrimaryLink" class="cta" href="/en/join/">Back to join</a>
+        <a class="ghost" href="/en/join/retry/">Retry</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/site.js"></script>
+  <script src="/assets/payments.js?v=20260417b"></script>
+</body>
+</html>

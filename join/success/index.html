@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Xác nhận thanh toán | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body data-page="payment-return" data-payment-status="success">
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Nguyễn Lan Anh</strong><span>Đi vào bên trong để làm chủ lại cuộc đời</span></div></a>
+        <div class="actions"><a class="btn" href="/join/">Quay lại join</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <h1>Đang xác nhận thanh toán</h1>
+      <p class="sub">Hệ thống sẽ chỉ cấp membership khi giao dịch đã được xác nhận đầy đủ.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Trạng thái giao dịch</h3>
+      <div id="paymentReturnStatus" class="statusBanner">Đang xử lý...</div>
+      <p id="paymentReturnSummary" class="note" style="margin-top:10px;">Nếu quá lâu, quay lại trang join để thử lại.</p>
+      <div id="magicBox" class="hidden" style="margin-top:14px;">
+        <p><strong>Magic link của bạn:</strong></p>
+        <div id="magicOutput" class="code" style="margin-top:8px;"></div>
+        <div class="actionsRow">
+          <button id="copyMagic" class="btn" type="button">Sao chép magic link</button>
+          <a id="paymentPrimaryLink" class="cta" href="/members/">Mở members</a>
+        </div>
+      </div>
+      <div class="actionsRow">
+        <a class="ghost" href="/join/">Quay lại join</a>
+        <a class="ghost" href="/join/retry/">Thử lại</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/site.js"></script>
+  <script src="/assets/members.js?v=20260417b"></script>
+  <script src="/assets/payments.js?v=20260417b"></script>
+</body>
+</html>

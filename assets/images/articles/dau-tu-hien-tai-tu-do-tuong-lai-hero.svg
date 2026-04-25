@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="900" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-9">
+  <title id="title-9">dau-tu-hien-tai-tu-do-tuong-lai</title>
+  <defs>
+    <linearGradient id="bg-9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f6f8"/>
+      <stop offset="50%" stop-color="#dfe7f0"/>
+      <stop offset="100%" stop-color="#9fb1d1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="900" fill="url(#bg-9)"/>
+  <g fill="none" stroke="rgba(30, 41, 59, 0.35)" stroke-width="2">
+    <circle cx="240" cy="160" r="220" opacity="0.25"/>
+    <circle cx="1160" cy="760" r="180" opacity="0.18"/>
+    <path d="M180 720 C260 640, 380 720, 460 640 S700 600, 820 670"/>
+    <path d="M680 240 C760 220, 820 260, 900 240 C980 220, 1030 260, 1120 250"/>
+    <path d="M120 420 C220 430, 300 380, 420 400 C560 420, 620 360, 700 390"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#111827">
+    <text x="96" y="150" font-size="56" font-weight="700">dau tu hien tai tu do tuong</text>
+    <text x="96" y="225" font-size="36" font-weight="500" opacity="0.8">lai</text>
+    <text x="96" y="830" font-size="22" fill="#334155" opacity="0.6">Nguyen Lan Anh — Bài viết</text>
+  </g>
+</svg>

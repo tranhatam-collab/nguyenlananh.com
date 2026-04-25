@@ -1,0 +1,94 @@
+{
+  "locale": "vi",
+  "language": {
+    "code": "vi",
+    "htmlLang": "vi",
+    "label": "VI"
+  },
+  "brand": {
+    "name": "Nguyễn Lan Anh",
+    "tagline": "Đi vào bên trong để tái thiết cuộc đời",
+    "signature": "Không phải để trở thành ai khác. Mà để nhìn rõ mình đang là ai."
+  },
+  "chrome": {
+    "skipToContent": "Bỏ qua điều hướng",
+    "primaryNavAria": "Điều hướng chính",
+    "mobileNavAria": "Điều hướng di động",
+    "languageSwitchAria": "Chọn ngôn ngữ",
+    "menuTitle": "Menu",
+    "menuHint": "Chọn một mục để đi tới.",
+    "menuOpen": "Mở menu",
+    "menuClose": "Đóng menu",
+    "menuFoot": "Đi chậm để đi sâu. Đi thật để đi xa.",
+    "nav": {
+      "/": "Trang chủ",
+      "/hanh-trinh/": "Hành trình",
+      "/phuong-phap/": "Hệ thống",
+      "/chuong-trinh/": "Chương trình",
+      "/bai-viet/": "Bài viết",
+      "/lien-he/": "Kết nối",
+      "/gioi-thieu/": "Câu chuyện",
+      "/members/": "Thành viên",
+      "/join/": "Đăng ký"
+    },
+    "footerLegal": {
+      "/chinh-sach-bao-mat/": "Quyền riêng tư",
+      "/dieu-khoan/": "Điều khoản",
+      "/mien-tru-trach-nhiem/": "Miễn trừ trách nhiệm"
+    }
+  },
+  "cta": {
+    "joinNav": "Đăng ký thành viên",
+    "joinPrimary": "Đồng hành miễn phí",
+    "journey": "Đọc hành trình",
+    "method": "Xem hệ thống",
+    "contact": "Kết nối",
+    "articles": "Đọc bài viết",
+    "backToArticles": "Về trang bài viết"
+  },
+  "forms": {
+    "contact": {
+      "nameLabel": "Tên",
+      "emailLabel": "Email",
+      "contextLabel": "Bạn đang gặp điều gì",
+      "changeLabel": "Bạn muốn thay đổi điều gì",
+      "submit": "Gửi lời nhắn"
+    },
+    "join": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "ban@domain.com",
+      "submit": "Nhận magic link"
+    }
+  },
+  "states": {
+    "empty": {
+      "default": "Hiện chưa có nội dung phù hợp."
+    },
+    "error": {
+      "generic": "Đã có lỗi xảy ra. Vui lòng thử lại."
+    }
+  },
+  "registry": {
+    "tone": [
+      "nhẹ",
+      "rõ",
+      "không dạy đời",
+      "không khẩu hiệu",
+      "không marketing"
+    ],
+    "terms": {
+      "journey": "Hành trình",
+      "system": "Hệ thống",
+      "writings": "Bài viết",
+      "membership": "Thành viên",
+      "freeCompanionship": "Đồng hành miễn phí"
+    },
+    "forbidden": [
+      "healing",
+      "coaching",
+      "breakthrough",
+      "success formula",
+      "hype"
+    ]
+  }
+}

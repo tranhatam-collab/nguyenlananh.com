@@ -1,0 +1,94 @@
+{
+  "locale": "en",
+  "language": {
+    "code": "en",
+    "htmlLang": "en-US",
+    "label": "EN-US"
+  },
+  "brand": {
+    "name": "Lan Anh Nguyen",
+    "tagline": "Rebuild your life from within",
+    "signature": "Not to become someone else. To see clearly who you are now."
+  },
+  "chrome": {
+    "skipToContent": "Skip to content",
+    "primaryNavAria": "Primary navigation",
+    "mobileNavAria": "Mobile navigation",
+    "languageSwitchAria": "Choose language",
+    "menuTitle": "Menu",
+    "menuHint": "Choose a section to continue.",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "menuFoot": "Move slowly to go deep. Stay real to go far.",
+    "nav": {
+      "/": "Home",
+      "/hanh-trinh/": "Journey",
+      "/phuong-phap/": "System",
+      "/chuong-trinh/": "Programs",
+      "/bai-viet/": "Writings",
+      "/lien-he/": "Contact",
+      "/gioi-thieu/": "Story",
+      "/members/": "Members",
+      "/join/": "Join"
+    },
+    "footerLegal": {
+      "/chinh-sach-bao-mat/": "Privacy Policy",
+      "/dieu-khoan/": "Terms",
+      "/mien-tru-trach-nhiem/": "Disclaimer"
+    }
+  },
+  "cta": {
+    "joinNav": "Join membership",
+    "joinPrimary": "Free companionship",
+    "journey": "Read the journey",
+    "method": "View the system",
+    "contact": "Contact",
+    "articles": "Read the writings",
+    "backToArticles": "Back to writings"
+  },
+  "forms": {
+    "contact": {
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "contextLabel": "What are you facing right now",
+      "changeLabel": "What would you like to change",
+      "submit": "Send message"
+    },
+    "join": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@domain.com",
+      "submit": "Receive magic link"
+    }
+  },
+  "states": {
+    "empty": {
+      "default": "No matching content is available yet."
+    },
+    "error": {
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "registry": {
+    "tone": [
+      "calm",
+      "clear",
+      "not preachy",
+      "not slogan-heavy",
+      "not marketing-led"
+    ],
+    "terms": {
+      "journey": "Journey",
+      "system": "System",
+      "writings": "Writings",
+      "membership": "Members",
+      "freeCompanionship": "Free companionship"
+    },
+    "forbidden": [
+      "healing tone",
+      "coaching tone",
+      "breakthrough",
+      "success formula",
+      "hype"
+    ]
+  }
+}

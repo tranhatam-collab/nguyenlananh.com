@@ -3,3 +3,9 @@ https://nguyenlananh.com/* https://www.nguyenlananh.com/:splat 301
 
 # Optional: nếu ai gõ /index.html thì về /
 /index.html / 301
+
+# Dedicated admin subdomain routing
+# admin.nguyenlananh.com should land directly to admin console on deploy
+https://admin.nguyenlananh.com/ /admin/ 301
+https://admin.nguyenlananh.com/en /en/admin/ 301
+https://admin.nguyenlananh.com/en/ /en/admin/ 301

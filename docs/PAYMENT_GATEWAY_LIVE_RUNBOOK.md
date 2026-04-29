@@ -1,7 +1,7 @@
 # PAYMENT_GATEWAY_LIVE_RUNBOOK.md
 
-Updated: 2026-04-11
-Status: payment stack wired into repo, waiting for production secrets + merchant onboarding
+Updated: 2026-04-29
+Status: VN + International checkout wired. Live claim still requires external merchant/mailbox proof.
 
 ## 1. Kien truc da duoc gan vao repo
 
@@ -9,9 +9,13 @@ Repo hien tai van la static site tren Cloudflare Pages, nhung da co them payment
 
 - `GET /api/payments/providers`
 - `POST /api/payments/create-checkout`
+- `POST /api/payments/vietqr/create-order`
+- `POST /api/payments/vietqr/mark-pending`
 - `POST /api/payments/finalize`
 - `POST /api/payments/paypal/webhook`
 - `POST /api/payments/stripe/webhook`
+- `GET /api/admin/payments/vietqr/orders`
+- `POST /api/admin/vietqr-confirm`
 - `POST /api/auth/magic-links/resend`
 - `POST /api/auth/magic-links/consume`
 
@@ -27,6 +31,7 @@ Thanh phan chinh:
 
 1. `PayPal`
 2. `Stripe`
+3. `VietQR (manual confirm phase)`
 
 ### Da co cho cam vao UI/API registry, chua viet adapter runtime
 
@@ -37,8 +42,10 @@ Thanh phan chinh:
 Nghia la:
 
 - trang join da cho chon nhieu cong
-- runtime live thuc su hien tai san sang cho `PayPal + Stripe`
-- cong Viet Nam se bat tiep theo merchant va docs API ma ban mo duoc
+- runtime live co 2 lane:
+  - `VN`: VietQR + admin manual confirm
+  - `International`: PayPal/Stripe checkout (USD)
+- rule bat buoc: ID VN -> VND; ID ngoai VN -> USD
 
 ## 3. Domain API production
 
@@ -52,9 +59,13 @@ ENV_DEPLOY_TARGET=cloudflare-pages
 Vi repo nay dang deploy bang Cloudflare Pages, route API production se la:
 
 - `https://www.nguyenlananh.com/api/payments/create-checkout`
+- `https://www.nguyenlananh.com/api/payments/vietqr/create-order`
+- `https://www.nguyenlananh.com/api/payments/vietqr/mark-pending`
 - `https://www.nguyenlananh.com/api/payments/finalize`
 - `https://www.nguyenlananh.com/api/payments/paypal/webhook`
 - `https://www.nguyenlananh.com/api/payments/stripe/webhook`
+- `https://www.nguyenlananh.com/api/admin/payments/vietqr/orders`
+- `https://www.nguyenlananh.com/api/admin/vietqr-confirm`
 
 ## 4. URLs chuan da chot
 
@@ -75,7 +86,7 @@ Tieng Anh:
 ### Plan mapping
 
 ```txt
-year1 = 3 USD
+year1 = 2 USD / 49,000 VND
 year2 = 60 USD
 year3 = 99 USD
 ```
@@ -88,6 +99,7 @@ Trong code hien tai:
 
 - PayPal: chi fulfill khi `PAYMENT.CAPTURE.COMPLETED` hoac finalize tra ve `COMPLETED`
 - Stripe: chi fulfill khi session co `payment_status=paid`
+- VietQR: chi fulfill khi `admin confirm` thanh cong qua `/api/admin/vietqr-confirm`
 
 ### Refund policy
 
@@ -124,6 +136,19 @@ Bang nay da luu du cac truong user dang yeu cau:
 - `fulfillment_status`
 - `paid_at`
 - `refunded_at`
+
+### Bang `vietqr_orders`
+
+- `internal_order_id`
+- `transfer_note`
+- `amount`
+- `currency`
+- `bank_bin`
+- `account_no`
+- `account_name`
+- `qr_url`
+- `status` (`pending` / `awaiting_confirmation` / `confirmed` / `expired`)
+- `provider_ref`
 
 ### Bang `users`
 
@@ -168,6 +193,16 @@ STRIPE_PUBLISHABLE_KEY=...
 STRIPE_WEBHOOK_SECRET=...
 ```
 
+### VietQR live (VN rail)
+
+```txt
+VIETQR_BANK_BIN=...
+VIETQR_ACCOUNT_NO=...
+VIETQR_ACCOUNT_NAME=...
+VIETQR_TEMPLATE=compact2
+PAYMENTS_ADMIN_KEY=...
+```
+
 ### Email
 
 Khuyen nghi don gian nhat:
@@ -203,6 +238,23 @@ Duong di dashboard:
 
 Khong commit secret vao repo.
 
+Script ho tro da co san:
+
+```bash
+PROJECT_NAME=nguyenlananh-com \
+CLOUDFLARE_ACCOUNT_ID=62d57eaa548617aeecac766e5a1cb98e \
+./scripts/provision-payment-live-secrets.sh
+```
+
+Script tren se yeu cau nhap va set day du:
+
+- `VIETQR_*`
+- `PAYMENTS_ADMIN_KEY`
+- `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_MERCHANT_EMAIL`
+- `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`
+- `RESEND_API_KEY`
+- `EMAIL_FROM_SYSTEM`, `EMAIL_FROM_PAY`, `EMAIL_REPLY_TO_SUPPORT`
+
 Neu dung D1:
 
 1. tao D1 database
@@ -234,12 +286,20 @@ Set:
 
 - PayPal live secrets
 - Stripe live secrets
+- VietQR live secrets
 - email provider key
 - `API_BASE_URL`
 - `ENV_DEPLOY_TARGET`
 - `REFUND_POLICY`
 
-### B5. Tao PayPal webhook
+### B5. Khoi dong VietQR admin desk
+
+1. vao `/admin/payments/`
+2. nhap `PAYMENTS_ADMIN_KEY`
+3. loc queue `awaiting_confirmation`
+4. confirm order sau khi doi chieu transfer note trong tai khoan ngan hang
+
+### B6. Tao PayPal webhook
 
 Webhook URL production:
 
@@ -253,7 +313,7 @@ Nen subscribe toi thieu:
 - `PAYMENT.CAPTURE.DENIED`
 - `PAYMENT.CAPTURE.REFUNDED`
 
-### B6. Tao Stripe webhook
+### B7. Tao Stripe webhook
 
 Webhook URL production:
 
@@ -268,6 +328,27 @@ Nen subscribe toi thieu:
 - `checkout.session.async_payment_failed`
 - `checkout.session.expired`
 - `charge.refunded`
+
+### B8. Smoke proof sau cutover DNS
+
+Sau khi DNS custom domain da xanh, chay script proof:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+D1_NAME=nguyenlananh-payments-prod \
+PAYMENTS_ADMIN_KEY='<admin_key>' \
+USD_PROVIDER=paypal \
+./scripts/payment-live-proof-smoke.sh
+```
+
+Script se:
+
+- check web status `nguyenlananh.com`, `www`, `admin`
+- check `/api/payments/providers` + `/api/payments/health`
+- tao order VN (`vietqr`) + mark pending
+- neu co `PAYMENTS_ADMIN_KEY`: xac nhan VN order qua `/api/admin/vietqr-confirm`
+- tao checkout USD va in `checkout_url`
+- in counter D1 + latest order evidence theo email smoke
 
 ## 10. PayPal live checklist dung theo 3 nhom
 

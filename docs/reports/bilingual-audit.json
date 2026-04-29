@@ -1,22 +1,26 @@
 {
   "summary": {
-    "generatedAt": "2026-04-25T12:27:04.335Z",
-    "totalUrls": 188,
-    "totalPagesWithIssues": 0,
-    "totalIssues": 0,
-    "blockingIssues": 0,
-    "status": "pass",
+    "generatedAt": "2026-04-25T13:04:39.564Z",
+    "totalUrls": 214,
+    "totalPagesWithIssues": 10,
+    "totalIssues": 10,
+    "blockingIssues": 10,
+    "status": "blocked",
     "totalImages": 75,
     "totalAltText": 75,
     "totalFigures": 75,
     "totalFigcaptions": 48,
     "totalSvgDescriptions": 56,
     "localeCounts": {
-      "vi": 94,
-      "en": 94
+      "vi": 107,
+      "en": 107
     },
-    "severityCounts": {},
-    "categoryCounts": {}
+    "severityCounts": {
+      "high": 10
+    },
+    "categoryCounts": {
+      "en": 10
+    }
   },
   "audits": [
     {
@@ -160,6 +164,26 @@
       "issues": []
     },
     {
+      "file": "bai-viet/ban-khong-thieu-kien-thuc/index.html",
+      "route": "/bai-viet/ban-khong-thieu-kien-thuc/",
+      "url": "https://www.nguyenlananh.com/bai-viet/ban-khong-thieu-kien-thuc/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không thiếu kiến thức | Nguyễn Lan Anh",
+      "metaDescription": "Bạn không thiếu thông tin. Bạn thiếu sự rõ ràng về cách mình đang sống và quyết định mỗi ngày.",
+      "h1": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+      "h1Count": 1,
+      "textNodeCount": 43,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/ban-khong-thieu-kien-thuc/index.html",
+      "issues": []
+    },
+    {
       "file": "bai-viet/cai-choi/index.html",
       "route": "/bai-viet/cai-choi/",
       "url": "https://www.nguyenlananh.com/bai-viet/cai-choi/",
@@ -177,6 +201,66 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/bai-viet/cai-choi/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/chi-can-dung/index.html",
+      "route": "/bai-viet/chi-can-dung/",
+      "url": "https://www.nguyenlananh.com/bai-viet/chi-can-dung/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+      "metaDescription": "Một đời sống được tối ưu có thể vận hành trơn tru hơn, nhưng chưa chắc đúng hơn với điều bạn thật sự cần và muốn giữ.",
+      "h1": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+      "h1Count": 1,
+      "textNodeCount": 45,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/chi-can-dung/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/chua-tung-co-huong/index.html",
+      "route": "/bai-viet/chua-tung-co-huong/",
+      "url": "https://www.nguyenlananh.com/bai-viet/chua-tung-co-huong/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+      "metaDescription": "Cảm giác lạc hướng nhiều khi đến từ việc bạn đã đi rất lâu theo những hướng chưa bao giờ thực sự là của mình.",
+      "h1": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+      "h1Count": 1,
+      "textNodeCount": 45,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/chua-tung-co-huong/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/co-nguoi-can-dung-lai/index.html",
+      "route": "/bai-viet/co-nguoi-can-dung-lai/",
+      "url": "https://www.nguyenlananh.com/bai-viet/co-nguoi-can-dung-lai/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Không phải ai cũng cần phát triển thêm",
+      "metaDescription": "Có những giai đoạn việc cố phát triển thêm chỉ làm bạn xa hơn khỏi điều cơ bản mình đang cần: dừng lại, nghỉ, và nghe lại mình.",
+      "h1": "Không phải ai cũng cần phát triển, có người cần dừng lại",
+      "h1Count": 1,
+      "textNodeCount": 45,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/co-nguoi-can-dung-lai/index.html",
       "issues": []
     },
     {
@@ -297,6 +381,26 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/bai-viet/di-vao-ben-trong/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/dieu-ban-dang-tranh/index.html",
+      "route": "/bai-viet/dieu-ban-dang-tranh/",
+      "url": "https://www.nguyenlananh.com/bai-viet/dieu-ban-dang-tranh/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Điều bạn đang tránh chính là điều cần nhìn",
+      "metaDescription": "Điều bạn cố né thường không biến mất. Nó chỉ quay lại dưới những hình dạng khác và tiếp tục chi phối cách bạn sống.",
+      "h1": "Điều bạn đang tránh chính là điều bạn cần nhìn",
+      "h1Count": 1,
+      "textNodeCount": 44,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/dieu-ban-dang-tranh/index.html",
       "issues": []
     },
     {
@@ -537,6 +641,26 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/hieu-cuoc-doi-minh/index.html",
+      "route": "/bai-viet/hieu-cuoc-doi-minh/",
+      "url": "https://www.nguyenlananh.com/bai-viet/hieu-cuoc-doi-minh/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không cần đổi cuộc đời, bạn cần hiểu nó",
+      "metaDescription": "Có những lúc điều cần thiết không phải là thay đổi thật nhanh, mà là hiểu cách mình đang sống và điều gì đang dẫn mình đi.",
+      "h1": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+      "h1Count": 1,
+      "textNodeCount": 44,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/hieu-cuoc-doi-minh/index.html",
       "issues": []
     },
     {
@@ -900,6 +1024,46 @@
       "issues": []
     },
     {
+      "file": "bai-viet/sai-moi-truong/index.html",
+      "route": "/bai-viet/sai-moi-truong/",
+      "url": "https://www.nguyenlananh.com/bai-viet/sai-moi-truong/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không kém, bạn đang ở sai môi trường",
+      "metaDescription": "Vấn đề không nằm ở bạn. Mà ở môi trường không phù hợp với cách bạn phát triển.",
+      "h1": "Bạn không kém, bạn chỉ đang ở sai chỗ",
+      "h1Count": 1,
+      "textNodeCount": 44,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/sai-moi-truong/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/song-sai-nhip/index.html",
+      "route": "/bai-viet/song-sai-nhip/",
+      "url": "https://www.nguyenlananh.com/bai-viet/song-sai-nhip/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không mệt vì làm nhiều, bạn mệt vì sai nhịp",
+      "metaDescription": "Mệt mỏi kéo dài nhiều khi không đến từ khối lượng công việc, mà từ việc bạn đang sống lệch khỏi nhịp phù hợp với mình.",
+      "h1": "Bạn không mệt vì làm nhiều, bạn mệt vì sống sai nhịp",
+      "h1Count": 1,
+      "textNodeCount": 44,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/song-sai-nhip/index.html",
+      "issues": []
+    },
+    {
       "file": "bai-viet/song-theo-dong-chay/index.html",
       "route": "/bai-viet/song-theo-dong-chay/",
       "url": "https://www.nguyenlananh.com/bai-viet/song-theo-dong-chay/",
@@ -917,6 +1081,46 @@
       "figcaptionCount": 2,
       "svgDescriptionCount": 2,
       "counterpartFile": "en/bai-viet/song-theo-dong-chay/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/song-theo-thoi-quen/index.html",
+      "route": "/bai-viet/song-theo-thoi-quen/",
+      "url": "https://www.nguyenlananh.com/bai-viet/song-theo-thoi-quen/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn đang sống theo thói quen hay lựa chọn?",
+      "metaDescription": "Phần lớn quyết định trong ngày của bạn đến từ thói quen, không phải ý thức.",
+      "h1": "Bạn đang sống theo thói quen, không phải lựa chọn",
+      "h1Count": 1,
+      "textNodeCount": 43,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/song-theo-thoi-quen/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/thieu-su-that/index.html",
+      "route": "/bai-viet/thieu-su-that/",
+      "url": "https://www.nguyenlananh.com/bai-viet/thieu-su-that/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bạn không thiếu động lực, bạn thiếu sự thật",
+      "metaDescription": "Động lực thường cạn đi rất nhanh khi nó phải chống lại một sự thật mà bạn đã biết nhưng không muốn nhìn thẳng.",
+      "h1": "Bạn không thiếu động lực, bạn thiếu sự thật",
+      "h1Count": 1,
+      "textNodeCount": 44,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/bai-viet/thieu-su-that/index.html",
       "issues": []
     },
     {
@@ -1240,6 +1444,33 @@
       "issues": []
     },
     {
+      "file": "en/bai-viet/ban-khong-thieu-kien-thuc/index.html",
+      "route": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/ban-khong-thieu-kien-thuc/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Do Not Lack Knowledge, You Lack Clarity | Nguyenlananh.com",
+      "metaDescription": "You do not lack information. You lack clarity about how you live and which truths actually matter in your daily decisions.",
+      "h1": "You Do Not Lack Knowledge, You Lack Clarity",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/ban-khong-thieu-kien-thuc/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
       "file": "en/bai-viet/cai-choi/index.html",
       "route": "/en/bai-viet/cai-choi/",
       "url": "https://www.nguyenlananh.com/en/bai-viet/cai-choi/",
@@ -1258,6 +1489,87 @@
       "svgDescriptionCount": 0,
       "counterpartFile": "bai-viet/cai-choi/index.html",
       "issues": []
+    },
+    {
+      "file": "en/bai-viet/chi-can-dung/index.html",
+      "route": "/en/bai-viet/chi-can-dung/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chi-can-dung/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Your Life Does Not Need Optimization, Only Alignment | Nguyenlananh.com",
+      "metaDescription": "A well-optimized life may run smoothly, but it may still be far from what is true for you.",
+      "h1": "Your Life Does Not Need Optimization, Only Alignment",
+      "h1Count": 1,
+      "textNodeCount": 43,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/chi-can-dung/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/chua-tung-co-huong/index.html",
+      "route": "/en/bai-viet/chua-tung-co-huong/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chua-tung-co-huong/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Have Not Lost Direction, You Never Truly Had One | Nguyenlananh.com",
+      "metaDescription": "Feeling lost may simply mean you have been following a borrowed direction for too long.",
+      "h1": "You Have Not Lost Direction, You Never Truly Had One",
+      "h1Count": 1,
+      "textNodeCount": 43,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/chua-tung-co-huong/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/co-nguoi-can-dung-lai/index.html",
+      "route": "/en/bai-viet/co-nguoi-can-dung-lai/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/co-nguoi-can-dung-lai/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Not Everyone Needs Growth, Some People Need to Pause | Nguyenlananh.com",
+      "metaDescription": "Some seasons do not ask for more growth. They ask for rest, quiet, and a return to your own voice.",
+      "h1": "Not Everyone Needs Growth, Some People Need to Pause",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/co-nguoi-can-dung-lai/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
     },
     {
       "file": "en/bai-viet/cong-dong-song-moi/index.html",
@@ -1378,6 +1690,33 @@
       "svgDescriptionCount": 0,
       "counterpartFile": "bai-viet/di-vao-ben-trong/index.html",
       "issues": []
+    },
+    {
+      "file": "en/bai-viet/dieu-ban-dang-tranh/index.html",
+      "route": "/en/bai-viet/dieu-ban-dang-tranh/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/dieu-ban-dang-tranh/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "What You Avoid Is Exactly What You Need to See | Nguyenlananh.com",
+      "metaDescription": "What you avoid does not disappear. It returns in other forms and keeps shaping your life from the shadows.",
+      "h1": "What You Avoid Is Exactly What You Need to See",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/dieu-ban-dang-tranh/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/index.html",
@@ -1618,6 +1957,33 @@
       "svgDescriptionCount": 0,
       "counterpartFile": "bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
       "issues": []
+    },
+    {
+      "file": "en/bai-viet/hieu-cuoc-doi-minh/index.html",
+      "route": "/en/bai-viet/hieu-cuoc-doi-minh/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/hieu-cuoc-doi-minh/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Do Not Need to Change Your Life, You Need to Understand It | Nguyenlananh.com",
+      "metaDescription": "The urgent need is not always a new life. Often it is a truer understanding of the life you are already living.",
+      "h1": "You Do Not Need to Change Your Life, You Need to Understand It",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/hieu-cuoc-doi-minh/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
     },
     {
       "file": "en/bai-viet/hoc-tap-sang-tao-truong-thanh/index.html",
@@ -1980,6 +2346,60 @@
       "issues": []
     },
     {
+      "file": "en/bai-viet/sai-moi-truong/index.html",
+      "route": "/en/bai-viet/sai-moi-truong/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/sai-moi-truong/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Are Not Less Capable, You Are in the Wrong Place | Nguyenlananh.com",
+      "metaDescription": "The problem is not always you. Sometimes the environment around you cannot support the way you are meant to grow.",
+      "h1": "You Are Not Less Capable, You Are in the Wrong Place",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/sai-moi-truong/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/song-sai-nhip/index.html",
+      "route": "/en/bai-viet/song-sai-nhip/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/song-sai-nhip/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm | Nguyenlananh.com",
+      "metaDescription": "Exhaustion does not always come from workload. It can come from living against a rhythm that does not fit you.",
+      "h1": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm",
+      "h1Count": 1,
+      "textNodeCount": 43,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/song-sai-nhip/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
       "file": "en/bai-viet/song-theo-dong-chay/index.html",
       "route": "/en/bai-viet/song-theo-dong-chay/",
       "url": "https://www.nguyenlananh.com/en/bai-viet/song-theo-dong-chay/",
@@ -1998,6 +2418,60 @@
       "svgDescriptionCount": 2,
       "counterpartFile": "bai-viet/song-theo-dong-chay/index.html",
       "issues": []
+    },
+    {
+      "file": "en/bai-viet/song-theo-thoi-quen/index.html",
+      "route": "/en/bai-viet/song-theo-thoi-quen/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/song-theo-thoi-quen/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Are Living by Habit, Not Choice | Nguyenlananh.com",
+      "metaDescription": "Most daily decisions come from habit, not conscious choice. Real direction begins when repetition becomes visible.",
+      "h1": "You Are Living by Habit, Not Choice",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/song-theo-thoi-quen/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/thieu-su-that/index.html",
+      "route": "/en/bai-viet/thieu-su-that/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/thieu-su-that/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "You Do Not Lack Motivation, You Lack Truth | Nguyenlananh.com",
+      "metaDescription": "Motivation fades quickly when it is asked to fight a truth you already know but do not want to face.",
+      "h1": "You Do Not Lack Motivation, You Lack Truth",
+      "h1Count": 1,
+      "textNodeCount": 42,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "bai-viet/thieu-su-that/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "en",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ]
     },
     {
       "file": "en/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/index.html",
@@ -2260,6 +2734,26 @@
       "issues": []
     },
     {
+      "file": "en/join/cancel/index.html",
+      "route": "/en/join/cancel/",
+      "url": "https://www.nguyenlananh.com/en/join/cancel/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Payment cancelled | Nguyenlananh.com",
+      "metaDescription": "No membership access is granted until the payment is completed.",
+      "h1": "You cancelled the payment",
+      "h1Count": 1,
+      "textNodeCount": 12,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "join/cancel/index.html",
+      "issues": []
+    },
+    {
       "file": "en/join/index.html",
       "route": "/en/join/",
       "url": "https://www.nguyenlananh.com/en/join/",
@@ -2277,6 +2771,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "join/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/join/retry/index.html",
+      "route": "/en/join/retry/",
+      "url": "https://www.nguyenlananh.com/en/join/retry/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Retry payment | Nguyenlananh.com",
+      "metaDescription": "Start again from join so the system can create a clean order and avoid duplicate capture attempts.",
+      "h1": "Payment not completed",
+      "h1Count": 1,
+      "textNodeCount": 12,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "join/retry/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/join/success/index.html",
+      "route": "/en/join/success/",
+      "url": "https://www.nguyenlananh.com/en/join/success/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Payment confirmation | Nguyenlananh.com",
+      "metaDescription": "Membership is granted only after the transaction is fully confirmed.",
+      "h1": "Verifying payment",
+      "h1Count": 1,
+      "textNodeCount": 14,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "join/success/index.html",
       "issues": []
     },
     {
@@ -3060,6 +3594,26 @@
       "issues": []
     },
     {
+      "file": "join/cancel/index.html",
+      "route": "/join/cancel/",
+      "url": "https://www.nguyenlananh.com/join/cancel/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Huỷ thanh toán | Nguyenlananh.com",
+      "metaDescription": "Không có quyền truy cập nào được cấp khi giao dịch chưa hoàn tất.",
+      "h1": "Bạn đã huỷ thanh toán",
+      "h1Count": 1,
+      "textNodeCount": 12,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/join/cancel/index.html",
+      "issues": []
+    },
+    {
       "file": "join/index.html",
       "route": "/join/",
       "url": "https://www.nguyenlananh.com/join/",
@@ -3077,6 +3631,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/join/index.html",
+      "issues": []
+    },
+    {
+      "file": "join/retry/index.html",
+      "route": "/join/retry/",
+      "url": "https://www.nguyenlananh.com/join/retry/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Thử lại thanh toán | Nguyenlananh.com",
+      "metaDescription": "Hãy bắt đầu lại từ trang join để tạo một order sạch và tránh double-charge.",
+      "h1": "Thanh toán chưa hoàn tất",
+      "h1Count": 1,
+      "textNodeCount": 12,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/join/retry/index.html",
+      "issues": []
+    },
+    {
+      "file": "join/success/index.html",
+      "route": "/join/success/",
+      "url": "https://www.nguyenlananh.com/join/success/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Xác nhận thanh toán | Nguyenlananh.com",
+      "metaDescription": "Hệ thống sẽ chỉ cấp membership khi giao dịch đã được xác nhận đầy đủ.",
+      "h1": "Đang xác nhận thanh toán",
+      "h1Count": 1,
+      "textNodeCount": 14,
+      "imageCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 0,
+      "counterpartFile": "en/join/success/index.html",
       "issues": []
     },
     {

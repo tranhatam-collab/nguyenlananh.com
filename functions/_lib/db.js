@@ -434,3 +434,87 @@ export async function updateEmailJob(db, id, patch) {
   });
   await db.prepare(sql).bind(...values, id).run();
 }
+
+function parseVietQrOrder(row) {
+  if (!row) return null;
+  return {
+    ...row,
+    amount: Number(row.amount)
+  };
+}
+
+export async function createVietQrOrder(db, record) {
+  await db
+    .prepare(
+      `INSERT INTO vietqr_orders (
+        internal_order_id,
+        email,
+        locale,
+        plan_code,
+        amount,
+        currency,
+        transfer_note,
+        bank_bin,
+        account_no,
+        account_name,
+        qr_url,
+        status,
+        provider_ref,
+        confirmed_by,
+        confirmation_note,
+        created_at,
+        awaiting_confirmation_at,
+        confirmed_at,
+        updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      record.internal_order_id,
+      record.email,
+      record.locale || "vi",
+      record.plan_code,
+      record.amount,
+      record.currency || "VND",
+      record.transfer_note,
+      record.bank_bin,
+      record.account_no,
+      record.account_name,
+      record.qr_url,
+      record.status || "pending",
+      record.provider_ref || null,
+      record.confirmed_by || null,
+      record.confirmation_note || null,
+      record.created_at || nowIso(),
+      record.awaiting_confirmation_at || null,
+      record.confirmed_at || null,
+      record.updated_at || nowIso()
+    )
+    .run();
+}
+
+export async function getVietQrOrderByInternalOrderId(db, internalOrderId) {
+  const row = await db.prepare("SELECT * FROM vietqr_orders WHERE internal_order_id = ?").bind(internalOrderId).first();
+  return parseVietQrOrder(row);
+}
+
+export async function listVietQrOrders(db, { status = null, limit = 50 } = {}) {
+  const safeLimit = Number.isFinite(Number(limit)) ? Math.max(1, Math.min(200, Number(limit))) : 50;
+  if (status) {
+    const result = await db
+      .prepare("SELECT * FROM vietqr_orders WHERE status = ? ORDER BY created_at DESC LIMIT ?")
+      .bind(status, safeLimit)
+      .all();
+    return (result.results || []).map(parseVietQrOrder);
+  }
+
+  const result = await db.prepare("SELECT * FROM vietqr_orders ORDER BY created_at DESC LIMIT ?").bind(safeLimit).all();
+  return (result.results || []).map(parseVietQrOrder);
+}
+
+export async function updateVietQrOrder(db, internalOrderId, patch) {
+  const keys = Object.keys(patch || {}).filter((key) => patch[key] !== undefined);
+  if (!keys.length) return;
+  const sql = `UPDATE vietqr_orders SET ${keys.map((key) => `${key} = ?`).join(", ")} WHERE internal_order_id = ?`;
+  const values = keys.map((key) => patch[key]);
+  await db.prepare(sql).bind(...values, internalOrderId).run();
+}

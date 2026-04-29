@@ -5,6 +5,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$REPO_ROOT"
 
 PROJECT_NAME="${CLOUDFLARE_PAGES_PROJECT:-nguyenlananh-com}"
+export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-62d57eaa548617aeecac766e5a1cb98e}"
 BUILD_DIR="${BUILD_DIR:-}"
 
 if ! command -v wrangler >/dev/null 2>&1; then
@@ -23,6 +24,7 @@ if [ -z "$BUILD_DIR" ]; then
 fi
 
 echo "Deploying ${BUILD_DIR} to Cloudflare Pages project ${PROJECT_NAME}"
+echo "Using Cloudflare account ${CLOUDFLARE_ACCOUNT_ID}"
 wrangler pages deploy "$BUILD_DIR" --project-name "$PROJECT_NAME" --branch main --commit-dirty=true
 
 echo "Deploy command sent. Check Cloudflare Pages for rollout status."

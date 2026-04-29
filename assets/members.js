@@ -17,6 +17,7 @@
       code: "year1",
       label: "Mở khóa lõi bên trong",
       priceUsd: 2,
+      priceVnd: 49000,
       durationDays: 365,
       tier: "paid"
     },
@@ -24,6 +25,7 @@
       code: "year2",
       label: "Đồng hành chuyên sâu",
       priceUsd: 60,
+      priceVnd: 1490000,
       durationDays: 365,
       tier: "paid"
     },
@@ -31,12 +33,11 @@
       code: "year3",
       label: "Chương trình chuyên sâu",
       priceUsd: 99,
+      priceVnd: 2490000,
       durationDays: 365,
       tier: "paid"
     }
   };
-
-  const PAYPAL_BUSINESS = "pay@nguyenlananh.com";
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
@@ -64,7 +65,14 @@
         freePlan: "Free Companion",
         freeExpires: "Open now",
         gateReason: "Complete your profile first, then unlock the full member path.",
-        paymentReminder: "Open PayPal, finish the 2 USD step, then confirm here to unlock the full paid member benefits.",
+        paymentReminder: "Vietnam IDs must use VietQR (VND). International IDs must use USD checkout.",
+        checkoutCreating: "Creating checkout...",
+        checkoutRedirecting: "Checkout is ready. Opening payment page...",
+        checkoutFailed: "Unable to create checkout right now.",
+        checkoutRailError: "Your identity area does not match this payment rail.",
+        transferMarked: "Transfer has been marked. The order now waits for admin confirmation.",
+        transferMarkFailed: "Unable to mark transfer at this step.",
+        adminConfirmHint: "Admin must confirm VietQR transfer inside /admin/payments/ before membership unlock.",
         alreadyFree: "Continue free companionship",
         alreadyPaid: "Open paid member dashboard"
       };
@@ -87,7 +95,14 @@
       freePlan: "Đồng hành miễn phí",
       freeExpires: "Đang mở",
       gateReason: "Hãy hoàn thiện profile trước, rồi mới mở khóa lộ trình thành viên đầy đủ.",
-      paymentReminder: "Mở PayPal, hoàn tất bước 2 USD, rồi quay lại bấm xác nhận để mở toàn bộ quyền lợi của gói đã trả phí.",
+      paymentReminder: "ID Việt Nam bắt buộc dùng VietQR (VND). ID ngoài Việt Nam bắt buộc dùng checkout USD.",
+      checkoutCreating: "Đang tạo checkout...",
+      checkoutRedirecting: "Checkout đã sẵn sàng. Đang mở trang thanh toán...",
+      checkoutFailed: "Chưa thể tạo checkout lúc này.",
+      checkoutRailError: "Khu vực định danh không khớp với cổng thanh toán.",
+      transferMarked: "Đã ghi nhận bạn đã chuyển khoản. Đơn đang chờ admin xác nhận.",
+      transferMarkFailed: "Chưa thể đánh dấu chuyển khoản ở bước này.",
+      adminConfirmHint: "Admin cần xác nhận ở /admin/payments/ thì membership mới mở.",
       alreadyFree: "Tiếp tục đồng hành miễn phí",
       alreadyPaid: "Mở dashboard thành viên đã trả phí"
     };
@@ -234,33 +249,6 @@
       startedAt: serverSession.startedAt || new Date().toISOString(),
       expiresAt
     });
-  }
-
-  function upgradeCurrentSession(planCode = "year1") {
-    const session = getSession();
-    if (!session) return null;
-    const plan = planByCode(planCode);
-
-    return writeSession({
-      ...session,
-      membershipType: plan.code,
-      membershipLabel: plan.label,
-      expiresAt: new Date(Date.now() + plan.durationDays * 24 * 60 * 60 * 1000).toISOString()
-    });
-  }
-
-  function buildPayPalUrl(plan, email) {
-    const item = `Nguyenlananh Membership ${plan.label}`;
-    const custom = `${email}|${plan.code}`;
-    const params = new URLSearchParams({
-      cmd: "_xclick",
-      business: PAYPAL_BUSINESS,
-      item_name: item,
-      currency_code: "USD",
-      amount: String(plan.priceUsd),
-      custom
-    });
-    return `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
   }
 
   function getProgress() {
@@ -455,6 +443,72 @@
     return body;
   }
 
+  async function createCheckout(payload) {
+    const response = await fetch("/api/payments/create-checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Idempotency-Key": randomId("checkout")
+      },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(body.message || "Unable to create checkout.");
+      error.code = body.code || "CHECKOUT_CREATE_FAILED";
+      throw error;
+    }
+    return body;
+  }
+
+  async function createVietQrOrder(payload) {
+    const response = await fetch("/api/payments/vietqr/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Idempotency-Key": randomId("vietqr")
+      },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(body.message || "Unable to create VietQR order.");
+      error.code = body.code || "VIETQR_CREATE_FAILED";
+      throw error;
+    }
+    return body;
+  }
+
+  async function markVietQrPending(payload) {
+    const response = await fetch("/api/payments/vietqr/mark-pending", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const error = new Error(body.message || "Unable to mark transfer pending.");
+      error.code = body.code || "VIETQR_MARK_PENDING_FAILED";
+      throw error;
+    }
+    return body;
+  }
+
+  function formatCurrency(amount, currency, localeHint = "vi") {
+    const locale = localeHint === "en-US" ? "en-US" : "vi-VN";
+    try {
+      return new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: String(currency || "USD").toUpperCase(),
+        maximumFractionDigits: currency === "VND" ? 0 : 2
+      }).format(Number(amount || 0));
+    } catch (_error) {
+      return `${Number(amount || 0)} ${String(currency || "").toUpperCase()}`;
+    }
+  }
+
   function setBanner(element, message, tone = "info") {
     if (!element) return;
     element.textContent = message;
@@ -581,9 +635,23 @@
     const unlockBlock = $("#unlockCore");
     const paidBlock = $("#paidMemberStart");
     const gateNotice = $("#startGateNotice");
-    const unlockPayNow = $("#unlockPayNow");
-    const confirmUnlock = $("#confirmPaid");
     const unlockStatus = $("#unlockStatus");
+    const unlockPayNow = $("#unlockPayNow");
+    const startCheckout = $("#startCheckout");
+    const territoryInput = $("#payerTerritory");
+    const identityRefInput = $("#payerIdRef");
+    const providerInput = $("#unlockProvider");
+    const internationalProviderField = $("#internationalProviderField");
+    const vietqrBox = $("#vietqrBox");
+    const vietqrTransferNote = $("#vietqrTransferNote");
+    const vietqrAmount = $("#vietqrAmount");
+    const vietqrAccountName = $("#vietqrAccountName");
+    const vietqrAccountNo = $("#vietqrAccountNo");
+    const vietqrBankBin = $("#vietqrBankBin");
+    const vietqrImage = $("#vietqrImage");
+    const markTransferSent = $("#markTransferSent");
+    const confirmUnlock = $("#confirmPaid");
+    let currentVietQrOrderId = null;
 
     const params = new URLSearchParams(window.location.search);
     if (params.get("gate") === "paid" && gateNotice) {
@@ -593,13 +661,26 @@
 
     attachCopy($("#copyUpgradeEmail"), () => session.email);
 
-    function draw() {
-      const profile = getProfileForEmail(session.email) || {
+    function profileSnapshot() {
+      return getProfileForEmail(session.email) || {
         fullName: "",
         currentState: "",
         desiredShift: "",
         companionRhythm: ""
       };
+    }
+
+    function updateTerritoryUI() {
+      const territory = String(territoryInput?.value || "VN").toUpperCase();
+      const isVn = territory === "VN";
+      internationalProviderField?.classList.toggle("hidden", isVn);
+      if (isVn) {
+        unlockPayNow?.classList.add("hidden");
+      }
+    }
+
+    function draw() {
+      const profile = profileSnapshot();
       const complete = profileIsComplete(profile);
       const paid = isPaidMembership(session);
 
@@ -618,12 +699,9 @@
       unlockBlock?.classList.toggle("hidden", !complete || paid);
       paidBlock?.classList.toggle("hidden", !paid);
 
-      if (unlockPayNow) {
-        unlockPayNow.href = buildPayPalUrl(planByCode("year1"), session.email);
-      }
-
       renderProfileInfo(session);
       renderSessionInfo(session);
+      updateTerritoryUI();
     }
 
     profileForm?.addEventListener("submit", (event) => {
@@ -642,12 +720,90 @@
       draw();
     });
 
+    territoryInput?.addEventListener("change", updateTerritoryUI);
+
+    startCheckout?.addEventListener("click", async () => {
+      const profile = profileSnapshot();
+      if (!profileIsComplete(profile)) {
+        setBanner(unlockStatus, strings.gateReason, "warning");
+        return;
+      }
+
+      const territory = String(territoryInput?.value || "VN").toUpperCase();
+      const identityRef = String(identityRefInput?.value || "").trim();
+      const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi";
+      setBanner(unlockStatus, strings.checkoutCreating, "warning");
+      unlockPayNow?.classList.add("hidden");
+
+      try {
+        if (territory === "VN") {
+          const checkout = await createVietQrOrder({
+            email: session.email,
+            plan_code: "year1",
+            locale,
+            identity_country: "VN",
+            identity_ref: identityRef || undefined,
+            next_path: startPathForPath(window.location.pathname)
+          });
+          currentVietQrOrderId = checkout.internal_order_id;
+          vietqrTransferNote.textContent = checkout.manual_transfer?.transfer_note || "-";
+          vietqrAmount.textContent = formatCurrency(checkout.amount, checkout.currency, locale);
+          vietqrAccountName.textContent = checkout.manual_transfer?.account_name || "-";
+          vietqrAccountNo.textContent = checkout.manual_transfer?.account_no || "-";
+          vietqrBankBin.textContent = checkout.manual_transfer?.bank_bin || "-";
+          if (checkout.manual_transfer?.qr_url) {
+            vietqrImage.src = checkout.manual_transfer.qr_url;
+          }
+          vietqrBox?.classList.remove("hidden");
+          setBanner(unlockStatus, strings.paymentReminder, "success");
+          return;
+        }
+
+        const provider = String(providerInput?.value || "stripe").toLowerCase();
+        const checkout = await createCheckout({
+          provider,
+          email: session.email,
+          plan_code: "year1",
+          locale,
+          identity_country: "INTL",
+          identity_ref: identityRef || undefined,
+          next_path: startPathForPath(window.location.pathname)
+        });
+        if (!checkout.checkout_url) {
+          throw new Error(strings.checkoutFailed);
+        }
+        unlockPayNow.href = checkout.checkout_url;
+        unlockPayNow.classList.remove("hidden");
+        setBanner(unlockStatus, strings.checkoutRedirecting, "success");
+        window.location.href = checkout.checkout_url;
+      } catch (error) {
+        const message = String(error?.message || "");
+        if (message.includes("requires")) {
+          setBanner(unlockStatus, strings.checkoutRailError, "danger");
+          return;
+        }
+        setBanner(unlockStatus, message || strings.checkoutFailed, "danger");
+      }
+    });
+
+    markTransferSent?.addEventListener("click", async () => {
+      if (!currentVietQrOrderId) {
+        setBanner(unlockStatus, strings.transferMarkFailed, "danger");
+        return;
+      }
+      try {
+        await markVietQrPending({
+          internal_order_id: currentVietQrOrderId,
+          email: session.email
+        });
+        setBanner(unlockStatus, strings.transferMarked, "success");
+      } catch (error) {
+        setBanner(unlockStatus, error.message || strings.transferMarkFailed, "danger");
+      }
+    });
+
     confirmUnlock?.addEventListener("click", () => {
-      const updated = upgradeCurrentSession("year1");
-      if (!updated) return;
-      session = updated;
-      setBanner(unlockStatus, strings.unlockReady, "success");
-      draw();
+      setBanner(unlockStatus, strings.adminConfirmHint, "warning");
     });
 
     const unlockNote = $("#unlockReminder");

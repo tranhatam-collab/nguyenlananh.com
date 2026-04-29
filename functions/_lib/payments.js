@@ -2,6 +2,7 @@ import { PLANS, PROVIDER_CATALOG, TEMPLATE_IDS, planByCode, providerByCode } fro
 import {
   createMagicLink,
   createOrder,
+  createVietQrOrder,
   findIdempotency,
   getMagicLinkByHash,
   getOrderByCaptureId,
@@ -10,13 +11,16 @@ import {
   getOrderByProviderSessionId,
   getUserByEmail,
   getUserById,
+  getVietQrOrderByInternalOrderId,
   getWebhookByEventId,
+  listVietQrOrders,
   markMagicLinkUsed,
   recordWebhook,
   requireDb,
   revokeUserMembership,
   storeIdempotency,
   updateOrder,
+  updateVietQrOrder,
   updateWebhook,
   upsertUserMembership
 } from "./db.js";
@@ -47,13 +51,57 @@ import {
 const PAYPAL_API_LIVE = "https://api-m.paypal.com";
 const PAYPAL_API_SANDBOX = "https://api-m.sandbox.paypal.com";
 const STRIPE_API = "https://api.stripe.com";
+const IMPLEMENTED_PROVIDER_CODES = ["paypal", "stripe", "vietqr"];
+const VIETQR_DEFAULT_TEMPLATE = "compact2";
+
+function normalizeIdentityCountry(value) {
+  const normalized = String(value || "").trim().toUpperCase();
+  if (!normalized) return "VN";
+  if (normalized === "VIETNAM" || normalized === "VNM") return "VN";
+  if (normalized === "FOREIGN" || normalized === "INTL" || normalized === "INTERNATIONAL" || normalized === "NON_VN") return "INTL";
+  return normalized;
+}
+
+export function resolvePaymentRail({ identityCountry, providerCode }) {
+  const territory = normalizeIdentityCountry(identityCountry);
+  const provider = String(providerCode || "").trim().toLowerCase();
+  const wantsVnd = provider === "vietqr";
+  const wantsUsd = provider === "paypal" || provider === "stripe";
+
+  if (territory === "VN" && wantsUsd) {
+    return {
+      allowed: false,
+      code: "VN_ID_REQUIRES_VND",
+      message: "Vietnam ID requires VND checkout."
+    };
+  }
+
+  if (territory !== "VN" && wantsVnd) {
+    return {
+      allowed: false,
+      code: "INTERNATIONAL_ID_REQUIRES_USD",
+      message: "International ID requires USD checkout."
+    };
+  }
+
+  return {
+    allowed: true,
+    territory,
+    currency: wantsVnd ? "VND" : "USD"
+  };
+}
+
+function planAmountForCurrency(plan, currency) {
+  if (String(currency || "").toUpperCase() === "VND") return Number(plan.priceVnd || 0);
+  return Number(plan.priceUsd || 0);
+}
 
 function providerSecretsReady(provider, env) {
   return provider.requiredSecrets.every((secretName) => Boolean(env[secretName]));
 }
 
 function providerStatus(provider, env) {
-  const implemented = ["paypal", "stripe"].includes(provider.code);
+  const implemented = IMPLEMENTED_PROVIDER_CODES.includes(provider.code);
   const enabled = providerSecretsReady(provider, env) && Boolean(env.PAYMENTS_DB) && implemented;
   const manualFallback = provider.code === "paypal" && Boolean(env.PAYPAL_MERCHANT_EMAIL) && !enabled;
   return {
@@ -128,7 +176,7 @@ async function createPayPalCheckout(env, order, idempotencyKey) {
           description: `Nguyenlananh Membership ${order.plan.label}`,
           amount: {
             currency_code: "USD",
-            value: order.plan.priceUsd.toFixed(2)
+            value: Number(order.amount || 0).toFixed(2)
           }
         }
       ],
@@ -282,8 +330,8 @@ async function createStripeCheckout(env, order, idempotencyKey) {
     "payment_intent_data[metadata][plan_code]": order.plan.code,
     "payment_intent_data[metadata][email]": order.email,
     "line_items[0][quantity]": 1,
-    "line_items[0][price_data][currency]": "usd",
-    "line_items[0][price_data][unit_amount]": order.plan.priceUsd * 100,
+    "line_items[0][price_data][currency]": String(order.currency || "USD").toLowerCase(),
+    "line_items[0][price_data][unit_amount]": Math.round(Number(order.amount || 0) * 100),
     "line_items[0][price_data][product_data][name]": `Nguyenlananh Membership ${order.plan.label}`
   });
 
@@ -306,6 +354,61 @@ async function retrieveStripeSession(env, sessionId) {
     status: body.status,
     capture_id: body.payment_intent || null,
     raw: body
+  };
+}
+
+function normalizeDigits(value) {
+  return String(value || "").replace(/\D+/g, "");
+}
+
+export function buildVietQrQuickLink({ bankBin, accountNo, amount, transferNote, accountName, template = VIETQR_DEFAULT_TEMPLATE }) {
+  const sanitizedBankBin = normalizeDigits(bankBin);
+  const sanitizedAccountNo = normalizeDigits(accountNo);
+  const sanitizedAmount = Math.max(0, Math.round(Number(amount || 0)));
+  const safeNote = String(transferNote || "").trim();
+  assert(sanitizedBankBin.length >= 6, "VIETQR_BANK_BIN_INVALID", "VIETQR_BANK_BIN is invalid.", 500);
+  assert(sanitizedAccountNo.length >= 6, "VIETQR_ACCOUNT_NO_INVALID", "VIETQR_ACCOUNT_NO is invalid.", 500);
+  assert(sanitizedAmount > 0, "VIETQR_AMOUNT_INVALID", "VND amount must be greater than zero.", 422);
+  assert(safeNote.length >= 6, "VIETQR_TRANSFER_NOTE_INVALID", "Transfer note is invalid.", 500);
+
+  const url = new URL(`https://img.vietqr.io/image/${sanitizedBankBin}-${sanitizedAccountNo}-${template}.png`);
+  url.searchParams.set("amount", String(sanitizedAmount));
+  url.searchParams.set("addInfo", safeNote);
+  if (String(accountName || "").trim()) {
+    url.searchParams.set("accountName", String(accountName || "").trim());
+  }
+  return url.toString();
+}
+
+function buildVietQrTransferNote(internalOrderId) {
+  const normalized = String(internalOrderId || "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  return `NLA${normalized.slice(-10)}`;
+}
+
+async function createVietQrCheckout(env, order) {
+  const transferNote = buildVietQrTransferNote(order.internal_order_id);
+  const qrUrl = buildVietQrQuickLink({
+    bankBin: env.VIETQR_BANK_BIN,
+    accountNo: env.VIETQR_ACCOUNT_NO,
+    accountName: env.VIETQR_ACCOUNT_NAME,
+    amount: order.amount,
+    transferNote,
+    template: env.VIETQR_TEMPLATE || VIETQR_DEFAULT_TEMPLATE
+  });
+
+  return {
+    provider_order_id: transferNote,
+    checkout_url: qrUrl,
+    raw: {
+      mode: "manual_confirm",
+      transfer_note: transferNote,
+      qr_url: qrUrl,
+      bank_bin: String(env.VIETQR_BANK_BIN || ""),
+      account_no: String(env.VIETQR_ACCOUNT_NO || ""),
+      account_name: String(env.VIETQR_ACCOUNT_NAME || ""),
+      amount: Number(order.amount || 0),
+      currency: "VND"
+    }
   };
 }
 
@@ -382,6 +485,15 @@ function providerPublicConfig(providerCode, env) {
   if (providerCode === "stripe") {
     return {
       publishable_key: env.STRIPE_PUBLISHABLE_KEY || null
+    };
+  }
+
+  if (providerCode === "vietqr") {
+    return {
+      bank_bin: env.VIETQR_BANK_BIN || null,
+      account_no: env.VIETQR_ACCOUNT_NO || null,
+      account_name: env.VIETQR_ACCOUNT_NAME || null,
+      template: env.VIETQR_TEMPLATE || VIETQR_DEFAULT_TEMPLATE
     };
   }
 
@@ -601,13 +713,13 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
 }
 
 function decorateResponse({ order, checkout }) {
-  return {
+  const body = {
     ok: true,
     internal_order_id: order.internal_order_id,
     provider: order.provider,
     plan_code: order.plan.code,
-    amount: order.plan.priceUsd,
-    currency: "USD",
+    amount: Number(order.amount),
+    currency: order.currency,
     checkout_url: checkout.checkout_url,
     provider_order_id: checkout.provider_order_id || null,
     provider_session_id: checkout.provider_session_id || null,
@@ -615,6 +727,20 @@ function decorateResponse({ order, checkout }) {
     cancel_url: order.cancel_url,
     retry_url: order.retry_url
   };
+
+  if (order.provider === "vietqr") {
+    body.manual_transfer = {
+      bank_bin: checkout.raw?.bank_bin || null,
+      account_no: checkout.raw?.account_no || null,
+      account_name: checkout.raw?.account_name || null,
+      transfer_note: checkout.raw?.transfer_note || checkout.provider_order_id || null,
+      qr_url: checkout.raw?.qr_url || checkout.checkout_url || null,
+      amount: Number(order.amount),
+      currency: order.currency
+    };
+  }
+
+  return body;
 }
 
 async function createCheckoutForProvider({ providerCode, env, order, idempotencyKey }) {
@@ -624,6 +750,10 @@ async function createCheckoutForProvider({ providerCode, env, order, idempotency
 
   if (providerCode === "stripe") {
     return createStripeCheckout(env, order, idempotencyKey);
+  }
+
+  if (providerCode === "vietqr") {
+    return createVietQrCheckout(env, order);
   }
 
   const error = new Error(`${providerCode} has not been wired into runtime yet.`);
@@ -653,6 +783,16 @@ async function finalizeProviderPayment({ order, body, env, idempotencyKey }) {
     };
   }
 
+  if (order.provider === "vietqr") {
+    const confirmed = Boolean(body.manual_confirmed || body.provider_ref || body.provider_capture_id);
+    return {
+      capture_status: confirmed ? "COMPLETED" : "PENDING",
+      provider_capture_id: body.provider_capture_id || body.provider_ref || null,
+      provider_order_id: order.provider_order_id,
+      provider_session_id: null
+    };
+  }
+
   return {
     capture_status: "PENDING",
     provider_capture_id: null,
@@ -672,6 +812,160 @@ export async function listProvidersResponse(context) {
   });
 }
 
+function requireAdminPaymentAccess(context) {
+  const secret = String(context.env.PAYMENTS_ADMIN_KEY || context.env.ADMIN_PAYMENT_CONFIRM_KEY || "");
+  assert(secret, "ADMIN_KEY_NOT_CONFIGURED", "Admin payment confirmation key is missing.", 503);
+  const provided = String(context.request.headers.get("x-admin-key") || "");
+  assert(provided, "ADMIN_KEY_REQUIRED", "x-admin-key is required.", 401);
+  assert(timingSafeEqualHex(provided, secret), "ADMIN_KEY_INVALID", "Invalid admin key.", 403);
+}
+
+export async function createVietQrOrderResponse(context) {
+  const body = await readJson(context.request);
+  const providerBody = {
+    ...(body || {}),
+    provider: "vietqr"
+  };
+  const request = new Request(context.request.url, {
+    method: "POST",
+    headers: context.request.headers,
+    body: JSON.stringify(providerBody)
+  });
+  return createCheckoutResponse({ ...context, request });
+}
+
+export async function markVietQrPendingResponse(context) {
+  try {
+    const body = await readJson(context.request);
+    assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
+    const internalOrderId = String(body.internal_order_id || "").trim();
+    assert(internalOrderId, "ORDER_ID_REQUIRED", "internal_order_id is required.", 422);
+
+    const db = requireDb(context.env);
+    const order = await getOrderByInternalId(db, internalOrderId);
+    assert(order, "ORDER_NOT_FOUND", "Order not found.", 404);
+    assert(order.provider === "vietqr", "ORDER_PROVIDER_INVALID", "Order is not a VietQR order.", 422);
+
+    const email = normalizeEmail(body.email);
+    if (email) {
+      assert(email === normalizeEmail(order.email), "ORDER_EMAIL_MISMATCH", "Order email does not match.", 403);
+    }
+
+    await updateOrder(db, internalOrderId, {
+      payment_status: "awaiting_confirmation",
+      updated_at: nowIso()
+    });
+    await updateVietQrOrder(db, internalOrderId, {
+      status: "awaiting_confirmation",
+      awaiting_confirmation_at: nowIso(),
+      updated_at: nowIso()
+    });
+
+    const vietQrOrder = await getVietQrOrderByInternalOrderId(db, internalOrderId);
+
+    return json({
+      ok: true,
+      internal_order_id: internalOrderId,
+      status: "awaiting_confirmation",
+      transfer_note: vietQrOrder?.transfer_note || order.provider_order_id || null,
+      qr_url: vietQrOrder?.qr_url || null
+    });
+  } catch (error) {
+    return errorResponse(error.status || 500, error.code || "VIETQR_MARK_PENDING_FAILED", error.message || "Unable to mark VietQR payment pending.");
+  }
+}
+
+export async function listVietQrOrdersResponse(context) {
+  try {
+    requireAdminPaymentAccess(context);
+    const db = requireDb(context.env);
+    const url = new URL(context.request.url);
+    const status = String(url.searchParams.get("status") || "awaiting_confirmation").trim();
+    const limit = Number(url.searchParams.get("limit") || 50);
+    const orders = await listVietQrOrders(db, {
+      status: status === "all" ? null : status,
+      limit
+    });
+    return json({
+      ok: true,
+      count: orders.length,
+      orders
+    });
+  } catch (error) {
+    return errorResponse(error.status || 500, error.code || "VIETQR_LIST_FAILED", error.message || "Unable to list VietQR orders.");
+  }
+}
+
+export async function confirmVietQrOrderResponse(context) {
+  try {
+    requireAdminPaymentAccess(context);
+    const body = await readJson(context.request);
+    assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
+
+    const internalOrderId = String(body.internal_order_id || "").trim();
+    assert(internalOrderId, "ORDER_ID_REQUIRED", "internal_order_id is required.", 422);
+    const providerRef = String(body.provider_ref || "").trim() || `vietqr_${internalOrderId}`;
+
+    const db = requireDb(context.env);
+    const order = await getOrderByInternalId(db, internalOrderId);
+    assert(order, "ORDER_NOT_FOUND", "Order not found.", 404);
+    assert(order.provider === "vietqr", "ORDER_PROVIDER_INVALID", "Order is not a VietQR order.", 422);
+
+    if (order.fulfillment_status === "fulfilled") {
+      return json({
+        ok: true,
+        internal_order_id: internalOrderId,
+        provider: "vietqr",
+        status: "already_confirmed",
+        provider_ref: order.provider_capture_id || providerRef
+      });
+    }
+
+    const finalized = await finalizeProviderPayment({
+      order,
+      body: {
+        manual_confirmed: true,
+        provider_ref: providerRef
+      },
+      env: context.env,
+      idempotencyKey: context.request.headers.get("x-idempotency-key") || randomId("vietqr_confirm")
+    });
+
+    assert(finalized.capture_status === "COMPLETED", "VIETQR_CONFIRM_FAILED", "Unable to confirm VietQR payment.", 409);
+
+    const fulfilled = await fulfillOrder({
+      db,
+      env: context.env,
+      order,
+      request: context.request,
+      providerCaptureId: finalized.provider_capture_id || providerRef,
+      providerOrderId: finalized.provider_order_id || order.provider_order_id
+    });
+
+    await updateVietQrOrder(db, internalOrderId, {
+      status: "confirmed",
+      provider_ref: providerRef,
+      confirmed_by: String(context.request.headers.get("x-admin-user") || body.confirmed_by || "admin").slice(0, 120),
+      confirmation_note: String(body.confirmation_note || "").slice(0, 240) || null,
+      confirmed_at: nowIso(),
+      updated_at: nowIso()
+    });
+
+    return json({
+      ok: true,
+      internal_order_id: internalOrderId,
+      provider: "vietqr",
+      capture_status: "COMPLETED",
+      fulfillment_status: fulfilled.fulfillment_status,
+      provider_ref: providerRef,
+      magic_link: fulfilled.magic_link || null,
+      queued_email_templates: fulfilled.queued_email_templates || []
+    });
+  } catch (error) {
+    return errorResponse(error.status || 500, error.code || "VIETQR_CONFIRM_FAILED", error.message || "Unable to confirm VietQR payment.");
+  }
+}
+
 export async function createCheckoutResponse(context) {
   try {
     const body = await readJson(context.request);
@@ -684,6 +978,11 @@ export async function createCheckoutResponse(context) {
 
     const plan = planByCode(body.plan_code);
     assert(plan, "PLAN_INVALID", "Unsupported plan code.", 422);
+    const rail = resolvePaymentRail({
+      identityCountry: body.identity_country,
+      providerCode
+    });
+    assert(rail.allowed, rail.code || "PAYMENT_RAIL_INVALID", rail.message || "Payment rail is not allowed for this identity country.", 422);
 
     const email = normalizeEmail(body.email);
     assert(email && email.includes("@"), "EMAIL_INVALID", "A valid email is required.", 422);
@@ -720,6 +1019,8 @@ export async function createCheckoutResponse(context) {
       email,
       provider: providerCode,
       plan,
+      amount: planAmountForCurrency(plan, rail.currency),
+      currency: rail.currency,
       locale,
       success_url: returnUrls.success_url,
       cancel_url: returnUrls.cancel_url,
@@ -727,6 +1028,8 @@ export async function createCheckoutResponse(context) {
       metadata_json: {
         next_path: normalizeNextPath(body.next_path, locale),
         source: "join",
+        identity_country: rail.territory,
+        identity_ref: String(body.identity_ref || "").trim().slice(0, 80) || null,
         raw_metadata: body.metadata || {}
       }
     };
@@ -744,8 +1047,8 @@ export async function createCheckoutResponse(context) {
       locale,
       provider: providerCode,
       plan_code: plan.code,
-      amount: plan.priceUsd,
-      currency: "USD",
+      amount: order.amount,
+      currency: order.currency,
       provider_order_id: checkout.provider_order_id || null,
       provider_session_id: checkout.provider_session_id || null,
       payment_status: "created",
@@ -758,6 +1061,25 @@ export async function createCheckoutResponse(context) {
       created_at: nowIso(),
       updated_at: nowIso()
     });
+
+    if (providerCode === "vietqr") {
+      await createVietQrOrder(db, {
+        internal_order_id: internalOrderId,
+        email,
+        locale,
+        plan_code: plan.code,
+        amount: Math.round(order.amount),
+        currency: "VND",
+        transfer_note: checkout.raw?.transfer_note || checkout.provider_order_id,
+        bank_bin: checkout.raw?.bank_bin || String(context.env.VIETQR_BANK_BIN || ""),
+        account_no: checkout.raw?.account_no || String(context.env.VIETQR_ACCOUNT_NO || ""),
+        account_name: checkout.raw?.account_name || String(context.env.VIETQR_ACCOUNT_NAME || ""),
+        qr_url: checkout.raw?.qr_url || checkout.checkout_url,
+        status: "pending",
+        created_at: nowIso(),
+        updated_at: nowIso()
+      });
+    }
 
     const responseBody = decorateResponse({ order, checkout });
     await storeIdempotency(db, {
@@ -818,6 +1140,14 @@ export async function finalizeCheckoutResponse(context) {
         providerSessionId: finalized.provider_session_id,
         providerOrderId: finalized.provider_order_id
       });
+      if (order.provider === "vietqr") {
+        await updateVietQrOrder(db, order.internal_order_id, {
+          status: "confirmed",
+          provider_ref: finalized.provider_capture_id || finalized.provider_order_id || null,
+          confirmed_at: nowIso(),
+          updated_at: nowIso()
+        });
+      }
     } else if (finalized.capture_status === "DENIED") {
       await markPaymentFailed({ db, env: context.env, order });
       responseBody = {
@@ -827,6 +1157,12 @@ export async function finalizeCheckoutResponse(context) {
         capture_status: "DENIED",
         fulfillment_status: "NOT_FULFILLED"
       };
+      if (order.provider === "vietqr") {
+        await updateVietQrOrder(db, order.internal_order_id, {
+          status: "expired",
+          updated_at: nowIso()
+        });
+      }
     } else {
       await updateOrder(db, order.internal_order_id, {
         payment_status: "pending",
@@ -839,6 +1175,13 @@ export async function finalizeCheckoutResponse(context) {
         capture_status: finalized.capture_status,
         fulfillment_status: "PENDING"
       };
+      if (order.provider === "vietqr") {
+        await updateVietQrOrder(db, order.internal_order_id, {
+          status: "awaiting_confirmation",
+          awaiting_confirmation_at: nowIso(),
+          updated_at: nowIso()
+        });
+      }
     }
 
     await storeIdempotency(db, {
@@ -974,6 +1317,33 @@ export async function paypalWebhookResponse(context) {
     }
 
     const headers = serializeHeaders(context.request.headers);
+    const paypalProvider = providerByCode("paypal");
+    if (!providerSecretsReady(paypalProvider, context.env)) {
+      if (!existing) {
+        await recordWebhook(db, {
+          provider: "paypal",
+          event_id: eventId,
+          event_type: eventType,
+          signature_valid: false,
+          headers_json: headers,
+          payload_json: event,
+          processed: false,
+          received_at: nowIso(),
+          error_code: "PAYPAL_NOT_CONFIGURED",
+          error_detail: "PayPal webhook secrets are missing."
+        });
+      } else {
+        await updateWebhook(db, eventId, {
+          signature_valid: false,
+          headers_json: headers,
+          payload_json: event,
+          error_code: "PAYPAL_NOT_CONFIGURED",
+          error_detail: "PayPal webhook secrets are missing."
+        });
+      }
+      return errorResponse(503, "PAYPAL_NOT_CONFIGURED", "PayPal webhook secrets are missing.");
+    }
+
     const signatureValid = await verifyPayPalWebhook(context.env, headers, event);
 
     if (!existing) {
@@ -1132,6 +1502,7 @@ export async function healthSummaryResponse(context) {
     plans: Object.values(PLANS).map((plan) => ({
       code: plan.code,
       price_usd: plan.priceUsd,
+      price_vnd: plan.priceVnd,
       duration_days: plan.durationDays
     }))
   });

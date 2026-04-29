@@ -1,11 +1,11 @@
 # Bilingual Language Rebuild Report
 
-- Generated at: 2026-04-25T12:27:04.335Z
-- Status: PASS
-- Total URLs audited: 188
-- Pages with issues: 0
-- Total issues: 0
-- Blocking issues: 0
+- Generated at: 2026-04-25T13:04:39.564Z
+- Status: BLOCKED
+- Total URLs audited: 214
+- Pages with issues: 10
+- Total issues: 10
+- Blocking issues: 10
 - Images checked: 75
 - Alt text present: 75
 - Figures checked: 75
@@ -14,13 +14,22 @@
 
 ## Summary
 
-- Locale split: {"vi":94,"en":94}
-- Severity split: {}
-- Category split: {}
+- Locale split: {"vi":107,"en":107}
+- Severity split: {"high":10}
+- Category split: {"en":10}
 
 ## Blocking Pages
 
-- None
+- /en/bai-viet/ban-khong-thieu-kien-thuc/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/chi-can-dung/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/chua-tung-co-huong/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/co-nguoi-can-dung-lai/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/dieu-ban-dang-tranh/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/hieu-cuoc-doi-minh/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/sai-moi-truong/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/song-sai-nhip/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/song-theo-thoi-quen/ [en] -> english_page_contains_vietnamese_diacritics
+- /en/bai-viet/thieu-su-that/ [en] -> english_page_contains_vietnamese_diacritics
 
 ## Locked Decisions
 

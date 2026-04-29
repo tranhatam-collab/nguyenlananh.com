@@ -67,6 +67,12 @@
 
 
 
+
+
+
+
+
+
   <meta name="robots" content="noindex,follow" />
   <link rel="stylesheet" href="/assets/site.css" />
   <meta property="og:title" content="Bắt đầu đồng hành | Nguyenlananh.com" />
@@ -137,11 +143,40 @@
 
     <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
       <h3>Mở khóa tầng thành viên đã trả phí</h3>
-      <p>Bước này là <strong>2 USD qua PayPal</strong>. Sau khi mở khóa, bạn sẽ thấy đủ toàn bộ quyền lợi của gói thành viên đã trả phí trước đây bắt đầu từ 3 USD.</p>
+      <p>Bạn có thể thanh toán nội địa Việt Nam bằng VietQR (VND) hoặc thanh toán quốc tế bằng USD. Membership chỉ mở khi thanh toán đã được xác nhận.</p>
       <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
+      <div class="field">
+        <label for="payerTerritory">Định danh thanh toán</label>
+        <select id="payerTerritory">
+          <option value="VN">ID tại Việt Nam (bắt buộc VND)</option>
+          <option value="INTL">ID ngoài Việt Nam (bắt buộc USD)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="payerIdRef">Mã tham chiếu định danh (CCCD/Hộ chiếu)</label>
+        <input id="payerIdRef" type="text" maxlength="80" placeholder="VD: 0792xxxx hoặc passport code" />
+      </div>
+      <div class="field" id="internationalProviderField">
+        <label for="unlockProvider">Cổng thanh toán quốc tế</label>
+        <select id="unlockProvider">
+          <option value="stripe">Stripe (USD)</option>
+          <option value="paypal">PayPal (USD)</option>
+        </select>
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
-        <a id="unlockPayNow" class="cta" href="#" target="_blank" rel="noopener">Mở PayPal 2 USD</a>
-        <button id="confirmPaid" class="ghost" type="button">Tôi đã thanh toán</button>
+        <button id="startCheckout" class="cta" type="button">Tạo checkout</button>
+        <a id="unlockPayNow" class="ghost hidden" href="#" target="_blank" rel="noopener">Mở trang thanh toán</a>
+      </div>
+      <div id="vietqrBox" class="hidden" style="margin-top:10px;">
+        <p><strong>Quét mã VietQR hoặc chuyển khoản thủ công</strong></p>
+        <p class="note">Nội dung chuyển khoản: <strong id="vietqrTransferNote">-</strong></p>
+        <p class="note">Số tiền: <strong id="vietqrAmount">-</strong></p>
+        <p class="note">Tài khoản: <strong id="vietqrAccountName">-</strong> · <span id="vietqrAccountNo">-</span> · BIN <span id="vietqrBankBin">-</span></p>
+        <img id="vietqrImage" alt="VietQR checkout" style="width:100%; max-width:280px; border-radius:6px; border:1px solid rgba(148,163,184,.35);" />
+        <div class="actionsRow" style="margin-top:10px;">
+          <button id="markTransferSent" class="ghost" type="button">Tôi đã chuyển khoản</button>
+          <button id="confirmPaid" class="btn" type="button">Admin xác nhận thủ công</button>
+        </div>
       </div>
       <div class="actionsRow" style="margin-top:10px;">
         <button id="copyUpgradeEmail" class="btn" type="button">Sao chép email thanh toán</button>

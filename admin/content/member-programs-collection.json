@@ -1,0 +1,558 @@
+{
+  "collection": "member_programs",
+  "version": "2026-04-29.step-2-3",
+  "generated_at": "2026-04-29T14:18:48+07:00",
+  "status": "strategy_locked",
+  "source_docs": [
+    "docs/NGUYENLANANH_STEP_2_3_PAID_MEMBER_COMMERCE_CREATOR_MASTER_PLAN_2026-04-29.md",
+    "docs/MEMBER_PROGRAMS_CONTENT_CANON_2026-04-29.md"
+  ],
+  "layers": [
+    {
+      "code": "free",
+      "label_vi": "Free Member",
+      "label_en": "Free Member",
+      "routes": [
+        "/join/",
+        "/members/start/",
+        "/members/dashboard/"
+      ],
+      "purpose_vi": "Định vị, hồ sơ, chooser nhẹ, Day 1 preview.",
+      "purpose_en": "Orientation, profile, light chooser, Day 1 preview.",
+      "unlocks": [
+        "orientation",
+        "profile",
+        "dashboard",
+        "day_1_preview"
+      ]
+    },
+    {
+      "code": "year1",
+      "label_vi": "Core Access",
+      "label_en": "Core Access",
+      "routes": [
+        "/members/journey/",
+        "/members/practice/",
+        "/members/experience/"
+      ],
+      "purpose_vi": "7 ngày nền, 30 ngày practice, 10 pillar companion lessons.",
+      "purpose_en": "7-day foundation, 30-day practice, 10 pillar companion lessons.",
+      "unlocks": [
+        "core_foundation",
+        "thirty_day_practice",
+        "pillar_companion_lessons",
+        "core_worksheets",
+        "program_chooser"
+      ]
+    },
+    {
+      "code": "year2",
+      "label_vi": "Deep Continuity",
+      "label_en": "Deep Continuity",
+      "routes": [
+        "/members/deep/"
+      ],
+      "purpose_vi": "12 deep tracks, worksheets, case/practice library, monthly review.",
+      "purpose_en": "12 deep tracks, worksheets, case/practice library, monthly review.",
+      "unlocks": [
+        "year1",
+        "deep_tracks",
+        "deep_worksheets",
+        "case_practice_library",
+        "monthly_review"
+      ]
+    },
+    {
+      "code": "year3",
+      "label_vi": "Mastery / Pro",
+      "label_en": "Mastery / Pro",
+      "routes": [
+        "/members/pro/",
+        "/members/creator/"
+      ],
+      "purpose_vi": "8 pro tracks, 30/60/90-day implementation, creator eligibility review.",
+      "purpose_en": "8 pro tracks, 30/60/90-day implementation, creator eligibility review.",
+      "unlocks": [
+        "year1",
+        "year2",
+        "pro_tracks",
+        "implementation_workbooks",
+        "creator_eligibility_review"
+      ]
+    }
+  ],
+  "pillar_companion_lessons": [
+    {
+      "pillar_code": "pillar_01",
+      "title_vi": "Bốn Trục",
+      "title_en": "The Four Axes",
+      "public_route_vi": "/bai-viet/bon-truc-thay-doi/",
+      "public_route_en": "/en/bai-viet/bon-truc-thay-doi/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/bon-truc/",
+      "deep_track": "four_axes_audit",
+      "pro_tracks": [
+        "reset_life",
+        "inner"
+      ],
+      "worksheet": "4-Axis Life Audit"
+    },
+    {
+      "pillar_code": "pillar_02",
+      "title_vi": "Cái Chổi",
+      "title_en": "The Broom",
+      "public_route_vi": "/bai-viet/cai-choi/",
+      "public_route_en": "/en/bai-viet/cai-choi/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/cai-choi/",
+      "deep_track": "gentle_discipline",
+      "pro_tracks": [
+        "discipline",
+        "environment"
+      ],
+      "worksheet": "Manual Work Tracker"
+    },
+    {
+      "pillar_code": "pillar_03",
+      "title_vi": "Vòng Lặp",
+      "title_en": "Loops",
+      "public_route_vi": "/bai-viet/nhung-vong-lap-ban-chua-goi-ten/",
+      "public_route_en": "/en/bai-viet/nhung-vong-lap-ban-chua-goi-ten/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/vong-lap/",
+      "deep_track": "loop_map",
+      "pro_tracks": [
+        "inner",
+        "reset_life"
+      ],
+      "worksheet": "Loop Map"
+    },
+    {
+      "pillar_code": "pillar_04",
+      "title_vi": "Im Lặng",
+      "title_en": "Silence",
+      "public_route_vi": "/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "public_route_en": "/en/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/im-lang/",
+      "deep_track": "silence_practice",
+      "pro_tracks": [
+        "inner",
+        "reset_life"
+      ],
+      "worksheet": "Silence Log"
+    },
+    {
+      "pillar_code": "pillar_05",
+      "title_vi": "Hệ Gia Đình",
+      "title_en": "Family Systems",
+      "public_route_vi": "/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "public_route_en": "/en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/he-gia-dinh/",
+      "deep_track": "family_systems",
+      "pro_tracks": [
+        "family_relationship_systems",
+        "children_education_environment"
+      ],
+      "worksheet": "Family Role Map"
+    },
+    {
+      "pillar_code": "pillar_06",
+      "title_vi": "Cô Đơn",
+      "title_en": "Loneliness",
+      "public_route_vi": "/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "public_route_en": "/en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/co-don/",
+      "deep_track": "self_connection",
+      "pro_tracks": [
+        "inner",
+        "family_relationship_systems"
+      ],
+      "worksheet": "Self-Connection Audit"
+    },
+    {
+      "pillar_code": "pillar_07",
+      "title_vi": "Môi Trường",
+      "title_en": "Environment",
+      "public_route_vi": "/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "public_route_en": "/en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/moi-truong/",
+      "deep_track": "environment_as_teacher",
+      "pro_tracks": [
+        "environment"
+      ],
+      "worksheet": "Environment Audit"
+    },
+    {
+      "pillar_code": "pillar_08",
+      "title_vi": "Trẻ Em",
+      "title_en": "Children",
+      "public_route_vi": "/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "public_route_en": "/en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/tre-em/",
+      "deep_track": "children_without_breaking_nature",
+      "pro_tracks": [
+        "children_education_environment"
+      ],
+      "worksheet": "Child Environment Map"
+    },
+    {
+      "pillar_code": "pillar_09",
+      "title_vi": "Lao Động Sáng Tạo",
+      "title_en": "Creative Labor",
+      "public_route_vi": "/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "public_route_en": "/en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/lao-dong-sang-tao/",
+      "deep_track": "creative_labor",
+      "pro_tracks": [
+        "creation",
+        "discipline"
+      ],
+      "worksheet": "Creative Labor Log"
+    },
+    {
+      "pillar_code": "pillar_10",
+      "title_vi": "Đầu Tư Bản Thân",
+      "title_en": "Investing in Yourself",
+      "public_route_vi": "/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "public_route_en": "/en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "core_route_status": "planned",
+      "core_route_vi": "/members/journey/dau-tu-ban-than/",
+      "deep_track": "right_investment",
+      "pro_tracks": [
+        "wealth",
+        "reset_life"
+      ],
+      "worksheet": "Right Investment Filter"
+    }
+  ],
+  "deep_tracks": [
+    {
+      "code": "four_axes_audit",
+      "title_vi": "Four Axes Audit",
+      "route_status": "planned",
+      "route_vi": "/members/deep/bon-truc-tu-dinh-vi/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_01"
+      ],
+      "lesson_count": 5,
+      "worksheet": "4-Axis Audit",
+      "chooser_to": [
+        "reset_life",
+        "inner",
+        "discipline"
+      ]
+    },
+    {
+      "code": "loop_map",
+      "title_vi": "Loop Map",
+      "route_status": "existing",
+      "route_vi": "/members/deep/ban-do-vong-lap/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_03"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Loop Map",
+      "chooser_to": [
+        "inner",
+        "reset_life"
+      ]
+    },
+    {
+      "code": "silence_practice",
+      "title_vi": "Silence Practice",
+      "route_status": "planned",
+      "route_vi": "/members/deep/im-lang-that/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_04"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Silence Log",
+      "chooser_to": [
+        "inner",
+        "reset_life"
+      ]
+    },
+    {
+      "code": "self_connection",
+      "title_vi": "Self-Connection",
+      "route_status": "existing",
+      "route_vi": "/members/deep/am-thanh-tu-than/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_06"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Self-Connection Audit",
+      "chooser_to": [
+        "inner",
+        "family_relationship_systems"
+      ]
+    },
+    {
+      "code": "family_systems",
+      "title_vi": "Family Systems",
+      "route_status": "existing",
+      "route_vi": "/members/deep/gia-dinh-va-goc-re/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_05"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Family Role Map",
+      "chooser_to": [
+        "family_relationship_systems",
+        "children_education_environment"
+      ]
+    },
+    {
+      "code": "environment_as_teacher",
+      "title_vi": "Environment As Teacher",
+      "route_status": "existing",
+      "route_vi": "/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_07"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Environment Audit",
+      "chooser_to": [
+        "environment",
+        "discipline"
+      ]
+    },
+    {
+      "code": "gentle_discipline",
+      "title_vi": "Gentle Discipline",
+      "route_status": "existing",
+      "route_vi": "/members/deep/ky-luat-nhe-va-nhip-song-moi/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_02",
+        "pillar_09"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Gentle Discipline Tracker",
+      "chooser_to": [
+        "discipline",
+        "creation"
+      ]
+    },
+    {
+      "code": "creative_labor",
+      "title_vi": "Creative Labor",
+      "route_status": "existing",
+      "route_vi": "/members/deep/lao-dong-vat-the-va-su-truong-thanh/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_09"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Creative Labor Log",
+      "chooser_to": [
+        "creation",
+        "discipline"
+      ]
+    },
+    {
+      "code": "right_investment",
+      "title_vi": "Right Investment",
+      "route_status": "planned",
+      "route_vi": "/members/deep/chon-dung-dau-tu-ban-than/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_10"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Right Investment Filter",
+      "chooser_to": [
+        "wealth",
+        "reset_life"
+      ]
+    },
+    {
+      "code": "children_without_breaking_nature",
+      "title_vi": "Children Without Breaking Nature",
+      "route_status": "existing",
+      "route_vi": "/members/deep/tre-em-va-khong-gian-lon-len/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_08"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Child Environment Map",
+      "chooser_to": [
+        "children_education_environment",
+        "family_relationship_systems"
+      ]
+    },
+    {
+      "code": "soft_boundaries_family",
+      "title_vi": "Soft Boundaries In Family",
+      "route_status": "existing",
+      "route_vi": "/members/deep/ranh-gioi-mem-trong-gia-dinh/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_05",
+        "pillar_06"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Soft Boundary Script",
+      "chooser_to": [
+        "family_relationship_systems",
+        "inner"
+      ]
+    },
+    {
+      "code": "dialogue_at_home",
+      "title_vi": "Dialogue At Home",
+      "route_status": "existing",
+      "route_vi": "/members/deep/doi-thoai-chua-lanh-trong-nha/",
+      "tier_required": "year2",
+      "source_pillars": [
+        "pillar_05",
+        "pillar_08"
+      ],
+      "lesson_count": 5,
+      "worksheet": "Home Dialogue Notes",
+      "chooser_to": [
+        "family_relationship_systems",
+        "children_education_environment"
+      ]
+    }
+  ],
+  "pro_tracks": [
+    {
+      "code": "reset_life",
+      "title_vi": "Reset Life",
+      "route_status": "existing",
+      "route_vi": "/members/pro/reset/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "inner",
+      "title_vi": "Inner",
+      "route_status": "existing",
+      "route_vi": "/members/pro/inner/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "discipline",
+      "title_vi": "Discipline",
+      "route_status": "existing",
+      "route_vi": "/members/pro/discipline/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "environment",
+      "title_vi": "Environment",
+      "route_status": "existing",
+      "route_vi": "/members/pro/environment/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "creation",
+      "title_vi": "Creation",
+      "route_status": "existing",
+      "route_vi": "/members/pro/creation/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "wealth",
+      "title_vi": "Wealth",
+      "route_status": "existing",
+      "route_vi": "/members/pro/wealth/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "family_relationship_systems",
+      "title_vi": "Family & Relationship Systems",
+      "route_status": "required_new_route",
+      "route_vi": "/members/pro/family/",
+      "tier_required": "year3",
+      "module_count": 8
+    },
+    {
+      "code": "children_education_environment",
+      "title_vi": "Children & Education Environment",
+      "route_status": "required_new_route",
+      "route_vi": "/members/pro/children/",
+      "tier_required": "year3",
+      "module_count": 8
+    }
+  ],
+  "creator_curriculum": [
+    {
+      "code": "creator_01",
+      "title_vi": "Voice lock của NguyenLanAnh"
+    },
+    {
+      "code": "creator_02",
+      "title_vi": "Viết không giảng, không chữa, không hứa"
+    },
+    {
+      "code": "creator_03",
+      "title_vi": "Biến một public pillar thành paid practice"
+    },
+    {
+      "code": "creator_04",
+      "title_vi": "Case thật không xâm phạm riêng tư"
+    },
+    {
+      "code": "creator_05",
+      "title_vi": "Internal links và route ổn định"
+    },
+    {
+      "code": "creator_06",
+      "title_vi": "SEO/meta mà không phá giọng"
+    },
+    {
+      "code": "creator_07",
+      "title_vi": "EN meaning adaptation"
+    },
+    {
+      "code": "creator_08",
+      "title_vi": "Worksheet và seven-day practice"
+    },
+    {
+      "code": "creator_09",
+      "title_vi": "Submission packet chuẩn"
+    },
+    {
+      "code": "creator_10",
+      "title_vi": "Review, revision, approval, revenue ops"
+    }
+  ],
+  "homepage_gate": {
+    "status": "blocked_until_step_2_3_execution_complete",
+    "do_not_modify": [
+      "index.html",
+      "en/index.html",
+      "admin/site-config.json"
+    ],
+    "required_before_refresh": [
+      "manifest_validates",
+      "content_canon_locked",
+      "deep_pro_pages_reflect_final_tracks",
+      "creator_curriculum_visible_to_members",
+      "entitlement_map_exists",
+      "admin_release_checklist_exists",
+      "production_smoke_passes"
+    ]
+  }
+}
+

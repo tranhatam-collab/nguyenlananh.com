@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Admin Payments | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/admin/">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Admin Payments</strong>
+            <span>VietQR confirmation desk</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin navigation">
+          <a href="/admin/dashboard/">Dashboard</a>
+          <a href="/admin/members/">Members</a>
+          <a href="/admin/payments/">Payments</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">VietQR Manual Confirm</span>
+      <h1>Xác nhận thanh toán VND</h1>
+      <p class="sub">Dùng cho `nguyenlananh.com` khi khách thanh toán bằng VietQR và cần admin xác nhận để mở membership.</p>
+    </section>
+
+    <section class="panel">
+      <h3>Admin key</h3>
+      <div class="field">
+        <label for="adminKey">x-admin-key</label>
+        <input id="adminKey" type="password" placeholder="Nhập PAYMENTS_ADMIN_KEY" />
+      </div>
+      <div class="field">
+        <label for="adminUser">Admin user label</label>
+        <input id="adminUser" type="text" value="ops-team" />
+      </div>
+      <div class="field">
+        <label for="orderStatus">Filter trạng thái</label>
+        <select id="orderStatus">
+          <option value="awaiting_confirmation">awaiting_confirmation</option>
+          <option value="pending">pending</option>
+          <option value="confirmed">confirmed</option>
+          <option value="all">all</option>
+        </select>
+      </div>
+      <div class="actionsRow">
+        <button id="reloadOrders" class="cta" type="button">Tải orders</button>
+      </div>
+      <div id="adminStatus" class="statusBanner hidden" role="status"></div>
+    </section>
+
+    <section class="panel" style="margin-top:12px;">
+      <h3>Danh sách orders</h3>
+      <div style="overflow:auto;">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:8px;">Order</th>
+              <th style="text-align:left; padding:8px;">Email</th>
+              <th style="text-align:left; padding:8px;">Amount</th>
+              <th style="text-align:left; padding:8px;">Transfer note</th>
+              <th style="text-align:left; padding:8px;">Status</th>
+              <th style="text-align:left; padding:8px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const $ = (selector) => document.querySelector(selector);
+      const statusBox = $("#adminStatus");
+      const ordersBody = $("#ordersBody");
+
+      function setStatus(message, tone = "info") {
+        statusBox.textContent = message;
+        statusBox.classList.remove("hidden", "is-success", "is-warning", "is-danger");
+        if (tone === "success") statusBox.classList.add("is-success");
+        if (tone === "warning") statusBox.classList.add("is-warning");
+        if (tone === "danger") statusBox.classList.add("is-danger");
+      }
+
+      function adminHeaders() {
+        const adminKey = String($("#adminKey").value || "").trim();
+        const adminUser = String($("#adminUser").value || "ops-team").trim();
+        return {
+          "content-type": "application/json",
+          "x-admin-key": adminKey,
+          "x-admin-user": adminUser
+        };
+      }
+
+      async function loadOrders() {
+        const status = $("#orderStatus").value;
+        const query = new URLSearchParams({ status, limit: "100" });
+        setStatus("Đang tải orders...", "warning");
+        const response = await fetch(`/api/admin/payments/vietqr/orders?${query.toString()}`, {
+          headers: adminHeaders()
+        });
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(body.message || body.code || "Không thể tải orders");
+        }
+        return Array.isArray(body.orders) ? body.orders : [];
+      }
+
+      async function confirmOrder(internalOrderId) {
+        const providerRef = `vietqr_manual_${internalOrderId}`;
+        const response = await fetch("/api/admin/vietqr-confirm", {
+          method: "POST",
+          headers: adminHeaders(),
+          body: JSON.stringify({
+            internal_order_id: internalOrderId,
+            provider_ref: providerRef,
+            confirmation_note: "Manual confirmation via admin/payments"
+          })
+        });
+        const body = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(body.message || body.code || "Xác nhận thất bại");
+        }
+        return body;
+      }
+
+      function renderRows(orders) {
+        ordersBody.innerHTML = "";
+        if (!orders.length) {
+          const row = document.createElement("tr");
+          row.innerHTML = '<td colspan="6" style="padding:10px;">Không có order.</td>';
+          ordersBody.appendChild(row);
+          return;
+        }
+
+        orders.forEach((order) => {
+          const row = document.createElement("tr");
+          const amount = `${Number(order.amount || 0).toLocaleString("vi-VN")} ${order.currency || "VND"}`;
+          row.innerHTML = `
+            <td style="padding:8px;">${order.internal_order_id}</td>
+            <td style="padding:8px;">${order.email}</td>
+            <td style="padding:8px;">${amount}</td>
+            <td style="padding:8px;">${order.transfer_note || "-"}</td>
+            <td style="padding:8px;">${order.status || "-"}</td>
+            <td style="padding:8px;"></td>
+          `;
+          const actionCell = row.querySelector("td:last-child");
+          if (order.status !== "confirmed") {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn";
+            button.textContent = "Xác nhận";
+            button.addEventListener("click", async () => {
+              button.disabled = true;
+              try {
+                setStatus(`Đang xác nhận ${order.internal_order_id}...`, "warning");
+                await confirmOrder(order.internal_order_id);
+                setStatus(`Đã xác nhận ${order.internal_order_id}`, "success");
+                const refreshed = await loadOrders();
+                renderRows(refreshed);
+              } catch (error) {
+                setStatus(error.message || "Xác nhận thất bại", "danger");
+              } finally {
+                button.disabled = false;
+              }
+            });
+            actionCell.appendChild(button);
+          } else {
+            actionCell.textContent = "Đã xác nhận";
+          }
+          ordersBody.appendChild(row);
+        });
+      }
+
+      $("#reloadOrders").addEventListener("click", async () => {
+        try {
+          const orders = await loadOrders();
+          renderRows(orders);
+          setStatus(`Đã tải ${orders.length} orders`, "success");
+        } catch (error) {
+          setStatus(error.message || "Không thể tải orders", "danger");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

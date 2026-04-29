@@ -173,9 +173,17 @@
   localizeSharedChrome();
 
   const articleImageLibrary = {
+    "bon-truc-thay-doi": "/assets/images/articles/di-vao-ben-trong-hero.svg",
     "gan-duc-khoi-trong": "/assets/images/articles/gan-duc-khoi-trong-hero.svg",
     "neu-minh-sai-thi-sao": "/assets/images/articles/neu-minh-sai-thi-sao-hero.svg",
     "khi-moi-truong-khong-con-phu-hop": "/assets/images/articles/khi-moi-truong-khong-con-phu-hop-hero.svg",
+    "im-lang-noi-ban-van-dang-ne": "/assets/images/articles/article-hero-default.svg",
+    "he-gia-dinh-noi-phan-xa-duoc-hoc": "/assets/images/articles/gia-dinh-khong-chi-la-noi-ta-lon-len-hero.svg",
+    "co-don-khong-phai-vi-thieu-nguoi": "/assets/images/articles/article-hero-default.svg",
+    "moi-truong-la-nguoi-thay-vo-hinh": "/assets/images/articles/khi-moi-truong-khong-con-phu-hop-hero.svg",
+    "nuoi-day-tre-khong-lam-gay-tu-nhien": "/assets/images/articles/dieu-tre-em-can-khong-chi-la-day-dung-hero.svg",
+    "lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song": "/assets/images/articles/lao-dong-sang-tao-hero.svg",
+    "dau-tu-ban-than-khong-ao-tuong-doi-doi": "/assets/images/articles/dau-tu-ban-than-hero.svg",
     "cong-dong-song-moi": "/assets/images/articles/cong-dong-song-moi-hero.svg",
     "ngoi-nha-thu-2": "/assets/images/articles/ngoi-nha-thu-2-hero.svg",
     "ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay": "/assets/images/articles/ngoi-nha-thu-hai-hero.svg",

@@ -99,6 +99,29 @@ CREATE TABLE IF NOT EXISTS email_jobs (
   updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS vietqr_orders (
+  internal_order_id TEXT PRIMARY KEY,
+  email TEXT NOT NULL,
+  locale TEXT NOT NULL DEFAULT 'vi',
+  plan_code TEXT NOT NULL,
+  amount INTEGER NOT NULL,
+  currency TEXT NOT NULL DEFAULT 'VND',
+  transfer_note TEXT NOT NULL UNIQUE,
+  bank_bin TEXT NOT NULL,
+  account_no TEXT NOT NULL,
+  account_name TEXT NOT NULL,
+  qr_url TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  provider_ref TEXT,
+  confirmed_by TEXT,
+  confirmation_note TEXT,
+  created_at TEXT NOT NULL,
+  awaiting_confirmation_at TEXT,
+  confirmed_at TEXT,
+  updated_at TEXT NOT NULL,
+  FOREIGN KEY (internal_order_id) REFERENCES payment_orders(internal_order_id)
+);
+
 CREATE INDEX IF NOT EXISTS idx_payment_orders_lookup
   ON payment_orders(provider, payment_status, fulfillment_status);
 
@@ -113,3 +136,9 @@ CREATE INDEX IF NOT EXISTS idx_magic_links_email
 
 CREATE INDEX IF NOT EXISTS idx_email_jobs_queue
   ON email_jobs(status, scheduled_for);
+
+CREATE INDEX IF NOT EXISTS idx_vietqr_orders_status
+  ON vietqr_orders(status, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_vietqr_orders_email
+  ON vietqr_orders(email, created_at DESC);

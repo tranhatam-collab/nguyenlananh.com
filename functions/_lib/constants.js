@@ -3,18 +3,21 @@ export const PLANS = {
     code: "year1",
     label: "Core Access",
     priceUsd: 2,
+    priceVnd: 49000,
     durationDays: 365
   },
   year2: {
     code: "year2",
     label: "Year 2 Continuity",
     priceUsd: 60,
+    priceVnd: 1490000,
     durationDays: 365
   },
   year3: {
     code: "year3",
     label: "Year 3+ Mastery",
     priceUsd: 99,
+    priceVnd: 2490000,
     durationDays: 365
   }
 };
@@ -59,6 +62,14 @@ export const PROVIDER_CATALOG = [
     methods: ["wallet", "qr"],
     currencies: ["VND"],
     requiredSecrets: ["ZALOPAY_APP_ID", "ZALOPAY_KEY1", "ZALOPAY_KEY2"]
+  },
+  {
+    code: "vietqr",
+    label: "VietQR",
+    region: "vietnam",
+    methods: ["bank_transfer_qr", "manual_confirm"],
+    currencies: ["VND"],
+    requiredSecrets: ["VIETQR_BANK_BIN", "VIETQR_ACCOUNT_NO", "VIETQR_ACCOUNT_NAME"]
   }
 ];
 

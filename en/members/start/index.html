@@ -67,6 +67,12 @@
 
 
 
+
+
+
+
+
+
   <meta name="robots" content="noindex,follow" />
   <link rel="stylesheet" href="/assets/site.css" />
   <meta property="og:title" content="Start Companion Flow | Nguyenlananh.com" />
@@ -75,7 +81,7 @@
 
   <meta name="twitter:description" content="Confirm your email, complete the basic companion profile, review the open specialist tracks, then unlock the paid member benefits only when ready." /><meta property="og:url" content="https://www.nguyenlananh.com/en/members/start/" /><meta name="twitter:card" content="summary_large_image" />  </head>
 <body data-page="members-start"><header class="topbar" role="banner">
-    <div class="container"><div class="navwrap"><a class="brand" href="/en/members/start/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Start</strong><span>Enter lightly, unlock later</span></div></a><nav class="navlinks" aria-label="Members navigationigationigationigationigationigationigationigationigationigationigationigationigation"><a href="/en/members/start/">Start</a><a href="/en/members/dashboard/">Dashboard</a><a href="/en/members/journey/">Journey</a><a href="/en/members/practice/">Practice</a><a href="/en/members/deep/">Deep</a><a href="/en/members/pro/">Deeper Programs</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Sign out</button></div></div></div>
+    <div class="container"><div class="navwrap"><a class="brand" href="/en/members/start/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Start</strong><span>Enter lightly, unlock later</span></div></a><nav class="navlinks" aria-label="Members navigationigationigationigationigationigationigationigationigationigationigationigationigationigationigation"><a href="/en/members/start/">Start</a><a href="/en/members/dashboard/">Dashboard</a><a href="/en/members/journey/">Journey</a><a href="/en/members/practice/">Practice</a><a href="/en/members/deep/">Deep</a><a href="/en/members/pro/">Deeper Programs</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Sign out</button></div></div></div>
   </header>
 
   <main class="container" role="main">
@@ -137,11 +143,40 @@
 
     <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
       <h3>Unlock the full paid membership</h3>
-      <p>This step is <strong>2 USD through PayPal</strong>. Once unlocked, you will see the full benefit layer that previously started from the 3 USD package.</p>
+      <p>You can pay in Vietnam via VietQR (VND) or pay internationally in USD. Membership unlocks only after payment is confirmed.</p>
       <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
+      <div class="field">
+        <label for="payerTerritory">Payment identity</label>
+        <select id="payerTerritory">
+          <option value="VN">Vietnam ID (VND required)</option>
+          <option value="INTL">International ID (USD required)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="payerIdRef">Identity reference (National ID/Passport)</label>
+        <input id="payerIdRef" type="text" maxlength="80" placeholder="Example: passport or local ID reference" />
+      </div>
+      <div class="field" id="internationalProviderField">
+        <label for="unlockProvider">International payment provider</label>
+        <select id="unlockProvider">
+          <option value="stripe">Stripe (USD)</option>
+          <option value="paypal">PayPal (USD)</option>
+        </select>
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
-        <a id="unlockPayNow" class="cta" href="#" target="_blank" rel="noopener">Open PayPal 2 USD</a>
-        <button id="confirmPaid" class="ghost" type="button">I have paid</button>
+        <button id="startCheckout" class="cta" type="button">Create checkout</button>
+        <a id="unlockPayNow" class="ghost hidden" href="#" target="_blank" rel="noopener">Open payment page</a>
+      </div>
+      <div id="vietqrBox" class="hidden" style="margin-top:10px;">
+        <p><strong>Scan VietQR or transfer manually</strong></p>
+        <p class="note">Transfer note: <strong id="vietqrTransferNote">-</strong></p>
+        <p class="note">Amount: <strong id="vietqrAmount">-</strong></p>
+        <p class="note">Account: <strong id="vietqrAccountName">-</strong> · <span id="vietqrAccountNo">-</span> · BIN <span id="vietqrBankBin">-</span></p>
+        <img id="vietqrImage" alt="VietQR checkout" style="width:100%; max-width:280px; border-radius:6px; border:1px solid rgba(148,163,184,.35);" />
+        <div class="actionsRow" style="margin-top:10px;">
+          <button id="markTransferSent" class="ghost" type="button">I have transferred</button>
+          <button id="confirmPaid" class="btn" type="button">Admin manual confirm</button>
+        </div>
       </div>
       <div class="actionsRow" style="margin-top:10px;">
         <button id="copyUpgradeEmail" class="btn" type="button">Copy payment email</button>

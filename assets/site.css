@@ -70,10 +70,18 @@ a:focus, button:focus, input:focus, textarea:focus{
 }
 .brand{
   display:flex; align-items:center; gap:10px;
-  min-width: 220px;
+  min-width: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   text-decoration:none;
   color:inherit;
 }
+@media (min-width: 920px){
+  .brand{ flex: 0 0 auto; min-width: 220px; }
+}
+.brand .name{ min-width: 0; }
+.brand .name strong{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.brand .name .tagline{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .mark{
   width:40px; height:40px; border-radius:12px;
   box-shadow: var(--shadow2);
@@ -112,6 +120,22 @@ a:focus, button:focus, input:focus, textarea:focus{
   display:flex; align-items:center; gap:10px;
   justify-content:flex-end;
   min-width: 220px;
+}
+
+/* Mobile topbar: only the hamburger stays in .actions; the topbar CTA
+   (Đăng ký / Join / Sign out / Contact) is reachable from the drawer.
+   Without this, brand + CTA + hamburger overflow on phones. */
+@media (max-width: 919px){
+  .actions{ min-width: 0; gap: 6px; flex: 0 0 auto; }
+  .actions > .btn:not(.hamburger),
+  .actions > .cta,
+  .actions > .ghost,
+  .actions > #logoutBtn,
+  .actions > a.btn,
+  .actions > a.cta,
+  .actions > .lang {
+    display: none;
+  }
 }
 
 .btn{

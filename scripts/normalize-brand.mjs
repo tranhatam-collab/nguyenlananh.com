@@ -85,6 +85,15 @@ const changedFiles = [];
 for await (const file of walk(ROOT)) {
   stats.scanned += 1;
   const before = readFileSync(file, "utf8");
+
+  // Member-section pages (data-page="members-...") use a different nav
+  // (Dashboard / Journey / Practice / Deep / Experience / Pro). The brand
+  // block + drawer wrapper still need normalisation, but the desktop nav and
+  // mobile drawer nav are owned by scripts/restore-member-nav.mjs. Skip
+  // those replacements here; the public landing /members/ keeps public nav.
+  const isMemberSurface =
+    /data-page="members-(?!public)[^"]*"/.test(before);
+
   let after = before;
   let touched = false;
 
@@ -95,19 +104,21 @@ for await (const file of walk(ROOT)) {
     return isEnglishContext(match) ? BRAND_EN : BRAND_VI;
   });
 
-  // Replace navlinks blocks. Locale by checking links inside.
-  after = after.replace(NAV_RX, (match) => {
-    stats.navReplaced += 1;
-    touched = true;
-    return /\/en\//.test(match) ? NAV_EN : NAV_VI;
-  });
+  // Replace navlinks blocks (skip member-section pages — they own their nav).
+  if (!isMemberSurface) {
+    after = after.replace(NAV_RX, (match) => {
+      stats.navReplaced += 1;
+      touched = true;
+      return /\/en\//.test(match) ? NAV_EN : NAV_VI;
+    });
 
-  // Replace mobile drawer nav.
-  after = after.replace(DRAWER_RX, (match) => {
-    stats.drawerReplaced += 1;
-    touched = true;
-    return /Mobile navigation/.test(match) ? DRAWER_EN : DRAWER_VI;
-  });
+    // Replace mobile drawer nav (also skip on member pages).
+    after = after.replace(DRAWER_RX, (match) => {
+      stats.drawerReplaced += 1;
+      touched = true;
+      return /Mobile navigation/.test(match) ? DRAWER_EN : DRAWER_VI;
+    });
+  }
 
   if (after !== before) {
     writeFileSync(file, after, "utf8");

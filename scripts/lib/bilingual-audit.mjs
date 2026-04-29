@@ -82,16 +82,56 @@ function extractTextNodes(html) {
 }
 
 function extractImages(html) {
-  const tags = html.match(/<img\b[^>]*>/giu) || [];
-  return tags.map((tag) => {
+  // Find every <img> together with the immediate enclosing element so we can
+  // tell whether the image is marked as decorative (WCAG SC 1.1.1).
+  // A decorative image is correctly authored with `alt=""` AND lives inside
+  // an element carrying `aria-hidden="true"` or `role="presentation"`, OR the
+  // <img> itself carries those attributes. The validator must not flag those.
+  const imgRe = /<img\b[^>]*>/giu;
+  const out = [];
+  let match;
+  while ((match = imgRe.exec(html)) !== null) {
+    const tag = match[0];
     const altMatch = tag.match(/\balt="([^"]*)"/iu);
     const srcMatch = tag.match(/\bsrc="([^"]+)"/iu);
-    return {
+    const hasAlt = Boolean(altMatch);
+    const alt = altMatch ? decodeHtml(altMatch[1].trim()) : "";
+
+    // Self-marked as decorative.
+    let decorative = /\baria-hidden="true"/iu.test(tag) || /\brole="(presentation|none)"/iu.test(tag);
+
+    // Or wrapped by an immediate ancestor that is. Scan back ~400 chars for
+    // an opening tag carrying aria-hidden="true" or role="presentation".
+    if (!decorative) {
+      const windowStart = Math.max(0, match.index - 400);
+      const before = html.slice(windowStart, match.index);
+      // Find the LAST opening tag that has not been closed before the <img>.
+      const ancestorRe = /<(\w+)\b([^>]*)>/giu;
+      let lastDecorativeOpen = -1;
+      let m;
+      while ((m = ancestorRe.exec(before)) !== null) {
+        const attrs = m[2] || "";
+        if (/\baria-hidden="true"/iu.test(attrs) || /\brole="(presentation|none)"/iu.test(attrs)) {
+          // Make sure this tag is still open at the <img>: no matching closer
+          // appears between this tag and the image.
+          const tagName = m[1];
+          const closeRe = new RegExp(`</${tagName}>`, "giu");
+          closeRe.lastIndex = ancestorRe.lastIndex;
+          const closer = closeRe.exec(before);
+          if (!closer) lastDecorativeOpen = m.index;
+        }
+      }
+      if (lastDecorativeOpen !== -1) decorative = true;
+    }
+
+    out.push({
       src: srcMatch ? srcMatch[1] : "",
-      hasAlt: Boolean(altMatch),
-      alt: altMatch ? decodeHtml(altMatch[1].trim()) : ""
-    };
-  });
+      hasAlt,
+      alt,
+      decorative
+    });
+  }
+  return out;
 }
 
 function extractFigures(html) {
@@ -250,7 +290,11 @@ function auditFile(file, root, allFiles) {
     });
   }
 
-  const missingAlt = images.filter((image) => !image.hasAlt || !image.alt);
+  // Per WCAG SC 1.1.1, an empty `alt=""` is the correct marker for purely
+  // decorative images. We only flag images that have no alt attribute at all,
+  // or that have empty alt but are NOT marked as decorative (e.g. no
+  // aria-hidden="true" / role="presentation" on the image or an ancestor).
+  const missingAlt = images.filter((image) => !image.hasAlt || (!image.alt && !image.decorative));
   for (const image of missingAlt) {
     pushIssue(issues, {
       severity: "high",

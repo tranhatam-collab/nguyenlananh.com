@@ -1,0 +1,757 @@
+{
+  "collection": "articles",
+  "source": "/docs/NGUYENLANANH_LAUNCH_CONTENT_PACK_2026-04-17.md",
+  "generatedAt": "2026-04-25T20:13:17+07:00",
+  "status": "published",
+  "localeStrategy": "vi-first-bilingual",
+  "cmsFieldMap": {
+    "title_vi": "title",
+    "title_en": "localized.title.en",
+    "subline_vi": "excerpt",
+    "subline_en": "localized.excerpt.en",
+    "content_vi": "content",
+    "content_en": "localized.content.en",
+    "meta_title": "seo_title",
+    "meta_description": "seo_description",
+    "hero_image": "featured_image",
+    "publish_date": "published_at",
+    "category": "category",
+    "publish_order": "series_order"
+  },
+  "items": [
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 1,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 1,
+      "slug": "ban-khong-thieu-kien-thuc",
+      "path_vi": "/bai-viet/ban-khong-thieu-kien-thuc/",
+      "path_en": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+      "title_vi": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+      "title_en": "You Do Not Lack Knowledge, You Lack Clarity",
+      "meta_title_vi": "Bạn không thiếu kiến thức | Nguyễn Lan Anh",
+      "meta_title_en": "You Do Not Lack Knowledge, You Lack Clarity | Nguyenlananh.com",
+      "meta_description_vi": "Bạn không thiếu thông tin. Bạn thiếu sự rõ ràng về cách mình đang sống và quyết định mỗi ngày.",
+      "meta_description_en": "You do not lack information. You lack clarity about how you live and which truths actually matter in your daily decisions.",
+      "subline_vi": "Bạn biết nhiều điều. Nhưng không biết điều nào thực sự liên quan đến cuộc đời mình.",
+      "subline_en": "You know many things. But you do not know which ones truly belong to the life you are living.",
+      "content_vi": [
+        "Bạn đọc nhiều. Bạn nghe nhiều. Bạn hiểu nhiều thứ hơn trước. Nhưng khi cần quyết định, bạn vẫn chần chừ.",
+        "Không phải vì bạn thiếu kiến thức. Mà vì bạn chưa có một trật tự bên trong để sắp xếp những gì mình biết.",
+        "Kiến thức giống như ánh sáng. Nó chỉ hữu ích khi bạn biết mình đang soi vào đâu.",
+        "Nếu không, bạn chỉ làm mọi thứ sáng lên một cách vô ích.",
+        "Sự rõ ràng không đến từ việc học thêm. Nó đến từ việc nhìn lại cách bạn đang sống.",
+        "Bạn đang ưu tiên điều gì? Bạn đang tránh điều gì? Bạn đang cố chứng minh điều gì?",
+        "Khi những câu hỏi đó được trả lời, kiến thức mới bắt đầu có nghĩa.",
+        "Bạn không cần học thêm. Bạn cần dừng lại đủ lâu để thấy mình đang dùng kiến thức như thế nào."
+      ],
+      "content_en": [
+        "You consume more information than ever. Yet when it’s time to decide, you hesitate.",
+        "It is not a lack of knowledge. It is the absence of inner order.",
+        "Knowledge is like light. It only works when you know where to aim it.",
+        "Clarity does not come from adding more. It comes from seeing how you live.",
+        "What do you prioritize? What do you avoid? What are you trying to prove?",
+        "When those become visible, knowledge begins to matter.",
+        "You do not need more input. You need a clearer way to use what you already have."
+      ],
+      "closing_vi": "Không phải bạn thiếu ánh sáng. Bạn đang chiếu sai chỗ.",
+      "closing_en": "It is not a lack of light. It is misdirection.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "song-theo-thoi-quen",
+          "path_vi": "/bai-viet/song-theo-thoi-quen/",
+          "path_en": "/en/bai-viet/song-theo-thoi-quen/",
+          "label_vi": "Bạn đang sống theo thói quen, không phải lựa chọn",
+          "label_en": "You Are Living by Habit, Not Choice"
+        },
+        {
+          "slug": "hieu-cuoc-doi-minh",
+          "path_vi": "/bai-viet/hieu-cuoc-doi-minh/",
+          "path_en": "/en/bai-viet/hieu-cuoc-doi-minh/",
+          "label_vi": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+          "label_en": "You Do Not Need to Change Your Life, You Need to Understand It"
+        },
+        {
+          "slug": "chua-tung-co-huong",
+          "path_vi": "/bai-viet/chua-tung-co-huong/",
+          "path_en": "/en/bai-viet/chua-tung-co-huong/",
+          "label_vi": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+          "label_en": "You Have Not Lost Direction, You Never Truly Had One"
+        }
+      ],
+      "cta_vi": {
+        "href": "/hanh-trinh/",
+        "label": "Đọc hành trình"
+      },
+      "cta_en": {
+        "href": "/en/hanh-trinh/",
+        "label": "Read the journey"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 2,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 2,
+      "slug": "song-theo-thoi-quen",
+      "path_vi": "/bai-viet/song-theo-thoi-quen/",
+      "path_en": "/en/bai-viet/song-theo-thoi-quen/",
+      "title_vi": "Bạn đang sống theo thói quen, không phải lựa chọn",
+      "title_en": "You Are Living by Habit, Not Choice",
+      "meta_title_vi": "Bạn đang sống theo thói quen hay lựa chọn?",
+      "meta_title_en": "You Are Living by Habit, Not Choice | Nguyenlananh.com",
+      "meta_description_vi": "Phần lớn quyết định trong ngày của bạn đến từ thói quen, không phải ý thức.",
+      "meta_description_en": "Most daily decisions come from habit, not conscious choice. Real direction begins when repetition becomes visible.",
+      "subline_vi": "Phần lớn ngày của bạn diễn ra mà bạn không nhận ra mình đang lặp lại.",
+      "subline_en": "Much of your day unfolds before you notice that you are repeating what has already been repeated.",
+      "content_vi": [
+        "Bạn nghĩ mình đang lựa chọn. Nhưng phần lớn hành động của bạn là phản xạ.",
+        "Bạn thức dậy theo giờ quen. Phản ứng theo cách quen. Nghĩ theo lối quen.",
+        "Không có gì sai. Nhưng nếu bạn không thấy điều này, bạn sẽ gọi nó là “cuộc đời”.",
+        "Thói quen giúp bạn tồn tại. Nhưng nó cũng giữ bạn ở nguyên vị trí.",
+        "Lựa chọn thực sự chỉ xuất hiện khi bạn nhận ra mình đang lặp lại.",
+        "Khoảnh khắc bạn dừng lại trước một phản ứng quen thuộc, một khả năng mới xuất hiện.",
+        "Không phải thay đổi lớn. Chỉ là một bước nhỏ không giống hôm qua.",
+        "Đó là nơi cuộc đời bắt đầu chuyển hướng."
+      ],
+      "content_en": [
+        "You believe you are choosing. But most of your actions are automatic.",
+        "You wake the same way. React the same way. Think along the same lines.",
+        "Habits sustain you. They also hold you in place.",
+        "Real choice begins when repetition becomes visible.",
+        "The moment you pause before a familiar reaction, a new path appears.",
+        "Not a dramatic shift. Just a small deviation from yesterday.",
+        "That is where direction changes."
+      ],
+      "closing_vi": "Bạn không bị mắc kẹt. Bạn chỉ chưa dừng lại.",
+      "closing_en": "You are not stuck. You haven’t paused.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "ban-khong-thieu-kien-thuc",
+          "path_vi": "/bai-viet/ban-khong-thieu-kien-thuc/",
+          "path_en": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+          "label_vi": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+          "label_en": "You Do Not Lack Knowledge, You Lack Clarity"
+        },
+        {
+          "slug": "dieu-ban-dang-tranh",
+          "path_vi": "/bai-viet/dieu-ban-dang-tranh/",
+          "path_en": "/en/bai-viet/dieu-ban-dang-tranh/",
+          "label_vi": "Điều bạn đang tránh chính là điều bạn cần nhìn",
+          "label_en": "What You Avoid Is Exactly What You Need to See"
+        },
+        {
+          "slug": "thieu-su-that",
+          "path_vi": "/bai-viet/thieu-su-that/",
+          "path_en": "/en/bai-viet/thieu-su-that/",
+          "label_vi": "Bạn không thiếu động lực, bạn thiếu sự thật",
+          "label_en": "You Do Not Lack Motivation, You Lack Truth"
+        }
+      ],
+      "cta_vi": {
+        "href": "/bai-viet/",
+        "label": "Đọc bài khác"
+      },
+      "cta_en": {
+        "href": "/en/bai-viet/",
+        "label": "Read another article"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 3,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 3,
+      "slug": "sai-moi-truong",
+      "path_vi": "/bai-viet/sai-moi-truong/",
+      "path_en": "/en/bai-viet/sai-moi-truong/",
+      "title_vi": "Bạn không kém, bạn chỉ đang ở sai chỗ",
+      "title_en": "You Are Not Less Capable, You Are in the Wrong Place",
+      "meta_title_vi": "Bạn không kém, bạn đang ở sai môi trường",
+      "meta_title_en": "You Are Not Less Capable, You Are in the Wrong Place | Nguyenlananh.com",
+      "meta_description_vi": "Vấn đề không nằm ở bạn. Mà ở môi trường không phù hợp với cách bạn phát triển.",
+      "meta_description_en": "The problem is not always you. Sometimes the environment around you cannot support the way you are meant to grow.",
+      "subline_vi": "Nhiều khi vấn đề không phải là bạn chưa đủ tốt.",
+      "subline_en": "Sometimes the problem is not that you are not good enough.",
+      "content_vi": [
+        "Một cái cây không lớn không phải vì nó yếu. Mà vì đất không phù hợp.",
+        "Con người cũng vậy.",
+        "Bạn cố gắng nhiều hơn. Bạn học thêm. Bạn thay đổi cách làm.",
+        "Nhưng mọi thứ vẫn không tiến.",
+        "Có thể bạn đang đặt mình vào một môi trường không nuôi được bạn.",
+        "Không phải môi trường xấu. Chỉ là không dành cho bạn.",
+        "Mỗi người có một nhịp phát triển khác nhau. Một nơi phù hợp sẽ làm bạn tiến lên mà không cần ép.",
+        "Một nơi không phù hợp sẽ làm bạn nghi ngờ chính mình.",
+        "Đôi khi, điều cần thay đổi không phải là bạn. Mà là nơi bạn đang đứng."
+      ],
+      "content_en": [
+        "A tree that doesn’t grow is not weak. The soil may be wrong.",
+        "The same applies to people.",
+        "You try harder. Learn more. Adjust your approach.",
+        "Yet nothing moves.",
+        "The environment may not support your way of growing.",
+        "A right environment expands you. A wrong one makes you doubt yourself.",
+        "Sometimes the change is not within you. It is where you stand."
+      ],
+      "closing_vi": "Không phải bạn sai. Bạn đang đứng sai chỗ.",
+      "closing_en": "You are not wrong. Your placement is.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "song-sai-nhip",
+          "path_vi": "/bai-viet/song-sai-nhip/",
+          "path_en": "/en/bai-viet/song-sai-nhip/",
+          "label_vi": "Bạn không mệt vì làm nhiều, bạn mệt vì sống sai nhịp",
+          "label_en": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm"
+        },
+        {
+          "slug": "chua-tung-co-huong",
+          "path_vi": "/bai-viet/chua-tung-co-huong/",
+          "path_en": "/en/bai-viet/chua-tung-co-huong/",
+          "label_vi": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+          "label_en": "You Have Not Lost Direction, You Never Truly Had One"
+        },
+        {
+          "slug": "chi-can-dung",
+          "path_vi": "/bai-viet/chi-can-dung/",
+          "path_en": "/en/bai-viet/chi-can-dung/",
+          "label_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+          "label_en": "Your Life Does Not Need Optimization, Only Alignment"
+        }
+      ],
+      "cta_vi": {
+        "href": "/hanh-trinh/",
+        "label": "Đi tiếp từ hành trình"
+      },
+      "cta_en": {
+        "href": "/en/hanh-trinh/",
+        "label": "Continue with the journey"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 4,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 4,
+      "slug": "song-sai-nhip",
+      "path_vi": "/bai-viet/song-sai-nhip/",
+      "path_en": "/en/bai-viet/song-sai-nhip/",
+      "title_vi": "Bạn không mệt vì làm nhiều, bạn mệt vì sống sai nhịp",
+      "title_en": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm",
+      "meta_title_vi": "Bạn không mệt vì làm nhiều, bạn mệt vì sai nhịp",
+      "meta_title_en": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm | Nguyenlananh.com",
+      "meta_description_vi": "Mệt mỏi kéo dài nhiều khi không đến từ khối lượng công việc, mà từ việc bạn đang sống lệch khỏi nhịp phù hợp với mình.",
+      "meta_description_en": "Exhaustion does not always come from workload. It can come from living against a rhythm that does not fit you.",
+      "subline_vi": "Có những kiểu mệt không đến từ việc quá nhiều. Nó đến từ việc bạn đang sống lệch khỏi nhịp của chính mình.",
+      "subline_en": "Some exhaustion does not come from excess. It comes from living against your own natural pace.",
+      "content_vi": [
+        "Bạn có thể không làm quá nhiều mà vẫn thấy kiệt sức.",
+        "Có những ngày công việc không hẳn nặng. Nhưng người bạn vẫn trĩu xuống như phải kéo mình đi qua từng phần của ngày.",
+        "Mệt không chỉ đến từ số việc. Nó đến từ việc bạn thức, làm, nghỉ, và phản ứng theo một nhịp không hợp với mình.",
+        "Bạn dậy khi cơ thể chưa hồi lại. Bạn nói chuyện khi bên trong đã cạn. Bạn nghỉ bằng những cách không làm mình thật sự nghỉ.",
+        "Bên ngoài, mọi thứ vẫn vận hành được. Bên trong, bạn ngày càng xa cảm giác mình đang sống đúng nhịp.",
+        "Sống sai nhịp thường không ồn ào. Nó chỉ là cảm giác mình luôn chậm hơn chính mình, luôn trễ một nhịp với điều mình cần.",
+        "Điều cần làm chưa chắc là đảo lộn toàn bộ cuộc đời. Trước hết, cần thấy điều gì đang làm bạn cạn đi lặp lại.",
+        "Có người cần ngủ sớm hơn. Có người cần bớt những cuộc gặp không cần thiết. Có người cần một khoảng yên trước khi bắt đầu ngày.",
+        "Khi nhịp sống bắt đầu khớp lại, sức lực không trở về bằng bùng nổ. Nó trở về như một cảm giác bớt phải gồng."
+      ],
+      "content_en": [
+        "You may not be doing too much, yet still feel exhausted.",
+        "Some days are not heavy on paper. But you still drag yourself through each part of them.",
+        "Fatigue does not come only from volume. It also comes from living in a rhythm that does not fit you.",
+        "You wake before your body recovers. You speak when you are already empty. You rest in ways that never become rest.",
+        "From the outside, life still functions. Inside, you grow further away from your own pace.",
+        "Living out of rhythm is rarely dramatic. It often feels like being late to your own life.",
+        "The answer is not always a total reset. Sometimes it begins with seeing what drains you again and again.",
+        "When your rhythm starts to fit, energy does not return as force. It returns as less strain."
+      ],
+      "closing_vi": "Điều làm bạn mệt không chỉ là việc phải làm. Đó là cách bạn đang đi ngược nhịp của mình.",
+      "closing_en": "What exhausts you is not only the work. It is the way you move against your own pace.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "hieu-cuoc-doi-minh",
+          "path_vi": "/bai-viet/hieu-cuoc-doi-minh/",
+          "path_en": "/en/bai-viet/hieu-cuoc-doi-minh/",
+          "label_vi": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+          "label_en": "You Do Not Need to Change Your Life, You Need to Understand It"
+        },
+        {
+          "slug": "thieu-su-that",
+          "path_vi": "/bai-viet/thieu-su-that/",
+          "path_en": "/en/bai-viet/thieu-su-that/",
+          "label_vi": "Bạn không thiếu động lực, bạn thiếu sự thật",
+          "label_en": "You Do Not Lack Motivation, You Lack Truth"
+        },
+        {
+          "slug": "co-nguoi-can-dung-lai",
+          "path_vi": "/bai-viet/co-nguoi-can-dung-lai/",
+          "path_en": "/en/bai-viet/co-nguoi-can-dung-lai/",
+          "label_vi": "Không phải ai cũng cần phát triển, có người cần dừng lại",
+          "label_en": "Not Everyone Needs Growth, Some People Need to Pause"
+        }
+      ],
+      "cta_vi": {
+        "href": "/bai-viet/",
+        "label": "Đọc tiếp trong loạt này"
+      },
+      "cta_en": {
+        "href": "/en/bai-viet/",
+        "label": "Keep reading this sequence"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 5,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 5,
+      "slug": "hieu-cuoc-doi-minh",
+      "path_vi": "/bai-viet/hieu-cuoc-doi-minh/",
+      "path_en": "/en/bai-viet/hieu-cuoc-doi-minh/",
+      "title_vi": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+      "title_en": "You Do Not Need to Change Your Life, You Need to Understand It",
+      "meta_title_vi": "Bạn không cần đổi cuộc đời, bạn cần hiểu nó",
+      "meta_title_en": "You Do Not Need to Change Your Life, You Need to Understand It | Nguyenlananh.com",
+      "meta_description_vi": "Có những lúc điều cần thiết không phải là thay đổi thật nhanh, mà là hiểu cách mình đang sống và điều gì đang dẫn mình đi.",
+      "meta_description_en": "The urgent need is not always a new life. Often it is a truer understanding of the life you are already living.",
+      "subline_vi": "Bạn thường muốn sửa mọi thứ thật nhanh. Nhưng nhiều khi điều còn thiếu chỉ là một cái nhìn đủ thật về đời sống mình đang có.",
+      "subline_en": "The first answer is not always a new life. Sometimes it is a truer way of seeing the one you already have.",
+      "content_vi": [
+        "Khi thấy cuộc sống chật chội, phản ứng đầu tiên thường là muốn đổi.",
+        "Đổi công việc. Đổi nơi ở. Đổi một mối quan hệ. Đổi chính mình.",
+        "Không có gì sai với thay đổi. Nhưng nhiều thay đổi chỉ thay hình dạng bên ngoài, còn điều đang vận hành bên trong vẫn giữ nguyên.",
+        "Bạn đi sang một nơi khác, nhưng mang theo cùng một nỗi sợ. Bạn bắt đầu một nhịp sống mới, nhưng lặp lại cùng một cách né tránh.",
+        "Vì vậy, vấn đề không phải lúc nào cũng là cuộc đời này cần bị thay đi. Nhiều khi điều cần hơn là hiểu nó đang được dựng lên từ những gì.",
+        "Bạn đang sống theo điều gì? Theo nỗi sợ nào? Theo nhu cầu chứng minh nào? Theo sự im lặng nào đã kéo dài quá lâu?",
+        "Khi những điều đó hiện ra, bạn sẽ bớt muốn xoay cả thế giới để tìm một lối ra.",
+        "Hiểu không phải là đứng yên. Hiểu là để nếu có đổi, bạn đổi từ sự sáng rõ thay vì hoảng hốt.",
+        "Có những cuộc đời không cần một cú rẽ lớn. Nó chỉ cần được nhìn đúng lần đầu tiên."
+      ],
+      "content_en": [
+        "When life feels tight, the first impulse is often to change it.",
+        "Change the work. Change the place. Change the relationship. Change yourself.",
+        "There is nothing wrong with change. But many changes only reshape the surface while the same forces remain underneath.",
+        "You move elsewhere and carry the same fear with you. You begin again and repeat the same avoidance.",
+        "So the question is not always how to replace this life. Sometimes it is how to understand what this life is built from.",
+        "What are you living by? What fear leads you? What silence have you kept for too long?",
+        "Understanding is not passivity. It lets change come from clarity instead of panic."
+      ],
+      "closing_vi": "Điều bạn cần trước tiên không phải một cuộc đời khác. Là một cái nhìn thật hơn về cuộc đời này.",
+      "closing_en": "What you need first is not a different life. It is a truer way of seeing this one.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "ban-khong-thieu-kien-thuc",
+          "path_vi": "/bai-viet/ban-khong-thieu-kien-thuc/",
+          "path_en": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+          "label_vi": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+          "label_en": "You Do Not Lack Knowledge, You Lack Clarity"
+        },
+        {
+          "slug": "dieu-ban-dang-tranh",
+          "path_vi": "/bai-viet/dieu-ban-dang-tranh/",
+          "path_en": "/en/bai-viet/dieu-ban-dang-tranh/",
+          "label_vi": "Điều bạn đang tránh chính là điều bạn cần nhìn",
+          "label_en": "What You Avoid Is Exactly What You Need to See"
+        },
+        {
+          "slug": "chi-can-dung",
+          "path_vi": "/bai-viet/chi-can-dung/",
+          "path_en": "/en/bai-viet/chi-can-dung/",
+          "label_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+          "label_en": "Your Life Does Not Need Optimization, Only Alignment"
+        }
+      ],
+      "cta_vi": {
+        "href": "/phuong-phap/",
+        "label": "Xem cách tiếp cận"
+      },
+      "cta_en": {
+        "href": "/en/phuong-phap/",
+        "label": "View the approach"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 6,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 6,
+      "slug": "dieu-ban-dang-tranh",
+      "path_vi": "/bai-viet/dieu-ban-dang-tranh/",
+      "path_en": "/en/bai-viet/dieu-ban-dang-tranh/",
+      "title_vi": "Điều bạn đang tránh chính là điều bạn cần nhìn",
+      "title_en": "What You Avoid Is Exactly What You Need to See",
+      "meta_title_vi": "Điều bạn đang tránh chính là điều cần nhìn",
+      "meta_title_en": "What You Avoid Is Exactly What You Need to See | Nguyenlananh.com",
+      "meta_description_vi": "Điều bạn cố né thường không biến mất. Nó chỉ quay lại dưới những hình dạng khác và tiếp tục chi phối cách bạn sống.",
+      "meta_description_en": "What you avoid does not disappear. It returns in other forms and keeps shaping your life from the shadows.",
+      "subline_vi": "Thứ bạn né không rời khỏi cuộc đời bạn. Nó chỉ lùi vào chỗ khuất và tiếp tục vận hành từ đó.",
+      "subline_en": "What you avoid does not leave your life. It simply moves into the dark and keeps working from there.",
+      "content_vi": [
+        "Bạn tránh một cuộc nói chuyện. Bạn tránh một cảm xúc. Bạn tránh một quyết định mà mình biết sớm muộn cũng phải chạm vào.",
+        "Ban đầu, việc né tránh cho bạn cảm giác nhẹ đi. Ít nhất là trong lúc đó.",
+        "Nhưng điều bị tránh thường không biến mất. Nó đi theo bạn dưới những hình dạng khác: sự bực bội, mệt mỏi, trì hoãn, mất kiên nhẫn, hoặc một nỗi nặng không gọi tên được.",
+        "Có những điều càng không nhìn, nó càng âm thầm tổ chức cuộc sống của bạn từ phía sau.",
+        "Bạn tưởng mình đang né nỗi đau. Nhiều khi, điều bạn thực sự né là sự rõ ràng.",
+        "Vì một khi đã nhìn thấy, bạn khó có thể tiếp tục sống như chưa từng biết.",
+        "Nhìn vào điều mình tránh không có nghĩa là phải giải quyết ngay lập tức. Nó chỉ có nghĩa là dừng việc để điều đó cai quản mình trong bóng tối.",
+        "Có khi thứ cần nhìn không phải là một biến cố lớn. Chỉ là một sự thật nhỏ bạn đã trì hoãn quá lâu: mình đang mệt, mình không còn muốn, mình đang sợ, mình đang không thật.",
+        "Từ khoảnh khắc điều bị tránh được gọi tên, nó bắt đầu bớt quyền lực hơn trước."
+      ],
+      "content_en": [
+        "You avoid a conversation. You avoid a feeling. You avoid a decision you already know will return.",
+        "At first, avoidance feels like relief. At least for a moment.",
+        "But what is avoided rarely disappears. It returns as irritation, fatigue, delay, impatience, or a heaviness with no clear name.",
+        "Some things become more powerful the longer they remain unseen.",
+        "You may think you are avoiding pain. Often, you are avoiding clarity.",
+        "Because once something is seen, it becomes harder to keep living as if you never knew.",
+        "Looking does not mean solving everything at once. It means no longer letting the hidden thing govern your life in the dark."
+      ],
+      "closing_vi": "Điều bạn đang tránh không đứng chắn đường. Nó chính là cánh cửa.",
+      "closing_en": "What you avoid is not merely in the way. It is the doorway.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "song-theo-thoi-quen",
+          "path_vi": "/bai-viet/song-theo-thoi-quen/",
+          "path_en": "/en/bai-viet/song-theo-thoi-quen/",
+          "label_vi": "Bạn đang sống theo thói quen, không phải lựa chọn",
+          "label_en": "You Are Living by Habit, Not Choice"
+        },
+        {
+          "slug": "hieu-cuoc-doi-minh",
+          "path_vi": "/bai-viet/hieu-cuoc-doi-minh/",
+          "path_en": "/en/bai-viet/hieu-cuoc-doi-minh/",
+          "label_vi": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+          "label_en": "You Do Not Need to Change Your Life, You Need to Understand It"
+        },
+        {
+          "slug": "chua-tung-co-huong",
+          "path_vi": "/bai-viet/chua-tung-co-huong/",
+          "path_en": "/en/bai-viet/chua-tung-co-huong/",
+          "label_vi": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+          "label_en": "You Have Not Lost Direction, You Never Truly Had One"
+        }
+      ],
+      "cta_vi": {
+        "href": "/lien-he/",
+        "label": "Kết nối nếu bạn muốn đi sâu hơn"
+      },
+      "cta_en": {
+        "href": "/en/lien-he/",
+        "label": "Reach out if you want to go deeper"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 7,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 7,
+      "slug": "chua-tung-co-huong",
+      "path_vi": "/bai-viet/chua-tung-co-huong/",
+      "path_en": "/en/bai-viet/chua-tung-co-huong/",
+      "title_vi": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+      "title_en": "You Have Not Lost Direction, You Never Truly Had One",
+      "meta_title_vi": "Bạn không mất phương hướng, bạn chưa từng có hướng",
+      "meta_title_en": "You Have Not Lost Direction, You Never Truly Had One | Nguyenlananh.com",
+      "meta_description_vi": "Cảm giác lạc hướng nhiều khi đến từ việc bạn đã đi rất lâu theo những hướng chưa bao giờ thực sự là của mình.",
+      "meta_description_en": "Feeling lost may simply mean you have been following a borrowed direction for too long.",
+      "subline_vi": "Có khi bạn không đánh mất điều gì cả. Bạn chỉ đang nhận ra mình đã đi quá lâu theo một hướng mượn từ người khác.",
+      "subline_en": "Perhaps you have not lost anything. You are only seeing that you have walked too long in a borrowed direction.",
+      "content_vi": [
+        "Nhiều người nói mình đang mất phương hướng.",
+        "Nghe như thể đã từng có một hướng rõ ràng, rồi một ngày nào đó làm rơi mất nó.",
+        "Nhưng có những cuộc đời chưa từng thật sự có hướng ngay từ đầu.",
+        "Bạn đi theo điều được xem là đúng. Đi theo thứ gia đình yên tâm. Đi theo nhịp mà người xung quanh gọi là trưởng thành.",
+        "Bạn vẫn tiến lên. Thậm chí còn đi khá xa. Nhưng càng đi, cảm giác bên trong càng rời rạc.",
+        "Không phải vì bạn yếu. Mà vì đích đến đó chưa bao giờ thật sự là của bạn.",
+        "Một hướng mượn vẫn có thể tạo ra trật tự. Nhưng nó không tạo ra cảm giác thuộc về.",
+        "Đến một lúc nào đó, những gì từng đủ để giữ bạn đi tiếp bỗng không còn đủ nữa.",
+        "Đó không hẳn là khủng hoảng. Đó có thể là lần đầu tiên bạn bắt đầu thành thật rằng: mình chưa từng thật sự biết mình đang đi đâu.",
+        "Hướng không phải lúc nào cũng đến như một lời gọi lớn. Nhiều khi nó bắt đầu bằng việc nhận ra điều gì làm mình bớt chia cắt hơn với chính mình."
+      ],
+      "content_en": [
+        "Many people say they have lost direction.",
+        "It sounds as if direction once existed, and then somehow disappeared.",
+        "But some lives never truly had one to begin with.",
+        "You follow what seems right. What reassures your family. What the world calls maturity.",
+        "You keep moving. You may even move far. But inwardly, something keeps loosening.",
+        "Not because you are weak. Because the destination was never really yours.",
+        "Borrowed direction can create order. It cannot create belonging.",
+        "Direction may not arrive as a grand calling. Sometimes it begins when you finally admit you do not yet have your own."
+      ],
+      "closing_vi": "Bạn không cần tìm lại một hướng cũ. Bạn cần bắt đầu có hướng của mình.",
+      "closing_en": "You do not need to recover an old direction. You need to begin having your own.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "ban-khong-thieu-kien-thuc",
+          "path_vi": "/bai-viet/ban-khong-thieu-kien-thuc/",
+          "path_en": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+          "label_vi": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+          "label_en": "You Do Not Lack Knowledge, You Lack Clarity"
+        },
+        {
+          "slug": "sai-moi-truong",
+          "path_vi": "/bai-viet/sai-moi-truong/",
+          "path_en": "/en/bai-viet/sai-moi-truong/",
+          "label_vi": "Bạn không kém, bạn chỉ đang ở sai chỗ",
+          "label_en": "You Are Not Less Capable, You Are in the Wrong Place"
+        },
+        {
+          "slug": "chi-can-dung",
+          "path_vi": "/bai-viet/chi-can-dung/",
+          "path_en": "/en/bai-viet/chi-can-dung/",
+          "label_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+          "label_en": "Your Life Does Not Need Optimization, Only Alignment"
+        }
+      ],
+      "cta_vi": {
+        "href": "/hanh-trinh/",
+        "label": "Bắt đầu lại từ hành trình"
+      },
+      "cta_en": {
+        "href": "/en/hanh-trinh/",
+        "label": "Begin again with the journey"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 8,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 8,
+      "slug": "thieu-su-that",
+      "path_vi": "/bai-viet/thieu-su-that/",
+      "path_en": "/en/bai-viet/thieu-su-that/",
+      "title_vi": "Bạn không thiếu động lực, bạn thiếu sự thật",
+      "title_en": "You Do Not Lack Motivation, You Lack Truth",
+      "meta_title_vi": "Bạn không thiếu động lực, bạn thiếu sự thật",
+      "meta_title_en": "You Do Not Lack Motivation, You Lack Truth | Nguyenlananh.com",
+      "meta_description_vi": "Động lực thường cạn đi rất nhanh khi nó phải chống lại một sự thật mà bạn đã biết nhưng không muốn nhìn thẳng.",
+      "meta_description_en": "Motivation fades quickly when it is asked to fight a truth you already know but do not want to face.",
+      "subline_vi": "Nhiều lúc thứ làm bạn đứng yên không phải là thiếu năng lượng. Mà là bạn đang cố đi tiếp mà không chịu nhìn vào điều mình đã biết.",
+      "subline_en": "What holds you still is not always low energy. Sometimes it is the refusal to face what you already know.",
+      "content_vi": [
+        "Bạn nghĩ mình thiếu động lực nên tìm thêm cách để ép mình đi tiếp.",
+        "Bạn đọc lời thúc đẩy. Bạn đặt mục tiêu mới. Bạn thử làm mình hưng phấn trở lại.",
+        "Có lúc nó có tác dụng. Nhưng thường không lâu.",
+        "Vì động lực rất khó bền khi nó phải kéo bạn đi ngược lại một sự thật mà bạn không muốn thừa nhận.",
+        "Có thể bạn đã mệt từ lâu. Có thể bạn không còn muốn điều mình đang theo. Có thể bạn đang sợ mất đi một hình ảnh đẹp về chính mình.",
+        "Khi sự thật không được nhìn, bạn phải dùng rất nhiều sức để giữ cho câu chuyện cũ tiếp tục.",
+        "Điều đó trông giống thiếu động lực. Nhưng thật ra là kiệt sức vì phải chống lại điều mình đã biết.",
+        "Sự thật ở đây không cần phải lớn lao. Đôi khi nó chỉ là: mình không ổn, mình không hợp, mình không còn tin, mình đang cố quá mức.",
+        "Từ lúc sự thật được nói ra, năng lượng không nhất thiết tăng ngay. Nhưng sự gồng gánh bắt đầu giảm xuống."
+      ],
+      "content_en": [
+        "You think you lack motivation, so you look for more ways to push yourself.",
+        "You read something encouraging. Set another goal. Try to feel driven again.",
+        "Sometimes it works. Usually not for long.",
+        "Motivation struggles to last when it is forced to fight a truth you already know.",
+        "Maybe you have been tired for a long time. Maybe you no longer want what you are chasing. Maybe you are protecting an image of yourself.",
+        "When truth stays hidden, you spend enormous energy preserving the old story.",
+        "That looks like low motivation. But often it is exhaustion from resisting what is already clear."
+      ],
+      "closing_vi": "Điều kéo bạn đi tiếp bền nhất không phải động lực. Là sự thật bạn không còn né.",
+      "closing_en": "What carries you furthest is not motivation. It is the truth you no longer avoid.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "song-theo-thoi-quen",
+          "path_vi": "/bai-viet/song-theo-thoi-quen/",
+          "path_en": "/en/bai-viet/song-theo-thoi-quen/",
+          "label_vi": "Bạn đang sống theo thói quen, không phải lựa chọn",
+          "label_en": "You Are Living by Habit, Not Choice"
+        },
+        {
+          "slug": "dieu-ban-dang-tranh",
+          "path_vi": "/bai-viet/dieu-ban-dang-tranh/",
+          "path_en": "/en/bai-viet/dieu-ban-dang-tranh/",
+          "label_vi": "Điều bạn đang tránh chính là điều bạn cần nhìn",
+          "label_en": "What You Avoid Is Exactly What You Need to See"
+        },
+        {
+          "slug": "co-nguoi-can-dung-lai",
+          "path_vi": "/bai-viet/co-nguoi-can-dung-lai/",
+          "path_en": "/en/bai-viet/co-nguoi-can-dung-lai/",
+          "label_vi": "Không phải ai cũng cần phát triển, có người cần dừng lại",
+          "label_en": "Not Everyone Needs Growth, Some People Need to Pause"
+        }
+      ],
+      "cta_vi": {
+        "href": "/phuong-phap/",
+        "label": "Đọc cách nhìn này"
+      },
+      "cta_en": {
+        "href": "/en/phuong-phap/",
+        "label": "Read this way of seeing"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 9,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 9,
+      "slug": "co-nguoi-can-dung-lai",
+      "path_vi": "/bai-viet/co-nguoi-can-dung-lai/",
+      "path_en": "/en/bai-viet/co-nguoi-can-dung-lai/",
+      "title_vi": "Không phải ai cũng cần phát triển, có người cần dừng lại",
+      "title_en": "Not Everyone Needs Growth, Some People Need to Pause",
+      "meta_title_vi": "Không phải ai cũng cần phát triển thêm",
+      "meta_title_en": "Not Everyone Needs Growth, Some People Need to Pause | Nguyenlananh.com",
+      "meta_description_vi": "Có những giai đoạn việc cố phát triển thêm chỉ làm bạn xa hơn khỏi điều cơ bản mình đang cần: dừng lại, nghỉ, và nghe lại mình.",
+      "meta_description_en": "Some seasons do not ask for more growth. They ask for rest, quiet, and a return to your own voice.",
+      "subline_vi": "Có những lúc việc tiếp tục lớn lên theo nghĩa quen thuộc chỉ làm bạn rời xa điều thiết yếu mà mình đang thiếu.",
+      "subline_en": "There are seasons when continuing to grow in the usual way only takes you further from what you actually need.",
+      "content_vi": [
+        "Chúng ta sống trong một thời đại rất chuộng phát triển.",
+        "Phát triển hơn. Giỏi hơn. Nhanh hơn. Nhiều hơn.",
+        "Nghe lâu ngày, bạn dễ tin rằng đứng yên là sai. Dừng lại là tụt lại. Chậm lại là có lỗi với đời mình.",
+        "Nhưng có những giai đoạn, điều bạn cần không phải là thêm nữa. Điều bạn cần là bớt đi.",
+        "Bớt ép. Bớt chứng minh. Bớt sống như thể mình luôn phải đi lên.",
+        "Có người không thiếu mục tiêu. Họ chỉ thiếu giấc ngủ, thiếu khoảng lặng, thiếu khả năng nghe mình khi không còn phải diễn.",
+        "Dừng lại không phải là từ bỏ cuộc sống. Nhiều khi đó là cách duy nhất để còn giữ được sự sống bên trong nó.",
+        "Một cái cây không lớn quanh năm. Nó cũng có mùa giữ nhựa, mùa chậm, mùa đứng yên để rễ không gãy.",
+        "Con người cũng vậy. Không phải lúc nào tiến lên cũng là dấu hiệu đúng.",
+        "Có khi, bước đi thật nhất là dừng lại đủ lâu để biết mình còn muốn đi đâu."
+      ],
+      "content_en": [
+        "We live in a time that is deeply attached to growth.",
+        "More growth. More speed. More achievement. More becoming.",
+        "After hearing that long enough, you start to believe that pausing is failure.",
+        "But there are seasons when the answer is not more. It is less.",
+        "Less pressure. Less proving. Less living as if upward is the only honest direction.",
+        "Some people do not lack goals. They lack sleep, silence, and the ability to hear themselves without performing.",
+        "Stopping is not the opposite of life. Sometimes it is how life is protected."
+      ],
+      "closing_vi": "Có lúc bước đi đúng nhất không phải tiến lên. Là dừng lại cho kịp mình.",
+      "closing_en": "At times, the truest movement is not forward. It is the pause that lets you catch up with yourself.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "song-sai-nhip",
+          "path_vi": "/bai-viet/song-sai-nhip/",
+          "path_en": "/en/bai-viet/song-sai-nhip/",
+          "label_vi": "Bạn không mệt vì làm nhiều, bạn mệt vì sống sai nhịp",
+          "label_en": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm"
+        },
+        {
+          "slug": "thieu-su-that",
+          "path_vi": "/bai-viet/thieu-su-that/",
+          "path_en": "/en/bai-viet/thieu-su-that/",
+          "label_vi": "Bạn không thiếu động lực, bạn thiếu sự thật",
+          "label_en": "You Do Not Lack Motivation, You Lack Truth"
+        },
+        {
+          "slug": "chi-can-dung",
+          "path_vi": "/bai-viet/chi-can-dung/",
+          "path_en": "/en/bai-viet/chi-can-dung/",
+          "label_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+          "label_en": "Your Life Does Not Need Optimization, Only Alignment"
+        }
+      ],
+      "cta_vi": {
+        "href": "/hanh-trinh/",
+        "label": "Cho mình một khoảng dừng"
+      },
+      "cta_en": {
+        "href": "/en/hanh-trinh/",
+        "label": "Give yourself a pause"
+      }
+    },
+    {
+      "collection": "articles",
+      "status": "published",
+      "publish_order": 10,
+      "category": "di-vao-ben-trong",
+      "series_name": "launch-10-inner-clarity",
+      "series_order": 10,
+      "slug": "chi-can-dung",
+      "path_vi": "/bai-viet/chi-can-dung/",
+      "path_en": "/en/bai-viet/chi-can-dung/",
+      "title_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+      "title_en": "Your Life Does Not Need Optimization, Only Alignment",
+      "meta_title_vi": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
+      "meta_title_en": "Your Life Does Not Need Optimization, Only Alignment | Nguyenlananh.com",
+      "meta_description_vi": "Một đời sống được tối ưu có thể vận hành trơn tru hơn, nhưng chưa chắc đúng hơn với điều bạn thật sự cần và muốn giữ.",
+      "meta_description_en": "A well-optimized life may run smoothly, but it may still be far from what is true for you.",
+      "subline_vi": "Tối ưu có thể làm mọi thứ chạy mượt hơn. Nhưng một đời sống đúng còn cần điều khác ngoài hiệu suất.",
+      "subline_en": "Optimization can make life run more smoothly. But a true life needs more than efficiency.",
+      "content_vi": [
+        "Bạn có thể tối ưu rất nhiều thứ trong đời mình.",
+        "Tối ưu thời gian. Tối ưu công việc. Tối ưu thói quen. Tối ưu cả những mối quan hệ.",
+        "Nhìn bên ngoài, điều đó tạo cảm giác gọn gàng và hiệu quả.",
+        "Nhưng không phải thứ gì trơn tru cũng là thứ đúng.",
+        "Có những đời sống được sắp xếp rất khéo, nhưng người ở trong đó ngày càng xa mình.",
+        "Khi mọi thứ đều phải có ích, có mục tiêu, có kết quả, bạn rất dễ đánh rơi những phần không tạo ra hiệu suất nhưng lại giữ cho mình còn là một con người.",
+        "Một khoảng nghỉ vô ích. Một cuộc trò chuyện không nhằm giải quyết gì. Một quyết định chậm hơn nhưng thật hơn.",
+        "Đời sống không chỉ cần vận hành tốt. Nó còn cần đủ rộng để chứa sự do dự, sự mềm lại, sự thay đổi ý, và cả những điều chưa thể gọi tên.",
+        "Sống đúng không phải là sống hoàn hảo. Nó là sống gần với điều mình biết là thật, dù nhìn từ ngoài có thể không tối ưu.",
+        "Nếu cứ hỏi điều gì hiệu quả nhất, bạn có thể làm được rất nhiều việc. Nhưng chưa chắc còn ở gần mình hơn."
+      ],
+      "content_en": [
+        "You can optimize many things in life.",
+        "Time. Work. Habits. Even relationships.",
+        "From the outside, optimization creates neatness and efficiency.",
+        "But what runs smoothly is not always what is right.",
+        "Some lives are arranged beautifully, yet the person inside them grows further away from themselves.",
+        "When everything must be useful, measurable, and productive, you begin to lose the parts that do not create output but keep you human.",
+        "A pause with no clear purpose. A conversation that solves nothing. A slower decision that feels more true.",
+        "Life does not only need to function well. It also needs room for uncertainty, softness, and change."
+      ],
+      "closing_vi": "Cuộc đời không cần chạy mượt hơn. Nó cần gần với sự thật của bạn hơn.",
+      "closing_en": "Life does not need to run more smoothly. It needs to move closer to what is true for you.",
+      "published_at": "2026-04-17",
+      "internal_links": [
+        {
+          "slug": "ban-khong-thieu-kien-thuc",
+          "path_vi": "/bai-viet/ban-khong-thieu-kien-thuc/",
+          "path_en": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
+          "label_vi": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
+          "label_en": "You Do Not Lack Knowledge, You Lack Clarity"
+        },
+        {
+          "slug": "hieu-cuoc-doi-minh",
+          "path_vi": "/bai-viet/hieu-cuoc-doi-minh/",
+          "path_en": "/en/bai-viet/hieu-cuoc-doi-minh/",
+          "label_vi": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
+          "label_en": "You Do Not Need to Change Your Life, You Need to Understand It"
+        },
+        {
+          "slug": "co-nguoi-can-dung-lai",
+          "path_vi": "/bai-viet/co-nguoi-can-dung-lai/",
+          "path_en": "/en/bai-viet/co-nguoi-can-dung-lai/",
+          "label_vi": "Không phải ai cũng cần phát triển, có người cần dừng lại",
+          "label_en": "Not Everyone Needs Growth, Some People Need to Pause"
+        }
+      ],
+      "cta_vi": {
+        "href": "/lien-he/",
+        "label": "Đi tiếp theo cách thật hơn"
+      },
+      "cta_en": {
+        "href": "/en/lien-he/",
+        "label": "Continue in a truer way"
+      }
+    }
+  ]
+}

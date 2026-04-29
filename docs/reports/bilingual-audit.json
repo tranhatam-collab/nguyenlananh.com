@@ -1,25 +1,30 @@
 {
   "summary": {
-    "generatedAt": "2026-04-25T13:04:39.564Z",
-    "totalUrls": 214,
-    "totalPagesWithIssues": 10,
-    "totalIssues": 10,
-    "blockingIssues": 10,
+    "generatedAt": "2026-04-29T16:34:46.763Z",
+    "totalUrls": 237,
+    "totalPagesWithIssues": 213,
+    "totalIssues": 216,
+    "blockingIssues": 216,
     "status": "blocked",
-    "totalImages": 75,
+    "totalImages": 286,
     "totalAltText": 75,
-    "totalFigures": 75,
-    "totalFigcaptions": 48,
-    "totalSvgDescriptions": 56,
+    "totalFigures": 73,
+    "totalFigcaptions": 46,
+    "totalSvgDescriptions": 267,
     "localeCounts": {
-      "vi": 107,
-      "en": 107
+      "vi": 119,
+      "en": 118
     },
     "severityCounts": {
-      "high": 10
+      "high": 213,
+      "medium": 3
     },
     "categoryCounts": {
-      "en": 10
+      "alt": 211,
+      "source": 1,
+      "bilingual": 1,
+      "seo": 1,
+      "vi": 2
     }
   },
   "audits": [
@@ -34,14 +39,21 @@
       "metaDescription": "Mọi thay đổi content cho giai đoạn launch nên update cùng manifest + config để tránh lệch route.",
       "h1": "Quản lý launch collection",
       "h1Count": 1,
-      "textNodeCount": 50,
-      "imageCount": 0,
+      "textNodeCount": 49,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/content/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "admin/creators/index.html",
@@ -54,14 +66,21 @@
       "metaDescription": "Theo dõi submission, quy trình duyệt nội bộ và quyền truy cập thư viện.",
       "h1": "Quản lý creator workflow",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 27,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/creators/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "admin/dashboard/index.html",
@@ -74,14 +93,21 @@
       "metaDescription": "Tập trung theo dõi trạng thái launch, health endpoint và cài đặt kiểm soát nội bộ.",
       "h1": "Vận hành tổng quan",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/dashboard/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "admin/index.html",
@@ -94,14 +120,21 @@
       "metaDescription": "Admin foundation nội bộ cho vận hành membership và creator layer.",
       "h1": "Admin route vận hành độc lập",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 48,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "admin/members/index.html",
@@ -114,14 +147,60 @@
       "metaDescription": "Rà soát luồng join, login và checkpoints Day-1 / Day-7.",
       "h1": "Theo dõi kích hoạt thành viên",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 28,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/members/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "admin/payments/index.html",
+      "route": "/admin/payments/",
+      "url": "https://www.nguyenlananh.com/admin/payments/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "admin",
+      "title": "Admin Payments | Nguyenlananh.com",
+      "metaDescription": "Bảng điều khiển nội bộ để vận hành thanh toán, đối soát, và xử lý giao dịch — chỉ dành cho Admin đã được cấp quyền.",
+      "h1": "Xác nhận thanh toán VND",
+      "h1Count": 1,
+      "textNodeCount": 26,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": null,
+      "issues": [
+        {
+          "severity": "high",
+          "category": "source",
+          "code": "missing_content_registry",
+          "message": "Page is not wired to the centralized bilingual content registry."
+        },
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        },
+        {
+          "severity": "high",
+          "category": "bilingual",
+          "code": "missing_counterpart_page",
+          "message": "Page is missing its counterpart in the second live language."
+        }
+      ]
     },
     {
       "file": "admin/settings/index.html",
@@ -134,14 +213,21 @@
       "metaDescription": "Bảng role, quy tắc nội bộ và cấu hình vận hành. Không public.",
       "h1": "Chính sách vận hành nội bộ",
       "h1Count": 1,
-      "textNodeCount": 41,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/admin/settings/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/index.html",
@@ -154,14 +240,21 @@
       "metaDescription": "Một bài mở đầu về cách giọng hát, hơi thở và âm thanh tự thân có thể trở thành con đường nhìn lại chính mình, mở lại tiếng nói bên trong và bước vào hành trình sâu hơn.",
       "h1": "Âm thanh tự thân: khi một tiếng hát trở thành cách trở về",
       "h1Count": 1,
-      "textNodeCount": 61,
-      "imageCount": 1,
+      "textNodeCount": 59,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 1,
+      "svgDescriptionCount": 2,
       "counterpartFile": "en/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/ban-khong-thieu-kien-thuc/index.html",
@@ -174,14 +267,48 @@
       "metaDescription": "Bạn không thiếu thông tin. Bạn thiếu sự rõ ràng về cách mình đang sống và quyết định mỗi ngày.",
       "h1": "Bạn không thiếu kiến thức, bạn thiếu sự rõ ràng",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 0,
+      "textNodeCount": 41,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/ban-khong-thieu-kien-thuc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/bon-truc-thay-doi/index.html",
+      "route": "/bai-viet/bon-truc-thay-doi/",
+      "url": "https://www.nguyenlananh.com/bai-viet/bon-truc-thay-doi/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bốn trục Quan sát Cảm nhận Hành động Chuyển hóa | Nguyenlananh.com",
+      "metaDescription": "Không phải một công thức đóng. Bốn trục là một khung thực hành để bạn quay lại đời sống thật mà không bị kéo đi mãi mà không hiểu vì sao.",
+      "h1": "Bốn Trục — Quan Sát, Cảm Nhận, Hành Động, Chuyển Hóa",
+      "h1Count": 1,
+      "textNodeCount": 60,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/bon-truc-thay-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/cai-choi/index.html",
@@ -190,18 +317,52 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "article",
-      "title": "Cái chổi | Nguyenlananh.com",
-      "metaDescription": "Biểu tượng của lao động có ý thức, kỷ luật tự thân và hiện diện.",
-      "h1": "Cái chổi",
+      "title": "Cái chổi và việc nhỏ làm đời sống rõ lại | Nguyenlananh.com",
+      "metaDescription": "Một việc tay chân rất nhỏ có thể đưa bạn trở lại với nhịp, trật tự và sự hiện diện. Cái chổi không chỉ để dọn nhà, mà để thấy mình đang sống thế nào.",
+      "h1": "Cái Chổi — Việc Nhỏ Làm Đời Sống Rõ Lại",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 75,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/cai-choi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/index.html",
+      "route": "/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
+      "url": "https://www.nguyenlananh.com/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Căn phòng như một bản đồ của nội tâm | Nguyenlananh.com",
+      "metaDescription": "Không gian sống không chỉ là nơi ở. Căn phòng có thể phản chiếu sự quá tải, trì hoãn, né tránh và nhịp sống thật của bạn.",
+      "h1": "Căn Phòng Như Một Bản Đồ Của Nội Tâm",
+      "h1Count": 1,
+      "textNodeCount": 70,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/chi-can-dung/index.html",
@@ -214,14 +375,21 @@
       "metaDescription": "Một đời sống được tối ưu có thể vận hành trơn tru hơn, nhưng chưa chắc đúng hơn với điều bạn thật sự cần và muốn giữ.",
       "h1": "Cuộc đời bạn không cần tối ưu, chỉ cần đúng",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/chi-can-dung/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/chua-tung-co-huong/index.html",
@@ -234,14 +402,48 @@
       "metaDescription": "Cảm giác lạc hướng nhiều khi đến từ việc bạn đã đi rất lâu theo những hướng chưa bao giờ thực sự là của mình.",
       "h1": "Bạn không mất phương hướng, bạn chưa từng có hướng",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/chua-tung-co-huong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/co-don-khong-phai-vi-thieu-nguoi/index.html",
+      "route": "/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "url": "https://www.nguyenlananh.com/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Cô đơn không phải vì thiếu người | Nguyenlananh.com",
+      "metaDescription": "Cô đơn sâu nhất không phải thiếu người. Đó là mất kết nối với chính mình. Đường về không phải qua ai khác mà qua chính bạn.",
+      "h1": "Cô Đơn — Không Phải Vì Thiếu Người",
+      "h1Count": 1,
+      "textNodeCount": 84,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/co-nguoi-can-dung-lai/index.html",
@@ -254,14 +456,21 @@
       "metaDescription": "Có những giai đoạn việc cố phát triển thêm chỉ làm bạn xa hơn khỏi điều cơ bản mình đang cần: dừng lại, nghỉ, và nghe lại mình.",
       "h1": "Không phải ai cũng cần phát triển, có người cần dừng lại",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/co-nguoi-can-dung-lai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/cong-dong-song-moi/index.html",
@@ -274,14 +483,21 @@
       "metaDescription": "Một cộng đồng sống mới không chỉ chia sẻ niềm tin đẹp. Nó là nơi con người được soi, được học, được sống thật hơn và cùng nhau phát triển giá trị bền vững.",
       "h1": "Cộng Đồng Sống Mới",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/cong-dong-song-moi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/index.html",
@@ -294,14 +510,48 @@
       "metaDescription": "Đầu tư sâu nhất là nâng cấp nhận thức và khả năng chọn lại.",
       "h1": "Đầu tư bản thân - học tập nhận thức cao hơn",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/index.html",
+      "route": "/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "url": "https://www.nguyenlananh.com/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Đầu tư bản thân không ảo tưởng đổi đời | Nguyenlananh.com",
+      "metaDescription": "Đầu tư bản thân không phải mua thêm lời hứa đổi đời. Đó là học cách chọn đúng thứ thật sự làm đời sống của bạn rõ hơn, vững hơn, sống được hơn.",
+      "h1": "Đầu Tư Bản Thân — Không Ảo Tưởng Đổi Đời",
+      "h1Count": 1,
+      "textNodeCount": 93,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dau-tu-ban-than/index.html",
@@ -314,14 +564,21 @@
       "metaDescription": "Hub về đầu tư nhận thức, nội lực và tương lai dài hạn của chính mình.",
       "h1": "Đầu tư bản thân",
       "h1Count": 1,
-      "textNodeCount": 22,
-      "imageCount": 0,
+      "textNodeCount": 20,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dau-tu-ban-than/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/index.html",
@@ -334,14 +591,21 @@
       "metaDescription": "Đầu tư hiện tại đúng điểm để tương lai có nhiều tự do hơn.",
       "h1": "Đầu tư hiện tại - tự do tương lai",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/index.html",
@@ -354,14 +618,48 @@
       "metaDescription": "Con người thường nghĩ mình đang làm chủ cuộc đời, nhưng phía dưới còn nhiều mô thức, niềm tin và phản xạ vô thức đang chi phối toàn bộ lựa chọn sống.",
       "h1": "Đi Vào Bên Trong: Giải Mã Những Gì Đang Vận Hành Bạn",
       "h1Count": 1,
-      "textNodeCount": 40,
-      "imageCount": 0,
+      "textNodeCount": 38,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/index.html",
+      "route": "/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
+      "url": "https://www.nguyenlananh.com/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Đi vào bên trong không phải để trốn đời | Nguyenlananh.com",
+      "metaDescription": "Đi vào bên trong không phải là rời bỏ đời sống, mà là nhìn rõ điều đang vận hành mình để sống thật, chủ động và bền vững hơn.",
+      "h1": "Đi Vào Bên Trong Không Phải Để Trốn Đời",
+      "h1Count": 1,
+      "textNodeCount": 63,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/di-vao-ben-trong/index.html",
@@ -374,14 +672,21 @@
       "metaDescription": "Hub dành cho các bài viết giúp bạn nhìn ra vòng lặp và chọn lại hướng sống.",
       "h1": "Đi vào bên trong",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/di-vao-ben-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dieu-ban-dang-tranh/index.html",
@@ -394,14 +699,21 @@
       "metaDescription": "Điều bạn cố né thường không biến mất. Nó chỉ quay lại dưới những hình dạng khác và tiếp tục chi phối cách bạn sống.",
       "h1": "Điều bạn đang tránh chính là điều bạn cần nhìn",
       "h1Count": 1,
-      "textNodeCount": 44,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dieu-ban-dang-tranh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/index.html",
@@ -414,14 +726,21 @@
       "metaDescription": "Bài nền tảng về điều đáng tiếc nhất: sống hết một đời mà chưa từng hiểu mình.",
       "h1": "Điều đáng tiếc nhất khi kết thúc một kiếp sống",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/index.html",
@@ -434,14 +753,21 @@
       "metaDescription": "Bài teaser về cách đồng hành cùng trẻ em qua môi trường sống, nhịp sống và sự hiện diện của người lớn, thay vì chỉ sửa cho đúng.",
       "h1": "Điều trẻ em cần không chỉ là dạy đúng",
       "h1Count": 1,
-      "textNodeCount": 58,
-      "imageCount": 1,
+      "textNodeCount": 56,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/dong-chay-sang-tao-dong-chay-su-song/index.html",
@@ -454,14 +780,21 @@
       "metaDescription": "Khi bạn làm đúng cách, dòng chảy sáng tạo và sự sống cùng mở lại.",
       "h1": "Dòng chảy sáng tạo - dòng chảy sự sống",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/dong-chay-sang-tao-dong-chay-su-song/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/du-an-37-ngay/index.html",
@@ -474,14 +807,21 @@
       "metaDescription": "Tiến trình 37 ngày để biến nhận thức thành hành vi cụ thể.",
       "h1": "Dự án 37 ngày",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/du-an-37-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/du-an-buoc/index.html",
@@ -494,14 +834,21 @@
       "metaDescription": "Nhật ký dự án hành động để giữ nhịp thay đổi từng bước.",
       "h1": "Dự án BƯỚC",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/du-an-buoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/du-an-nhat-ky/index.html",
@@ -514,14 +861,21 @@
       "metaDescription": "Hub về dự án thực hành, nhật ký và các bước đi thật trong đời sống.",
       "h1": "Dự án nhật ký",
       "h1Count": 1,
-      "textNodeCount": 24,
-      "imageCount": 0,
+      "textNodeCount": 22,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/du-an-nhat-ky/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/gan-duc-khoi-trong/index.html",
@@ -534,14 +888,21 @@
       "metaDescription": "Làm việc với bản thân không phải để ghét bỏ những phần đục, mà để dần gạn ra điều gì đang làm mình nặng và khơi lại phần trong sáng hơn của sự sống.",
       "h1": "Gạn Đục Khơi Trong",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/gan-duc-khoi-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/index.html",
@@ -554,14 +915,21 @@
       "metaDescription": "Bài teaser về ảnh hưởng gia đình đến phản xạ sống hôm nay, và cách nhìn lại mà không đổ lỗi để mở một hướng trưởng thành hơn.",
       "h1": "Gia đình không chỉ là nơi ta lớn lên",
       "h1Count": 1,
-      "textNodeCount": 61,
-      "imageCount": 1,
+      "textNodeCount": 59,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/index.html",
@@ -574,14 +942,21 @@
       "metaDescription": "Giá trị thật của đời người đến từ chiều sâu nội tâm và hành động có ý nghĩa.",
       "h1": "Giá trị cuộc đời bạn đáng giá bao nhiêu",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/index.html",
@@ -594,14 +969,21 @@
       "metaDescription": "Khi biến động đến, thứ giữ bạn lại là nội lực và trí tuệ thật.",
       "h1": "Giá trị nào là vĩnh cửu trước sóng gió",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/gia-tri-noi-tai/index.html",
@@ -614,14 +996,21 @@
       "metaDescription": "Hub về nền tảng vững bên trong, khả năng thích nghi và trí tuệ thật.",
       "h1": "Giá trị nội tại",
       "h1Count": 1,
-      "textNodeCount": 22,
-      "imageCount": 0,
+      "textNodeCount": 20,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/gia-tri-noi-tai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
@@ -634,14 +1023,48 @@
       "metaDescription": "Từ bế tắc bên ngoài đến khả năng làm chủ lại cuộc đời từ bên trong.",
       "h1": "Hành trình đi vào bên trong",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/index.html",
+      "route": "/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "url": "https://www.nguyenlananh.com/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Hệ gia đình nơi phản xạ được học | Nguyenlananh.com",
+      "metaDescription": "Cách bạn xử lý xung đột, đối diện cảm xúc, yêu thương đều được học rất sớm trong gia đình. Nhìn rõ điều đã được truyền qua là bước đầu để chọn lại.",
+      "h1": "Hệ Gia Đình — Nơi Phản Xạ Được Học",
+      "h1Count": 1,
+      "textNodeCount": 86,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/hieu-cuoc-doi-minh/index.html",
@@ -654,14 +1077,21 @@
       "metaDescription": "Có những lúc điều cần thiết không phải là thay đổi thật nhanh, mà là hiểu cách mình đang sống và điều gì đang dẫn mình đi.",
       "h1": "Bạn không cần thay đổi cuộc đời, bạn cần hiểu nó",
       "h1Count": 1,
-      "textNodeCount": 44,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/hieu-cuoc-doi-minh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/hoc-tap-sang-tao-truong-thanh/index.html",
@@ -674,14 +1104,21 @@
       "metaDescription": "Ba trục cần đi cùng nhau để tạo tăng trưởng bền và có chiều sâu.",
       "h1": "Học tập - sáng tạo - trưởng thành",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/hoc-tap-sang-tao-truong-thanh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/index.html",
@@ -694,14 +1131,48 @@
       "metaDescription": "Khôi phục nhịp sống bằng sáng tạo nguyên sơ, chậm và có chiều sâu.",
       "h1": "Hồi sinh sự sống từ sự sáng tạo nguyên sơ",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/im-lang-noi-ban-van-dang-ne/index.html",
+      "route": "/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "url": "https://www.nguyenlananh.com/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Im lặng nơi bạn vẫn đang né | Nguyenlananh.com",
+      "metaDescription": "Phần lớn người ta không sợ im lặng. Họ sợ những gì im lặng cho họ thấy. Đây là cách quay lại với chính mình qua một khoảng trống thật.",
+      "h1": "Im Lặng — Nơi Bạn Vẫn Đang Né",
+      "h1Count": 1,
+      "textNodeCount": 82,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/im-lang-noi-ban-van-dang-ne/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/index.html",
@@ -714,14 +1185,21 @@
       "metaDescription": "Bài viết theo chủ đề: đi vào bên trong, môn học dọn dẹp, lao động sáng tạo, giá trị nội tại, đầu tư bản thân và dự án nhật ký.",
       "h1": "Bài viết",
       "h1Count": 1,
-      "textNodeCount": 103,
-      "imageCount": 0,
+      "textNodeCount": 118,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/ket-noi-linh-hon-vat-the/index.html",
@@ -734,14 +1212,21 @@
       "metaDescription": "Đồ vật không chỉ để dùng, mà còn phản ánh trạng thái sống của bạn.",
       "h1": "Kết nối linh hồn vật thể",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/ket-noi-linh-hon-vat-the/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/ket-noi-sang-tao/index.html",
@@ -754,14 +1239,21 @@
       "metaDescription": "Sáng tạo không ở xa, nó bắt đầu từ hành động thật trong đời sống thật.",
       "h1": "Kết nối sáng tạo",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/ket-noi-sang-tao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
@@ -774,14 +1266,21 @@
       "metaDescription": "Có những lúc vấn đề không nằm ở bạn, mà ở môi trường bạn đang sống và làm việc mỗi ngày.",
       "h1": "Khi Môi Trường Không Còn Phù Hợp",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 2,
+      "textNodeCount": 40,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/khoi-tu-tam/index.html",
@@ -794,14 +1293,21 @@
       "metaDescription": "Rất nhiều vòng lặp của cuộc đời bắt đầu từ một ý nghĩ, một niềm tin và một kết luận lặp lại đủ lâu để trở thành số phận.",
       "h1": "Khởi Từ Tâm",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/khoi-tu-tam/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
@@ -814,14 +1320,48 @@
       "metaDescription": "Sống có ý nghĩa là sống có chiều sâu, có hành động, có giá trị thật.",
       "h1": "Kiến tạo một đời sống ý nghĩa",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/index.html",
+      "route": "/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "url": "https://www.nguyenlananh.com/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Lao động sáng tạo không phải đầu ra mà là cách sống | Nguyenlananh.com",
+      "metaDescription": "Sáng tạo không chỉ là tạo sản phẩm hay nội dung. Đó là cách một người làm việc, nhìn đời sống, giữ nhịp và để điều thật đi qua đôi tay mình.",
+      "h1": "Lao Động Sáng Tạo — Không Phải Đầu Ra, Mà Là Cách Sống",
+      "h1Count": 1,
+      "textNodeCount": 93,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/lao-dong-sang-tao/index.html",
@@ -834,14 +1374,21 @@
       "metaDescription": "Hub về lao động có ý thức, hiện diện và mở lại dòng sống.",
       "h1": "Lao động sáng tạo",
       "h1Count": 1,
-      "textNodeCount": 25,
-      "imageCount": 0,
+      "textNodeCount": 23,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/lao-dong-sang-tao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/minh-dang-di-con-duong-gi/index.html",
@@ -854,14 +1401,48 @@
       "metaDescription": "Đặt lại câu hỏi nền tảng để tránh lạc hướng trong chính thành tựu của mình.",
       "h1": "Mình đang đi con đường gì",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/minh-dang-di-con-duong-gi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/moi-truong-la-nguoi-thay-vo-hinh/index.html",
+      "route": "/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "url": "https://www.nguyenlananh.com/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Môi trường là người thầy vô hình | Nguyenlananh.com",
+      "metaDescription": "Môi trường không chỉ chứa bạn. Nó dạy bạn cách sống, cách phản ứng, cách tiêu hao năng lượng và cách nhìn chính mình mỗi ngày.",
+      "h1": "Môi Trường — Người Thầy Vô Hình",
+      "h1Count": 1,
+      "textNodeCount": 87,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/mon-hoc-don-dep-tong-quan/index.html",
@@ -874,14 +1455,21 @@
       "metaDescription": "Tổng quan phương pháp dọn dẹp như một tiến trình học tập và trưởng thành.",
       "h1": "Môn học dọn dẹp tổng quan",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/mon-hoc-don-dep-tong-quan/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/mon-hoc-don-dep/index.html",
@@ -894,14 +1482,21 @@
       "metaDescription": "Hub signature nối nội tâm - vật thể - môi trường sống - hành vi.",
       "h1": "Môn học dọn dẹp",
       "h1Count": 1,
-      "textNodeCount": 25,
-      "imageCount": 0,
+      "textNodeCount": 23,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/mon-hoc-don-dep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/neu-minh-sai-thi-sao/index.html",
@@ -914,14 +1509,21 @@
       "metaDescription": "Một trong những năng lực quan trọng nhất của trưởng thành là giữ được tâm thế truy tìm sự thật, thay vì bám chặt vào điều mình đã tin.",
       "h1": "Nếu Mình Sai Thì Sao?",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/neu-minh-sai-thi-sao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/ngoi-nha-thu-2/index.html",
@@ -934,14 +1536,21 @@
       "metaDescription": "Ngoài ngôi nhà vật lý, con người còn sống trong một ngôi nhà khác: môi trường làm việc, không gian tinh thần và cấu trúc sống đang nuôi hoặc làm cạn mình mỗi ngày.",
       "h1": "Ngôi Nhà Thứ 2",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/ngoi-nha-thu-2/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/index.html",
@@ -954,14 +1563,21 @@
       "metaDescription": "Môi trường bạn làm việc mỗi ngày có thể nuôi dưỡng hoặc làm cạn kiệt năng lượng sống. Nhận ra và điều chỉnh không gian sống là bước quan trọng để tái thiết cuộc đời.",
       "h1": "Ngôi Nhà Thứ Hai – Nơi Bạn Đang Sống Mỗi Ngày",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 2,
+      "textNodeCount": 41,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/index.html",
@@ -974,14 +1590,21 @@
       "metaDescription": "Ngày đầu tiên của hành trình làm chủ không cần hoàn hảo. Điều quan trọng là dám bắt đầu, điều chỉnh linh hoạt và ghi nhận một bước thật.",
       "h1": "Nhật Ký 37 Ngày Làm Chủ – Ngày 1",
       "h1Count": 1,
-      "textNodeCount": 38,
-      "imageCount": 2,
+      "textNodeCount": 36,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/nhung-vong-lap-ban-chua-goi-ten/index.html",
@@ -990,18 +1613,52 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "article",
-      "title": "Những vòng lặp bạn chưa gọi tên | Nguyenlananh.com",
-      "metaDescription": "Một bài teaser giúp bạn nhận ra vòng lặp đang vận hành đời sống: trigger, phản ứng, cái giá phải trả, và bước thật đầu tiên để mở lối ra.",
-      "h1": "Những vòng lặp bạn chưa gọi tên",
+      "title": "Vòng lặp điều bạn chưa gọi đúng tên | Nguyenlananh.com",
+      "metaDescription": "Bạn không thiếu ý chí. Có thể bạn đang sống trong một vòng lặp chưa được gọi tên: cùng trigger, cùng phản ứng, cùng cái giá phải trả.",
+      "h1": "Vòng Lặp — Điều Bạn Chưa Gọi Đúng Tên",
       "h1Count": 1,
-      "textNodeCount": 68,
+      "textNodeCount": 78,
       "imageCount": 1,
-      "altCount": 1,
-      "figureCount": 1,
-      "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/nhung-vong-lap-ban-chua-goi-ten/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/index.html",
+      "route": "/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "url": "https://www.nguyenlananh.com/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Nuôi dạy trẻ không làm gãy tự nhiên | Nguyenlananh.com",
+      "metaDescription": "Trẻ em không chỉ cần được dạy đúng. Trẻ cần một môi trường người lớn đủ tỉnh để không bẻ gãy tò mò, nhịp sống và sự thật tự nhiên của trẻ.",
+      "h1": "Trẻ Em — Nuôi Dạy Mà Không Làm Gãy Tự Nhiên",
+      "h1Count": 1,
+      "textNodeCount": 90,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/quet-la-va-viec-hoc/index.html",
@@ -1014,14 +1671,21 @@
       "metaDescription": "Lao động thường ngày giúp mở lại dòng sống và năng lượng sáng tạo.",
       "h1": "Quét lá và việc học",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/quet-la-va-viec-hoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/sai-moi-truong/index.html",
@@ -1034,14 +1698,21 @@
       "metaDescription": "Vấn đề không nằm ở bạn. Mà ở môi trường không phù hợp với cách bạn phát triển.",
       "h1": "Bạn không kém, bạn chỉ đang ở sai chỗ",
       "h1Count": 1,
-      "textNodeCount": 44,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/sai-moi-truong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/song-sai-nhip/index.html",
@@ -1054,14 +1725,21 @@
       "metaDescription": "Mệt mỏi kéo dài nhiều khi không đến từ khối lượng công việc, mà từ việc bạn đang sống lệch khỏi nhịp phù hợp với mình.",
       "h1": "Bạn không mệt vì làm nhiều, bạn mệt vì sống sai nhịp",
       "h1Count": 1,
-      "textNodeCount": 44,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/song-sai-nhip/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/song-theo-dong-chay/index.html",
@@ -1074,14 +1752,21 @@
       "metaDescription": "Sống theo dòng chảy không phải buông xuôi. Đó là trạng thái sống linh hoạt, tỉnh và đủ thật để không tự ngắt dòng sống của chính mình.",
       "h1": "Sống Theo Dòng Chảy",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/song-theo-dong-chay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/song-theo-thoi-quen/index.html",
@@ -1094,14 +1779,21 @@
       "metaDescription": "Phần lớn quyết định trong ngày của bạn đến từ thói quen, không phải ý thức.",
       "h1": "Bạn đang sống theo thói quen, không phải lựa chọn",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 0,
+      "textNodeCount": 41,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/song-theo-thoi-quen/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/thieu-su-that/index.html",
@@ -1114,14 +1806,21 @@
       "metaDescription": "Động lực thường cạn đi rất nhanh khi nó phải chống lại một sự thật mà bạn đã biết nhưng không muốn nhìn thẳng.",
       "h1": "Bạn không thiếu động lực, bạn thiếu sự thật",
       "h1Count": 1,
-      "textNodeCount": 44,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/thieu-su-that/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/index.html",
@@ -1134,14 +1833,21 @@
       "metaDescription": "Môi trường sống là tấm gương của nội tâm và là điểm bắt đầu của chuyển hóa.",
       "h1": "Trưởng thành thông qua môn học dọn dẹp",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/tu-55-trieu-den-tu-do/index.html",
@@ -1154,14 +1860,48 @@
       "metaDescription": "Một góc nhìn về đầu tư cho nhận thức và tương lai dài hạn của chính mình.",
       "h1": "Từ 55 triệu đến tự do",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/tu-55-trieu-den-tu-do/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "bai-viet/tu-biet-nhieu-den-song-duoc/index.html",
+      "route": "/bai-viet/tu-biet-nhieu-den-song-duoc/",
+      "url": "https://www.nguyenlananh.com/bai-viet/tu-biet-nhieu-den-song-duoc/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Từ biết nhiều đến sống được | Nguyenlananh.com",
+      "metaDescription": "Biết nhiều không đủ để đổi đời sống. Chuyển hóa bắt đầu khi nhận thức được đưa xuống một bước nhỏ, thật, đều và có thể lặp lại.",
+      "h1": "Từ Biết Nhiều Đến Sống Được",
+      "h1Count": 1,
+      "textNodeCount": 75,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/tu-biet-nhieu-den-song-duoc/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "bai-viet/vu-tru-vat-chat/index.html",
@@ -1174,14 +1914,21 @@
       "metaDescription": "Vật chất không chỉ là vật lý đơn thuần. Nó còn mang dấu vết của niềm tin, năng lượng, cách sử dụng và mối quan hệ của con người với thế giới sống quanh mình.",
       "h1": "Vũ Trụ Vật Chất",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "en/bai-viet/vu-tru-vat-chat/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "chinh-sach-bao-mat/index.html",
@@ -1214,14 +1961,21 @@
       "metaDescription": "Các chương trình đồng hành được thiết kế theo chiều sâu: nhận thức, đời sống thực, và đầu tư cho chính mình.",
       "h1": "Chương trình",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/chuong-trinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "dieu-khoan/index.html",
@@ -1255,13 +2009,20 @@
       "h1": "Dự án 37 ngày làm chủ cuộc đời",
       "h1Count": 1,
       "textNodeCount": 17,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/du-an/du-an-37-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "du-an/du-an-buoc/index.html",
@@ -1275,13 +2036,20 @@
       "h1": "Dự án BƯỚC",
       "h1Count": 1,
       "textNodeCount": 17,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/du-an/du-an-buoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "du-an/index.html",
@@ -1294,14 +2062,21 @@
       "metaDescription": "Các dự án hành động: Dự án BƯỚC và Dự án 37 ngày làm chủ cuộc đời.",
       "h1": "Dự án",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 25,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/du-an/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/admin/content/index.html",
@@ -1314,14 +2089,27 @@
       "metaDescription": "Keep launch content, order and internal links consistent when editing.",
       "h1": "Launch collection operations",
       "h1Count": 1,
-      "textNodeCount": 50,
-      "imageCount": 0,
+      "textNodeCount": 49,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/content/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        },
+        {
+          "severity": "medium",
+          "category": "seo",
+          "code": "wrong_language_internal_link",
+          "message": "Internal link does not match the page locale: /admin/content/articles-launch-collection.json"
+        }
+      ]
     },
     {
       "file": "en/admin/creators/index.html",
@@ -1334,14 +2122,21 @@
       "metaDescription": "Track submission queue, review status and internal publish rules.",
       "h1": "Creator workflow operations",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 27,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/creators/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/admin/dashboard/index.html",
@@ -1354,14 +2149,21 @@
       "metaDescription": "Monitor launch status, internal health and operational controls.",
       "h1": "Operation overview",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/dashboard/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/admin/index.html",
@@ -1374,14 +2176,21 @@
       "metaDescription": "Internal admin foundation for membership and creator operations.",
       "h1": "Independent admin operation console",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 45,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/admin/members/index.html",
@@ -1394,14 +2203,21 @@
       "metaDescription": "Track join/login flow and day-1/day-7 checkpoints.",
       "h1": "Member activation monitoring",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 28,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/members/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/admin/settings/index.html",
@@ -1414,14 +2230,21 @@
       "metaDescription": "Internal settings, role policy, and operations safety flags.",
       "h1": "Operational governance panel",
       "h1Count": 1,
-      "textNodeCount": 41,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "admin/settings/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/index.html",
@@ -1434,14 +2257,21 @@
       "metaDescription": "An opening article on how voice, breath, and self-sound can become a way to return to yourself, hear your inner voice again, and begin a deeper journey.",
       "h1": "Self-Sound Practice: When a Small Song Becomes a Way Back",
       "h1Count": 1,
-      "textNodeCount": 61,
-      "imageCount": 1,
+      "textNodeCount": 59,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 1,
+      "svgDescriptionCount": 2,
       "counterpartFile": "bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/ban-khong-thieu-kien-thuc/index.html",
@@ -1454,19 +2284,46 @@
       "metaDescription": "You do not lack information. You lack clarity about how you live and which truths actually matter in your daily decisions.",
       "h1": "You Do Not Lack Knowledge, You Lack Clarity",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/ban-khong-thieu-kien-thuc/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/bon-truc-thay-doi/index.html",
+      "route": "/en/bai-viet/bon-truc-thay-doi/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/bon-truc-thay-doi/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "The Four Axes of Change | Nguyenlananh.com",
+      "metaDescription": "Not a closed formula. Four axes as a practice frame for returning to real life and no longer being pulled along without knowing why.",
+      "h1": "The Four Axes of Change — Observe, Feel, Act, Shift",
+      "h1Count": 1,
+      "textNodeCount": 58,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/bon-truc-thay-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1477,18 +2334,52 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "article",
-      "title": "The Broom | Nguyenlananh.com",
-      "metaDescription": "A symbol of conscious labor, quiet discipline, and everyday presence.",
-      "h1": "The Broom",
+      "title": "The Broom — Small Work That Makes Life Clear Again | Nguyenlananh.com",
+      "metaDescription": "A small manual task can return you to rhythm, order, and presence. The broom is not only for cleaning a room; it shows how you are living.",
+      "h1": "The Broom — Small Work That Makes Life Clear Again",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 74,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/cai-choi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/index.html",
+      "route": "/en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "The Room as a Map of the Inner Life | Nguyenlananh.com",
+      "metaDescription": "Your room is not just a place to live. It can reveal overload, delay, avoidance, and the real rhythm of your life.",
+      "h1": "The Room as a Map of the Inner Life",
+      "h1Count": 1,
+      "textNodeCount": 62,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/chi-can-dung/index.html",
@@ -1501,19 +2392,19 @@
       "metaDescription": "A well-optimized life may run smoothly, but it may still be far from what is true for you.",
       "h1": "Your Life Does Not Need Optimization, Only Alignment",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 0,
+      "textNodeCount": 41,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/chi-can-dung/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1528,19 +2419,46 @@
       "metaDescription": "Feeling lost may simply mean you have been following a borrowed direction for too long.",
       "h1": "You Have Not Lost Direction, You Never Truly Had One",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 0,
+      "textNodeCount": 41,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/chua-tung-co-huong/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/index.html",
+      "route": "/en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Loneliness Is a Self-Disconnect | Nguyenlananh.com",
+      "metaDescription": "The deepest loneliness is not the lack of people. It is a disconnect from yourself. The way back is not through others but through yourself.",
+      "h1": "Loneliness Is a Self-Disconnect",
+      "h1Count": 1,
+      "textNodeCount": 75,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/co-don-khong-phai-vi-thieu-nguoi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1555,19 +2473,19 @@
       "metaDescription": "Some seasons do not ask for more growth. They ask for rest, quiet, and a return to your own voice.",
       "h1": "Not Everyone Needs Growth, Some People Need to Pause",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/co-nguoi-can-dung-lai/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1582,14 +2500,21 @@
       "metaDescription": "A true growth community is not just shared belief. It is where people are reflected, supported, and challenged to grow in sustainable ways.",
       "h1": "New Living Community",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/cong-dong-song-moi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/index.html",
@@ -1602,14 +2527,48 @@
       "metaDescription": "Why the most important investment is upgrading awareness, not chasing quick external gains.",
       "h1": "Investing in Yourself Through Higher Awareness",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/index.html",
+      "route": "/en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Investing in Yourself Without the Life-Change Illusion | Nguyenlananh.com",
+      "metaDescription": "Investing in yourself is not buying another promise of life change. It is learning to choose what actually makes life clearer, steadier, and more livable.",
+      "h1": "Investing in Yourself Without the Life-Change Illusion",
+      "h1Count": 1,
+      "textNodeCount": 87,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dau-tu-ban-than/index.html",
@@ -1622,14 +2581,21 @@
       "metaDescription": "A hub for long-term investing in awareness, daily discipline, and a durable inner direction.",
       "h1": "Investing in Yourself",
       "h1Count": 1,
-      "textNodeCount": 22,
-      "imageCount": 0,
+      "textNodeCount": 20,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dau-tu-ban-than/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/index.html",
@@ -1642,14 +2608,21 @@
       "metaDescription": "A practical framing of present-day discipline as the foundation of future freedom.",
       "h1": "Invest in the Present, Free Your Future",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/index.html",
@@ -1662,14 +2635,48 @@
       "metaDescription": "A practical article to decode hidden drivers, emotional loops, and unconscious reactions that shape your life.",
       "h1": "Going Inward: Decoding What Is Running You",
       "h1Count": 1,
-      "textNodeCount": 40,
-      "imageCount": 0,
+      "textNodeCount": 38,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/index.html",
+      "route": "/en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Going Inward Is Not Escaping Life | Nguyenlananh.com",
+      "metaDescription": "Going inward is not a retreat from life. It is the work of seeing what drives you so you can live with clarity, agency, and depth.",
+      "h1": "Going Inward Is Not Escaping Life",
+      "h1Count": 1,
+      "textNodeCount": 61,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/di-vao-ben-trong/index.html",
@@ -1682,14 +2689,21 @@
       "metaDescription": "Hub danh cho cac bai viet giup ban nhin ra vong lap va chon lai huong song.",
       "h1": "Di vao ben trong",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/di-vao-ben-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dieu-ban-dang-tranh/index.html",
@@ -1699,22 +2713,22 @@
       "htmlLang": "en-US",
       "pageType": "article",
       "title": "What You Avoid Is Exactly What You Need to See | Nguyenlananh.com",
-      "metaDescription": "What you avoid does not disappear. It returns in other forms and keeps shaping your life from the shadows.",
+      "metaDescription": "What you avoid rarely disappears. It returns in different forms and quietly runs the way you live. This piece names the cost of avoidance and how to begin facing it without rushing to solve everything.",
       "h1": "What You Avoid Is Exactly What You Need to See",
       "h1Count": 1,
       "textNodeCount": 42,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dieu-ban-dang-tranh/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1729,14 +2743,21 @@
       "metaDescription": "A foundational reflection on the deepest regret: living an entire life without truly understanding yourself.",
       "h1": "The Deepest Regret at the End of a Life",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/index.html",
@@ -1749,14 +2770,21 @@
       "metaDescription": "A public teaser on accompanying children through environment, rhythm, and adult presence, not only correction and instruction.",
       "h1": "What Children Need Is More Than Correct Instruction",
       "h1Count": 1,
-      "textNodeCount": 58,
-      "imageCount": 1,
+      "textNodeCount": 56,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/dong-chay-sang-tao-dong-chay-su-song/index.html",
@@ -1769,14 +2797,21 @@
       "metaDescription": "Why creative flow and life flow are connected, and how to restore both through consistent embodied action.",
       "h1": "Creative Flow, Life Flow",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/dong-chay-sang-tao-dong-chay-su-song/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/du-an-37-ngay/index.html",
@@ -1789,14 +2824,21 @@
       "metaDescription": "A structured reset to rebuild self-leadership through 37 days of focused daily practice.",
       "h1": "The 37-Day Project",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/du-an-37-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/du-an-buoc/index.html",
@@ -1809,14 +2851,21 @@
       "metaDescription": "An action journal built around small but real steps that restore rhythm and trust in yourself.",
       "h1": "Project STEP",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/du-an-buoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/du-an-nhat-ky/index.html",
@@ -1829,14 +2878,21 @@
       "metaDescription": "Hub ve du an thuc hanh, nhat ky va cac buoc di that trong doi song.",
       "h1": "Journal project",
       "h1Count": 1,
-      "textNodeCount": 24,
-      "imageCount": 0,
+      "textNodeCount": 22,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/du-an-nhat-ky/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/gan-duc-khoi-trong/index.html",
@@ -1849,14 +2905,21 @@
       "metaDescription": "To clear life, you do not remove your emotions. You bring the inner layer into view and release what keeps it crowded.",
       "h1": "Clear the Mud, Open the Source",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/gan-duc-khoi-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/index.html",
@@ -1865,18 +2928,25 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "article",
-      "title": "Family Is Not Only Where We Grew Up | Nguyenlananh.com",
-      "metaDescription": "A public teaser on how family patterns shape present-day reactions, and how to look back without blame so growth can begin.",
-      "h1": "Family Is Not Only Where We Grew Up",
+      "title": "Family Is Not Only Where We Grow Up | Nguyenlananh.com",
+      "metaDescription": "A short piece on how family shapes the reactions we still live by today, and how to look back without falling into blame so a more mature direction can open.",
+      "h1": "Family Is Not Only Where We Grow Up",
       "h1Count": 1,
-      "textNodeCount": 60,
-      "imageCount": 1,
+      "textNodeCount": 59,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/index.html",
@@ -1889,14 +2959,21 @@
       "metaDescription": "A direct inquiry into life value beyond income, titles, and social recognition.",
       "h1": "How Much Is Your Life Actually Worth?",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/index.html",
@@ -1909,14 +2986,21 @@
       "metaDescription": "A reflection on the kind of value that remains when status, money, and certainty are shaken.",
       "h1": "What Value Endures Before Any Storm?",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/gia-tri-noi-tai/index.html",
@@ -1925,18 +3009,25 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "article",
-      "title": "Gia tri noi tai | Bai viet | Nguyenlananh.com",
-      "metaDescription": "Hub ve nen tang vung ben trong, kha nang thich nghi va tri tue that.",
-      "h1": "Gia tri noi tai",
+      "title": "Inner Value | Articles | Nguyenlananh.com",
+      "metaDescription": "A hub on inner foundation, adaptive capacity, and long-term practical wisdom.",
+      "h1": "Inner Value",
       "h1Count": 1,
-      "textNodeCount": 22,
-      "imageCount": 0,
+      "textNodeCount": 20,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/gia-tri-noi-tai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
@@ -1949,14 +3040,48 @@
       "metaDescription": "A clear map for returning inward, seeing what runs your life, and rebuilding from the inside out.",
       "h1": "The Journey Inward",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/index.html",
+      "route": "/en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Family Systems — Where Reactions Are Learned | Nguyenlananh.com",
+      "metaDescription": "How you handle conflict, face emotion, and love was learned early in the family. Seeing what was passed through is the first step toward choosing differently.",
+      "h1": "Family Systems — Where Reactions Are Learned",
+      "h1Count": 1,
+      "textNodeCount": 86,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/hieu-cuoc-doi-minh/index.html",
@@ -1969,19 +3094,19 @@
       "metaDescription": "The urgent need is not always a new life. Often it is a truer understanding of the life you are already living.",
       "h1": "You Do Not Need to Change Your Life, You Need to Understand It",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/hieu-cuoc-doi-minh/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -1996,14 +3121,21 @@
       "metaDescription": "A practical triangle for sustainable growth through learning, creative expression, and disciplined practice.",
       "h1": "Learning, Creating, Growing",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/hoc-tap-sang-tao-truong-thanh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/index.html",
@@ -2016,14 +3148,48 @@
       "metaDescription": "A deep look at how original creativity can restore vitality, meaning, and movement in daily life.",
       "h1": "Reviving Life Through Original Creativity",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/im-lang-noi-ban-van-dang-ne/index.html",
+      "route": "/en/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/im-lang-noi-ban-van-dang-ne/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Silence — The Place You Keep Avoiding | Nguyenlananh.com",
+      "metaDescription": "Most people are not afraid of silence. They are afraid of what silence reveals. A return to yourself through one honest pause.",
+      "h1": "Silence — The Place You Keep Avoiding",
+      "h1Count": 1,
+      "textNodeCount": 82,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/im-lang-noi-ban-van-dang-ne/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/index.html",
@@ -2036,14 +3202,21 @@
       "metaDescription": "Read by journey: inner work, decluttering practice, labor and creation, inner value, self-investment, and project journals.",
       "h1": "Articles",
       "h1Count": 1,
-      "textNodeCount": 103,
-      "imageCount": 0,
+      "textNodeCount": 118,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/ket-noi-linh-hon-vat-the/index.html",
@@ -2056,14 +3229,21 @@
       "metaDescription": "A contemplative practice of seeing objects not as clutter, but as mirrors of attention and meaning.",
       "h1": "Connecting with the Soul of Objects",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/ket-noi-linh-hon-vat-the/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/ket-noi-sang-tao/index.html",
@@ -2076,14 +3256,21 @@
       "metaDescription": "How to reopen creative energy by restoring presence, order, and contact with real life.",
       "h1": "Reconnecting with Creativity",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/ket-noi-sang-tao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
@@ -2096,14 +3283,21 @@
       "metaDescription": "Sometimes the problem is not you, but the environment you live and work in every day.",
       "h1": "When the Environment No Longer Fits",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 2,
+      "textNodeCount": 40,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/khoi-tu-tam/index.html",
@@ -2116,14 +3310,21 @@
       "metaDescription": "Many life loops begin with one thought, one belief, and one repeated conclusion that was never examined.",
       "h1": "Beginning from the Core",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/khoi-tu-tam/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
@@ -2136,14 +3337,48 @@
       "metaDescription": "A practical philosophy for building a life that is grounded, useful, and aligned with your deepest values.",
       "h1": "Designing a Meaningful Life",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/index.html",
+      "route": "/en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Creative Labor — Not Output, But a Way of Living | Nguyenlananh.com",
+      "metaDescription": "Creativity is not only producing work or content. It is a way of working, seeing life, keeping rhythm, and letting something real pass through your hands.",
+      "h1": "Creative Labor — Not Output, But a Way of Living",
+      "h1Count": 1,
+      "textNodeCount": 81,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/lao-dong-sang-tao/index.html",
@@ -2156,14 +3391,21 @@
       "metaDescription": "Hub ve lao dong co y thuc, hien dien va mo lai dong song.",
       "h1": "Lao dong sang tao",
       "h1Count": 1,
-      "textNodeCount": 25,
-      "imageCount": 0,
+      "textNodeCount": 23,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/lao-dong-sang-tao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/minh-dang-di-con-duong-gi/index.html",
@@ -2176,14 +3418,48 @@
       "metaDescription": "A reflective checkpoint for people who are moving fast but unsure whether their path still feels true.",
       "h1": "What Path Am I Really On?",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 0,
+      "textNodeCount": 35,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/minh-dang-di-con-duong-gi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/index.html",
+      "route": "/en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Environment — The Invisible Teacher | Nguyenlananh.com",
+      "metaDescription": "Your environment does not only contain you. It teaches you how to live, react, spend energy, and see yourself every day.",
+      "h1": "Environment — The Invisible Teacher",
+      "h1Count": 1,
+      "textNodeCount": 77,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/moi-truong-la-nguoi-thay-vo-hinh/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/mon-hoc-don-dep-tong-quan/index.html",
@@ -2196,14 +3472,21 @@
       "metaDescription": "An overview of cleaning as a life practice connecting inner awareness, environment, and behavior.",
       "h1": "The Cleaning Practice: A Foundational View",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/mon-hoc-don-dep-tong-quan/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/mon-hoc-don-dep/index.html",
@@ -2216,14 +3499,21 @@
       "metaDescription": "A hub connecting inner clarity, objects, living environment, and everyday action.",
       "h1": "The Cleaning Practice",
       "h1Count": 1,
-      "textNodeCount": 25,
-      "imageCount": 0,
+      "textNodeCount": 23,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/mon-hoc-don-dep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/neu-minh-sai-thi-sao/index.html",
@@ -2236,14 +3526,21 @@
       "metaDescription": "Mature awareness is the ability to stay with uncertainty and return to truth instead of defending a familiar story.",
       "h1": "If you are wrong, so what?",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/neu-minh-sai-thi-sao/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/ngoi-nha-thu-2/index.html",
@@ -2256,14 +3553,21 @@
       "metaDescription": "A physical place can become a second home: a work, study, and reflection space that either supports life or quietly drains it.",
       "h1": "Second home",
       "h1Count": 1,
-      "textNodeCount": 38,
-      "imageCount": 2,
+      "textNodeCount": 36,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/ngoi-nha-thu-2/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/index.html",
@@ -2276,14 +3580,21 @@
       "metaDescription": "Your daily environment can either nourish or deplete your energy. Reworking your space is a key step in rebuilding life.",
       "h1": "Your Second Home: The Place You Live In Every Day",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 2,
+      "textNodeCount": 41,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/index.html",
@@ -2296,14 +3607,21 @@
       "metaDescription": "Day 1 does not need perfection. What matters is starting with honesty, adapting with flexibility, and taking one real step.",
       "h1": "37-Day Self-Mastery Journal – Day 1",
       "h1Count": 1,
-      "textNodeCount": 38,
-      "imageCount": 2,
+      "textNodeCount": 36,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/nhung-vong-lap-ban-chua-goi-ten/index.html",
@@ -2312,18 +3630,52 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "article",
-      "title": "The Loops You Have Not Named Yet | Nguyenlananh.com",
-      "metaDescription": "A public teaser on hidden life loops: trigger, reaction, cost, and the first real step to create a different direction.",
-      "h1": "The Loops You Have Not Named Yet",
+      "title": "Loops — What You Have Not Named Yet | Nguyenlananh.com",
+      "metaDescription": "You may not lack willpower. You may be living inside an unnamed loop: the same trigger, the same reaction, the same cost.",
+      "h1": "Loops — What You Have Not Named Yet",
       "h1Count": 1,
-      "textNodeCount": 68,
+      "textNodeCount": 77,
       "imageCount": 1,
-      "altCount": 1,
-      "figureCount": 1,
-      "figcaptionCount": 1,
-      "svgDescriptionCount": 0,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/nhung-vong-lap-ban-chua-goi-ten/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/index.html",
+      "route": "/en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Raising Children Without Breaking Their Nature | Nguyenlananh.com",
+      "metaDescription": "Children need more than correct instruction. They need adults awake enough not to break curiosity, rhythm, and the child's natural truth.",
+      "h1": "Children — Raising Without Breaking Their Nature",
+      "h1Count": 1,
+      "textNodeCount": 80,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/quet-la-va-viec-hoc/index.html",
@@ -2336,14 +3688,21 @@
       "metaDescription": "A grounded lesson on learning through hands-on work, repetition, and real-life attention.",
       "h1": "Sweeping Leaves and the Way We Learn",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/quet-la-va-viec-hoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/sai-moi-truong/index.html",
@@ -2356,19 +3715,19 @@
       "metaDescription": "The problem is not always you. Sometimes the environment around you cannot support the way you are meant to grow.",
       "h1": "You Are Not Less Capable, You Are in the Wrong Place",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/sai-moi-truong/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -2383,19 +3742,19 @@
       "metaDescription": "Exhaustion does not always come from workload. It can come from living against a rhythm that does not fit you.",
       "h1": "You Are Not Tired from Doing Too Much, You Are Out of Rhythm",
       "h1Count": 1,
-      "textNodeCount": 43,
-      "imageCount": 0,
+      "textNodeCount": 41,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/song-sai-nhip/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -2410,14 +3769,21 @@
       "metaDescription": "Living in flow is not passive surrender. It is a clear, flexible way of living that stops you from blocking your own life current.",
       "h1": "Living in Flow",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 2,
+      "textNodeCount": 34,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/song-theo-dong-chay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/song-theo-thoi-quen/index.html",
@@ -2430,19 +3796,19 @@
       "metaDescription": "Most daily decisions come from habit, not conscious choice. Real direction begins when repetition becomes visible.",
       "h1": "You Are Living by Habit, Not Choice",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/song-theo-thoi-quen/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -2457,19 +3823,19 @@
       "metaDescription": "Motivation fades quickly when it is asked to fight a truth you already know but do not want to face.",
       "h1": "You Do Not Lack Motivation, You Lack Truth",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/thieu-su-that/index.html",
       "issues": [
         {
           "severity": "high",
-          "category": "en",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
         }
       ]
     },
@@ -2484,14 +3850,21 @@
       "metaDescription": "How simple acts of cleaning become a real path of maturity, awareness, and inner order.",
       "h1": "Growing Through the Cleaning Practice",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/tu-55-trieu-den-tu-do/index.html",
@@ -2504,14 +3877,48 @@
       "metaDescription": "Reframing money as a conscious commitment to growth, capacity, and long-term personal freedom.",
       "h1": "From 55 Million to Freedom",
       "h1Count": 1,
-      "textNodeCount": 36,
-      "imageCount": 0,
+      "textNodeCount": 34,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/tu-55-trieu-den-tu-do/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
+    },
+    {
+      "file": "en/bai-viet/tu-biet-nhieu-den-song-duoc/index.html",
+      "route": "/en/bai-viet/tu-biet-nhieu-den-song-duoc/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/tu-biet-nhieu-den-song-duoc/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "From Knowing More to Actually Living | Nguyenlananh.com",
+      "metaDescription": "Knowing more is not enough to change life. Real transformation begins when awareness becomes one small, honest, repeatable action.",
+      "h1": "From Knowing More to Actually Living",
+      "h1Count": 1,
+      "textNodeCount": 69,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/tu-biet-nhieu-den-song-duoc/index.html",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/bai-viet/vu-tru-vat-chat/index.html",
@@ -2524,14 +3931,21 @@
       "metaDescription": "Material things are not only objects. They can carry traces of attention, beliefs, and how you show up in life.",
       "h1": "The Material World",
       "h1Count": 1,
-      "textNodeCount": 37,
-      "imageCount": 2,
+      "textNodeCount": 35,
+      "imageCount": 3,
       "altCount": 2,
       "figureCount": 2,
       "figcaptionCount": 2,
-      "svgDescriptionCount": 2,
+      "svgDescriptionCount": 3,
       "counterpartFile": "bai-viet/vu-tru-vat-chat/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/chinh-sach-bao-mat/index.html",
@@ -2564,14 +3978,21 @@
       "metaDescription": "Guided programs designed for depth: awareness, real-life practice, and long-term self-investment.",
       "h1": "Programs",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "chuong-trinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/dieu-khoan/index.html",
@@ -2600,18 +4021,25 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "project",
-      "title": "Du an 37 ngay | Nguyenlananh.com",
-      "metaDescription": "Du an 37 ngay lam chu cuoc doi qua hanh dong nho nhung deu dan.",
-      "h1": "Du an 37 ngay lam chu cuoc doi",
+      "title": "37-Day Project | Nguyenlananh.com",
+      "metaDescription": "A 37-day practice track to rebuild rhythm and agency through small daily actions.",
+      "h1": "37-Day Project: Rebuilding Agency",
       "h1Count": 1,
       "textNodeCount": 17,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "du-an/du-an-37-ngay/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/du-an/du-an-buoc/index.html",
@@ -2620,18 +4048,25 @@
       "locale": "en",
       "htmlLang": "en-US",
       "pageType": "project",
-      "title": "Du an BUOC | Nguyenlananh.com",
-      "metaDescription": "Du an BUOC: tien trinh buoc nho nhung that de tai thiet doi song.",
-      "h1": "Du an BUOC",
+      "title": "BUOC Project | Nguyenlananh.com",
+      "metaDescription": "BUOC is a step-by-step practice environment to leave old loops and establish a new life rhythm.",
+      "h1": "BUOC Project",
       "h1Count": 1,
       "textNodeCount": 17,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "du-an/du-an-buoc/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/du-an/index.html",
@@ -2644,14 +4079,21 @@
       "metaDescription": "Cac du an hanh dong: Du an BUOC va Du an 37 ngay lam chu cuoc doi.",
       "h1": "Du an",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 25,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "du-an/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/faq/index.html",
@@ -2664,14 +4106,21 @@
       "metaDescription": "Frequently asked questions about the journey, method, and guided programs at Nguyenlananh.com.",
       "h1": "FAQ",
       "h1Count": 1,
-      "textNodeCount": 35,
-      "imageCount": 0,
+      "textNodeCount": 33,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "faq/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/gioi-thieu/index.html",
@@ -2684,14 +4133,21 @@
       "metaDescription": "About Nguyen Lan Anh, the real journey behind this work, and why this website exists as a practice-based system.",
       "h1": "About",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "gioi-thieu/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/hanh-trinh/index.html",
@@ -2704,14 +4160,21 @@
       "metaDescription": "A clear path inward: pain points, hidden blocks, process, and real outcomes.",
       "h1": "The journey inward",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "hanh-trinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/index.html",
@@ -2724,14 +4187,21 @@
       "metaDescription": "A journey system for people trapped in repeated life loops, ready to see clearly, release what binds them, and rebuild from within.",
       "h1": "You do not lack ability You are trapped in loops you still cannot clearly see",
       "h1Count": 1,
-      "textNodeCount": 336,
-      "imageCount": 6,
+      "textNodeCount": 333,
+      "imageCount": 7,
       "altCount": 6,
       "figureCount": 6,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 6,
+      "svgDescriptionCount": 7,
       "counterpartFile": "index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/join/cancel/index.html",
@@ -2745,13 +4215,20 @@
       "h1": "You cancelled the payment",
       "h1Count": 1,
       "textNodeCount": 12,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "join/cancel/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/join/index.html",
@@ -2764,14 +4241,21 @@
       "metaDescription": "Register with one email only. Confirm through a magic link, complete a basic companion profile, then unlock the paid member path only when you are ready.",
       "h1": "Begin with one email only",
       "h1Count": 1,
-      "textNodeCount": 66,
-      "imageCount": 0,
+      "textNodeCount": 64,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "join/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/join/retry/index.html",
@@ -2785,13 +4269,20 @@
       "h1": "Payment not completed",
       "h1Count": 1,
       "textNodeCount": 12,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "join/retry/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/join/success/index.html",
@@ -2805,13 +4296,20 @@
       "h1": "Verifying payment",
       "h1Count": 1,
       "textNodeCount": 14,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "join/success/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/lien-he/index.html",
@@ -2824,14 +4322,21 @@
       "metaDescription": "Contact Nguyenlananh.com for support and guidance. Leave a short message to begin the right journey.",
       "h1": "Contact",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "lien-he/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/creator/guidelines/index.html",
@@ -2864,14 +4369,21 @@
       "metaDescription": "Internal creator layer for approved members: guidelines, submission, review, and publishing workflow.",
       "h1": "From member to system co-creator",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/creator/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/creator/library/index.html",
@@ -2944,14 +4456,21 @@
       "metaDescription": "Members dashboard: track progress, continue the journey, and keep a daily practice rhythm.",
       "h1": "Dashboard",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/dashboard/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/am-thanh-tu-than/index.html",
@@ -2964,14 +4483,21 @@
       "metaDescription": "A members-only topic on voice, breath, felt awareness, and reopening the inner voice as a self-practice.",
       "h1": "Self-Sound Practice and the Inner Voice",
       "h1Count": 1,
-      "textNodeCount": 116,
-      "imageCount": 1,
+      "textNodeCount": 114,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 1,
+      "svgDescriptionCount": 2,
       "counterpartFile": "members/deep/am-thanh-tu-than/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/ban-do-vong-lap/index.html",
@@ -2984,14 +4510,21 @@
       "metaDescription": "A members-only deep topic for naming recurring loops, triggers, protective reactions, the cost you keep paying, and the first real opening forward.",
       "h1": "Loop Map and Hidden Friction Points",
       "h1Count": 1,
-      "textNodeCount": 68,
-      "imageCount": 1,
+      "textNodeCount": 66,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/ban-do-vong-lap/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/doi-thoai-chua-lanh-trong-nha/index.html",
@@ -3004,14 +4537,21 @@
       "metaDescription": "A member deep topic on how to move through family conflict with less reactivity, steadier listening, and clearer speech.",
       "h1": "Restorative Dialogue at Home",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 1,
+      "textNodeCount": 65,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/doi-thoai-chua-lanh-trong-nha/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/gia-dinh-va-goc-re/index.html",
@@ -3024,14 +4564,21 @@
       "metaDescription": "A members-only deep topic on family influence, survival roles, unconscious loyalty, and how to look back without collapsing into blame.",
       "h1": "Family and What Gets Passed Through Us",
       "h1Count": 1,
-      "textNodeCount": 51,
-      "imageCount": 1,
+      "textNodeCount": 49,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/gia-dinh-va-goc-re/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/index.html",
@@ -3044,14 +4591,21 @@
       "metaDescription": "Deep layer: advanced guided topics, framework tracks, and practical implementation paths.",
       "h1": "Deep Layer",
       "h1Count": 1,
-      "textNodeCount": 59,
-      "imageCount": 0,
+      "textNodeCount": 57,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/ky-luat-nhe-va-nhip-song-moi/index.html",
@@ -3064,14 +4618,21 @@
       "metaDescription": "A members-only deep topic on building sustainable discipline through realistic rhythm, less force, and daily practical consistency.",
       "h1": "Gentle Discipline and a New Rhythm",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 0,
+      "textNodeCount": 65,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/ky-luat-nhe-va-nhip-song-moi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/lao-dong-vat-the-va-su-truong-thanh/index.html",
@@ -3084,14 +4645,21 @@
       "metaDescription": "A members-only deep topic on hands-on labor, relationship with objects, and how mature qualities are built through small repeated acts.",
       "h1": "Labor, Objects, and Maturity",
       "h1Count": 1,
-      "textNodeCount": 63,
-      "imageCount": 0,
+      "textNodeCount": 61,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/lao-dong-vat-the-va-su-truong-thanh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/index.html",
@@ -3104,14 +4672,21 @@
       "metaDescription": "A members-only deep topic on how your living environment reflects inner state and becomes a practical structure for stable energy and focus.",
       "h1": "The Living Environment as a Second Body",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 0,
+      "textNodeCount": 65,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/ranh-gioi-mem-trong-gia-dinh/index.html",
@@ -3124,14 +4699,21 @@
       "metaDescription": "A members-only deep topic on building healthy family boundaries without turning every difficult moment into confrontation.",
       "h1": "Soft Boundaries Inside Family Life",
       "h1Count": 1,
-      "textNodeCount": 66,
-      "imageCount": 1,
+      "textNodeCount": 64,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/ranh-gioi-mem-trong-gia-dinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/tre-em-va-khong-gian-lon-len/index.html",
@@ -3144,14 +4726,21 @@
       "metaDescription": "A members-only deep topic on walking with children through interest, environment, rhythm, everyday objects, and the real presence of the adult.",
       "h1": "Accompanying Children Without Breaking What Is Natural",
       "h1Count": 1,
-      "textNodeCount": 49,
-      "imageCount": 1,
+      "textNodeCount": 47,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/tre-em-va-khong-gian-lon-len/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/deep/tre-em-va-nhip-song-so/index.html",
@@ -3164,14 +4753,21 @@
       "metaDescription": "A member deep topic on helping children move through digital life with rhythm, rest, screen boundaries, and real-world grounding.",
       "h1": "Children and the Digital Rhythm",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 1,
+      "textNodeCount": 65,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/deep/tre-em-va-nhip-song-so/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/experience/index.html",
@@ -3184,14 +4780,21 @@
       "metaDescription": "Experience layer: journal real observations and store practical notes from your journey.",
       "h1": "Experience Layer",
       "h1Count": 1,
-      "textNodeCount": 18,
-      "imageCount": 0,
+      "textNodeCount": 16,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/experience/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/index.html",
@@ -3204,14 +4807,21 @@
       "metaDescription": "The membership flow now starts with free registration, email confirmation, a basic companion profile, and only then the paid layer when the timing is right.",
       "h1": "Do not enter through price. Enter through companionship.",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/journey/day-1/index.html",
@@ -3224,14 +4834,21 @@
       "metaDescription": "Day 1 for members: look at yourself, your environment, and the loops you keep repeating.",
       "h1": "Where are you right now?",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 28,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/journey/day-1/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/journey/day-2/index.html",
@@ -3244,14 +4861,21 @@
       "metaDescription": "Day 2 for members: interrupt the first loop with one small opposite action.",
       "h1": "Release the first loop",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/journey/day-2/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/journey/day-7/index.html",
@@ -3264,14 +4888,21 @@
       "metaDescription": "Day 7 for members: rebuild through small visible actions in your living space.",
       "h1": "You are beginning to rebuild",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/journey/day-7/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/journey/index.html",
@@ -3284,14 +4915,21 @@
       "metaDescription": "90-day journey: see clearly, release loops, and build a stable life system.",
       "h1": "Journey System",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 27,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/journey/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/practice/index.html",
@@ -3304,14 +4942,21 @@
       "metaDescription": "Daily structure: observe, clean, write, act.",
       "h1": "Daily Practice",
       "h1Count": 1,
-      "textNodeCount": 24,
-      "imageCount": 0,
+      "textNodeCount": 22,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/practice/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/pro/creation/index.html",
@@ -3384,14 +5029,21 @@
       "metaDescription": "Pro layer includes six guided upgrade tracks: reset, inner work, discipline, environment, creation, and wealth.",
       "h1": "6 guided upgrades",
       "h1Count": 1,
-      "textNodeCount": 33,
-      "imageCount": 0,
+      "textNodeCount": 31,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/pro/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/members/pro/inner/index.html",
@@ -3464,14 +5116,21 @@
       "metaDescription": "Confirm your email, complete the basic companion profile, review the open specialist tracks, then unlock the paid member benefits only when ready.",
       "h1": "You are now inside",
       "h1Count": 1,
-      "textNodeCount": 49,
-      "imageCount": 0,
-      "altCount": 0,
+      "textNodeCount": 65,
+      "imageCount": 2,
+      "altCount": 1,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "members/start/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "en/mien-tru-trach-nhiem/index.html",
@@ -3504,14 +5163,21 @@
       "metaDescription": "A four-layer method: Observe, Sense, Act, Transform. Connect inner work with daily behavior and living conditions.",
       "h1": "Method",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "phuong-phap/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "faq/index.html",
@@ -3524,14 +5190,21 @@
       "metaDescription": "Câu hỏi thường gặp về hành trình, phương pháp và chương trình đồng hành của Nguyenlananh.com.",
       "h1": "FAQ",
       "h1Count": 1,
-      "textNodeCount": 35,
-      "imageCount": 0,
+      "textNodeCount": 33,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/faq/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "gioi-thieu/index.html",
@@ -3544,14 +5217,21 @@
       "metaDescription": "Giới thiệu Nguyễn Lan Anh, hành trình thật, và lý do website này tồn tại như một hệ học từ đời sống thật.",
       "h1": "Giới thiệu",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/gioi-thieu/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "hanh-trinh/index.html",
@@ -3564,14 +5244,21 @@
       "metaDescription": "Giải thích rõ con đường đi vào bên trong: nỗi đau, điểm nghẽn, tiến trình và thành quả thật.",
       "h1": "Hành trình đi vào bên trong",
       "h1Count": 1,
-      "textNodeCount": 45,
-      "imageCount": 0,
+      "textNodeCount": 42,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/hanh-trinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "index.html",
@@ -3584,14 +5271,21 @@
       "metaDescription": "Nơi bắt đầu hành trình nhìn lại chính mình, gỡ những vòng lặp đang chi phối cuộc đời, tái thiết đời sống từ nội tâm, hành vi, môi trường sống và hành động thực tế.",
       "h1": "Sống hết một đời mà chưa từng hiểu mình mới là điều đáng tiếc nhất",
       "h1Count": 1,
-      "textNodeCount": 359,
-      "imageCount": 6,
+      "textNodeCount": 356,
+      "imageCount": 7,
       "altCount": 6,
       "figureCount": 6,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 6,
+      "svgDescriptionCount": 7,
       "counterpartFile": "en/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "join/cancel/index.html",
@@ -3605,13 +5299,20 @@
       "h1": "Bạn đã huỷ thanh toán",
       "h1Count": 1,
       "textNodeCount": 12,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/join/cancel/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "join/index.html",
@@ -3624,14 +5325,21 @@
       "metaDescription": "Đăng ký đồng hành miễn phí bằng email duy nhất. Xác nhận qua magic link, hoàn thiện profile cơ bản, rồi mới mở khóa hành trình trả phí bên trong.",
       "h1": "Bắt đầu bằng email duy nhất",
       "h1Count": 1,
-      "textNodeCount": 66,
-      "imageCount": 0,
+      "textNodeCount": 64,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/join/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "join/retry/index.html",
@@ -3645,13 +5353,20 @@
       "h1": "Thanh toán chưa hoàn tất",
       "h1Count": 1,
       "textNodeCount": 12,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/join/retry/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "join/success/index.html",
@@ -3665,13 +5380,20 @@
       "h1": "Đang xác nhận thanh toán",
       "h1Count": 1,
       "textNodeCount": 14,
-      "imageCount": 0,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/join/success/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "lien-he/index.html",
@@ -3684,14 +5406,21 @@
       "metaDescription": "Liên hệ đồng hành cùng Nguyenlananh.com. Gửi lời nhắn ngắn để bắt đầu hành trình phù hợp.",
       "h1": "Liên hệ",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/lien-he/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/creator/guidelines/index.html",
@@ -3700,9 +5429,9 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "members",
-      "title": "Hướng dẫn creator | Nguyenlananh.com",
-      "metaDescription": "Chuẩn biên tập và tiêu chí duyệt nội dung creator nội bộ.",
-      "h1": "Creator Guidelines",
+      "title": "Hướng dẫn Creator | Nguyenlananh.com",
+      "metaDescription": "Tiêu chuẩn biên tập và chất lượng cho nội dung do thành viên Creator gửi vào hệ thống nội bộ.",
+      "h1": "Hướng dẫn Creator",
       "h1Count": 1,
       "textNodeCount": 21,
       "imageCount": 0,
@@ -3711,7 +5440,14 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/members/creator/guidelines/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "vi",
+          "code": "vietnamese_page_contains_english_ui",
+          "message": "Vietnamese page appears to contain English UI labels."
+        }
+      ]
     },
     {
       "file": "members/creator/index.html",
@@ -3724,14 +5460,21 @@
       "metaDescription": "Creator layer nội bộ cho thành viên đủ điều kiện: guideline, submit, review, publish và vận hành doanh thu.",
       "h1": "Từ thành viên sang người cùng xây hệ",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/creator/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/creator/library/index.html",
@@ -3740,9 +5483,9 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "members",
-      "title": "Thư viện creator | Nguyenlananh.com",
-      "metaDescription": "Thư viện nội dung creator đã duyệt trong lớp thành viên.",
-      "h1": "Creator Library",
+      "title": "Thư viện Creator | Nguyenlananh.com",
+      "metaDescription": "Thư viện nội bộ chứa nội dung Creator đã được duyệt và sẵn sàng phát hành cho tầng thành viên.",
+      "h1": "Thư viện Creator",
       "h1Count": 1,
       "textNodeCount": 11,
       "imageCount": 0,
@@ -3751,7 +5494,14 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 0,
       "counterpartFile": "en/members/creator/library/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "vi",
+          "code": "vietnamese_page_contains_english_ui",
+          "message": "Vietnamese page appears to contain English UI labels."
+        }
+      ]
     },
     {
       "file": "members/creator/revenue-share/index.html",
@@ -3760,9 +5510,9 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "members",
-      "title": "Vận hành creator | Nguyenlananh.com",
-      "metaDescription": "Nguyên tắc vận hành revenue-share nội bộ cho creator đã duyệt.",
-      "h1": "Creator Revenue Operations",
+      "title": "Vận hành chia sẻ doanh thu Creator | Nguyenlananh.com",
+      "metaDescription": "Nguyên tắc vận hành chia sẻ doanh thu nội bộ dành cho Creator đã được duyệt — minh bạch, có audit trail, không lộ ra trang công khai.",
+      "h1": "Vận hành chia sẻ doanh thu",
       "h1Count": 1,
       "textNodeCount": 13,
       "imageCount": 0,
@@ -3780,9 +5530,9 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "members",
-      "title": "Gửi nội dung creator | Nguyenlananh.com",
-      "metaDescription": "Biểu mẫu nộp nội dung creator nội bộ cho thành viên đủ điều kiện.",
-      "h1": "Creator Submit",
+      "title": "Gửi bài Creator | Nguyenlananh.com",
+      "metaDescription": "Form gửi nội dung nội bộ dành cho Creator đã được duyệt — dùng template chuẩn để Admin review nhanh và đồng nhất.",
+      "h1": "Gửi bài Creator",
       "h1Count": 1,
       "textNodeCount": 16,
       "imageCount": 0,
@@ -3804,14 +5554,21 @@
       "metaDescription": "Bảng điều khiển thành viên: theo dõi tiến trình, vào journey và practice.",
       "h1": "Bảng điều khiển",
       "h1Count": 1,
-      "textNodeCount": 28,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/dashboard/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/am-thanh-tu-than/index.html",
@@ -3821,17 +5578,24 @@
       "htmlLang": "vi",
       "pageType": "members",
       "title": "Members Chuyên sâu | Âm thanh tự thân và tiếng nói bên trong",
-      "metaDescription": "Chuyên đề thành viên về giọng hát, hơi thở, cảm nhận và việc mở lại tiếng nói bên trong như một thực hành tự thân.",
+      "metaDescription": "Chuyên đề thành viên về giọng, hơi thở, sự cảm nhận và cách mở lại tiếng nói bên trong như một thực hành tự thân.",
       "h1": "Âm thanh tự thân và tiếng nói bên trong",
       "h1Count": 1,
-      "textNodeCount": 116,
-      "imageCount": 1,
+      "textNodeCount": 114,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 1,
+      "svgDescriptionCount": 2,
       "counterpartFile": "en/members/deep/am-thanh-tu-than/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/ban-do-vong-lap/index.html",
@@ -3840,18 +5604,25 @@
       "locale": "vi",
       "htmlLang": "vi",
       "pageType": "members",
-      "title": "Members Chuyên sâu | Bản đồ vòng lặp và điểm nghẽn sâu",
-      "metaDescription": "Chuyên đề thành viên giúp gọi tên vòng lặp, trigger, phản ứng, cái giá đang trả và bước thật đầu tiên để mở lối ra.",
-      "h1": "Bản đồ vòng lặp và điểm nghẽn sâu",
+      "title": "Members Chuyên sâu | Bản đồ vòng lặp và điểm nghẽn ẩn",
+      "metaDescription": "Chuyên đề thành viên giúp gọi tên vòng lặp đang lặp lại, trigger, phản ứng tự bảo vệ, cái giá đang trả và một khe mở thật để bước đi.",
+      "h1": "Bản đồ vòng lặp và điểm nghẽn ẩn",
       "h1Count": 1,
-      "textNodeCount": 74,
-      "imageCount": 1,
+      "textNodeCount": 66,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/ban-do-vong-lap/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/doi-thoai-chua-lanh-trong-nha/index.html",
@@ -3861,17 +5632,24 @@
       "htmlLang": "vi",
       "pageType": "members",
       "title": "Members Chuyên sâu | Đối thoại chữa lành trong nhà",
-      "metaDescription": "Chuyên đề thành viên về cách đi vào đối thoại khi trong nhà có xung đột, giảm phản ứng và tăng lắng nghe chủ động.",
+      "metaDescription": "Chuyên đề thành viên về cách đi qua xung đột gia đình với ít phản ứng hơn, lắng nghe vững hơn và lời nói rõ hơn.",
       "h1": "Đối thoại chữa lành trong nhà",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 1,
+      "textNodeCount": 65,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/doi-thoai-chua-lanh-trong-nha/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/gia-dinh-va-goc-re/index.html",
@@ -3881,17 +5659,24 @@
       "htmlLang": "vi",
       "pageType": "members",
       "title": "Members Chuyên sâu | Gia đình và những điều đang truyền qua nhau",
-      "metaDescription": "Chuyên đề thành viên về ảnh hưởng gia đình, vai trò sống, trung thành vô thức và cách nhìn lại mà không đổ lỗi.",
+      "metaDescription": "Chuyên đề thành viên về ảnh hưởng gia đình, vai trò sinh tồn, lòng trung thành vô thức và cách nhìn lại mà không gãy vào trách móc.",
       "h1": "Gia đình và những điều đang truyền qua nhau",
       "h1Count": 1,
-      "textNodeCount": 58,
-      "imageCount": 1,
+      "textNodeCount": 49,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/gia-dinh-va-goc-re/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/index.html",
@@ -3904,14 +5689,21 @@
       "metaDescription": "Chuyên sâu layer: nội dung nâng cao, tài liệu PDF, framework hệ thống.",
       "h1": "Tầng chuyên sâu",
       "h1Count": 1,
-      "textNodeCount": 59,
-      "imageCount": 0,
+      "textNodeCount": 57,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/ky-luat-nhe-va-nhip-song-moi/index.html",
@@ -3921,17 +5713,24 @@
       "htmlLang": "vi",
       "pageType": "members",
       "title": "Members Chuyên sâu | Kỷ luật nhẹ và nhịp sống mới",
-      "metaDescription": "Chuyên đề thành viên về cách tạo kỷ luật bền bằng nhịp sống phù hợp, giảm gồng ép và duy trì hành động thật mỗi ngày.",
+      "metaDescription": "Chuyên đề thành viên về cách xây kỷ luật bền vững qua nhịp sống thực tế, ít gồng ép và sự nhất quán nhỏ mỗi ngày.",
       "h1": "Kỷ luật nhẹ và nhịp sống mới",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 0,
+      "textNodeCount": 65,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/ky-luat-nhe-va-nhip-song-moi/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/lao-dong-vat-the-va-su-truong-thanh/index.html",
@@ -3944,14 +5743,21 @@
       "metaDescription": "Chuyên đề thành viên về lao động tay chân, mối quan hệ với vật thể, và cách phẩm chất trưởng thành được rèn trong việc nhỏ mỗi ngày.",
       "h1": "Lao động, vật thể và sự trưởng thành",
       "h1Count": 1,
-      "textNodeCount": 63,
-      "imageCount": 0,
+      "textNodeCount": 61,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/lao-dong-vat-the-va-su-truong-thanh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/index.html",
@@ -3964,14 +5770,21 @@
       "metaDescription": "Chuyên đề thành viên về cách môi trường sống phản chiếu nội tâm và trở thành nền điều chỉnh năng lượng, nhịp sống, và khả năng hiện diện.",
       "h1": "Môi trường sống như một thân thể thứ hai",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 1,
+      "textNodeCount": 65,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/ranh-gioi-mem-trong-gia-dinh/index.html",
@@ -3981,17 +5794,24 @@
       "htmlLang": "vi",
       "pageType": "members",
       "title": "Members Chuyên sâu | Ranh giới mềm trong gia đình",
-      "metaDescription": "Chuyen de thanh vien ve cach giu ranh gioi lanh manh trong gia dinh ma khong bien moi cuoc doi thoai thanh doi dau.",
+      "metaDescription": "Chuyên đề thành viên về cách giữ ranh giới lành mạnh trong gia đình mà không biến mọi cuộc đối thoại thành đối đầu.",
       "h1": "Ranh giới mềm trong gia đình",
       "h1Count": 1,
-      "textNodeCount": 66,
-      "imageCount": 1,
+      "textNodeCount": 64,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/ranh-gioi-mem-trong-gia-dinh/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/tre-em-va-khong-gian-lon-len/index.html",
@@ -4004,14 +5824,21 @@
       "metaDescription": "Chuyên đề thành viên về cách đi cùng trẻ em bằng hứng thú, môi trường sống, vật thể, nhịp sống và sự hiện diện của người lớn.",
       "h1": "Đồng hành cùng trẻ em mà không làm gãy tự nhiên",
       "h1Count": 1,
-      "textNodeCount": 59,
-      "imageCount": 1,
+      "textNodeCount": 57,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/tre-em-va-khong-gian-lon-len/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/deep/tre-em-va-nhip-song-so/index.html",
@@ -4024,14 +5851,21 @@
       "metaDescription": "Chuyên đề thành viên về việc giúp trẻ em đi qua thời số hóa bằng nhịp sống, môi trường, giới hạn màn hình và sự hiện diện của người lớn.",
       "h1": "Trẻ em và nhịp sống số",
       "h1Count": 1,
-      "textNodeCount": 67,
-      "imageCount": 1,
+      "textNodeCount": 65,
+      "imageCount": 2,
       "altCount": 1,
       "figureCount": 1,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/deep/tre-em-va-nhip-song-so/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/experience/index.html",
@@ -4044,14 +5878,21 @@
       "metaDescription": "Trải nghiệm layer: nhật ký, case thật, chia sẻ trải nghiệm hành trình.",
       "h1": "Tầng trải nghiệm",
       "h1Count": 1,
-      "textNodeCount": 18,
-      "imageCount": 0,
+      "textNodeCount": 16,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/experience/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/index.html",
@@ -4064,14 +5905,21 @@
       "metaDescription": "Hệ thành viên bắt đầu bằng đăng ký miễn phí, xác nhận email, profile đồng hành cơ bản, rồi mới mở khóa tầng đã trả phí khi bạn sẵn sàng.",
       "h1": "Không vào bằng giá. Vào bằng một quan hệ đồng hành",
       "h1Count": 1,
-      "textNodeCount": 42,
-      "imageCount": 0,
+      "textNodeCount": 40,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/journey/day-1/index.html",
@@ -4084,14 +5932,21 @@
       "metaDescription": "Ngày 1 của hành trình thành viên: nhìn lại chính mình, môi trường sống, và những vòng lặp đang lặp lại.",
       "h1": "Bạn đang ở đâu?",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 28,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/journey/day-1/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/journey/day-2/index.html",
@@ -4104,14 +5959,21 @@
       "metaDescription": "Ngày 2 của hành trình thành viên: gỡ vòng lặp đầu tiên bằng một hành động ngược nhỏ nhưng thật.",
       "h1": "Gỡ vòng lặp đầu tiên",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/journey/day-2/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/journey/day-7/index.html",
@@ -4124,14 +5986,21 @@
       "metaDescription": "Ngày 7 của hành trình thành viên: xây lại chính mình từ việc dọn một góc sống và lặp lại điều nhỏ một cách có ý thức.",
       "h1": "Bạn bắt đầu xây lại",
       "h1Count": 1,
-      "textNodeCount": 27,
-      "imageCount": 0,
+      "textNodeCount": 26,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/journey/day-7/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/journey/index.html",
@@ -4144,14 +6013,21 @@
       "metaDescription": "Hành trình 90 ngày: nhìn lại, gỡ vòng lặp, xây hệ sống.",
       "h1": "Hệ hành trình",
       "h1Count": 1,
-      "textNodeCount": 29,
-      "imageCount": 0,
+      "textNodeCount": 27,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/journey/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/practice/index.html",
@@ -4164,14 +6040,21 @@
       "metaDescription": "Daily structure: Quan sát, Dọn, Viết, Hành động.",
       "h1": "Thực hành hằng ngày",
       "h1Count": 1,
-      "textNodeCount": 24,
-      "imageCount": 0,
+      "textNodeCount": 22,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/practice/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/pro/creation/index.html",
@@ -4244,14 +6127,21 @@
       "metaDescription": "Pro layer gồm 6 gói: reset, inner, discipline, environment, creation, wealth.",
       "h1": "6 gói nâng cấp",
       "h1Count": 1,
-      "textNodeCount": 33,
-      "imageCount": 0,
+      "textNodeCount": 31,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/pro/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "members/pro/inner/index.html",
@@ -4324,14 +6214,21 @@
       "metaDescription": "Xác nhận email, hoàn thiện profile đồng hành cơ bản, xem các chuỗi đang mở, rồi mới mở khóa quyền lợi thành viên đã trả phí.",
       "h1": "Bạn đã vào được bên trong",
       "h1Count": 1,
-      "textNodeCount": 49,
-      "imageCount": 0,
-      "altCount": 0,
+      "textNodeCount": 65,
+      "imageCount": 2,
+      "altCount": 1,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/members/start/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     },
     {
       "file": "mien-tru-trach-nhiem/index.html",
@@ -4364,14 +6261,21 @@
       "metaDescription": "4 lớp phương pháp: Quan sát, Cảm nhận, Hành động, Chuyển hóa. Nối nội tâm với môi trường sống và hành vi thực.",
       "h1": "Phương pháp",
       "h1Count": 1,
-      "textNodeCount": 46,
-      "imageCount": 0,
+      "textNodeCount": 43,
+      "imageCount": 1,
       "altCount": 0,
       "figureCount": 0,
       "figcaptionCount": 0,
-      "svgDescriptionCount": 0,
+      "svgDescriptionCount": 1,
       "counterpartFile": "en/phuong-phap/index.html",
-      "issues": []
+      "issues": [
+        {
+          "severity": "high",
+          "category": "alt",
+          "code": "missing_alt",
+          "message": "Image is missing alt text: /assets/brand/logo-mark.svg"
+        }
+      ]
     }
   ]
 }

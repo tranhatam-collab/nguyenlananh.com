@@ -1,35 +1,236 @@
 # Bilingual Language Rebuild Report
 
-- Generated at: 2026-04-25T13:04:39.564Z
+- Generated at: 2026-04-29T16:34:46.763Z
 - Status: BLOCKED
-- Total URLs audited: 214
-- Pages with issues: 10
-- Total issues: 10
-- Blocking issues: 10
-- Images checked: 75
+- Total URLs audited: 237
+- Pages with issues: 213
+- Total issues: 216
+- Blocking issues: 216
+- Images checked: 286
 - Alt text present: 75
-- Figures checked: 75
-- Figure captions present: 48
-- SVG descriptions present: 56
+- Figures checked: 73
+- Figure captions present: 46
+- SVG descriptions present: 267
 
 ## Summary
 
-- Locale split: {"vi":107,"en":107}
-- Severity split: {"high":10}
-- Category split: {"en":10}
+- Locale split: {"vi":119,"en":118}
+- Severity split: {"high":213,"medium":3}
+- Category split: {"alt":211,"source":1,"bilingual":1,"seo":1,"vi":2}
 
 ## Blocking Pages
 
-- /en/bai-viet/ban-khong-thieu-kien-thuc/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/chi-can-dung/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/chua-tung-co-huong/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/co-nguoi-can-dung-lai/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/dieu-ban-dang-tranh/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/hieu-cuoc-doi-minh/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/sai-moi-truong/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/song-sai-nhip/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/song-theo-thoi-quen/ [en] -> english_page_contains_vietnamese_diacritics
-- /en/bai-viet/thieu-su-that/ [en] -> english_page_contains_vietnamese_diacritics
+- /admin/content/ [vi] -> missing_alt
+- /admin/creators/ [vi] -> missing_alt
+- /admin/dashboard/ [vi] -> missing_alt
+- /admin/ [vi] -> missing_alt
+- /admin/members/ [vi] -> missing_alt
+- /admin/payments/ [vi] -> missing_content_registry, missing_alt, missing_counterpart_page
+- /admin/settings/ [vi] -> missing_alt
+- /bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ [vi] -> missing_alt
+- /bai-viet/ban-khong-thieu-kien-thuc/ [vi] -> missing_alt
+- /bai-viet/bon-truc-thay-doi/ [vi] -> missing_alt
+- /bai-viet/cai-choi/ [vi] -> missing_alt
+- /bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/ [vi] -> missing_alt
+- /bai-viet/chi-can-dung/ [vi] -> missing_alt
+- /bai-viet/chua-tung-co-huong/ [vi] -> missing_alt
+- /bai-viet/co-don-khong-phai-vi-thieu-nguoi/ [vi] -> missing_alt
+- /bai-viet/co-nguoi-can-dung-lai/ [vi] -> missing_alt
+- /bai-viet/cong-dong-song-moi/ [vi] -> missing_alt
+- /bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/ [vi] -> missing_alt
+- /bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/ [vi] -> missing_alt
+- /bai-viet/dau-tu-ban-than/ [vi] -> missing_alt
+- /bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/ [vi] -> missing_alt
+- /bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/ [vi] -> missing_alt
+- /bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/ [vi] -> missing_alt
+- /bai-viet/di-vao-ben-trong/ [vi] -> missing_alt
+- /bai-viet/dieu-ban-dang-tranh/ [vi] -> missing_alt
+- /bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/ [vi] -> missing_alt
+- /bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/ [vi] -> missing_alt
+- /bai-viet/dong-chay-sang-tao-dong-chay-su-song/ [vi] -> missing_alt
+- /bai-viet/du-an-37-ngay/ [vi] -> missing_alt
+- /bai-viet/du-an-buoc/ [vi] -> missing_alt
+- /bai-viet/du-an-nhat-ky/ [vi] -> missing_alt
+- /bai-viet/gan-duc-khoi-trong/ [vi] -> missing_alt
+- /bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/ [vi] -> missing_alt
+- /bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/ [vi] -> missing_alt
+- /bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/ [vi] -> missing_alt
+- /bai-viet/gia-tri-noi-tai/ [vi] -> missing_alt
+- /bai-viet/hanh-trinh-di-vao-ben-trong/ [vi] -> missing_alt
+- /bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/ [vi] -> missing_alt
+- /bai-viet/hieu-cuoc-doi-minh/ [vi] -> missing_alt
+- /bai-viet/hoc-tap-sang-tao-truong-thanh/ [vi] -> missing_alt
+- /bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/ [vi] -> missing_alt
+- /bai-viet/im-lang-noi-ban-van-dang-ne/ [vi] -> missing_alt
+- /bai-viet/ [vi] -> missing_alt
+- /bai-viet/ket-noi-linh-hon-vat-the/ [vi] -> missing_alt
+- /bai-viet/ket-noi-sang-tao/ [vi] -> missing_alt
+- /bai-viet/khi-moi-truong-khong-con-phu-hop/ [vi] -> missing_alt
+- /bai-viet/khoi-tu-tam/ [vi] -> missing_alt
+- /bai-viet/kien-tao-mot-doi-song-y-nghia/ [vi] -> missing_alt
+- /bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/ [vi] -> missing_alt
+- /bai-viet/lao-dong-sang-tao/ [vi] -> missing_alt
+- /bai-viet/minh-dang-di-con-duong-gi/ [vi] -> missing_alt
+- /bai-viet/moi-truong-la-nguoi-thay-vo-hinh/ [vi] -> missing_alt
+- /bai-viet/mon-hoc-don-dep-tong-quan/ [vi] -> missing_alt
+- /bai-viet/mon-hoc-don-dep/ [vi] -> missing_alt
+- /bai-viet/neu-minh-sai-thi-sao/ [vi] -> missing_alt
+- /bai-viet/ngoi-nha-thu-2/ [vi] -> missing_alt
+- /bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/ [vi] -> missing_alt
+- /bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/ [vi] -> missing_alt
+- /bai-viet/nhung-vong-lap-ban-chua-goi-ten/ [vi] -> missing_alt
+- /bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/ [vi] -> missing_alt
+- /bai-viet/quet-la-va-viec-hoc/ [vi] -> missing_alt
+- /bai-viet/sai-moi-truong/ [vi] -> missing_alt
+- /bai-viet/song-sai-nhip/ [vi] -> missing_alt
+- /bai-viet/song-theo-dong-chay/ [vi] -> missing_alt
+- /bai-viet/song-theo-thoi-quen/ [vi] -> missing_alt
+- /bai-viet/thieu-su-that/ [vi] -> missing_alt
+- /bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/ [vi] -> missing_alt
+- /bai-viet/tu-55-trieu-den-tu-do/ [vi] -> missing_alt
+- /bai-viet/tu-biet-nhieu-den-song-duoc/ [vi] -> missing_alt
+- /bai-viet/vu-tru-vat-chat/ [vi] -> missing_alt
+- /chuong-trinh/ [vi] -> missing_alt
+- /du-an/du-an-37-ngay/ [vi] -> missing_alt
+- /du-an/du-an-buoc/ [vi] -> missing_alt
+- /du-an/ [vi] -> missing_alt
+- /en/admin/content/ [en] -> missing_alt
+- /en/admin/creators/ [en] -> missing_alt
+- /en/admin/dashboard/ [en] -> missing_alt
+- /en/admin/ [en] -> missing_alt
+- /en/admin/members/ [en] -> missing_alt
+- /en/admin/settings/ [en] -> missing_alt
+- /en/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ [en] -> missing_alt
+- /en/bai-viet/ban-khong-thieu-kien-thuc/ [en] -> missing_alt
+- /en/bai-viet/bon-truc-thay-doi/ [en] -> missing_alt
+- /en/bai-viet/cai-choi/ [en] -> missing_alt
+- /en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/ [en] -> missing_alt
+- /en/bai-viet/chi-can-dung/ [en] -> missing_alt
+- /en/bai-viet/chua-tung-co-huong/ [en] -> missing_alt
+- /en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/ [en] -> missing_alt
+- /en/bai-viet/co-nguoi-can-dung-lai/ [en] -> missing_alt
+- /en/bai-viet/cong-dong-song-moi/ [en] -> missing_alt
+- /en/bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/ [en] -> missing_alt
+- /en/bai-viet/dau-tu-ban-than-khong-ao-tuong-doi-doi/ [en] -> missing_alt
+- /en/bai-viet/dau-tu-ban-than/ [en] -> missing_alt
+- /en/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/ [en] -> missing_alt
+- /en/bai-viet/di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban/ [en] -> missing_alt
+- /en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/ [en] -> missing_alt
+- /en/bai-viet/di-vao-ben-trong/ [en] -> missing_alt
+- /en/bai-viet/dieu-ban-dang-tranh/ [en] -> missing_alt
+- /en/bai-viet/dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song/ [en] -> missing_alt
+- /en/bai-viet/dieu-tre-em-can-khong-chi-la-day-dung/ [en] -> missing_alt
+- /en/bai-viet/dong-chay-sang-tao-dong-chay-su-song/ [en] -> missing_alt
+- /en/bai-viet/du-an-37-ngay/ [en] -> missing_alt
+- /en/bai-viet/du-an-buoc/ [en] -> missing_alt
+- /en/bai-viet/du-an-nhat-ky/ [en] -> missing_alt
+- /en/bai-viet/gan-duc-khoi-trong/ [en] -> missing_alt
+- /en/bai-viet/gia-dinh-khong-chi-la-noi-ta-lon-len/ [en] -> missing_alt
+- /en/bai-viet/gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu/ [en] -> missing_alt
+- /en/bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/ [en] -> missing_alt
+- /en/bai-viet/gia-tri-noi-tai/ [en] -> missing_alt
+- /en/bai-viet/hanh-trinh-di-vao-ben-trong/ [en] -> missing_alt
+- /en/bai-viet/he-gia-dinh-noi-phan-xa-duoc-hoc/ [en] -> missing_alt
+- /en/bai-viet/hieu-cuoc-doi-minh/ [en] -> missing_alt
+- /en/bai-viet/hoc-tap-sang-tao-truong-thanh/ [en] -> missing_alt
+- /en/bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/ [en] -> missing_alt
+- /en/bai-viet/im-lang-noi-ban-van-dang-ne/ [en] -> missing_alt
+- /en/bai-viet/ [en] -> missing_alt
+- /en/bai-viet/ket-noi-linh-hon-vat-the/ [en] -> missing_alt
+- /en/bai-viet/ket-noi-sang-tao/ [en] -> missing_alt
+- /en/bai-viet/khi-moi-truong-khong-con-phu-hop/ [en] -> missing_alt
+- /en/bai-viet/khoi-tu-tam/ [en] -> missing_alt
+- /en/bai-viet/kien-tao-mot-doi-song-y-nghia/ [en] -> missing_alt
+- /en/bai-viet/lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song/ [en] -> missing_alt
+- /en/bai-viet/lao-dong-sang-tao/ [en] -> missing_alt
+- /en/bai-viet/minh-dang-di-con-duong-gi/ [en] -> missing_alt
+- /en/bai-viet/moi-truong-la-nguoi-thay-vo-hinh/ [en] -> missing_alt
+- /en/bai-viet/mon-hoc-don-dep-tong-quan/ [en] -> missing_alt
+- /en/bai-viet/mon-hoc-don-dep/ [en] -> missing_alt
+- /en/bai-viet/neu-minh-sai-thi-sao/ [en] -> missing_alt
+- /en/bai-viet/ngoi-nha-thu-2/ [en] -> missing_alt
+- /en/bai-viet/ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay/ [en] -> missing_alt
+- /en/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/ [en] -> missing_alt
+- /en/bai-viet/nhung-vong-lap-ban-chua-goi-ten/ [en] -> missing_alt
+- /en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/ [en] -> missing_alt
+- /en/bai-viet/quet-la-va-viec-hoc/ [en] -> missing_alt
+- /en/bai-viet/sai-moi-truong/ [en] -> missing_alt
+- /en/bai-viet/song-sai-nhip/ [en] -> missing_alt
+- /en/bai-viet/song-theo-dong-chay/ [en] -> missing_alt
+- /en/bai-viet/song-theo-thoi-quen/ [en] -> missing_alt
+- /en/bai-viet/thieu-su-that/ [en] -> missing_alt
+- /en/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/ [en] -> missing_alt
+- /en/bai-viet/tu-55-trieu-den-tu-do/ [en] -> missing_alt
+- /en/bai-viet/tu-biet-nhieu-den-song-duoc/ [en] -> missing_alt
+- /en/bai-viet/vu-tru-vat-chat/ [en] -> missing_alt
+- /en/chuong-trinh/ [en] -> missing_alt
+- /en/du-an/du-an-37-ngay/ [en] -> missing_alt
+- /en/du-an/du-an-buoc/ [en] -> missing_alt
+- /en/du-an/ [en] -> missing_alt
+- /en/faq/ [en] -> missing_alt
+- /en/gioi-thieu/ [en] -> missing_alt
+- /en/hanh-trinh/ [en] -> missing_alt
+- /en/ [en] -> missing_alt
+- /en/join/cancel/ [en] -> missing_alt
+- /en/join/ [en] -> missing_alt
+- /en/join/retry/ [en] -> missing_alt
+- /en/join/success/ [en] -> missing_alt
+- /en/lien-he/ [en] -> missing_alt
+- /en/members/creator/ [en] -> missing_alt
+- /en/members/dashboard/ [en] -> missing_alt
+- /en/members/deep/am-thanh-tu-than/ [en] -> missing_alt
+- /en/members/deep/ban-do-vong-lap/ [en] -> missing_alt
+- /en/members/deep/doi-thoai-chua-lanh-trong-nha/ [en] -> missing_alt
+- /en/members/deep/gia-dinh-va-goc-re/ [en] -> missing_alt
+- /en/members/deep/ [en] -> missing_alt
+- /en/members/deep/ky-luat-nhe-va-nhip-song-moi/ [en] -> missing_alt
+- /en/members/deep/lao-dong-vat-the-va-su-truong-thanh/ [en] -> missing_alt
+- /en/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/ [en] -> missing_alt
+- /en/members/deep/ranh-gioi-mem-trong-gia-dinh/ [en] -> missing_alt
+- /en/members/deep/tre-em-va-khong-gian-lon-len/ [en] -> missing_alt
+- /en/members/deep/tre-em-va-nhip-song-so/ [en] -> missing_alt
+- /en/members/experience/ [en] -> missing_alt
+- /en/members/ [en] -> missing_alt
+- /en/members/journey/day-1/ [en] -> missing_alt
+- /en/members/journey/day-2/ [en] -> missing_alt
+- /en/members/journey/day-7/ [en] -> missing_alt
+- /en/members/journey/ [en] -> missing_alt
+- /en/members/practice/ [en] -> missing_alt
+- /en/members/pro/ [en] -> missing_alt
+- /en/members/start/ [en] -> missing_alt
+- /en/phuong-phap/ [en] -> missing_alt
+- /faq/ [vi] -> missing_alt
+- /gioi-thieu/ [vi] -> missing_alt
+- /hanh-trinh/ [vi] -> missing_alt
+- / [vi] -> missing_alt
+- /join/cancel/ [vi] -> missing_alt
+- /join/ [vi] -> missing_alt
+- /join/retry/ [vi] -> missing_alt
+- /join/success/ [vi] -> missing_alt
+- /lien-he/ [vi] -> missing_alt
+- /members/creator/ [vi] -> missing_alt
+- /members/dashboard/ [vi] -> missing_alt
+- /members/deep/am-thanh-tu-than/ [vi] -> missing_alt
+- /members/deep/ban-do-vong-lap/ [vi] -> missing_alt
+- /members/deep/doi-thoai-chua-lanh-trong-nha/ [vi] -> missing_alt
+- /members/deep/gia-dinh-va-goc-re/ [vi] -> missing_alt
+- /members/deep/ [vi] -> missing_alt
+- /members/deep/ky-luat-nhe-va-nhip-song-moi/ [vi] -> missing_alt
+- /members/deep/lao-dong-vat-the-va-su-truong-thanh/ [vi] -> missing_alt
+- /members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/ [vi] -> missing_alt
+- /members/deep/ranh-gioi-mem-trong-gia-dinh/ [vi] -> missing_alt
+- /members/deep/tre-em-va-khong-gian-lon-len/ [vi] -> missing_alt
+- /members/deep/tre-em-va-nhip-song-so/ [vi] -> missing_alt
+- /members/experience/ [vi] -> missing_alt
+- /members/ [vi] -> missing_alt
+- /members/journey/day-1/ [vi] -> missing_alt
+- /members/journey/day-2/ [vi] -> missing_alt
+- /members/journey/day-7/ [vi] -> missing_alt
+- /members/journey/ [vi] -> missing_alt
+- /members/practice/ [vi] -> missing_alt
+- /members/pro/ [vi] -> missing_alt
+- /members/start/ [vi] -> missing_alt
+- /phuong-phap/ [vi] -> missing_alt
 
 ## Locked Decisions
 

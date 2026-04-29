@@ -24,7 +24,12 @@ const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const EXCLUDE_DIRS = new Set([".git", "node_modules", "docs", "scripts", "functions", ".wrangler"]);
 
 // Reference the canonical logo SVG asset; one source of truth, easy to update.
-const LOGO_IMG = `<img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async"/>`;
+// Image is decorative — the wordmark next to it carries the brand name. We
+// signal that in three ways so every audit / a11y tool sees it consistently:
+//   - empty alt=""               (WCAG SC 1.1.1 marker)
+//   - aria-hidden="true"          (skip from the accessibility tree)
+//   - role="presentation"         (also expose as decorative to legacy AT)
+const LOGO_IMG = `<img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/>`;
 
 const BRAND_VI = `<a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true">${LOGO_IMG}</span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>`;
 

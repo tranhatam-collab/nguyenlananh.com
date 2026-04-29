@@ -27,7 +27,10 @@ const FAIL_ON_ISSUES = ARGS.has("--fail");
 
 const EXCLUDE_DIRS = new Set([
   ".git", ".claude", "node_modules", "docs", "scripts",
-  "functions", ".wrangler"
+  "functions", ".wrangler",
+  // "nguyenlananh.com" is a stray legacy subfolder kept around for reference;
+  // it is NOT the deployable site (the deployable site is at the repo root).
+  "nguyenlananh.com",
 ]);
 
 // Paths that look like Next.js-style dynamic templates ("[slug]") are

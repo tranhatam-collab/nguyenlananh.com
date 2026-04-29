@@ -1,16 +1,13 @@
 {
   "summary": {
-    "generatedAt": "2026-04-29T16:42:39.765Z",
+    "generatedAt": "2026-04-29T16:55:19.785Z",
     "baseUrl": "http://localhost:4173",
     "pagesAudited": 241,
-    "pagesWithIssues": 52,
-    "totalIssues": 52,
+    "pagesWithIssues": 0,
+    "totalIssues": 0,
     "brokenInternalRefs": 0,
     "localApiRefs": 0,
-    "issueCounts": {
-      "meta_description_length": 50,
-      "long_title": 2
-    }
+    "issueCounts": {}
   },
   "audits": [
     {
@@ -94,14 +91,8 @@
       "route": "/admin/",
       "file": "admin/index.html",
       "title": "Nền quản trị | Nguyễn Lan Anh",
-      "description": "Admin foundation nội bộ cho vận hành membership và creator layer.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Console này là khu vực vận hành nội bộ cho toàn bộ luồng membership, member journey và creator workflow.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -127,14 +118,8 @@
       "route": "/admin/members/",
       "file": "admin/members/index.html",
       "title": "Admin Members | Nguyễn Lan Anh",
-      "description": "Rà soát luồng join, login và checkpoints Day-1 / Day-7.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 55 characters."
-        }
-      ],
+      "description": "Rà soát luồng join, login và checkpoints Day-1 / Day-7. Rà soát luồng join, login và checkpoints Day-1 / Day-7.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -174,14 +159,8 @@
       "route": "/admin/settings/",
       "file": "admin/settings/index.html",
       "title": "Admin Settings | Nguyễn Lan Anh",
-      "description": "Bảng role, quy tắc nội bộ và cấu hình vận hành. Không public.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 61 characters."
-        }
-      ],
+      "description": "Bảng role, quy tắc nội bộ và cấu hình vận hành. Không public. Bảng role, quy tắc nội bộ và cấu hình vận hành. Không public.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -201,14 +180,8 @@
       "route": "/bai-viet/[slug]/",
       "file": "bai-viet/[slug]/index.html",
       "title": "Mẫu route bài viết | Nguyenlananh.com",
-      "description": "Route mẫu cho bài viết theo slug.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 33 characters."
-        }
-      ],
+      "description": "Route mẫu cho bài viết theo slug. Đây là route mẫu cho tài liệu triển khai. Ở production, CMS/router sẽ render bài thật theo slug.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/bai-viet/",
@@ -222,14 +195,8 @@
       "route": "/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/",
       "file": "bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/index.html",
       "title": "Âm thanh tự thân: khi một tiếng hát trở thành cách trở về",
-      "description": "Một bài mở đầu về cách giọng hát, hơi thở và âm thanh tự thân có thể trở thành con đường nhìn lại chính mình, mở lại tiếng nói bên trong và bước vào hành trình sâu hơn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 168 characters."
-        }
-      ],
+      "description": "Bài mở đầu về cách giọng hát, hơi thở và âm thanh tự thân trở thành con đường nhìn lại chính mình và mở lại tiếng nói bên trong.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -494,14 +461,8 @@
       "route": "/bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/",
       "file": "bai-viet/dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon/index.html",
       "title": "Đầu tư bản thân - học tập nhận thức cao hơn | Nguyenlananh.com",
-      "description": "Đầu tư sâu nhất là nâng cấp nhận thức và khả năng chọn lại.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 59 characters."
-        }
-      ],
+      "description": "Đầu tư sâu nhất là nâng cấp nhận thức và khả năng chọn lại. Đầu tư sâu nhất là nâng cấp nhận thức và khả năng chọn lại.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -549,14 +510,8 @@
       "route": "/bai-viet/dau-tu-ban-than/",
       "file": "bai-viet/dau-tu-ban-than/index.html",
       "title": "Đầu tư bản thân | Bài viết | Nguyenlananh.com",
-      "description": "Hub về đầu tư nhận thức, nội lực và tương lai dài hạn của chính mình.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 69 characters."
-        }
-      ],
+      "description": "Hub về đầu tư nhận thức, nội lực và tương lai dài hạn của chính mình. Hub về đầu tư nhận thức, nội lực và tương lai dài hạn của chính mình.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -579,14 +534,8 @@
       "route": "/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/",
       "file": "bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/index.html",
       "title": "Đầu tư hiện tại - tự do tương lai | Nguyenlananh.com",
-      "description": "Đầu tư hiện tại đúng điểm để tương lai có nhiều tự do hơn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 58 characters."
-        }
-      ],
+      "description": "Đầu tư hiện tại đúng điểm để tương lai có nhiều tự do hơn. Đầu tư hiện tại đúng điểm để tương lai có nhiều tự do hơn.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -778,14 +727,8 @@
       "route": "/bai-viet/dong-chay-sang-tao-dong-chay-su-song/",
       "file": "bai-viet/dong-chay-sang-tao-dong-chay-su-song/index.html",
       "title": "Dòng chảy sáng tạo - dòng chảy sự sống | Nguyenlananh.com",
-      "description": "Khi bạn làm đúng cách, dòng chảy sáng tạo và sự sống cùng mở lại.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Khi bạn làm đúng cách, dòng chảy sáng tạo và sự sống cùng mở lại. Khi bạn làm đúng cách, dòng chảy sáng tạo và sự sống cùng mở lại.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -811,14 +754,8 @@
       "route": "/bai-viet/du-an-37-ngay/",
       "file": "bai-viet/du-an-37-ngay/index.html",
       "title": "Dự án 37 ngày | Nguyenlananh.com",
-      "description": "Tiến trình 37 ngày để biến nhận thức thành hành vi cụ thể.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 58 characters."
-        }
-      ],
+      "description": "Tiến trình 37 ngày để biến nhận thức thành hành vi cụ thể. Tiến trình 37 ngày để biến nhận thức thành hành vi cụ thể.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -844,14 +781,8 @@
       "route": "/bai-viet/du-an-buoc/",
       "file": "bai-viet/du-an-buoc/index.html",
       "title": "Dự án BƯỚC | Nguyenlananh.com",
-      "description": "Nhật ký dự án hành động để giữ nhịp thay đổi từng bước.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 55 characters."
-        }
-      ],
+      "description": "Nhật ký dự án hành động để giữ nhịp thay đổi từng bước. Nhật ký dự án hành động để giữ nhịp thay đổi từng bước.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -877,14 +808,8 @@
       "route": "/bai-viet/du-an-nhat-ky/",
       "file": "bai-viet/du-an-nhat-ky/index.html",
       "title": "Dự án nhật ký | Bài viết | Nguyenlananh.com",
-      "description": "Hub về dự án thực hành, nhật ký và các bước đi thật trong đời sống.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 67 characters."
-        }
-      ],
+      "description": "Hub về dự án thực hành, nhật ký và các bước đi thật trong đời sống. Hub về dự án thực hành, nhật ký và các bước đi thật trong đời sống.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -994,14 +919,8 @@
       "route": "/bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/",
       "file": "bai-viet/gia-tri-nao-la-vinh-cuu-truoc-song-gio/index.html",
       "title": "Giá trị nào là vĩnh cửu trước sóng gió | Nguyenlananh.com",
-      "description": "Khi biến động đến, thứ giữ bạn lại là nội lực và trí tuệ thật.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 62 characters."
-        }
-      ],
+      "description": "Khi biến động đến, thứ giữ bạn lại là nội lực và trí tuệ thật. Khi biến động đến, thứ giữ bạn lại là nội lực và trí tuệ thật.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1027,14 +946,8 @@
       "route": "/bai-viet/gia-tri-noi-tai/",
       "file": "bai-viet/gia-tri-noi-tai/index.html",
       "title": "Giá trị nội tại | Bài viết | Nguyenlananh.com",
-      "description": "Hub về nền tảng vững bên trong, khả năng thích nghi và trí tuệ thật.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 68 characters."
-        }
-      ],
+      "description": "Hub về nền tảng vững bên trong, khả năng thích nghi và trí tuệ thật. Hub về nền tảng vững bên trong, khả năng thích nghi và trí tuệ thật.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1057,14 +970,8 @@
       "route": "/bai-viet/hanh-trinh-di-vao-ben-trong/",
       "file": "bai-viet/hanh-trinh-di-vao-ben-trong/index.html",
       "title": "Hành trình đi vào bên trong | Nguyenlananh.com",
-      "description": "Từ bế tắc bên ngoài đến khả năng làm chủ lại cuộc đời từ bên trong.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 67 characters."
-        }
-      ],
+      "description": "Từ bế tắc bên ngoài đến khả năng làm chủ lại cuộc đời từ bên trong. Từ bế tắc bên ngoài đến khả năng làm chủ lại cuộc đời từ bên trong.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1142,14 +1049,8 @@
       "route": "/bai-viet/hoc-tap-sang-tao-truong-thanh/",
       "file": "bai-viet/hoc-tap-sang-tao-truong-thanh/index.html",
       "title": "Học tập - sáng tạo - trưởng thành | Nguyenlananh.com",
-      "description": "Ba trục cần đi cùng nhau để tạo tăng trưởng bền và có chiều sâu.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Ba trục cần đi cùng nhau để tạo tăng trưởng bền và có chiều sâu. Ba trục cần đi cùng nhau để tạo tăng trưởng bền và có chiều sâu.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1176,14 +1077,8 @@
       "route": "/bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/",
       "file": "bai-viet/hoi-sinh-su-song-tu-su-sang-tao-nguyen-so/index.html",
       "title": "Hồi sinh sự sống từ sự sáng tạo nguyên sơ | Nguyenlananh.com",
-      "description": "Khôi phục nhịp sống bằng sáng tạo nguyên sơ, chậm và có chiều sâu.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 66 characters."
-        }
-      ],
+      "description": "Khôi phục nhịp sống bằng sáng tạo nguyên sơ, chậm và có chiều sâu. Khôi phục nhịp sống bằng sáng tạo nguyên sơ, chậm và có chiều sâu.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1303,14 +1198,8 @@
       "route": "/bai-viet/ket-noi-linh-hon-vat-the/",
       "file": "bai-viet/ket-noi-linh-hon-vat-the/index.html",
       "title": "Kết nối linh hồn vật thể | Nguyenlananh.com",
-      "description": "Đồ vật không chỉ để dùng, mà còn phản ánh trạng thái sống của bạn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 66 characters."
-        }
-      ],
+      "description": "Đồ vật không chỉ để dùng, mà còn phản ánh trạng thái sống của bạn. Đồ vật không chỉ để dùng, mà còn phản ánh trạng thái sống của bạn.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1422,14 +1311,8 @@
       "route": "/bai-viet/kien-tao-mot-doi-song-y-nghia/",
       "file": "bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
       "title": "Kiến tạo một đời sống ý nghĩa | Nguyenlananh.com",
-      "description": "Sống có ý nghĩa là sống có chiều sâu, có hành động, có giá trị thật.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 68 characters."
-        }
-      ],
+      "description": "Sống có ý nghĩa là sống có chiều sâu, có hành động, có giá trị thật. Sống có ý nghĩa là sống có chiều sâu, có hành động, có giá trị thật.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1477,14 +1360,8 @@
       "route": "/bai-viet/lao-dong-sang-tao/",
       "file": "bai-viet/lao-dong-sang-tao/index.html",
       "title": "Lao động sáng tạo | Bài viết | Nguyenlananh.com",
-      "description": "Hub về lao động có ý thức, hiện diện và mở lại dòng sống.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 57 characters."
-        }
-      ],
+      "description": "Hub về lao động có ý thức, hiện diện và mở lại dòng sống. Hub về lao động có ý thức, hiện diện và mở lại dòng sống.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1586,14 +1463,8 @@
       "route": "/bai-viet/mon-hoc-don-dep/",
       "file": "bai-viet/mon-hoc-don-dep/index.html",
       "title": "Môn học dọn dẹp | Bài viết | Nguyenlananh.com",
-      "description": "Hub signature nối nội tâm - vật thể - môi trường sống - hành vi.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Hub signature nối nội tâm - vật thể - môi trường sống - hành vi. Hub signature nối nội tâm - vật thể - môi trường sống - hành vi.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -1777,14 +1648,8 @@
       "route": "/bai-viet/quet-la-va-viec-hoc/",
       "file": "bai-viet/quet-la-va-viec-hoc/index.html",
       "title": "Quét lá và việc học | Nguyenlananh.com",
-      "description": "Lao động thường ngày giúp mở lại dòng sống và năng lượng sáng tạo.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 66 characters."
-        }
-      ],
+      "description": "Lao động thường ngày giúp mở lại dòng sống và năng lượng sáng tạo. Lao động thường ngày giúp mở lại dòng sống và năng lượng sáng tạo.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2067,14 +1932,8 @@
       "route": "/chinh-sach-bao-mat/",
       "file": "chinh-sach-bao-mat/index.html",
       "title": "Chính sách bảo mật | Nguyenlananh.com",
-      "description": "Chính sách bảo mật thông tin cho website Nguyenlananh.com",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 57 characters."
-        }
-      ],
+      "description": "Chúng tôi tôn trọng quyền riêng tư của người dùng và chỉ thu thập thông tin cần thiết cho mục đích liên hệ và hỗ trợ.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2115,14 +1974,8 @@
       "route": "/dieu-khoan/",
       "file": "dieu-khoan/index.html",
       "title": "Điều khoản sử dụng | Nguyenlananh.com",
-      "description": "Điều khoản sử dụng website Nguyenlananh.com",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 43 characters."
-        }
-      ],
+      "description": "Điều khoản sử dụng website Nguyenlananh.com Khi truy cập website, bạn đồng ý sử dụng nội dung cho mục đích học tập và phát triển cá nhân lành mạnh.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2136,14 +1989,8 @@
       "route": "/du-an/du-an-37-ngay/",
       "file": "du-an/du-an-37-ngay/index.html",
       "title": "Dự án 37 ngày | Nguyenlananh.com",
-      "description": "Dự án 37 ngày làm chủ cuộc đời qua hành động nhỏ nhưng đều đặn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 63 characters."
-        }
-      ],
+      "description": "Dự án 37 ngày làm chủ cuộc đời qua hành động nhỏ nhưng đều đặn. 37 ngày để nhìn lại, điều chỉnh hành vi và thiết lập dòng chảy sống bền hơn.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2163,14 +2010,8 @@
       "route": "/du-an/du-an-buoc/",
       "file": "du-an/du-an-buoc/index.html",
       "title": "Dự án BƯỚC | Nguyenlananh.com",
-      "description": "Dự án BƯỚC: tiến trình bước nhỏ nhưng thật để tái thiết đời sống.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Dự án BƯỚC: tiến trình bước nhỏ nhưng thật để tái thiết đời sống. Một môi trường thực hành từng bước để rời vòng lặp cũ và thiết lập nhịp sống mới.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2189,15 +2030,9 @@
     {
       "route": "/du-an/",
       "file": "du-an/index.html",
-      "title": "Dự án | Nguyenlananh.com",
-      "description": "Các dự án hành động: Dự án BƯỚC và Dự án 37 ngày làm chủ cuộc đời.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 66 characters."
-        }
-      ],
+      "title": "Dự án thực hành — Hành trình làm chủ đời sống | Nguyenlananh.com",
+      "description": "Các dự án hành động: Dự án BƯỚC và Dự án 37 ngày làm chủ cuộc đời. Biến chia sẻ thành hệ hành động: có tiến trình, có thử nghiệm, có nhật ký, có thực hành.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2245,14 +2080,8 @@
       "route": "/en/admin/creators/",
       "file": "en/admin/creators/index.html",
       "title": "Admin Creators | Nguyenlananh.com",
-      "description": "Track submission queue, review status and internal publish rules.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Track submission queue, review status and internal publish rules. Track submission queue, review status and internal publish rules.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -2272,14 +2101,8 @@
       "route": "/en/admin/dashboard/",
       "file": "en/admin/dashboard/index.html",
       "title": "Admin Dashboard | Nguyenlananh.com",
-      "description": "Monitor launch status, internal health and operational controls.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Monitor launch status, internal health and operational controls. Monitor launch status, internal health and operational controls.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -2299,14 +2122,8 @@
       "route": "/en/admin/",
       "file": "en/admin/index.html",
       "title": "Admin Foundation | Nguyenlananh.com",
-      "description": "Internal admin foundation for membership and creator operations.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Internal admin foundation for membership and creator operations. This space is for internal operations of membership, member journey, and creator workflow.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -2331,14 +2148,8 @@
       "route": "/en/admin/members/",
       "file": "en/admin/members/index.html",
       "title": "Admin Members | Nguyenlananh.com",
-      "description": "Track join/login flow and day-1/day-7 checkpoints.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 50 characters."
-        }
-      ],
+      "description": "Track join/login flow and day-1/day-7 checkpoints. Track join/login flow and day-1/day-7 checkpoints.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -2379,14 +2190,8 @@
       "route": "/en/admin/settings/",
       "file": "en/admin/settings/index.html",
       "title": "Admin Settings | Nguyenlananh.com",
-      "description": "Internal settings, role policy, and operations safety flags.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 60 characters."
-        }
-      ],
+      "description": "Internal settings, role policy, and operations safety flags. Role policy, internal operations rules and platform settings. No public indexing.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -2406,14 +2211,8 @@
       "route": "/en/bai-viet/[slug]/",
       "file": "en/bai-viet/[slug]/index.html",
       "title": "Mau route bai viet | Nguyenlananh.com",
-      "description": "Route mau cho bai viet theo slug.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 33 characters."
-        }
-      ],
+      "description": "Route mau cho bai viet theo slug. Day la route mau cho tai lieu trien khai. O production, CMS/router se render bai that theo slug.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/bai-viet/",
@@ -3040,14 +2839,8 @@
       "route": "/en/bai-viet/du-an-nhat-ky/",
       "file": "en/bai-viet/du-an-nhat-ky/index.html",
       "title": "Journal project | Bai viet | Nguyenlananh.com",
-      "description": "Hub ve du an thuc hanh, nhat ky va cac buoc di that trong doi song.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 67 characters."
-        }
-      ],
+      "description": "Hub ve du an thuc hanh, nhat ky va cac buoc di that trong doi song. Hub ve du an thuc hanh, nhat ky va cac buoc di that trong doi song.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -3598,14 +3391,8 @@
       "route": "/en/bai-viet/lao-dong-sang-tao/",
       "file": "en/bai-viet/lao-dong-sang-tao/index.html",
       "title": "Lao dong sang tao | Bai viet | Nguyenlananh.com",
-      "description": "Hub ve lao dong co y thuc, hien dien va mo lai dong song.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 57 characters."
-        }
-      ],
+      "description": "Hub ve lao dong co y thuc, hien dien va mo lai dong song. Hub ve lao dong co y thuc, hien dien va mo lai dong song.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4176,14 +3963,8 @@
       "route": "/en/chinh-sach-bao-mat/",
       "file": "en/chinh-sach-bao-mat/index.html",
       "title": "Privacy Policy | Nguyenlananh.com",
-      "description": "Privacy policy for Nguyenlananh.com and how we handle user data.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Privacy policy for Nguyenlananh.com and how we handle user data. We respect user privacy and collect only what is needed for contact and support.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4224,14 +4005,8 @@
       "route": "/en/dieu-khoan/",
       "file": "en/dieu-khoan/index.html",
       "title": "Terms of Use | Nguyenlananh.com",
-      "description": "Terms and conditions for using Nguyenlananh.com.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 48 characters."
-        }
-      ],
+      "description": "Terms and conditions for using Nguyenlananh.com. By using this website, you agree to use the content for learning and healthy personal development.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4286,15 +4061,9 @@
     {
       "route": "/en/du-an/",
       "file": "en/du-an/index.html",
-      "title": "Du an | Nguyenlananh.com",
-      "description": "Cac du an hanh dong: Du an BUOC va Du an 37 ngay lam chu cuoc doi.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 66 characters."
-        }
-      ],
+      "title": "Practice Projects — Daily Life Mastery | Nguyenlananh.com",
+      "description": "Action-oriented programs — the BUOC project and the 37-day mastery project — turn shared ideas into a real practice with rhythm, experiments, and daily journaling.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4317,7 +4086,7 @@
     {
       "route": "/en/faq/",
       "file": "en/faq/index.html",
-      "title": "FAQ | Nguyenlananh.com",
+      "title": "FAQ — Common questions about the system | Nguyenlananh.com",
       "description": "Frequently asked questions about the journey, method, and guided programs at Nguyenlananh.com.",
       "issues": [],
       "refs": [
@@ -4340,7 +4109,7 @@
     {
       "route": "/en/gioi-thieu/",
       "file": "en/gioi-thieu/index.html",
-      "title": "About | Nguyenlananh.com",
+      "title": "About Lan Anh Nguyen — Story and method | Nguyenlananh.com",
       "description": "About Nguyen Lan Anh, the real journey behind this work, and why this website exists as a practice-based system.",
       "issues": [],
       "refs": [
@@ -4427,14 +4196,8 @@
       "route": "/en/join/cancel/",
       "file": "en/join/cancel/index.html",
       "title": "Payment cancelled | Nguyenlananh.com",
-      "description": "No membership access is granted until the payment is completed.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 63 characters."
-        }
-      ],
+      "description": "No membership access is granted until the payment is completed. No membership access is granted until the payment is completed.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4495,14 +4258,8 @@
       "route": "/en/join/success/",
       "file": "en/join/success/index.html",
       "title": "Payment confirmation | Nguyenlananh.com",
-      "description": "Membership is granted only after the transaction is fully confirmed.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 68 characters."
-        }
-      ],
+      "description": "Membership is granted only after the transaction is fully confirmed. Membership is granted only after the transaction is fully confirmed.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -4549,14 +4306,8 @@
       "route": "/en/members/creator/guidelines/",
       "file": "en/members/creator/guidelines/index.html",
       "title": "Creator Guidelines | Nguyenlananh.com",
-      "description": "Editorial and quality standards for internal creator submissions.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Editorial and quality standards for internal creator submissions. Standards that protect the voice and quality of the membership system.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/members/creator/submit/",
@@ -4612,14 +4363,8 @@
       "route": "/en/members/creator/revenue-share/",
       "file": "en/members/creator/revenue-share/index.html",
       "title": "Creator Operations | Nguyenlananh.com",
-      "description": "Internal revenue operations principles for approved creators.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 61 characters."
-        }
-      ],
+      "description": "Internal revenue operations principles for approved creators. Detailed terms are only visible to approved creator/admin roles.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/members/creator/library/",
@@ -4635,14 +4380,8 @@
       "route": "/en/members/creator/submit/",
       "file": "en/members/creator/submit/index.html",
       "title": "Creator Submit | Nguyenlananh.com",
-      "description": "Internal creator submission form for approved members.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 54 characters."
-        }
-      ],
+      "description": "Internal creator submission form for approved members. Use the standard template so admin can review quickly and consistently.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/members/creator/guidelines/",
@@ -4937,15 +4676,9 @@
     {
       "route": "/en/members/deep/tre-em-va-khong-gian-lon-len/",
       "file": "en/members/deep/tre-em-va-khong-gian-lon-len/index.html",
-      "title": "Members Deep | Accompanying Children Without Breaking What Is Natural",
+      "title": "Accompanying Children Without Breaking What Is Natural",
       "description": "A members-only deep topic on walking with children through interest, environment, rhythm, everyday objects, and the real presence of the adult.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 69 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5133,14 +4866,8 @@
       "route": "/en/members/practice/",
       "file": "en/members/practice/index.html",
       "title": "Members Practice | Nguyenlananh.com",
-      "description": "Daily structure: observe, clean, write, act.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 44 characters."
-        }
-      ],
+      "description": "Daily structure: observe, clean, write, act. Four daily actions: observe → clean → write → act. Keep the rhythm so you do not fall out of the system.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5178,14 +4905,8 @@
       "route": "/en/members/pro/discipline/",
       "file": "en/members/pro/discipline/index.html",
       "title": "Pro Discipline | Nguyenlananh.com",
-      "description": "Pro Discipline: build consistent action rhythms without burnout.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 64 characters."
-        }
-      ],
+      "description": "Pro Discipline: build consistent action rhythms without burnout. An action track for steady discipline that is gentle but consistent.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/members/pro/",
@@ -5201,14 +4922,8 @@
       "route": "/en/members/pro/environment/",
       "file": "en/members/pro/environment/index.html",
       "title": "Pro Environment | Nguyenlananh.com",
-      "description": "Pro Environment: redesign your daily living space to support growth.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 68 characters."
-        }
-      ],
+      "description": "Pro Environment: redesign your daily living space to support growth. A space-design track for building environments that protect your rhythm.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/members/pro/",
@@ -5474,14 +5189,8 @@
       "route": "/join/cancel/",
       "file": "join/cancel/index.html",
       "title": "Huỷ thanh toán | Nguyenlananh.com",
-      "description": "Không có quyền truy cập nào được cấp khi giao dịch chưa hoàn tất.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 65 characters."
-        }
-      ],
+      "description": "Không có quyền truy cập nào được cấp khi giao dịch chưa hoàn tất. Không có quyền truy cập nào được cấp khi giao dịch chưa hoàn tất.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -5542,14 +5251,8 @@
       "route": "/join/success/",
       "file": "join/success/index.html",
       "title": "Xác nhận thanh toán | Nguyenlananh.com",
-      "description": "Hệ thống sẽ chỉ cấp membership khi giao dịch đã được xác nhận đầy đủ.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 69 characters."
-        }
-      ],
+      "description": "Hệ thống sẽ chỉ cấp membership khi giao dịch đã được xác nhận đầy đủ. Hệ thống sẽ chỉ cấp membership khi giao dịch đã được xác nhận đầy đủ.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -5967,15 +5670,9 @@
     {
       "route": "/members/deep/tre-em-va-khong-gian-lon-len/",
       "file": "members/deep/tre-em-va-khong-gian-lon-len/index.html",
-      "title": "Members Chuyên sâu | Đồng hành cùng trẻ em mà không làm gãy tự nhiên",
+      "title": "Đồng hành cùng trẻ em mà không làm gãy tự nhiên",
       "description": "Chuyên đề thành viên về cách đi cùng trẻ em bằng hứng thú, môi trường sống, vật thể, nhịp sống và sự hiện diện của người lớn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 68 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -6143,14 +5840,8 @@
       "route": "/members/journey/",
       "file": "members/journey/index.html",
       "title": "Hành trình thành viên | Nguyenlananh.com",
-      "description": "Hành trình 90 ngày: nhìn lại, gỡ vòng lặp, xây hệ sống.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 55 characters."
-        }
-      ],
+      "description": "Hành trình 90 ngày: nhìn lại, gỡ vòng lặp, xây hệ sống. Mỗi chặng hoàn thành bằng hành động thật, không bằng đọc thêm. Thành viên: -",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -6171,14 +5862,8 @@
       "route": "/members/practice/",
       "file": "members/practice/index.html",
       "title": "Thực hành thành viên | Nguyenlananh.com",
-      "description": "Daily structure: Quan sát, Dọn, Viết, Hành động.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 48 characters."
-        }
-      ],
+      "description": "Daily structure: Quan sát, Dọn, Viết, Hành động. Mỗi ngày 4 việc: quan sát → dọn → viết → hành động. Làm đều để không rơi khỏi hệ.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",

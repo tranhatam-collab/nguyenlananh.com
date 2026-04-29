@@ -41,7 +41,7 @@ Cloudflare target account: `62d57eaa548617aeecac766e5a1cb98e` (migrated on 2026-
    - `REFUND_POLICY=manual_review`
    - `VIETQR_TEMPLATE=compact2`
    - `PAYPAL_MERCHANT_EMAIL=pay@nguyenlananh.com`
-   - `EMAIL_PROVIDER=resend`
+   - `EMAIL_PROVIDER=mail_iai_one`
    - `EMAIL_FROM_SYSTEM=noreply@nguyenlananh.com`
    - `EMAIL_FROM_PAY=pay@nguyenlananh.com`
    - `EMAIL_REPLY_TO_SUPPORT=support@nguyenlananh.com`
@@ -71,7 +71,7 @@ Cloudflare target account: `62d57eaa548617aeecac766e5a1cb98e` (migrated on 2026-
    - `STRIPE_SECRET_KEY`
    - `STRIPE_PUBLISHABLE_KEY`
    - `STRIPE_WEBHOOK_SECRET`
-   - `RESEND_API_KEY`
+   - `MAIL_API_KEY`
 2. Current production smoke confirms these are the exact blockers:
    - `POST /api/payments/vietqr/create-order` -> `409 PROVIDER_NOT_READY`
    - `POST /api/payments/create-checkout` (`provider=paypal`) -> `409 PROVIDER_NOT_READY`

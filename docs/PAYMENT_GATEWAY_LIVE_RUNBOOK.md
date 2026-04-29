@@ -208,8 +208,8 @@ PAYMENTS_ADMIN_KEY=...
 Khuyen nghi don gian nhat:
 
 ```txt
-EMAIL_PROVIDER=resend
-RESEND_API_KEY=...
+EMAIL_PROVIDER=mail_iai_one
+MAIL_API_KEY=...
 EMAIL_FROM_SYSTEM=noreply@nguyenlananh.com
 EMAIL_FROM_PAY=pay@nguyenlananh.com
 EMAIL_REPLY_TO_SUPPORT=support@nguyenlananh.com
@@ -252,7 +252,7 @@ Script tren se yeu cau nhap va set day du:
 - `PAYMENTS_ADMIN_KEY`
 - `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_MERCHANT_EMAIL`
 - `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`
-- `RESEND_API_KEY`
+- `MAIL_API_KEY`
 - `EMAIL_FROM_SYSTEM`, `EMAIL_FROM_PAY`, `EMAIL_REPLY_TO_SUPPORT`
 
 Neu dung D1:
@@ -370,7 +370,7 @@ Script se:
 1. `API_BASE_URL=https://www.nguyenlananh.com/api`
 2. `ENV_DEPLOY_TARGET=cloudflare-pages`
 3. `DB_READY=yes/no`
-4. `EMAIL_PROVIDER=resend`
+4. `EMAIL_PROVIDER=mail_iai_one`
 
 ### Nhom 3: Rule nghiep vu
 
@@ -432,7 +432,7 @@ MERCHANT_EMAIL=pay@nguyenlananh.com
 API_BASE_URL=https://www.nguyenlananh.com/api
 ENV_DEPLOY_TARGET=cloudflare-pages
 DB_READY=yes/no
-EMAIL_PROVIDER=resend
+EMAIL_PROVIDER=mail_iai_one
 REFUND_POLICY=manual_review
 SUCCESS_URL=https://www.nguyenlananh.com/join/success/
 CANCEL_URL=https://www.nguyenlananh.com/join/cancel/

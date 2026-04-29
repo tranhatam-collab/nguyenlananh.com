@@ -3,6 +3,8 @@ set -euo pipefail
 
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
 export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-62d57eaa548617aeecac766e5a1cb98e}"
+EMAIL_PROVIDER="${EMAIL_PROVIDER:-mail_iai_one}"
+MAIL_API_BASE_URL_DEFAULT="${MAIL_API_BASE_URL:-https://api.mail.iai.one/v1}"
 
 need_cmd() {
   local cmd="$1"
@@ -28,11 +30,24 @@ read_secret() {
   printf -v "$outvar" "%s" "$value"
 }
 
+read_value_with_default() {
+  local prompt="$1"
+  local default_value="$2"
+  local outvar="$3"
+  local value=""
+  read -rp "$prompt [$default_value]: " value
+  if [ -z "$value" ]; then
+    value="$default_value"
+  fi
+  printf -v "$outvar" "%s" "$value"
+}
+
 need_cmd wrangler
 
 echo "Project: $PROJECT_NAME"
 echo "Account: $CLOUDFLARE_ACCOUNT_ID"
 echo "Setting production payment/email secrets for nguyenlananh.com"
+echo "Email provider mode: $EMAIL_PROVIDER"
 echo
 
 read_secret "VIETQR_BANK_BIN" VIETQR_BANK_BIN
@@ -46,7 +61,10 @@ read_secret "PAYPAL_MERCHANT_EMAIL" PAYPAL_MERCHANT_EMAIL
 read_secret "STRIPE_SECRET_KEY" STRIPE_SECRET_KEY
 read_secret "STRIPE_PUBLISHABLE_KEY" STRIPE_PUBLISHABLE_KEY
 read_secret "STRIPE_WEBHOOK_SECRET" STRIPE_WEBHOOK_SECRET
-read_secret "RESEND_API_KEY" RESEND_API_KEY
+read_value_with_default "MAIL_API_BASE_URL" "$MAIL_API_BASE_URL_DEFAULT" MAIL_API_BASE_URL
+read_secret "MAIL_API_KEY" MAIL_API_KEY
+read_secret "MAIL_API_WORKSPACE_ID" MAIL_API_WORKSPACE_ID
+read_secret "MAIL_API_WEBHOOK_SECRET" MAIL_API_WEBHOOK_SECRET
 read_secret "EMAIL_FROM_SYSTEM" EMAIL_FROM_SYSTEM
 read_secret "EMAIL_FROM_PAY" EMAIL_FROM_PAY
 read_secret "EMAIL_REPLY_TO_SUPPORT" EMAIL_REPLY_TO_SUPPORT
@@ -64,7 +82,11 @@ put_secret "PAYPAL_MERCHANT_EMAIL" "$PAYPAL_MERCHANT_EMAIL"
 put_secret "STRIPE_SECRET_KEY" "$STRIPE_SECRET_KEY"
 put_secret "STRIPE_PUBLISHABLE_KEY" "$STRIPE_PUBLISHABLE_KEY"
 put_secret "STRIPE_WEBHOOK_SECRET" "$STRIPE_WEBHOOK_SECRET"
-put_secret "RESEND_API_KEY" "$RESEND_API_KEY"
+put_secret "EMAIL_PROVIDER" "$EMAIL_PROVIDER"
+put_secret "MAIL_API_BASE_URL" "$MAIL_API_BASE_URL"
+put_secret "MAIL_API_KEY" "$MAIL_API_KEY"
+put_secret "MAIL_API_WORKSPACE_ID" "$MAIL_API_WORKSPACE_ID"
+put_secret "MAIL_API_WEBHOOK_SECRET" "$MAIL_API_WEBHOOK_SECRET"
 put_secret "EMAIL_FROM_SYSTEM" "$EMAIL_FROM_SYSTEM"
 put_secret "EMAIL_FROM_PAY" "$EMAIL_FROM_PAY"
 put_secret "EMAIL_REPLY_TO_SUPPORT" "$EMAIL_REPLY_TO_SUPPORT"
@@ -81,7 +103,10 @@ unset \
   STRIPE_SECRET_KEY \
   STRIPE_PUBLISHABLE_KEY \
   STRIPE_WEBHOOK_SECRET \
-  RESEND_API_KEY \
+  MAIL_API_BASE_URL \
+  MAIL_API_KEY \
+  MAIL_API_WORKSPACE_ID \
+  MAIL_API_WEBHOOK_SECRET \
   EMAIL_FROM_SYSTEM \
   EMAIL_FROM_PAY \
   EMAIL_REPLY_TO_SUPPORT

@@ -116,7 +116,7 @@ Result:
 - `ok: true`
 - `environment.db_ready: true`
 - `environment.deploy_target: cloudflare-pages`
-- `environment.email_provider: resend`
+- `environment.email_provider: mail_iai_one`
 - PayPal: `implemented: true`, `enabled: false`, `manual_fallback: true`, `mode: setup_required`
 
 ### Providers
@@ -186,7 +186,7 @@ Result:
 - `ok: true`
 - `expires_in_minutes: 20`
 - `delivery_status: preview`
-- `preview_magic_link` returned because Resend API key is not present in production secret list.
+- `preview_magic_link` returned because MAIL API key is not present in production secret list.
 
 Consume link:
 

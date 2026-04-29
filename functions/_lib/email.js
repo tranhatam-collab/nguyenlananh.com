@@ -2,6 +2,21 @@ import { TEMPLATE_IDS } from "./constants.js";
 import { getEmailJobByDedupeKey, insertEmailJob, updateEmailJob } from "./db.js";
 import { nowIso } from "./utils.js";
 
+function normalizeEmailProvider(env) {
+  const explicit = String(env.EMAIL_PROVIDER || "")
+    .trim()
+    .toLowerCase();
+  if (explicit) return explicit;
+  if (env.MAIL_API_KEY || env.MAIL_API_BASE_URL || env.MAIL_API_URL) return "mail_iai_one";
+  if (env.RESEND_API_KEY) return "resend";
+  return "preview";
+}
+
+function normalizeMailApiBaseUrl(env) {
+  const raw = String(env.MAIL_API_BASE_URL || env.MAIL_API_URL || "https://api.mail.iai.one/v1").trim();
+  return raw.replace(/\/+$/u, "");
+}
+
 function paymentFromAddress(env) {
   return env.EMAIL_FROM_PAY || "pay@nguyenlananh.com";
 }
@@ -122,6 +137,77 @@ async function sendViaResend(env, emailJob) {
   };
 }
 
+async function sendViaMailIaiOne(env, emailJob) {
+  const content = renderTemplate(emailJob.template_id, emailJob.language, emailJob.payload_json, env);
+  const baseUrl = normalizeMailApiBaseUrl(env);
+  const useLegacyEndpoint = baseUrl.includes("/_mail");
+  const endpoint = useLegacyEndpoint ? `${baseUrl}/emails` : `${baseUrl}/send`;
+
+  const headers = {
+    Authorization: `Bearer ${env.MAIL_API_KEY}`,
+    "Content-Type": "application/json"
+  };
+
+  if (!useLegacyEndpoint && env.MAIL_API_WORKSPACE_ID) {
+    headers["X-Workspace-Id"] = env.MAIL_API_WORKSPACE_ID;
+  }
+
+  if (!useLegacyEndpoint) {
+    headers["X-Request-Id"] = `nla-${emailJob.template_id}-${Date.now()}`;
+  }
+
+  const html = `<pre style="font-family:ui-monospace, SFMono-Regular, Menlo, monospace; white-space:pre-wrap;">${escapeHtml(
+    content.text
+  )}</pre>`;
+
+  const body = useLegacyEndpoint
+    ? {
+        from: content.from,
+        to: [emailJob.recipient_email],
+        reply_to: content.reply_to,
+        subject: content.subject,
+        text: content.text,
+        html
+      }
+    : {
+        from: { email: content.from },
+        to: [{ email: emailJob.recipient_email }],
+        reply_to: content.reply_to ? { email: content.reply_to } : undefined,
+        subject: content.subject,
+        text: content.text,
+        html,
+        tags: ["nguyenlananh.com", emailJob.template_id],
+        metadata: {
+          source_domain: "nguyenlananh.com",
+          template_id: emailJob.template_id
+        }
+      };
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body)
+  });
+  const raw = await response.text();
+  const parsed = (() => {
+    try {
+      return JSON.parse(raw);
+    } catch (_error) {
+      return {};
+    }
+  })();
+
+  if (!response.ok) {
+    const error = new Error(parsed.message || raw || "MAIL_API request failed.");
+    error.details = parsed;
+    throw error;
+  }
+
+  return {
+    provider_message_id: parsed.message_id || parsed.id || parsed.data?.message_id || null
+  };
+}
+
 export async function sendTemplateEmailDirect({ env, templateId, recipientEmail, language, payload }) {
   const content = renderTemplate(templateId, language, payload, env);
   const emailJob = {
@@ -131,7 +217,11 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
     payload_json: payload
   };
 
-  if ((env.EMAIL_PROVIDER || "").toLowerCase() !== "resend" || !env.RESEND_API_KEY) {
+  const provider = normalizeEmailProvider(env);
+  const canSend =
+    (provider === "mail_iai_one" && !!env.MAIL_API_KEY) || (provider === "resend" && !!env.RESEND_API_KEY);
+
+  if (!canSend) {
     return {
       status: "preview",
       provider_message_id: null,
@@ -140,7 +230,8 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
   }
 
   try {
-    const result = await sendViaResend(env, emailJob);
+    const result =
+      provider === "mail_iai_one" ? await sendViaMailIaiOne(env, emailJob) : await sendViaResend(env, emailJob);
     return {
       status: "sent",
       provider_message_id: result.provider_message_id || null,
@@ -164,6 +255,7 @@ function escapeHtml(value) {
 }
 
 export async function queueAndSendEmail({ db, env, templateId, recipientEmail, language, dedupeKey, payload }) {
+  const provider = normalizeEmailProvider(env);
   const existing = await getEmailJobByDedupeKey(db, dedupeKey);
   if (existing) return existing;
 
@@ -172,6 +264,7 @@ export async function queueAndSendEmail({ db, env, templateId, recipientEmail, l
     template_id: templateId,
     recipient_email: recipientEmail,
     language,
+    provider,
     dedupe_key: dedupeKey,
     payload_json: payload,
     status: "queued",
@@ -180,12 +273,14 @@ export async function queueAndSendEmail({ db, env, templateId, recipientEmail, l
     scheduled_for: timestamp
   });
 
-  if ((env.EMAIL_PROVIDER || "").toLowerCase() !== "resend" || !env.RESEND_API_KEY) {
+  const canSend =
+    (provider === "mail_iai_one" && !!env.MAIL_API_KEY) || (provider === "resend" && !!env.RESEND_API_KEY);
+  if (!canSend) {
     return job;
   }
 
   try {
-    const result = await sendViaResend(env, job);
+    const result = provider === "mail_iai_one" ? await sendViaMailIaiOne(env, job) : await sendViaResend(env, job);
     await updateEmailJob(db, job.id, {
       status: "sent",
       provider_message_id: result.provider_message_id,

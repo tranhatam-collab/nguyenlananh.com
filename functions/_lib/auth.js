@@ -24,7 +24,7 @@ function membershipLabel(locale = "vi") {
 }
 
 function magicSecret(env) {
-  return env.MAGIC_LINK_SECRET || env.RESEND_API_KEY || env.EMAIL_FROM_SYSTEM || env.PAYPAL_MERCHANT_EMAIL || "nla-magic-link";
+  return env.MAGIC_LINK_SECRET || env.MAIL_API_WEBHOOK_SECRET || env.MAIL_API_KEY || env.EMAIL_FROM_SYSTEM || env.PAYPAL_MERCHANT_EMAIL || "nla-magic-link";
 }
 
 function base64UrlEncode(value) {

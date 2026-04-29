@@ -237,8 +237,35 @@ h1{
   letter-spacing: -0.7px;
   line-height: 1.06;
 }
-h2{ margin:0 0 8px; font-size: 22px; letter-spacing: -0.2px; }
+h1{ color: var(--c-earth); }
+h2{
+  margin:0 0 8px;
+  font-size: 22px;
+  letter-spacing: -0.2px;
+  color: var(--c-brick);
+}
+h3{ color: var(--c-rust); }
 p{ margin:0; color: rgba(42,24,16,.78); line-height: 1.75; }
+
+/* — Inline body links (article copy + panel copy) —
+   Distinct from buttons / brand link / nav. Brand orange with a
+   subtle underline so links read as clickable without shouting. */
+:where(.articleBody, .panel, .pageHead, main p, .list)
+  a:not(.btn):not(.cta):not(.ghost):not(.brand):not(.drawerCta){
+  color: var(--c-orange);
+  text-decoration: underline;
+  text-decoration-color: rgba(217,83,29,0.42);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color .12s ease, text-decoration-color .12s ease, text-decoration-thickness .12s ease;
+}
+:where(.articleBody, .panel, .pageHead, main p, .list)
+  a:not(.btn):not(.cta):not(.ghost):not(.brand):not(.drawerCta):hover{
+  color: var(--c-brick);
+  text-decoration-color: var(--c-brick);
+  text-decoration-thickness: 2px;
+}
 
 .pageHead{
   border:1px solid var(--line);

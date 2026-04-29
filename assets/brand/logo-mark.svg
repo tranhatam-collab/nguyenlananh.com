@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Nguyễn Lan Anh — logo mark">
+  <title>Nguyễn Lan Anh</title>
+  <!-- Sand background -->
+  <rect width="200" height="200" fill="#c9905e"/>
+  <!-- Concentric horizon arches, outer to inner -->
+  <path d="M40 165 V100 a60 60 0 0 1 120 0 V165 Z" fill="#8b2818"/>
+  <path d="M52 165 V100 a48 48 0 0 1 96 0 V165 Z" fill="#b5371e"/>
+  <path d="M62 165 V100 a38 38 0 0 1 76 0 V165 Z" fill="#d9531d"/>
+  <path d="M72 165 V100 a28 28 0 0 1 56 0 V165 Z" fill="#f08a2e"/>
+  <path d="M81 165 V100 a19 19 0 0 1 38 0 V165 Z" fill="#f5b53c"/>
+  <path d="M90 165 V104 a10 10 0 0 1 20 0 V165 Z" fill="#f5ebc8"/>
+  <!-- Sun (centered dot inside the cream gateway) -->
+  <circle cx="100" cy="118" r="5" fill="#d9531d"/>
+  <!-- Mid hill (clay) crossing in front of arches -->
+  <path d="M0 158 C40 148 70 162 110 158 C150 154 175 168 200 158 V172 H0 Z" fill="#d88e36"/>
+  <!-- Foreground earth band -->
+  <path d="M0 168 C50 158 110 174 150 166 C175 162 190 170 200 168 V200 H0 Z" fill="#5c2818"/>
+</svg>

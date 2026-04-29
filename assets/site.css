@@ -1,16 +1,28 @@
 :root{
-  --text:#0f172a;
-  --muted:#475569;
-  --line:rgba(15,23,42,.12);
-  --card:rgba(255,255,255,.88);
-  --shadow:0 14px 40px rgba(2,6,23,.10);
-  --shadow2:0 10px 24px rgba(2,6,23,.10);
-  --r-xl:26px;
-  --r-lg:18px;
-  --r-md:14px;
-  --max:1120px;
-  --accent:#111827;
-  --accent2:#9a3412;
+  /* — Brand palette (extracted from logo: retro horizon arch) — */
+  --c-sand:    #c9905e;  /* tan background of the mark */
+  --c-brick:   #8b2818;  /* outermost arch ring */
+  --c-rust:    #b5371e;
+  --c-orange:  #d9531d;  /* the inner sun + accent ring */
+  --c-marigold:#f08a2e;
+  --c-saffron: #f5b53c;
+  --c-cream:   #f5ebc8;  /* gateway core */
+  --c-clay:    #d88e36;  /* mid hill */
+  --c-earth:   #5c2818;  /* foreground hill / deepest brown */
+
+  /* — Semantic tokens (mapped to brand palette) — */
+  --text:    #2a1810;                         /* warm umber for body copy */
+  --muted:   #6b4a35;                         /* dusk brown for secondary */
+  --line:    rgba(92,40,24,0.14);             /* hairline derived from earth */
+  --card:    rgba(255,253,247,0.92);          /* paper-cream card surface */
+  --shadow:  0 14px 40px rgba(92,40,24,0.10);
+  --shadow2: 0 10px 24px rgba(92,40,24,0.10);
+  --r-xl:    26px;
+  --r-lg:    18px;
+  --r-md:    14px;
+  --max:     1120px;
+  --accent:  var(--c-brick);                  /* deep accent (headings, links) */
+  --accent2: var(--c-orange);                 /* warm orange (CTA gradient stop) */
 }
 
 *{ box-sizing:border-box; }
@@ -20,16 +32,16 @@ body{
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color:var(--text);
   background:
-    radial-gradient(1200px 600px at 10% 0%, rgba(154,52,18,.10), transparent 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(15,23,42,.08), transparent 55%),
-    linear-gradient(180deg, #fff, #fffaf4 45%, #fff 100%);
+    radial-gradient(1200px 600px at 10% 0%, rgba(217,83,29,0.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 10%, rgba(245,181,60,0.10), transparent 55%),
+    linear-gradient(180deg, #fdf6e8, #faecd0 45%, #fdf6e8 100%);
   min-height:100vh;
   overflow-x:hidden;
 }
 
 a{ color:inherit; text-decoration:none; }
 a:focus, button:focus, input:focus, textarea:focus{
-  outline: 3px solid rgba(154,52,18,.22);
+  outline: 3px solid rgba(217,83,29,0.28);
   outline-offset:2px;
   border-radius:12px;
 }
@@ -63,18 +75,21 @@ a:focus, button:focus, input:focus, textarea:focus{
   color:inherit;
 }
 .mark{
-  width:36px; height:36px; border-radius:12px;
+  width:40px; height:40px; border-radius:12px;
   box-shadow: var(--shadow2);
   flex-shrink:0;
   display:inline-flex;
   overflow:hidden;
-  /* Fallback gradient for any context where the inline SVG is stripped. */
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: var(--c-sand);
 }
+.mark > img,
 .mark > svg,
-.markIcon{ width:100%; height:100%; display:block; }
+.markIcon{
+  width:100%; height:100%; display:block;
+  object-fit: cover;
+}
 .brand .name{ display:inline-flex; flex-direction:column; line-height:1.1; gap:1px; }
-.brand .name strong{ font-size:14px; letter-spacing:.2px; color:rgba(15,23,42,.92); }
+.brand .name strong{ font-size:14px; letter-spacing:.2px; color:rgba(42,24,16,.92); }
 .brand .name .tagline{ font-size:12px; color:var(--muted); }
 @media (max-width: 640px){
   .brand .name .tagline{ display:none; }
@@ -89,9 +104,9 @@ a:focus, button:focus, input:focus, textarea:focus{
   font-size:13px;
   padding:10px 10px;
   border-radius:12px;
-  color:rgba(15,23,42,.78);
+  color:rgba(42,24,16,.78);
 }
-.navlinks a:hover{ background: rgba(154,52,18,.08); color:rgba(15,23,42,.95); }
+.navlinks a:hover{ background: rgba(217,83,29,.08); color:rgba(42,24,16,.95); }
 
 .actions{
   display:flex; align-items:center; gap:10px;
@@ -106,10 +121,10 @@ a:focus, button:focus, input:focus, textarea:focus{
   padding: 10px 12px;
   font-size: 13px;
   cursor:pointer;
-  box-shadow: 0 6px 18px rgba(2,6,23,.06);
+  box-shadow: 0 6px 18px rgba(92,40,24,.06);
   transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
 }
-.btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(2,6,23,.10); }
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(92,40,24,.10); }
 
 .cta{
   display:inline-block;
@@ -120,23 +135,23 @@ a:focus, button:focus, input:focus, textarea:focus{
   font-size: 14px;
   color: white;
   background: linear-gradient(135deg, var(--accent), var(--accent2));
-  box-shadow: 0 12px 30px rgba(154,52,18,.16);
+  box-shadow: 0 12px 30px rgba(217,83,29,.16);
   transition: transform .12s ease, box-shadow .12s ease;
 }
-.cta:hover{ transform: translateY(-1px); box-shadow: 0 16px 36px rgba(154,52,18,.20); }
+.cta:hover{ transform: translateY(-1px); box-shadow: 0 16px 36px rgba(217,83,29,.20); }
 .ghost{
   display:inline-block;
   border:1px solid var(--line);
   background: rgba(255,255,255,.86);
-  color: rgba(15,23,42,.90);
+  color: rgba(42,24,16,.90);
   border-radius: 16px;
   padding: 12px 14px;
   font-size: 14px;
   cursor:pointer;
   transition: transform .12s ease, box-shadow .12s ease;
-  box-shadow: 0 8px 20px rgba(2,6,23,.06);
+  box-shadow: 0 8px 20px rgba(92,40,24,.06);
 }
-.ghost:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(2,6,23,.08); }
+.ghost:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(92,40,24,.08); }
 
 .hamburger{
   width:42px; height:42px;
@@ -148,7 +163,7 @@ a:focus, button:focus, input:focus, textarea:focus{
   position:relative;
 }
 .hamburger span{
-  width:18px; height:2px; background: rgba(15,23,42,.75);
+  width:18px; height:2px; background: rgba(42,24,16,.75);
   position:relative; display:block;
   border-radius:2px;
   transition: transform .18s ease, opacity .18s ease;
@@ -157,7 +172,7 @@ a:focus, button:focus, input:focus, textarea:focus{
   content:"";
   position:absolute; left:0;
   width:18px; height:2px; border-radius:2px;
-  background: rgba(15,23,42,.75);
+  background: rgba(42,24,16,.75);
   transition: transform .18s ease, top .18s ease, bottom .18s ease;
 }
 .hamburger span::before{ top:-6px; }
@@ -193,12 +208,12 @@ a:focus, button:focus, input:focus, textarea:focus{
   padding: 12px 12px;
   border-radius: 14px;
   border:1px solid transparent;
-  color: rgba(15,23,42,.90);
-  background: rgba(154,52,18,.06);
+  color: rgba(42,24,16,.90);
+  background: rgba(217,83,29,.06);
 }
 .drawer nav a:hover{
-  border-color: rgba(154,52,18,.22);
-  background: rgba(154,52,18,.10);
+  border-color: rgba(217,83,29,.22);
+  background: rgba(217,83,29,.10);
 }
 .drawer nav a.drawerCta{
   background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -207,10 +222,10 @@ a:focus, button:focus, input:focus, textarea:focus{
   font-weight: 600;
   text-align: center;
   margin-top: 4px;
-  box-shadow: 0 8px 18px rgba(154,52,18,.16);
+  box-shadow: 0 8px 18px rgba(217,83,29,.16);
 }
 .drawer nav a.drawerCta:hover{
-  background: linear-gradient(135deg, #1f2937, #b04a1c);
+  background: linear-gradient(135deg, #6f1f12, #e36028);
   border-color: transparent;
 }
 .drawer .foot{ padding: 10px 14px 14px; color: var(--muted); font-size: 12px; }
@@ -223,7 +238,7 @@ h1{
   line-height: 1.06;
 }
 h2{ margin:0 0 8px; font-size: 22px; letter-spacing: -0.2px; }
-p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
+p{ margin:0; color: rgba(42,24,16,.78); line-height: 1.75; }
 
 .pageHead{
   border:1px solid var(--line);
@@ -233,7 +248,7 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
   padding: 22px;
   margin-bottom: 14px;
 }
-.pageHead .sub{ margin-top:10px; color: rgba(15,23,42,.72); max-width: 72ch; }
+.pageHead .sub{ margin-top:10px; color: rgba(42,24,16,.72); max-width: 72ch; }
 
 .grid2{
   display:grid;
@@ -248,7 +263,7 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
   padding: 18px;
 }
 .panel h3{ margin:0 0 8px; font-size: 16px; letter-spacing: -0.2px; }
-.list{ margin:10px 0 0; padding-left:18px; color: rgba(15,23,42,.74); line-height:1.65; }
+.list{ margin:10px 0 0; padding-left:18px; color: rgba(42,24,16,.74); line-height:1.65; }
 .actionsRow{ margin-top:14px; display:flex; gap:10px; flex-wrap:wrap; }
 
 .articleBody p{ margin-top: 12px; }
@@ -267,7 +282,7 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
 }
 .articleMedia figcaption{
   font-size: 12px;
-  color: rgba(15,23,42,.62);
+  color: rgba(42,24,16,.62);
   padding: 10px 12px 12px;
 }
 
@@ -304,7 +319,7 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
 
 .articleHero figcaption{
   font-size: 12px;
-  color: rgba(15,23,42,.62);
+  color: rgba(42,24,16,.62);
   line-height: 1.5;
   padding: 10px 12px 12px;
 }
@@ -314,7 +329,7 @@ p{ margin:0; color: rgba(15,23,42,.78); line-height: 1.75; }
   display:block;
   height: clamp(160px, 30vw, 240px);
   background:
-    linear-gradient(90deg, rgba(154,52,18,.08), rgba(15,23,42,.08), rgba(154,52,18,.08));
+    linear-gradient(90deg, rgba(217,83,29,.08), rgba(42,24,16,.08), rgba(217,83,29,.08));
   background-size: 200% 100%;
   animation: heroShimmer 1.2s infinite linear;
 }
@@ -357,9 +372,9 @@ footer{
 .fwrap a{
   padding: 8px 10px;
   border-radius: 12px;
-  color: rgba(15,23,42,.74);
+  color: rgba(42,24,16,.74);
 }
-.fwrap a:hover{ background: rgba(154,52,18,.08); color: rgba(15,23,42,.92); }
+.fwrap a:hover{ background: rgba(217,83,29,.08); color: rgba(42,24,16,.92); }
 .legal{
   display:flex;
   gap:6px;
@@ -382,7 +397,7 @@ footer{
   border-radius:999px;
   padding:7px 11px;
   font-size:12px;
-  color:rgba(15,23,42,.72);
+  color:rgba(42,24,16,.72);
   background:rgba(255,255,255,.9);
 }
 
@@ -401,8 +416,8 @@ footer{
 }
 
 .pricingCard.active{
-  border-color:rgba(154,52,18,.28);
-  box-shadow:0 14px 30px rgba(154,52,18,.16);
+  border-color:rgba(217,83,29,.28);
+  box-shadow:0 14px 30px rgba(217,83,29,.16);
 }
 
 .price{
@@ -415,7 +430,7 @@ footer{
 
 .meta{
   font-size:13px;
-  color:rgba(15,23,42,.64);
+  color:rgba(42,24,16,.64);
 }
 
 .field{
@@ -427,7 +442,7 @@ footer{
 
 .field label{
   font-size:13px;
-  color:rgba(15,23,42,.72);
+  color:rgba(42,24,16,.72);
 }
 
 .field input, .field select, .field textarea{
@@ -441,7 +456,7 @@ footer{
 
 .note{
   font-size:13px;
-  color:rgba(15,23,42,.62);
+  color:rgba(42,24,16,.62);
 }
 
 .statusBanner{
@@ -450,7 +465,7 @@ footer{
   border:1px solid var(--line);
   border-radius:14px;
   background:rgba(255,255,255,.82);
-  color:rgba(15,23,42,.82);
+  color:rgba(42,24,16,.82);
   line-height:1.6;
 }
 
@@ -504,7 +519,7 @@ footer{
 .progressTrack{
   width:100%;
   height:10px;
-  background:rgba(15,23,42,.09);
+  background:rgba(42,24,16,.09);
   border-radius:999px;
   overflow:hidden;
 }

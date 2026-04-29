@@ -23,14 +23,12 @@ import { fileURLToPath } from "node:url";
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const EXCLUDE_DIRS = new Set([".git", "node_modules", "docs", "scripts", "functions", ".wrangler"]);
 
-// Inline SVG logo: gradient tile + arch (horizon) + centered dot.
-// Single-line so it's safe to embed via regex replacement.
-const LOGO_SVG_VI = `<svg class="markIcon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs><linearGradient id="nlaMarkVi" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#111827"/><stop offset="100%" stop-color="#9a3412"/></linearGradient></defs><rect width="40" height="40" rx="12" fill="url(#nlaMarkVi)"/><path d="M11 25 a9 9 0 0 1 18 0" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".95"/><circle cx="20" cy="22" r="1.8" fill="#ffffff" opacity=".95"/></svg>`;
-const LOGO_SVG_EN = LOGO_SVG_VI.replaceAll("nlaMarkVi", "nlaMarkEn");
+// Reference the canonical logo SVG asset; one source of truth, easy to update.
+const LOGO_IMG = `<img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async"/>`;
 
-const BRAND_VI = `<a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true">${LOGO_SVG_VI}</span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>`;
+const BRAND_VI = `<a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true">${LOGO_IMG}</span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>`;
 
-const BRAND_EN = `<a class="brand" href="/en/" aria-label="Lan Anh Nguyen — back to home"><span class="mark" aria-hidden="true">${LOGO_SVG_EN}</span><span class="name"><strong>Lan Anh Nguyen</strong><span class="tagline">Rebuild your life from within</span></span></a>`;
+const BRAND_EN = `<a class="brand" href="/en/" aria-label="Lan Anh Nguyen — back to home"><span class="mark" aria-hidden="true">${LOGO_IMG}</span><span class="name"><strong>Lan Anh Nguyen</strong><span class="tagline">Rebuild your life from within</span></span></a>`;
 
 const NAV_VI = `<nav class="navlinks" aria-label="Điều hướng chính"><a href="/hanh-trinh/">Hành trình</a><a href="/phuong-phap/">Phương pháp</a><a href="/bai-viet/">Bài viết</a><a href="/members/">Thành viên</a></nav>`;
 

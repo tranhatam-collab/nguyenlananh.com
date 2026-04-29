@@ -30,7 +30,7 @@
   <meta name="twitter:description" content="Nơi bắt đầu hành trình nhìn lại chính mình, gỡ những vòng lặp đang chi phối cuộc đời, tái thiết đời sống từ nội tâm, hành vi, môi trường sống và hành động thực tế." />
   <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
 
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#2a1810" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
@@ -98,16 +98,16 @@
 
   <style>
     :root{
-      --a1:#111827;
-      --a2:#7c3aed;
-      --a3:#06b6d4;
+      --a1:#2a1810;
+      --a2:#d9531d;
+      --a3:#f5b53c;
       --a4:#f97316;
-      --text:#0f172a;
+      --text:#2a1810;
       --muted:#475569;
-      --line:rgba(15,23,42,.12);
+      --line:rgba(42,24,16,.12);
       --card:rgba(255,255,255,.88);
-      --shadow:0 14px 40px rgba(2,6,23,.10);
-      --shadow2:0 10px 24px rgba(2,6,23,.10);
+      --shadow:0 14px 40px rgba(92,40,24,.10);
+      --shadow2:0 10px 24px rgba(92,40,24,.10);
       --r-xl:26px;
       --r-lg:18px;
       --r-md:14px;
@@ -119,9 +119,9 @@
     }
 
     .btn.active{
-      background: rgba(124,58,237,.12);
-      border-color: rgba(124,58,237,.32);
-      box-shadow: 0 6px 18px rgba(124,58,237,.18);
+      background: rgba(217,83,29,.12);
+      border-color: rgba(217,83,29,.32);
+      box-shadow: 0 6px 18px rgba(217,83,29,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -131,16 +131,16 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(1200px 600px at 10% 0%, rgba(124,58,237,.12), transparent 60%),
-        radial-gradient(900px 500px at 90% 10%, rgba(6,182,212,.12), transparent 55%),
-        radial-gradient(900px 600px at 30% 100%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(1200px 600px at 10% 0%, rgba(217,83,29,.12), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(245,181,60,.12), transparent 55%),
+        radial-gradient(900px 600px at 30% 100%, rgba(245,181,60,.10), transparent 60%),
         linear-gradient(180deg, #fff, #fbfbff 45%, #fff 100%);
       min-height:100vh;
       overflow-x:hidden;
     }
 
     a{ color:inherit; text-decoration:none; }
-    a:focus, button:focus{ outline: 3px solid rgba(124,58,237,.25); outline-offset:2px; border-radius:12px; }
+    a:focus, button:focus{ outline: 3px solid rgba(217,83,29,.25); outline-offset:2px; border-radius:12px; }
     .container{ width:min(var(--max), calc(100% - 36px)); margin:0 auto; }
 
     /* Top nav */
@@ -171,7 +171,7 @@
       content:"";
       position:absolute; inset:9px;
       border-radius:10px;
-      background: linear-gradient(135deg, rgba(34,197,94,.85), rgba(249,115,22,.85));
+      background: linear-gradient(135deg, rgba(245,181,60,.85), rgba(217,83,29,.85));
       mix-blend-mode:multiply;
       opacity:.45;
     }
@@ -190,9 +190,9 @@
       font-size:13px;
       padding:10px 10px;
       border-radius:12px;
-      color:rgba(15,23,42,.78);
+      color:rgba(42,24,16,.78);
     }
-    .navlinks a:hover{ background: rgba(124,58,237,.08); color:rgba(15,23,42,.95); }
+    .navlinks a:hover{ background: rgba(217,83,29,.08); color:rgba(42,24,16,.95); }
 
     .actions{
       display:flex; align-items:center; gap:10px;
@@ -213,12 +213,12 @@
       border:0;
       background:transparent;
       cursor:pointer;
-      color:rgba(15,23,42,.78);
+      color:rgba(42,24,16,.78);
       transition: transform .12s ease, background .12s ease;
     }
     .chip.active{
-      background: rgba(124,58,237,.12);
-      color: rgba(15,23,42,.95);
+      background: rgba(217,83,29,.12);
+      color: rgba(42,24,16,.95);
     }
     .chip[disabled]{ opacity:.45; cursor:not-allowed; }
     .btn{
@@ -228,10 +228,10 @@
       padding: 10px 12px;
       font-size: 13px;
       cursor:pointer;
-      box-shadow: 0 6px 18px rgba(2,6,23,.06);
+      box-shadow: 0 6px 18px rgba(92,40,24,.06);
       transition: transform .12s ease, box-shadow .12s ease;
     }
-    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(2,6,23,.10); }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(92,40,24,.10); }
 
     /* Hamburger */
     .hamburger{
@@ -244,7 +244,7 @@
       position:relative;
     }
     .hamburger span{
-      width:18px; height:2px; background: rgba(15,23,42,.75);
+      width:18px; height:2px; background: rgba(42,24,16,.75);
       position:relative; display:block;
       border-radius:2px;
       transition: transform .18s ease, opacity .18s ease;
@@ -253,7 +253,7 @@
       content:"";
       position:absolute; left:0;
       width:18px; height:2px; border-radius:2px;
-      background: rgba(15,23,42,.75);
+      background: rgba(42,24,16,.75);
       transition: transform .18s ease, top .18s ease, bottom .18s ease;
     }
     .hamburger span::before{ top:-6px; }
@@ -298,12 +298,12 @@
       padding: 12px 12px;
       border-radius: 14px;
       border:1px solid transparent;
-      color: rgba(15,23,42,.90);
-      background: rgba(124,58,237,.06);
+      color: rgba(42,24,16,.90);
+      background: rgba(217,83,29,.06);
     }
     .drawer nav a:hover{
-      border-color: rgba(124,58,237,.22);
-      background: rgba(124,58,237,.10);
+      border-color: rgba(217,83,29,.22);
+      background: rgba(217,83,29,.10);
     }
     .drawer .foot{
       padding: 10px 14px 14px;
@@ -334,21 +334,21 @@
       content:"";
       position:absolute; inset:-80px -120px auto auto;
       width:260px; height:260px; border-radius:50%;
-      background: radial-gradient(circle at 35% 35%, rgba(249,115,22,.22), rgba(124,58,237,.18), transparent 70%);
+      background: radial-gradient(circle at 35% 35%, rgba(217,83,29,.22), rgba(217,83,29,.18), transparent 70%);
       filter: blur(6px);
     }
     .kicker{
       display:inline-flex;
       gap:8px; align-items:center;
       font-size:12px;
-      color: rgba(15,23,42,.72);
-      background: rgba(6,182,212,.10);
-      border: 1px solid rgba(6,182,212,.18);
+      color: rgba(42,24,16,.72);
+      background: rgba(245,181,60,.10);
+      border: 1px solid rgba(245,181,60,.18);
       padding: 8px 10px;
       border-radius: 999px;
     }
     .kicker b{
-      color: rgba(15,23,42,.92);
+      color: rgba(42,24,16,.92);
     }
     h1{
       margin: 14px 0 10px;
@@ -359,7 +359,7 @@
     .lead{
       margin:0;
       font-size: 15px;
-      color: rgba(15,23,42,.78);
+      color: rgba(42,24,16,.78);
       line-height: 1.65;
       max-width: 70ch;
     }
@@ -373,7 +373,7 @@
     .bullets li{
       display:flex; gap:10px;
       align-items:flex-start;
-      color: rgba(15,23,42,.80);
+      color: rgba(42,24,16,.80);
       font-size: 14px;
       line-height: 1.5;
     }
@@ -382,7 +382,7 @@
       width:10px; height:10px; border-radius: 999px;
       margin-top:6px;
       background: linear-gradient(135deg, var(--a1), var(--a2));
-      box-shadow: 0 8px 18px rgba(124,58,237,.18);
+      box-shadow: 0 8px 18px rgba(217,83,29,.18);
     }
     .heroActions{
       margin-top: 18px;
@@ -398,22 +398,22 @@
       font-size: 14px;
       color: white;
       background: linear-gradient(135deg, var(--a1), var(--a2));
-      box-shadow: 0 12px 30px rgba(124,58,237,.20);
+      box-shadow: 0 12px 30px rgba(217,83,29,.20);
       transition: transform .12s ease, box-shadow .12s ease;
     }
-    .cta:hover{ transform: translateY(-1px); box-shadow: 0 16px 36px rgba(124,58,237,.25); }
+    .cta:hover{ transform: translateY(-1px); box-shadow: 0 16px 36px rgba(217,83,29,.25); }
     .ghost{
       border:1px solid var(--line);
       background: rgba(255,255,255,.85);
-      color: rgba(15,23,42,.90);
+      color: rgba(42,24,16,.90);
       border-radius: 16px;
       padding: 12px 14px;
       font-size: 14px;
       cursor:pointer;
       transition: transform .12s ease, box-shadow .12s ease;
-      box-shadow: 0 8px 20px rgba(2,6,23,.06);
+      box-shadow: 0 8px 20px rgba(92,40,24,.06);
     }
-    .ghost:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(2,6,23,.08); }
+    .ghost:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(92,40,24,.08); }
 
     .heroSide{
       border:1px solid var(--line);
@@ -428,19 +428,19 @@
       content:"";
       position:absolute; inset:auto -80px -80px auto;
       width:260px; height:260px; border-radius:50%;
-      background: radial-gradient(circle at 35% 35%, rgba(34,197,94,.18), rgba(6,182,212,.14), transparent 72%);
+      background: radial-gradient(circle at 35% 35%, rgba(245,181,60,.18), rgba(245,181,60,.14), transparent 72%);
       filter: blur(6px);
     }
     .miniTitle{
       margin:0 0 10px;
       font-size: 14px;
-      color: rgba(15,23,42,.92);
+      color: rgba(42,24,16,.92);
       letter-spacing:.2px;
     }
     .miniText{
       margin:0 0 12px;
       font-size: 13px;
-      color: rgba(15,23,42,.72);
+      color: rgba(42,24,16,.72);
       line-height: 1.6;
     }
     .cards{
@@ -452,7 +452,7 @@
       background: rgba(255,255,255,.82);
       border-radius: 18px;
       padding: 12px;
-      box-shadow: 0 8px 20px rgba(2,6,23,.06);
+      box-shadow: 0 8px 20px rgba(92,40,24,.06);
       transition: transform .12s ease;
     }
     .card:hover{ transform: translateY(-1px); }
@@ -463,9 +463,9 @@
       font-size: 12px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(124,58,237,.16);
-      background: rgba(124,58,237,.08);
-      color: rgba(15,23,42,.80);
+      border: 1px solid rgba(217,83,29,.16);
+      background: rgba(217,83,29,.08);
+      color: rgba(42,24,16,.80);
       white-space: nowrap;
     }
     .card h3{
@@ -476,7 +476,7 @@
     .card p{
       margin: 8px 0 0;
       font-size: 13px;
-      color: rgba(15,23,42,.72);
+      color: rgba(42,24,16,.72);
       line-height: 1.55;
     }
 
@@ -522,7 +522,7 @@
       content:"";
       position:absolute; inset:-120px -140px auto auto;
       width:320px; height:320px; border-radius:50%;
-      background: radial-gradient(circle at 35% 35%, rgba(6,182,212,.18), rgba(124,58,237,.14), transparent 70%);
+      background: radial-gradient(circle at 35% 35%, rgba(245,181,60,.18), rgba(217,83,29,.14), transparent 70%);
       filter: blur(8px);
       pointer-events:none;
     }
@@ -533,14 +533,14 @@
     }
     .panel p{
       margin:0;
-      color: rgba(15,23,42,.78);
+      color: rgba(42,24,16,.78);
       line-height: 1.65;
       font-size: 14px;
     }
     .list{
       margin: 12px 0 0;
       padding-left: 18px;
-      color: rgba(15,23,42,.78);
+      color: rgba(42,24,16,.78);
       line-height: 1.7;
       font-size: 14px;
     }
@@ -564,7 +564,7 @@
       content:"";
       position:absolute; inset:auto -40px -40px auto;
       width:180px; height:180px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(249,115,22,.18), rgba(34,197,94,.14), transparent 70%);
+      background: radial-gradient(circle at 30% 30%, rgba(217,83,29,.18), rgba(245,181,60,.14), transparent 70%);
       filter: blur(8px);
       opacity:.9;
       pointer-events:none;
@@ -576,13 +576,13 @@
     .icon{
       width:38px; height:38px; border-radius: 14px;
       display:grid; place-items:center;
-      border:1px solid rgba(15,23,42,.08);
-      background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(6,182,212,.10));
-      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+      border:1px solid rgba(42,24,16,.08);
+      background: linear-gradient(135deg, rgba(217,83,29,.12), rgba(245,181,60,.10));
+      box-shadow: 0 10px 22px rgba(92,40,24,.06);
       flex: 0 0 auto;
     }
     .stationCard h3{ margin:0; font-size: 16px; }
-    .stationCard p{ margin: 6px 0 0; font-size: 13px; color: rgba(15,23,42,.72); line-height:1.6; }
+    .stationCard p{ margin: 6px 0 0; font-size: 13px; color: rgba(42,24,16,.72); line-height:1.6; }
     .stationCard .linkrow{
       margin-top: 12px;
       display:flex; gap: 10px; flex-wrap:wrap;
@@ -595,9 +595,9 @@
       background: rgba(255,255,255,.82);
       cursor:pointer;
       transition: transform .12s ease, box-shadow .12s ease;
-      box-shadow: 0 8px 20px rgba(2,6,23,.06);
+      box-shadow: 0 8px 20px rgba(92,40,24,.06);
     }
-    .smallLink:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(2,6,23,.08); }
+    .smallLink:hover{ transform: translateY(-1px); box-shadow: 0 12px 26px rgba(92,40,24,.08); }
 
     /* Writings */
     .wGrid{
@@ -614,15 +614,15 @@
     }
     .post .meta{
       display:flex; gap:8px; align-items:center; flex-wrap:wrap;
-      color: rgba(15,23,42,.62);
+      color: rgba(42,24,16,.62);
       font-size: 12px;
     }
     .pill{
-      border:1px solid rgba(6,182,212,.18);
-      background: rgba(6,182,212,.08);
+      border:1px solid rgba(245,181,60,.18);
+      background: rgba(245,181,60,.08);
       padding: 6px 10px;
       border-radius: 999px;
-      color: rgba(15,23,42,.78);
+      color: rgba(42,24,16,.78);
       font-size: 12px;
     }
     .post h3{
@@ -632,14 +632,14 @@
     }
     .post p{
       margin:0 0 12px;
-      color: rgba(15,23,42,.75);
+      color: rgba(42,24,16,.75);
       font-size: 13px;
       line-height: 1.65;
     }
     .post .do{
-      border-left: 3px solid rgba(124,58,237,.35);
+      border-left: 3px solid rgba(217,83,29,.35);
       padding-left: 10px;
-      color: rgba(15,23,42,.80);
+      color: rgba(42,24,16,.80);
       font-size: 13px;
       line-height: 1.6;
       margin: 0;
@@ -657,21 +657,21 @@
       background: rgba(255,255,255,.78);
       border-radius: 18px;
       padding: 12px;
-      box-shadow: 0 8px 20px rgba(2,6,23,.06);
+      box-shadow: 0 8px 20px rgba(92,40,24,.06);
     }
     .rule .n{
       width:28px; height:28px; border-radius: 999px;
       display:grid; place-items:center;
-      background: rgba(124,58,237,.10);
-      border:1px solid rgba(124,58,237,.18);
-      color: rgba(15,23,42,.90);
+      background: rgba(217,83,29,.10);
+      border:1px solid rgba(217,83,29,.18);
+      color: rgba(42,24,16,.90);
       font-size: 12px;
       flex:0 0 auto;
       margin-top: 2px;
     }
     .rule p{
       margin:0;
-      color: rgba(15,23,42,.78);
+      color: rgba(42,24,16,.78);
       font-size: 13px;
       line-height:1.6;
     }
@@ -699,7 +699,7 @@
     /* Footer */
     footer{
       padding: 26px 0 36px;
-      color: rgba(15,23,42,.62);
+      color: rgba(42,24,16,.62);
       font-size: 12px;
     }
     .fwrap{
@@ -714,9 +714,9 @@
       padding: 8px 10px;
       border-radius: 12px;
       border: 1px solid transparent;
-      color: rgba(15,23,42,.70);
+      color: rgba(42,24,16,.70);
     }
-    .fwrap a:hover{ background: rgba(6,182,212,.08); border-color: rgba(6,182,212,.12); }
+    .fwrap a:hover{ background: rgba(245,181,60,.08); border-color: rgba(245,181,60,.12); }
 
     /* Motion (respect reduced motion) */
     .reveal{
@@ -763,7 +763,7 @@
   <header class="topbar" role="banner">
     <div class="container">
       <div class="navwrap">
-        <a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><svg class="markIcon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><defs><linearGradient id="nlaMarkVi" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#111827"/><stop offset="100%" stop-color="#9a3412"/></linearGradient></defs><rect width="40" height="40" rx="12" fill="url(#nlaMarkVi)"/><path d="M11 25 a9 9 0 0 1 18 0" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".95"/><circle cx="20" cy="22" r="1.8" fill="#ffffff" opacity=".95"/></svg></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>
+        <a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>
 
         <nav class="navlinks" aria-label="Điều hướng chính"><a href="/hanh-trinh/">Hành trình</a><a href="/phuong-phap/">Phương pháp</a><a href="/bai-viet/">Bài viết</a><a href="/members/">Thành viên</a></nav>
 
@@ -1064,7 +1064,7 @@
       </div>
 
       <div class="panel reveal" style="margin-bottom:12px;">
-        <p style="margin:0; color:rgba(15,23,42,.78); line-height:1.7;">
+        <p style="margin:0; color:rgba(42,24,16,.78); line-height:1.7;">
           Không phải việc lớn. Mà là những bước nhỏ nhưng thật, đủ để đời sống bắt đầu chảy lại.
         </p>
       </div>
@@ -1453,7 +1453,7 @@
 
       <div class="panel reveal" style="margin-bottom:12px;">
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
-          <p style="margin:0; color:rgba(15,23,42,.78); line-height:1.7; max-width:72ch;">
+          <p style="margin:0; color:rgba(42,24,16,.78); line-height:1.7; max-width:72ch;">
             Chọn một series để đọc theo trật tự. Mỗi bài đều dẫn tới một hành động thật hoặc một bước tiếp vào hệ thành viên.
           </p>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -1618,7 +1618,7 @@
             <a class="btn" href="mailto:lienhe@nguyenlananh.com?subject=G%E1%BB%ADi%20m%E1%BB%99t%20d%C3%B2ng%20cho%20Lan%20Anh&body=Ch%C3%A0o%20Lan%20Anh%2C%0A%0AEm%20mu%E1%BB%91n%20n%C3%B3i%20m%E1%BB%99t%20%C4%91i%E1%BB%81u%20r%E1%BA%A5t%20ng%E1%BA%AFn%3A%0A%0A-%20%0A%0AEm%20c%E1%BA%A3m%20%C6%A1n%20Lan%20Anh." aria-label="Mở email">Mở Email</a>
           </div>
 
-          <p style="margin-top:12px; color:rgba(15,23,42,.70); font-size:13px; line-height:1.6;">
+          <p style="margin-top:12px; color:rgba(42,24,16,.70); font-size:13px; line-height:1.6;">
             Gợi ý về trạng thái hiện tại của bạn: Bạn thấy mình đang vướng mắc về điều gì? Bạn mong muốn điều gì cho chính mình? Bạn muốn trở thành người như thế nào?
           </p>
         </div>
@@ -1630,7 +1630,7 @@
             Không tự động gửi đi.
           </p>
 
-          <label for="note" style="display:block; margin-top:12px; font-size:13px; color:rgba(15,23,42,.75);">Một dòng cho mình</label>
+          <label for="note" style="display:block; margin-top:12px; font-size:13px; color:rgba(42,24,16,.75);">Một dòng cho mình</label>
           <textarea id="note" rows="6" style="
             width:100%; margin-top:8px;
             border:1px solid var(--line);
@@ -1640,7 +1640,7 @@
             line-height:1.6;
             resize:vertical;
             background: rgba(255,255,255,.85);
-            box-shadow: 0 8px 20px rgba(2,6,23,.06);
+            box-shadow: 0 8px 20px rgba(92,40,24,.06);
           " placeholder="Hôm nay tôi muốn giữ nhịp bằng cách..."></textarea>
 
           <div class="copyRow" style="margin-top:10px;">
@@ -1649,7 +1649,7 @@
             <button class="btn" type="button" id="exportNote">Xuất .txt</button>
           </div>
 
-          <p id="noteStatus" style="margin:10px 0 0; font-size:12px; color:rgba(15,23,42,.62);"></p>
+          <p id="noteStatus" style="margin:10px 0 0; font-size:12px; color:rgba(42,24,16,.62);"></p>
         </div>
       </div>
     </section>
@@ -1660,7 +1660,7 @@
     <div class="container">
       <div class="fwrap">
         <div>
-          <div style="font-weight:700; color:rgba(15,23,42,.80);">Nguyễn Lan Anh</div>
+          <div style="font-weight:700; color:rgba(42,24,16,.80);">Nguyễn Lan Anh</div>
           <div>© <span id="year"></span> · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</div>
         </div>
 
@@ -1674,7 +1674,7 @@
         </div>
       </div>
 
-      <div style="margin-top:10px; color:rgba(15,23,42,.55); line-height:1.6;">
+      <div style="margin-top:10px; color:rgba(42,24,16,.55); line-height:1.6;">
         <span>Legal: </span>
         <a href="/chinh-sach-bao-mat/" class="mono" style="padding:6px 10px;">Chính sách bảo mật</a>
         <a href="/dieu-khoan/" class="mono" style="padding:6px 10px;">Điều khoản sử dụng</a>

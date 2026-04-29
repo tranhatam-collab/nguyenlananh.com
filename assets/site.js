@@ -48,6 +48,10 @@
 
   function localizeSharedLinks(root = document) {
     $$("a[href]", root).forEach((anchor) => {
+      // Brand anchors carry their own logo + wordmark + tagline structure;
+      // never overwrite their textContent or inner SVG.
+      if (anchor.classList.contains("brand") || anchor.closest(".brand")) return;
+
       const originalText = String(anchor.textContent || "").trim();
       if (isLocalePlaceholder(originalText)) {
         anchor.remove();

@@ -16,9 +16,4 @@
     <path d="M680 240 C760 220, 820 260, 900 240 C980 220, 1030 260, 1120 250"/>
     <path d="M120 420 C220 430, 300 380, 420 400 C560 420, 620 360, 700 390"/>
   </g>
-  <g font-family="Arial, Helvetica, sans-serif" fill="#2a1810">
-    <text x="96" y="150" font-size="56" font-weight="700">Bạn đang sống theo thói quen hay lựa chọn?</text>
-    <text x="96" y="225" font-size="36" font-weight="500" opacity="0.8">Hình minh hoạ</text>
-    <text x="96" y="830" font-size="22" fill="#6b4a35" opacity="0.6">Nguyễn Lan Anh — Bài viết</text>
-  </g>
 </svg>

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Journal and tea in morning light">
   <defs>
     <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f8e7cf"/>
-      <stop offset="100%" stop-color="#d9c2a0"/>
+      <stop offset="0%" stop-color="#fdf6e8"/>
+      <stop offset="100%" stop-color="#c9905e"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="675" fill="url(#g1)"/>

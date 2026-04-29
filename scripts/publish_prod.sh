@@ -19,6 +19,9 @@ fi
 echo "Syncing i18n and sitemap"
 node scripts/sync-i18n.mjs
 
+echo "Running bilingual release validation"
+node scripts/validate-bilingual-release.mjs
+
 if [ -n "$(git status --porcelain)" ]; then
   echo "sync-i18n produced changes. Commit them before publishing."
   exit 1

@@ -1,5 +1,193 @@
 <!doctype html>
 <html lang="en-US" dir="ltr">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" /><title>Admin Settings | Nguyenlananh.com</title><meta name="robots" content="noindex,follow" /><link rel="canonical" href="https://www.nguyenlananh.com/en/admin/settings/" /><link rel="stylesheet" href="/assets/site.css" /></head>
-<body data-page="admin-settings"><main class="container" role="main"><section class="pageHead"><h1>Settings module</h1><p class="sub">Placeholder for role matrix, policy text, and internal security flags.</p><div class="actionsRow"><a class="ghost" href="/en/admin/">Back to Admin Home</a></div></section><section class="panel"><h3>Module placeholder</h3><p>Placeholder page for today's live phase.</p></section></main><script src="/assets/site.js"></script></body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Admin Settings | Nguyenlananh.com</title>
+  <meta name="description" content="Internal settings, role policy, and operations safety flags." />
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/en/admin/settings/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/settings/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/settings/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/settings/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/settings/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/assets/site.css" />
+  <meta property="og:title" content="Admin Settings | Nguyenlananh.com" />
+
+  <meta property="og:description" content="Internal settings, role policy, and operations safety flags." />  <meta name="twitter:title" content="Admin Settings | Nguyenlananh.com" />
+
+  <meta name="twitter:description" content="Internal settings, role policy, and operations safety flags." /><meta property="og:url" content="https://www.nguyenlananh.com/en/admin/settings/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="admin-settings"><a class="skip" href="#admin-main">Skip to content</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/admin/" aria-label="Admin home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Admin Foundation</strong>
+            <span>Membership + Creator Operations</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin nav">
+          <a href="/en/admin/dashboard/">Dashboard</a>
+          <a href="/en/admin/content/">Content</a>
+          <a href="/en/admin/members/">Members</a>
+          <a href="/en/admin/creators/">Creators</a>
+          <a href="/en/admin/settings/">Settings</a>
+        </nav>
+        <div class="actions">
+          <a class="btn" href="/en/admin/">Admin home</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Settings</span>
+      <h1>Operational governance panel</h1>
+      <p class="sub">Role policy, internal operations rules and platform settings. No public indexing.</p>
+      <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
+    </section>
+
+    <section id="admin-auth" class="panel">
+      <h3>Open internal session</h3>
+      <div class="field">
+        <label for="admin-key">Internal key</label>
+        <input id="admin-key" type="password" placeholder="Enter team key..." />
+      </div>
+        <div class="field">
+          <label for="admin-role">Role</label>
+          <select id="admin-role">
+            <option value="super_admin">Super Admin</option>
+            <option value="ops">Operations</option>
+            <option value="content_editor">Content editor</option>
+            <option value="content">Content</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
+      <div class="field">
+        <label for="admin-ttl">Session minutes</label>
+        <input id="admin-ttl" type="number" min="15" max="720" value="480" />
+      </div>
+      <div class="actionsRow">
+        <button id="admin-enter" class="cta" type="button">Open session</button>
+      </div>
+      <p id="session-status" class="meta">No active internal session.</p>
+      <p id="admin-role-text" class="note"></p>
+      <p id="admin-time-left" class="note"></p>
+    </section>
+
+    <section class="panel admin-only" data-requires="settings">
+      <h3>Role policy</h3>
+      <div class="field">
+        <label for="role-policy-json">Role policy JSON</label>
+        <textarea id="role-policy-json" rows="18" class="code"></textarea>
+      </div>
+      <div class="actionsRow">
+        <button id="role-policy-save" class="ghost" type="button">Save</button>
+        <button id="role-policy-copy" class="ghost" type="button">Copy</button>
+      </div>
+      <p id="role-policy-status" class="meta"></p>
+    </section>
+
+    <section id="admin-account-manager" class="panel admin-only" data-requires="settings">
+      <h3>Content account administration</h3>
+      <p class="note">Create accounts with content permissions for publishing, editing/deleting posts, and image updates.</p>
+      <div class="grid2">
+        <div class="field">
+          <label for="admin-account-username">Username</label>
+          <input id="admin-account-username" type="text" placeholder="example: content.editor" />
+        </div>
+        <div class="field">
+          <label for="admin-account-display">Display name</label>
+          <input id="admin-account-display" type="text" placeholder="Internal display name" />
+        </div>
+        <div class="field">
+          <label for="admin-account-new-password">Password</label>
+          <input id="admin-account-new-password" type="password" autocomplete="new-password" placeholder="Set new password when creating/updating" />
+        </div>
+        <div class="field">
+          <label for="admin-account-role">Role</label>
+          <select id="admin-account-role"></select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Permissions</label>
+        <div id="admin-account-permissions" class="checkList"></div>
+      </div>
+      <div class="actionsRow">
+        <button id="admin-account-save" class="ghost" type="button">Save account</button>
+        <button id="admin-account-reset" class="ghost" type="button">Reset form</button>
+      </div>
+      <p id="admin-account-status" class="meta"></p>
+      <p id="admin-account-manager-hint" class="note"></p>
+
+      <h4>Accounts</h4>
+      <ul id="admin-account-list" class="checkList"></ul>
+    </section>
+
+    <section id="health-panel" class="admin-only" data-requires="dashboard"></section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div>© <span id="year"></span> · Admin foundation only, no public indexing.</div>
+    </div>
+  </footer>
+
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
+  <script src="/assets/lang-routing.js"></script>
+</body>
 </html>

@@ -47,6 +47,30 @@ Scope: Bài viết, chuyên mục, series, chương trình, quote, FAQ.
 - `related_posts` (relation -> posts, max 4)
 - `cta_variant` (enum)
 
+## 2A. Launch bilingual article payload
+
+Theo launch pack `NGUYENLANANH_LAUNCH_CONTENT_PACK_2026-04-17.md`, nếu team cần dựng nhanh luồng VI trước - EN sau, payload tối thiểu là:
+
+- `title_vi`
+- `title_en`
+- `slug`
+- `meta_title`
+- `meta_description`
+- `subline_vi`
+- `subline_en`
+- `content_vi`
+- `content_en`
+- `hero_image`
+- `publish_date`
+- `category`
+- `status`
+
+Khuyến nghị triển khai:
+
+- nếu CMS chưa hỗ trợ localization, map `title_vi -> title`, `subline_vi -> excerpt`, `content_vi -> content`
+- nếu CMS có localization, tách `title`, `subline`, `content`, `seo_title`, `seo_description` theo locale thay vì giữ field phẳng
+- không bỏ các field SEO và image metadata trong schema gốc chỉ vì có launch payload rút gọn
+
 ---
 
 ## 3. Category Taxonomy (lock)

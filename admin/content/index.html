@@ -1,5 +1,171 @@
 <!doctype html>
 <html lang="vi" dir="ltr">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" /><title>Admin Content | Nguyenlananh.com</title><meta name="robots" content="noindex,follow" /><link rel="canonical" href="https://www.nguyenlananh.com/admin/content/" /><link rel="stylesheet" href="/assets/site.css" /></head>
-<body data-page="admin-content"><main class="container" role="main"><section class="pageHead"><h1>Module Content</h1><p class="sub">Placeholder workflow: content owner, version, status và audit log publish.</p><div class="actionsRow"><a class="ghost" href="/admin/">Về Admin Home</a></div></section><section class="panel"><h3>Mẫu module</h3><p>Trang placeholder cho phase live.</p></section></main><script src="/assets/site.js"></script></body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Admin Content | Nguyễn Lan Anh</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/admin/content/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/content/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/content/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/content/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/content/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="description" content="Mọi thay đổi content cho giai đoạn launch nên update cùng manifest + config để tránh lệch route." />
+
+
+
+  <link rel="stylesheet" href="/assets/site.css" />
+
+
+
+  <meta property="og:title" content="Admin Content | Nguyễn Lan Anh" />
+
+  <meta property="og:description" content="Mọi thay đổi content cho giai đoạn launch nên update cùng manifest + config để tránh lệch route." />  <meta name="twitter:title" content="Admin Content | Nguyễn Lan Anh" />
+
+  <meta name="twitter:description" content="Mọi thay đổi content cho giai đoạn launch nên update cùng manifest + config để tránh lệch route." /><meta property="og:url" content="https://www.nguyenlananh.com/admin/content/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="admin-content"><a class="skip" href="#admin-main">Bỏ qua và vào nội dung chính</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/admin/" aria-label="Admin home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Nền quản trị</strong>
+            <span>Vận hành thành viên + creator</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin nav">
+          <a href="/admin/dashboard/">Bảng điều khiển</a>
+          <a href="/admin/content/">Content</a>
+          <a href="/admin/members/">Members</a>
+          <a href="/admin/creators/">Creators</a>
+          <a href="/admin/settings/">Settings</a>
+        </nav>
+        <div class="actions">
+          <a class="btn" href="/admin/">Trang chủ Admin</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Content module</span>
+      <h1>Quản lý launch collection</h1>
+      <p class="sub">Mọi thay đổi content cho giai đoạn launch nên update cùng manifest + config để tránh lệch route.</p>
+      <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
+    </section>
+
+    <section id="admin-auth" class="panel">
+      <h3>Khởi tạo nhanh phiên nội bộ</h3>
+      <div class="field"><label for="admin-key">Khóa nội bộ</label><input id="admin-key" type="password" /></div>
+      <div class="field">
+        <label for="admin-role">Vai trò</label>
+        <select id="admin-role">
+          <option value="super_admin">Toàn quyền</option>
+          <option value="ops">Điều hành</option>
+          <option value="content_editor">Biên tập nội dung</option>
+          <option value="content">Nội dung</option>
+          <option value="viewer">Chỉ xem</option>
+        </select>
+      </div>
+      <div class="field"><label for="admin-ttl">Thời lượng phiên (phút)</label><input id="admin-ttl" type="number" min="15" max="720" value="480" /></div>
+      <div class="actionsRow"><button id="admin-enter" class="cta" type="button">Mở khóa phiên</button></div>
+      <p id="session-status" class="meta">Chưa có phiên nội bộ.</p>
+      <p id="admin-role-text" class="note"></p>
+    </section>
+
+    <section class="panel admin-only" data-requires="content">
+      <h3>site-config</h3>
+      <p class="sub">Đồng bộ, chỉnh sửa và xuất bản nhanh các giá trị config vận hành.</p>
+      <div class="field">
+        <label for="site-config-json">site-config JSON</label>
+        <textarea id="site-config-json" rows="14" class="code"></textarea>
+      </div>
+      <p id="site-config-summary" class="note"></p>
+      <div id="admin-role-summary" class="note"></div>
+      <div class="actionsRow">
+        <button id="site-config-sync" class="ghost" type="button">Sync source</button>
+        <button id="site-config-save" class="ghost" type="button">Lưu local</button>
+        <button id="site-config-export" class="ghost" type="button">Export</button>
+        <button id="site-config-copy" class="ghost" type="button">Copy</button>
+        <button id="site-config-clear" class="ghost" type="button">Xóa local</button>
+      </div>
+      <p id="site-config-status" class="meta"></p>
+    </section>
+
+    <section class="panel admin-only" data-requires="content">
+      <h3>Launch manifest</h3>
+      <p class="sub">Quản lý thứ tự publish và đường nội bộ cho 10 bài launch.</p>
+      <p>Manifest: <a href="/admin/content/articles-launch-collection.json">/admin/content/articles-launch-collection.json</a></p>
+      <p>Đầu chuỗi: <a href="/bai-viet/ban-khong-thieu-kien-thuc/">/bai-viet/ban-khong-thieu-kien-thuc/</a></p>
+      <p>Cuối chuỗi: <a href="/bai-viet/chi-can-dung/">/bai-viet/chi-can-dung/</a></p>
+      <p>Series code: launch-10-inner-clarity</p>
+      <div class="field">
+        <label for="launch-manifest-json">articles-launch-collection JSON</label>
+        <textarea id="launch-manifest-json" rows="18" class="code"></textarea>
+      </div>
+      <div id="launch-manifest-summary" class="admin-section"></div>
+      <div class="actionsRow">
+        <button id="launch-manifest-validate" class="ghost" type="button">Validate</button>
+        <button id="launch-manifest-import" class="ghost" type="button">Import local</button>
+        <button id="launch-manifest-export" class="ghost" type="button">Export</button>
+        <button id="launch-manifest-copy" class="ghost" type="button">Copy</button>
+        <button id="launch-manifest-clear" class="ghost" type="button">Xóa local</button>
+      </div>
+      <p id="launch-manifest-status" class="meta"></p>
+    </section>
+
+    <section id="health-panel" class="admin-only" data-requires="dashboard"></section>
+  </main>
+
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div></footer>
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
+  <script src="/assets/lang-routing.js"></script>
+</body>
 </html>

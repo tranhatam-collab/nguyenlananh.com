@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Admin Foundation | Nguyenlananh.com</title>
+  <title>Nền quản trị | Nguyễn Lan Anh</title>
   <meta name="description" content="Admin foundation nội bộ cho vận hành membership và creator layer." />
   <meta name="robots" content="noindex,follow" />
   <link rel="canonical" href="https://www.nguyenlananh.com/admin/" />
@@ -11,29 +11,168 @@
   <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/" />
   <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/" />
   <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/" />
-  <link rel="stylesheet" href="/assets/site.css" />
-</head>
-<body data-page="admin-home">
-  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/admin/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Admin Foundation</strong><span>Membership + Creator Operations</span></div></a><nav class="navlinks" aria-label="Admin nav"><a href="/admin/dashboard/">Dashboard</a><a href="/admin/content/">Content</a><a href="/admin/members/">Members</a><a href="/admin/creators/">Creators</a><a href="/admin/settings/">Settings</a></nav><div class="actions"><a class="btn" href="/members/dashboard/">Về Members</a></div></div></div></header>
 
-  <main class="container" role="main">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/assets/site.css" />
+  <meta property="og:title" content="Nền quản trị | Nguyễn Lan Anh" />
+
+  <meta property="og:description" content="Admin foundation nội bộ cho vận hành membership và creator layer." />  <meta name="twitter:title" content="Nền quản trị | Nguyễn Lan Anh" />
+
+  <meta name="twitter:description" content="Admin foundation nội bộ cho vận hành membership và creator layer." /><meta property="og:url" content="https://www.nguyenlananh.com/admin/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="admin-home"><a class="skip" href="#admin-main">Bỏ qua và vào nội dung chính</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/admin/" aria-label="Admin home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Nền quản trị</strong>
+            <span>Vận hành thành viên + creator</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin nav">
+          <a href="/admin/dashboard/">Bảng điều khiển</a>
+          <a href="/admin/content/">Content</a>
+          <a href="/admin/members/">Members</a>
+          <a href="/admin/creators/">Creators</a>
+          <a href="/admin/settings/">Settings</a>
+        </nav>
+        <div class="actions">
+          <a class="btn" href="/members/dashboard/">Về Members</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Internal Placeholder</span>
-      <h1 style="margin-top:8px;">Admin route foundation đã khóa</h1>
-      <p class="sub">Skeleton route an toàn cho phase live hôm nay. Backend, auth và phân quyền thực thi ở phase build kế tiếp.</p>
+      <span class="badge">Operations console</span>
+      <h1>Admin route vận hành độc lập</h1>
+      <p class="sub">Console này là khu vực vận hành nội bộ cho toàn bộ luồng membership, member journey và creator workflow.</p>
+      <p id="admin-host-banner" class="statusBanner hidden" role="status"></p>
+      <p id="session-status" class="meta">Chưa có phiên nội bộ.</p>
+      <p id="admin-role-text" class="note"></p>
+      <p id="admin-time-left" class="note"></p>
+    </section>
+
+    <section id="admin-auth" class="panel" data-page="auth">
+      <h3>Mở khóa phiên nội bộ</h3>
+      <div class="field">
+        <label for="admin-key">Khóa nội bộ</label>
+        <input id="admin-key" type="password" autocomplete="off" placeholder="Nhập khóa theo team vận hành..." />
+      </div>
+      <div class="field">
+        <label for="admin-role">Vai trò</label>
+        <select id="admin-role">
+          <option value="super_admin">Toàn quyền</option>
+          <option value="ops">Điều hành</option>
+          <option value="content_editor">Biên tập nội dung</option>
+          <option value="content">Nội dung</option>
+          <option value="viewer">Chỉ xem</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="admin-ttl">Thời lượng phiên (phút)</label>
+        <input id="admin-ttl" type="number" min="15" max="720" value="480" />
+      </div>
+      <div class="actionsRow">
+        <button id="admin-enter" class="cta" type="button">Mở khóa phiên</button>
+      </div>
+      <p id="admin-host-warning" class="note"></p>
     </section>
 
     <section class="grid2">
-      <article class="panel"><h3>Dashboard</h3><p>Queue vận hành, funnel activation và cảnh báo blocker.</p><div class="actionsRow"><a class="ghost" href="/admin/dashboard/">Mở module</a></div></article>
-      <article class="panel"><h3>Content</h3><p>Vòng đời nội dung: draft, review, approved, published, archived.</p><div class="actionsRow"><a class="ghost" href="/admin/content/">Mở module</a></div></article>
-      <article class="panel"><h3>Members</h3><p>Theo dõi activation sau join và checkpoint day-1/day-7.</p><div class="actionsRow"><a class="ghost" href="/admin/members/">Mở module</a></div></article>
-      <article class="panel"><h3>Creators</h3><p>Submission queue, quyết định review và lịch publish nội bộ.</p><div class="actionsRow"><a class="ghost" href="/admin/creators/">Mở module</a></div></article>
-      <article class="panel"><h3>Settings</h3><p>Role matrix, chính sách vận hành và cờ bảo mật nội bộ.</p><div class="actionsRow"><a class="ghost" href="/admin/settings/">Mở module</a></div></article>
+      <article class="panel admin-only" data-requires="dashboard">
+        <h3>Bảng điều khiển</h3>
+        <p>Queue vận hành, funnel activation và cảnh báo blocker.</p>
+        <div class="actionsRow"><a class="ghost" href="/admin/dashboard/">Mở module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="content">
+        <h3>Content</h3>
+        <p>Lifecycle nội dung: draft / review / approved / published / archived.</p>
+        <div class="actionsRow"><a class="ghost" href="/admin/content/">Mở module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="members">
+        <h3>Members</h3>
+        <p>Theo dõi activation sau join và checkpoint day-1/day-7.</p>
+        <div class="actionsRow"><a class="ghost" href="/admin/members/">Mở module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="creators">
+        <h3>Creators</h3>
+        <p>Submission queue, review decision và lịch publish nội bộ.</p>
+        <div class="actionsRow"><a class="ghost" href="/admin/creators/">Mở module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="settings">
+        <h3>Settings</h3>
+        <p>Role matrix, chính sách vận hành và cờ an toàn nội bộ.</p>
+        <div class="actionsRow"><a class="ghost" href="/admin/settings/">Mở module</a></div>
+      </article>
+    </section>
+
+    <section id="health-panel" class="admin-only" data-requires="dashboard" aria-live="polite"></section>
+    <section id="admin-quick-note" class="panel admin-only" data-requires="dashboard">
+      <h3>Checklist nhanh</h3>
+      <ul class="list">
+        <li>Giá và paywall không được hiển thị công khai.</li>
+        <li>Mọi thay đổi launch content phải đi kèm manifest + internal link.</li>
+        <li>Không commit thay đổi admin nếu chưa chốt nội dung vận hành.</li>
+      </ul>
     </section>
   </main>
 
-  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div></footer>
-  <script src="/assets/site.js"></script>
+  <footer role="contentinfo">
+    <div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div>
+  </footer>
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>
 </body>
 </html>

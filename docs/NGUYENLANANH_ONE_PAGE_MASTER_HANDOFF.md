@@ -9,15 +9,29 @@ Status: MASTER HANDOFF (ONE FILE ENTRY)
 
 Đây là file tổng chỉ huy để DEV nhận 1 file duy nhất và triển khai đúng thứ tự từ structure → pages → content → CTA → SEO → QA → deploy.
 
+Từ phase nâng cấp tháng 4/2026, file này phải được đọc cùng:
+
+- `NGUYENLANANH_DEV_MASTERPLAN_UNIFIED_2026-04.md`
+
+File master plan hợp nhất là tài liệu khóa mới nhất cho:
+
+- homepage chuyển đổi
+- menu final
+- membership guided journey
+- creator layer nội bộ
+- admin toàn quyền
+- PayPal-first architecture
+
 ---
 
 ## 2. Bộ tài liệu bắt buộc
 
-1. `NGUYENLANANH_MASTER_WEBSITE_SPEC.md`
-2. `NGUYENLANANH_DEPLOY_LOCK_CHECKLIST.md`
-3. `NGUYENLANANH_HOMEPAGE_FULL_COPY_FINAL.md`
-4. `NGUYENLANANH_FULL_SITE_CONTENT_STRUCTURE.md`
-5. `NGUYENLANANH_HOMEPAGE_SEO_FULL_FINAL.md`
+1. `NGUYENLANANH_DEV_MASTERPLAN_UNIFIED_2026-04.md`
+2. `NGUYENLANANH_MASTER_WEBSITE_SPEC.md`
+3. `NGUYENLANANH_DEPLOY_LOCK_CHECKLIST.md`
+4. `NGUYENLANANH_HOMEPAGE_FULL_COPY_FINAL.md`
+5. `NGUYENLANANH_FULL_SITE_CONTENT_STRUCTURE.md`
+6. `NGUYENLANANH_HOMEPAGE_SEO_FULL_FINAL.md`
 
 ---
 
@@ -53,9 +67,9 @@ Chỉ coi là xong khi đủ:
 
 ## 5. Link nhanh trong repo
 
+- Master plan hợp nhất: `docs/NGUYENLANANH_DEV_MASTERPLAN_UNIFIED_2026-04.md`
 - Spec: `docs/NGUYENLANANH_MASTER_WEBSITE_SPEC.md`
 - Deploy checklist: `docs/NGUYENLANANH_DEPLOY_LOCK_CHECKLIST.md`
 - Homepage copy: `docs/NGUYENLANANH_HOMEPAGE_FULL_COPY_FINAL.md`
 - Content structure: `docs/NGUYENLANANH_FULL_SITE_CONTENT_STRUCTURE.md`
 - Homepage SEO: `docs/NGUYENLANANH_HOMEPAGE_SEO_FULL_FINAL.md`
-

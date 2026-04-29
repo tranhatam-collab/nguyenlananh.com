@@ -10,30 +10,167 @@
   <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/" />
   <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/" />
   <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/" />
-  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/en/admin/" />
-  <link rel="stylesheet" href="/assets/site.css" />
-</head>
-<body data-page="admin-home">
-  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/en/admin/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Admin Foundation</strong><span>Membership + Creator Operations</span></div></a><nav class="navlinks" aria-label="Admin nav"><a href="/en/admin/dashboard/">Dashboard</a><a href="/en/admin/content/">Content</a><a href="/en/admin/members/">Members</a><a href="/en/admin/creators/">Creators</a><a href="/en/admin/settings/">Settings</a></nav><div class="actions"><a class="btn" href="/en/members/dashboard/">Back to Members</a></div></div></div></header>
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/" />
 
-  <main class="container" role="main">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="/assets/site.css" />
+  <meta property="og:title" content="Admin Foundation | Nguyenlananh.com" />
+
+  <meta property="og:description" content="Internal admin foundation for membership and creator operations." />  <meta name="twitter:title" content="Admin Foundation | Nguyenlananh.com" />
+
+  <meta name="twitter:description" content="Internal admin foundation for membership and creator operations." /><meta property="og:url" content="https://www.nguyenlananh.com/en/admin/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="admin-home"><a class="skip" href="#admin-main">Skip to content</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/admin/" aria-label="Admin home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Admin Foundation</strong>
+            <span>Membership + Creator Operations</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin nav">
+          <a href="/en/admin/dashboard/">Dashboard</a>
+          <a href="/en/admin/content/">Content</a>
+          <a href="/en/admin/members/">Members</a>
+          <a href="/en/admin/creators/">Creators</a>
+          <a href="/en/admin/settings/">Settings</a>
+        </nav>
+        <div class="actions">
+          <a class="btn" href="/en/members/dashboard/">To Members</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Internal Placeholder</span>
-      <h1 style="margin-top:8px;">Admin route foundation is locked</h1>
-      <p class="sub">Safe placeholder routes for today's live phase. Backend auth, data, and role enforcement are planned in the next build phase.</p>
+      <span class="badge">Operations console</span>
+      <h1>Independent admin operation console</h1>
+      <p class="sub">This space is for internal operations of membership, member journey, and creator workflow.</p>
+      <p id="admin-host-banner" class="statusBanner hidden" role="status"></p>
+      <p id="session-status" class="meta">No active internal session.</p>
+      <p id="admin-role-text" class="note"></p>
+      <p id="admin-time-left" class="note"></p>
+    </section>
+
+    <section id="admin-auth" class="panel" data-page="auth">
+      <h3>Open internal session</h3>
+      <div class="field">
+        <label for="admin-key">Internal key</label>
+        <input id="admin-key" type="password" autocomplete="off" placeholder="Enter team internal key..." />
+      </div>
+      <div class="field">
+        <label for="admin-role">Role</label>
+        <select id="admin-role">
+          <option value="super_admin">Super Admin</option>
+          <option value="ops">Operations</option>
+          <option value="content_editor">Content editor</option>
+          <option value="content">Content</option>
+          <option value="viewer">Viewer</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="admin-ttl">Session minutes</label>
+        <input id="admin-ttl" type="number" min="15" max="720" value="480" />
+      </div>
+      <div class="actionsRow"><button id="admin-enter" class="cta" type="button">Open session</button></div>
+      <p id="admin-host-warning" class="note"></p>
     </section>
 
     <section class="grid2">
-      <article class="panel"><h3>Dashboard</h3><p>Operations queues, activation funnel, and blocker alerts.</p><div class="actionsRow"><a class="ghost" href="/en/admin/dashboard/">Open module</a></div></article>
-      <article class="panel"><h3>Content</h3><p>Content lifecycle: draft, review, approved, published, archived.</p><div class="actionsRow"><a class="ghost" href="/en/admin/content/">Open module</a></div></article>
-      <article class="panel"><h3>Members</h3><p>Post-join activation tracking and day-1/day-7 checkpoints.</p><div class="actionsRow"><a class="ghost" href="/en/admin/members/">Open module</a></div></article>
-      <article class="panel"><h3>Creators</h3><p>Submission queue, review decisions, and internal publishing schedule.</p><div class="actionsRow"><a class="ghost" href="/en/admin/creators/">Open module</a></div></article>
-      <article class="panel"><h3>Settings</h3><p>Role matrix, policy guardrails, and internal visibility flags.</p><div class="actionsRow"><a class="ghost" href="/en/admin/settings/">Open module</a></div></article>
+      <article class="panel admin-only" data-requires="dashboard">
+        <h3>Dashboard</h3>
+        <p>Release health, funnel checkpoints, and blocker alerts.</p>
+        <div class="actionsRow"><a class="ghost" href="/en/admin/dashboard/">Open module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="content">
+        <h3>Content</h3>
+        <p>Lifecycle: draft, review, approved, published, archived.</p>
+        <div class="actionsRow"><a class="ghost" href="/en/admin/content/">Open module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="members">
+        <h3>Members</h3>
+        <p>Track join → day-1 → day-7 flow and activation status.</p>
+        <div class="actionsRow"><a class="ghost" href="/en/admin/members/">Open module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="creators">
+        <h3>Creators</h3>
+        <p>Submission review queue and internal publish schedule.</p>
+        <div class="actionsRow"><a class="ghost" href="/en/admin/creators/">Open module</a></div>
+      </article>
+      <article class="panel admin-only" data-requires="settings">
+        <h3>Settings</h3>
+        <p>Role matrix, operations policy, and internal security flags.</p>
+        <div class="actionsRow"><a class="ghost" href="/en/admin/settings/">Open module</a></div>
+      </article>
+    </section>
+
+    <section id="health-panel" class="panel admin-only" data-requires="dashboard" aria-live="polite"></section>
+    <section id="admin-quick-note" class="panel admin-only" data-requires="dashboard">
+      <h3>Quick checklist</h3>
+      <ul class="list">
+        <li>Keep pricing and paywall copy out of public pages.</li>
+        <li>Launch content updates must include manifest and internal links.</li>
+        <li>Do not push admin changes without operation notes.</li>
+      </ul>
     </section>
   </main>
 
-  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div></footer>
-  <script src="/assets/site.js"></script>
+  <footer role="contentinfo">
+    <div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div>
+  </footer>
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>
 </body>
 </html>

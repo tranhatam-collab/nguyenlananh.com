@@ -3,53 +3,167 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Members Start | Nguyenlananh.com</title>
-  <meta name="description" content="The starting point for members: understand the system, the rules, and the first step of the journey." />
+  <title>Start Companion Flow | Nguyenlananh.com</title>
+  <meta name="description" content="Confirm your email, complete the basic companion profile, review the open specialist tracks, then unlock the paid member benefits only when ready." />
   <link rel="canonical" href="https://www.nguyenlananh.com/en/members/start/" />
   <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/members/start/" />
   <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/members/start/" />
   <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/members/start/" />
-  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/en/members/start/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/members/start/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <meta name="robots" content="noindex,follow" />
   <link rel="stylesheet" href="/assets/site.css" />
-</head>
-<body data-page="members-start">
-  <header class="topbar" role="banner">
-    <div class="container"><div class="navwrap"><a class="brand" href="/en/members/dashboard/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Start</strong><span>Journey System</span></div></a><nav class="navlinks" aria-label="Members nav"><a href="/en/members/start/">Start</a><a href="/en/members/journey/">Journey</a><a href="/en/members/practice/">Practice</a><a href="/en/members/deep/">Deep</a><a href="/en/members/experience/">Experience</a><a href="/en/members/pro/">Upgrade</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Sign out</button></div></div></div>
+  <meta property="og:title" content="Start Companion Flow | Nguyenlananh.com" />
+
+  <meta property="og:description" content="Confirm your email, complete the basic companion profile, review the open specialist tracks, then unlock the paid member benefits only when ready." />  <meta name="twitter:title" content="Start Companion Flow | Nguyenlananh.com" />
+
+  <meta name="twitter:description" content="Confirm your email, complete the basic companion profile, review the open specialist tracks, then unlock the paid member benefits only when ready." /><meta property="og:url" content="https://www.nguyenlananh.com/en/members/start/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="members-start"><header class="topbar" role="banner">
+    <div class="container"><div class="navwrap"><a class="brand" href="/en/members/start/"><div class="mark" aria-hidden="true"></div><div class="name"><strong>Start</strong><span>Enter lightly, unlock later</span></div></a><nav class="navlinks" aria-label="Members navigationigationigationigationigationigationigationigationigationigationigationigationigation"><a href="/en/members/start/">Start</a><a href="/en/members/dashboard/">Dashboard</a><a href="/en/members/journey/">Journey</a><a href="/en/members/practice/">Practice</a><a href="/en/members/deep/">Deep</a><a href="/en/members/pro/">Deeper Programs</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Sign out</button></div></div></div>
   </header>
 
   <main class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Module 0</span>
-      <h1 style="margin-top:8px;">You have stepped into a different system</h1>
-      <p class="sub">You did not buy a course. You entered a system that can change your life if you walk it for real.</p>
-      <div class="actionsRow">
-        <a class="cta" href="/en/members/journey/day-1/">Start day 1</a>
-        <a class="ghost" href="/en/members/dashboard/">Back to dashboard</a>
-      </div>
+      <span class="badge">Step 1 - enter the system</span>
+      <h1 style="margin-top:8px;">You are now inside</h1>
+      <p class="sub">Your email is <strong data-member-email>-</strong>. Now confirm where you are, complete the basic companion profile, then unlock the paid layer only when it feels right.</p>
+      <div id="magicError" class="statusBanner hidden" role="status"></div>
+      <div id="startGateNotice" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
     </section>
 
-    <section class="grid2">
+    <section id="profileGate" class="panel">
+      <h3>Basic companion profile</h3>
+      <p class="note">It does not need to be long. It only needs to be clear enough for the system to know where you are before anything deeper opens.</p>
+      <form id="profileForm">
+        <div class="field">
+          <label for="profileFullName">How you want to be called</label>
+          <input id="profileFullName" type="text" required placeholder="Lan Anh" />
+        </div>
+        <div class="field">
+          <label for="profileCurrentState">What you are moving through</label>
+          <textarea id="profileCurrentState" rows="3" required placeholder="I am stuck in a repeating loop..."></textarea>
+        </div>
+        <div class="field">
+          <label for="profileDesiredShift">What you want to change</label>
+          <textarea id="profileDesiredShift" rows="3" required placeholder="I want to live with more clarity..."></textarea>
+        </div>
+        <div class="field">
+          <label for="profileCompanionRhythm">What kind of rhythm you need</label>
+          <textarea id="profileCompanionRhythm" rows="2" required placeholder="Slow, clear, steady, without pressure..."></textarea>
+        </div>
+        <div id="profileStatus" class="statusBanner hidden" role="status"></div>
+        <div class="actionsRow">
+          <button class="cta" type="submit">Save profile and continue</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="sequencePreview" class="grid2 hidden" style="margin-top:12px;">
       <article class="panel">
-        <h3>What to understand now</h3>
+        <h3>Tracks now visible to you</h3>
         <ul class="list">
-          <li>You do not lack knowledge, motivation, or ability.</li>
-          <li>You are stuck in loops, patterns, environments, and ways of running yourself.</li>
-          <li>This system does not teach for information. It guides for action.</li>
+          <li>The 90-day Journey to see, release, and rebuild</li>
+          <li>Daily Practice to keep a real rhythm</li>
+          <li>Deep tracks on loops, family, children, and living environment</li>
+          <li>A later Pro layer for deeper specialist programs</li>
         </ul>
       </article>
       <article class="panel">
-        <h3>The rule</h3>
-        <p>If you read just to know, nothing changes.</p>
-        <p style="margin-top:10px;">If you do the work for real, everything can begin to shift.</p>
-        <p style="margin-top:10px;">Each day: read one part, do one thing, record one line.</p>
+        <h3>Your current profile snapshot</h3>
+        <ul class="list">
+          <li><strong>Name:</strong> <span data-profile-name>-</span></li>
+          <li><strong>Current state:</strong> <span data-profile-state>-</span></li>
+          <li><strong>Desired shift:</strong> <span data-profile-shift>-</span></li>
+          <li><strong>Needed rhythm:</strong> <span data-profile-rhythm>-</span></li>
+        </ul>
       </article>
+    </section>
+
+    <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
+      <h3>Unlock the full paid membership</h3>
+      <p>This step is <strong>2 USD through PayPal</strong>. Once unlocked, you will see the full benefit layer that previously started from the 3 USD package.</p>
+      <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
+      <div class="actionsRow" style="margin-top:12px;">
+        <a id="unlockPayNow" class="cta" href="#" target="_blank" rel="noopener">Open PayPal 2 USD</a>
+        <button id="confirmPaid" class="ghost" type="button">I have paid</button>
+      </div>
+      <div class="actionsRow" style="margin-top:10px;">
+        <button id="copyUpgradeEmail" class="btn" type="button">Copy payment email</button>
+      </div>
+      <div id="unlockStatus" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
+    </section>
+
+    <section id="paidMemberStart" class="panel hidden" style="margin-top:12px;">
+      <h3>The full paid membership is now open</h3>
+      <p>You now have the core paid member benefits. From here you can enter the Dashboard, Journey, Practice, and the specialist sequences already opened inside the system.</p>
+      <div class="actionsRow">
+        <a class="cta" href="/en/members/dashboard/">Open dashboard</a>
+        <a class="ghost" href="/en/members/journey/day-1/">Start Day 1</a>
+      </div>
     </section>
   </main>
 
-  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · No perfection required. Only honesty.</div></div></footer>
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Enter lightly first. Unlock later.</div></div></footer>
+    <script src="/assets/content-registry.js"></script>
   <script src="/assets/site.js"></script>
-  <script src="/assets/members.js?v=46757a2"></script>
+  <script src="/assets/members.js?v=20260417b"></script>
+    <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>
 </body>
 </html>

@@ -1,5 +1,171 @@
 <!doctype html>
 <html lang="en-US" dir="ltr">
-<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" /><title>Admin Content | Nguyenlananh.com</title><meta name="robots" content="noindex,follow" /><link rel="canonical" href="https://www.nguyenlananh.com/en/admin/content/" /><link rel="stylesheet" href="/assets/site.css" /></head>
-<body data-page="admin-content"><main class="container" role="main"><section class="pageHead"><h1>Content module</h1><p class="sub">Placeholder workflow: content owner, versioning, status, and publish audit log.</p><div class="actionsRow"><a class="ghost" href="/en/admin/">Back to Admin Home</a></div></section><section class="panel"><h3>Module placeholder</h3><p>Placeholder page for today's live phase.</p></section></main><script src="/assets/site.js"></script></body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Admin Content | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/en/admin/content/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/content/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/content/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/content/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/content/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta name="description" content="Keep launch content, order and internal links consistent when editing." />
+
+
+
+  <link rel="stylesheet" href="/assets/site.css" />
+
+
+
+  <meta property="og:title" content="Admin Content | Nguyenlananh.com" />
+
+  <meta property="og:description" content="Keep launch content, order and internal links consistent when editing." />  <meta name="twitter:title" content="Admin Content | Nguyenlananh.com" />
+
+  <meta name="twitter:description" content="Keep launch content, order and internal links consistent when editing." /><meta property="og:url" content="https://www.nguyenlananh.com/en/admin/content/" /><meta name="twitter:card" content="summary_large_image" />  </head>
+<body data-page="admin-content"><a class="skip" href="#admin-main">Skip to content</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/admin/" aria-label="Admin home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="name">
+            <strong>Admin Foundation</strong>
+            <span>Membership + Creator Operations</span>
+          </div>
+        </a>
+        <nav class="navlinks" aria-label="Admin nav">
+          <a href="/en/admin/dashboard/">Dashboard</a>
+          <a href="/en/admin/content/">Content</a>
+          <a href="/en/admin/members/">Members</a>
+          <a href="/en/admin/creators/">Creators</a>
+          <a href="/en/admin/settings/">Settings</a>
+        </nav>
+        <div class="actions">
+          <a class="btn" href="/en/admin/">Admin home</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Content module</span>
+      <h1>Launch collection operations</h1>
+      <p class="sub">Keep launch content, order and internal links consistent when editing.</p>
+      <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
+    </section>
+
+    <section id="admin-auth" class="panel">
+      <h3>Open internal session</h3>
+      <div class="field"><label for="admin-key">Internal key</label><input id="admin-key" type="password" placeholder="Enter team key..." /></div>
+      <div class="field">
+        <label for="admin-role">Role</label>
+        <select id="admin-role">
+          <option value="super_admin">Super Admin</option>
+          <option value="ops">Operations</option>
+          <option value="content_editor">Content editor</option>
+          <option value="content">Content</option>
+          <option value="viewer">Viewer</option>
+        </select>
+      </div>
+      <div class="field"><label for="admin-ttl">Session minutes</label><input id="admin-ttl" type="number" min="15" max="720" value="480" /></div>
+      <div class="actionsRow"><button id="admin-enter" class="cta" type="button">Open session</button></div>
+      <p id="session-status" class="meta">No active internal session.</p>
+      <p id="admin-role-text" class="note"></p>
+    </section>
+
+    <section class="panel admin-only" data-requires="content">
+      <h3>site-config</h3>
+      <p class="sub">Sync and edit operational config for launch content.</p>
+      <div class="field">
+        <label for="site-config-json">site-config JSON</label>
+        <textarea id="site-config-json" rows="14" class="code"></textarea>
+      </div>
+      <p id="site-config-summary" class="note"></p>
+      <div id="admin-role-summary" class="note"></div>
+      <div class="actionsRow">
+        <button id="site-config-sync" class="ghost" type="button">Sync source</button>
+        <button id="site-config-save" class="ghost" type="button">Save local</button>
+        <button id="site-config-export" class="ghost" type="button">Export</button>
+        <button id="site-config-copy" class="ghost" type="button">Copy</button>
+        <button id="site-config-clear" class="ghost" type="button">Clear local</button>
+      </div>
+      <p id="site-config-status" class="meta"></p>
+    </section>
+
+    <section class="panel admin-only" data-requires="content">
+      <h3>Launch manifest</h3>
+      <p class="sub">Control publish order and internal flow for the launch pack.</p>
+      <p>Manifest: <a href="/en/admin/content/articles-launch-collection.json">/admin/content/articles-launch-collection.json</a></p>
+      <p>First in chain: <a href="/en/bai-viet/ban-khong-thieu-kien-thuc/">/bai-viet/ban-khong-thieu-kien-thuc/</a></p>
+      <p>Last in chain: <a href="/en/bai-viet/chi-can-dung/">/bai-viet/chi-can-dung/</a></p>
+      <p>Series code: launch-10-inner-clarity</p>
+      <div class="field">
+        <label for="launch-manifest-json">articles-launch-collection JSON</label>
+        <textarea id="launch-manifest-json" rows="18" class="code"></textarea>
+      </div>
+      <div id="launch-manifest-summary" class="admin-section"></div>
+      <div class="actionsRow">
+        <button id="launch-manifest-validate" class="ghost" type="button">Validate</button>
+        <button id="launch-manifest-import" class="ghost" type="button">Import local</button>
+        <button id="launch-manifest-export" class="ghost" type="button">Export</button>
+        <button id="launch-manifest-copy" class="ghost" type="button">Copy</button>
+        <button id="launch-manifest-clear" class="ghost" type="button">Clear local</button>
+      </div>
+      <p id="launch-manifest-status" class="meta"></p>
+    </section>
+
+    <section id="health-panel" class="admin-only" data-requires="dashboard"></section>
+  </main>
+
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Admin foundation only, no public indexing.</div></div></footer>
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
+  <script src="/assets/lang-routing.js"></script>
+</body>
 </html>

@@ -12,6 +12,12 @@ if ! command -v wrangler >/dev/null 2>&1; then
   exit 1
 fi
 
+echo "Syncing i18n and content registry"
+node "$REPO_ROOT/scripts/sync-i18n.mjs"
+
+echo "Running bilingual release validation"
+node "$REPO_ROOT/scripts/validate-bilingual-release.mjs"
+
 if [ -z "$BUILD_DIR" ]; then
   BUILD_DIR="$(node "$REPO_ROOT/scripts/prepare_release_dist.mjs")"
 fi

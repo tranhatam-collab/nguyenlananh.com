@@ -7,6 +7,7 @@ export const RELEASE_INCLUDE_PATHS = [
   "bai-viet",
   "chinh-sach-bao-mat",
   "chuong-trinh",
+  "content",
   "dieu-khoan",
   "du-an",
   "en",

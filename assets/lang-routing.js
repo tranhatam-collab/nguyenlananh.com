@@ -4,8 +4,8 @@
   const FALLBACK_CONFIG = {
     defaultLocale: "vi",
     locales: [
-      { code: "vi", htmlLang: "vi", pathSegment: "", switchLabel: "VI", browserCodes: ["vi", "vi-vn"] },
-      { code: "en", htmlLang: "en-US", pathSegment: "en", switchLabel: "EN-US", browserCodes: ["en", "en-us", "en-gb"] }
+      { code: "vi", htmlLang: "vi", pathSegment: "", switchLabel: "🇻🇳 Tiếng Việt", browserCodes: ["vi", "vi-vn"] },
+      { code: "en", htmlLang: "en-US", pathSegment: "en", switchLabel: "🇺🇸 English", browserCodes: ["en", "en-us", "en-gb"] }
     ],
     autoRedirect: {
       allowedBasePrefixes: ["/", "/hanh-trinh/", "/phuong-phap/", "/bai-viet/", "/gioi-thieu/", "/du-an/"],
@@ -158,11 +158,15 @@
     const current = currentLocale();
     document.querySelectorAll("[data-lang]").forEach((button) => {
       const code = (button.getAttribute("data-lang") || "").toLowerCase();
+      const locale = localeByCode(code);
+      if (locale?.switchLabel) {
+        button.textContent = locale.switchLabel;
+      }
       const active = code === current.code;
       button.setAttribute("aria-pressed", active ? "true" : "false");
       button.classList.toggle("active", active);
       button.addEventListener("click", () => {
-        if (localeByCode(code)) goTo(code);
+        if (locale) goTo(code);
       });
     });
   }

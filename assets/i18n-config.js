@@ -5,7 +5,7 @@ window.NLA_I18N_CONFIG = {
       "code": "vi",
       "htmlLang": "vi",
       "pathSegment": "",
-      "switchLabel": "VI",
+      "switchLabel": "🇻🇳 Tiếng Việt",
       "browserCodes": [
         "vi",
         "vi-vn"
@@ -15,7 +15,7 @@ window.NLA_I18N_CONFIG = {
       "code": "en",
       "htmlLang": "en-US",
       "pathSegment": "en",
-      "switchLabel": "EN-US",
+      "switchLabel": "🇺🇸 English",
       "browserCodes": [
         "en",
         "en-us",

@@ -25,10 +25,10 @@ function renderTemplate(templateId, locale, payload, env) {
       reply_to: supportEmail,
       subject: isEnglish
         ? "[Nguyenlananh.com] Welcome to your journey system"
-        : "[Nguyenlananh.com] Chao mung ban vao he hanh trinh",
+        : "[Nguyenlananh.com] Chào mừng bạn vào hệ hành trình",
       text: isEnglish
         ? `Hi,\n\nYour membership is now active.\nPlan: ${payload.plan_name}\nMagic link: ${payload.magic_link}\nDashboard: ${dashboardUrl}\n\nIf this was not you, contact ${supportEmail}.`
-        : `Chao ban,\n\nTai khoan thanh vien cua ban da duoc kich hoat.\nGoi: ${payload.plan_name}\nMagic link: ${payload.magic_link}\nDashboard: ${dashboardUrl}\n\nNeu can ho tro, vui long lien he ${supportEmail}.`
+        : `Chào bạn,\n\nTài khoản thành viên của bạn đã được kích hoạt.\nGói: ${payload.plan_name}\nMagic link: ${payload.magic_link}\nDashboard: ${dashboardUrl}\n\nNếu cần hỗ trợ, vui lòng liên hệ ${supportEmail}.`
     };
   }
 
@@ -36,10 +36,10 @@ function renderTemplate(templateId, locale, payload, env) {
     return {
       from: systemFromAddress(env),
       reply_to: supportEmail,
-      subject: isEnglish ? "[Nguyenlananh.com] Your new magic link" : "[Nguyenlananh.com] Magic link moi cua ban",
+      subject: isEnglish ? "[Nguyenlananh.com] Your new magic link" : "[Nguyenlananh.com] Magic link mới của bạn",
       text: isEnglish
         ? `Hi,\n\nHere is your new login magic link:\n${payload.magic_link}\n\nThis link expires in ${payload.magic_link_expire_minutes || 15} minutes.`
-        : `Chao ban,\n\nDay la magic link moi de dang nhap:\n${payload.magic_link}\n\nLink co hieu luc trong ${payload.magic_link_expire_minutes || 15} phut.`
+        : `Chào bạn,\n\nĐây là magic link mới để đăng nhập:\n${payload.magic_link}\n\nLink có hiệu lực trong ${payload.magic_link_expire_minutes || 15} phút.`
     };
   }
 
@@ -49,10 +49,10 @@ function renderTemplate(templateId, locale, payload, env) {
       reply_to: supportEmail,
       subject: isEnglish
         ? `[Receipt] Payment successful #${payload.order_id}`
-        : `[Bien nhan] Thanh toan thanh cong #${payload.order_id}`,
+        : `[Biên nhận] Thanh toán thành công #${payload.order_id}`,
       text: isEnglish
         ? `Hi,\n\nWe received your payment successfully.\nPlan: ${payload.plan_name}\nAmount: ${payload.amount} ${payload.currency}\nOrder ID: ${payload.order_id}\nCapture ID: ${payload.capture_id}\nDashboard: ${dashboardUrl}`
-        : `Chao ban,\n\nChung toi da nhan thanh toan thanh cong.\nGoi: ${payload.plan_name}\nSo tien: ${payload.amount} ${payload.currency}\nOrder ID: ${payload.order_id}\nCapture ID: ${payload.capture_id}\nDashboard: ${dashboardUrl}`
+        : `Chào bạn,\n\nChúng tôi đã nhận thanh toán thành công.\nGói: ${payload.plan_name}\nSố tiền: ${payload.amount} ${payload.currency}\nOrder ID: ${payload.order_id}\nCapture ID: ${payload.capture_id}\nDashboard: ${dashboardUrl}`
     };
   }
 
@@ -62,10 +62,10 @@ function renderTemplate(templateId, locale, payload, env) {
       reply_to: supportEmail,
       subject: isEnglish
         ? "[Nguyenlananh.com] Payment not completed"
-        : "[Nguyenlananh.com] Thanh toan chua thanh cong",
+        : "[Nguyenlananh.com] Thanh toán chưa thành công",
       text: isEnglish
         ? `Hi,\n\nPayment for order ${payload.order_id} was not completed.\nRetry here: ${payload.next_step_url}\nNeed help? ${supportEmail}`
-        : `Chao ban,\n\nThanh toan cho don ${payload.order_id} chua thanh cong.\nThu lai tai day: ${payload.next_step_url}\nCan ho tro? ${supportEmail}`
+        : `Chào bạn,\n\nThanh toán cho đơn ${payload.order_id} chưa thành công.\nThử lại tại đây: ${payload.next_step_url}\nCần hỗ trợ? ${supportEmail}`
     };
   }
 
@@ -75,17 +75,17 @@ function renderTemplate(templateId, locale, payload, env) {
       reply_to: supportEmail,
       subject: isEnglish
         ? `[Nguyenlananh.com] Refund update #${payload.order_id}`
-        : `[Nguyenlananh.com] Cap nhat hoan tien #${payload.order_id}`,
+        : `[Nguyenlananh.com] Cập nhật hoàn tiền #${payload.order_id}`,
       text: isEnglish
         ? `Hi,\n\nA refund was recorded for order ${payload.order_id}.\nCurrent policy: ${payload.refund_policy}\nSupport: ${supportEmail}`
-        : `Chao ban,\n\nHe thong da ghi nhan hoan tien cho don ${payload.order_id}.\nChinh sach hien tai: ${payload.refund_policy}\nHo tro: ${supportEmail}`
+        : `Chào bạn,\n\nHệ thống đã ghi nhận hoàn tiền cho đơn ${payload.order_id}.\nChính sách hiện tại: ${payload.refund_policy}\nHỗ trợ: ${supportEmail}`
     };
   }
 
   return {
     from: systemFromAddress(env),
     reply_to: supportEmail,
-    subject: isEnglish ? "[Nguyenlananh.com] Payment event" : "[Nguyenlananh.com] Su kien thanh toan",
+    subject: isEnglish ? "[Nguyenlananh.com] Payment event" : "[Nguyenlananh.com] Sự kiện thanh toán",
     text: JSON.stringify(payload, null, 2)
   };
 }

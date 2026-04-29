@@ -296,13 +296,21 @@ function auditFile(file, root, allFiles) {
     }
   }
 
-  if (localeCode === "en" && /[À-ỹĐđ]/u.test(html)) {
-    pushIssue(issues, {
-      severity: "high",
-      category: "en",
-      code: "english_page_contains_vietnamese_diacritics",
-      message: "English page still contains Vietnamese diacritics."
-    });
+  if (localeCode === "en") {
+    const sanitizedEnglishHtml = html
+      .replaceAll("🇻🇳 Tiếng Việt", "")
+      .replaceAll("Tiếng Việt", "")
+      .replaceAll("🇺🇸 English", "")
+      .replaceAll("English", "");
+
+    if (/[À-ỹĐđ]/u.test(sanitizedEnglishHtml)) {
+      pushIssue(issues, {
+        severity: "high",
+        category: "en",
+        code: "english_page_contains_vietnamese_diacritics",
+        message: "English page still contains Vietnamese diacritics."
+      });
+    }
   }
 
   const englishUiOnViPage = textNodes.some((node) =>

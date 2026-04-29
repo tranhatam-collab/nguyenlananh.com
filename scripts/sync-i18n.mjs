@@ -30,6 +30,13 @@ const RAW_FILES = execSync('git ls-files "*index.html"', { encoding: "utf8" })
   .split("\n")
   .map((value) => value.trim())
   .filter(Boolean)
+  .filter((file) => !file.startsWith("docs/"))
+  .filter((file) => !file.includes("/node_modules/"))
+  .filter((file) => !file.includes("/.next/"))
+  .filter((file) => !file.includes("/.vercel/"))
+  .filter((file) => !file.includes("/dist/"))
+  .filter((file) => !file.includes("/out/"))
+  .filter((file) => !file.includes(" "))
   .filter((file) => !file.startsWith("nguyenlananh.com/"))
   .filter((file) => !file.startsWith(".claude/"));
 
@@ -297,10 +304,14 @@ function normalizeHeadBoundary(html) {
   return output;
 }
 
+function stripTrailingLineWhitespace(html) {
+  return html.replace(/[ \t]+$/gm, "");
+}
+
 function insertAlternateTags(html, baseRoute) {
   const block = buildAlternateLinks(baseRoute);
   if (/<link\s+rel="canonical"/i.test(html)) {
-    return html.replace(/(<link\s+rel="canonical"[^\n]*\n)/i, `$1${block}\n`);
+    return html.replace(/(<link\s+rel="canonical"[^\n]*\n)\s*/i, `$1${block}\n`);
   }
   return html.replace(/<meta\s+name="robots"/i, `${block}\n\n  <meta name="robots"`);
 }
@@ -479,6 +490,7 @@ function buildLocalizedHtml(sourceHtml, baseRoute, localeCode, preserveExisting)
   html = normalizeCommonUI(html, localeCode);
   html = ensureLangScripts(html);
   html = normalizeHeadBoundary(html);
+  html = stripTrailingLineWhitespace(html);
   return html;
 }
 
@@ -490,6 +502,13 @@ function getAllIndexFiles() {
     .map((value) => value.replace(/^\.\//, ""))
     .filter((file) => !file.startsWith(".git/"))
     .filter((file) => !file.startsWith(".claude/"))
+    .filter((file) => !file.startsWith("docs/"))
+    .filter((file) => !file.includes("/node_modules/"))
+    .filter((file) => !file.includes("/.next/"))
+    .filter((file) => !file.includes("/.vercel/"))
+    .filter((file) => !file.includes("/dist/"))
+    .filter((file) => !file.includes("/out/"))
+    .filter((file) => !file.includes(" "))
     .filter((file) => !file.startsWith("nguyenlananh.com/"))
     .filter((file) => !NON_LIVE_PREFIXES.some((prefix) => file.startsWith(prefix)));
 }

@@ -39,24 +39,24 @@
     }
 
     return {
-      loadingProviders: "Dang kiem tra cong thanh toan...",
-      autoModeReady: "Checkout live da san sang. Membership chi duoc cap khi thanh toan duoc xac nhan.",
-      manualMode: "API live chua duoc cau hinh day du. Trang dang giu fallback PayPal thu cong.",
-      setupRequired: "Cong nay chua san sang. Hay chon PayPal hoac Stripe, hoac set xong env production truoc.",
-      redirecting: "Dang chuyen ban den cong thanh toan...",
-      providerError: "Chua the bat dau checkout luc nay.",
-      successLoading: "Dang xac minh thanh toan va kich hoat membership...",
-      successDone: "Thanh toan da duoc xac nhan. Membership cua ban da active.",
-      pending: "He thong da nhan giao dich nhung dang cho xac nhan cuoi.",
-      denied: "Thanh toan chua hoan tat. Vui long thu lai.",
-      cancel: "Ban da huy thanh toan. Ban co the quay lai va chon cong khac.",
-      retry: "Lan thanh toan truoc chua hoan tat. Bat dau lai khi ban san sang.",
-      copyDone: "Da sao chep",
-      copyFail: "Khong the sao chep",
-      copyAction: "Sao chep magic link",
-      missingOrder: "Khong tim thay ngu canh thanh toan. Hay bat dau lai tu trang join.",
-      backToJoin: "Quay lai trang thanh vien",
-      tryAgain: "Thu thanh toan lai"
+      loadingProviders: "Đang kiểm tra cổng thanh toán...",
+      autoModeReady: "Checkout live đã sẵn sàng. Membership chỉ được cấp khi thanh toán được xác nhận.",
+      manualMode: "API live chưa được cấu hình đầy đủ. Trang đang giữ fallback PayPal thủ công.",
+      setupRequired: "Cổng này chưa sẵn sàng. Hãy chọn PayPal hoặc Stripe, hoặc cấu hình production trước.",
+      redirecting: "Đang chuyển bạn đến cổng thanh toán...",
+      providerError: "Chưa thể bắt đầu checkout lúc này.",
+      successLoading: "Đang xác minh thanh toán và kích hoạt membership...",
+      successDone: "Thanh toán đã được xác nhận. Membership của bạn đã kích hoạt.",
+      pending: "Hệ thống đã nhận giao dịch nhưng đang chờ xác nhận cuối.",
+      denied: "Thanh toán chưa hoàn tất. Vui lòng thử lại.",
+      cancel: "Bạn đã hủy thanh toán. Bạn có thể quay lại và chọn cổng khác.",
+      retry: "Lần thanh toán trước chưa hoàn tất. Bắt đầu lại khi bạn sẵn sàng.",
+      copyDone: "Đã sao chép",
+      copyFail: "Không thể sao chép",
+      copyAction: "Sao chép magic link",
+      missingOrder: "Không tìm thấy ngữ cảnh thanh toán. Hãy bắt đầu lại từ trang join.",
+      backToJoin: "Quay lại trang thành viên",
+      tryAgain: "Thử thanh toán lại"
     };
   }
 

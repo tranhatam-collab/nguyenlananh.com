@@ -175,3 +175,38 @@ Network note:
 
 - During direct follow-up `curl` with cache-bust query, local shell returned DNS resolution errors for the same hosts that had just passed gate checks.
 - `dig +short` for apex/www/admin still resolved Cloudflare IPs (`104.21.68.244`, `172.67.200.73`), indicating transient local resolver instability, not a confirmed production regression.
+
+## Script Hardening Update (2026-04-30 13:26:37 +0700)
+
+Scope: runtime-only gate/proof discipline. No SEO/content/public-surface edits.
+
+Changed files:
+
+- `scripts/team2-live-gate.sh`
+- `scripts/payment-live-proof-smoke.sh`
+
+What was added:
+
+- Structured pass/warn/fail markers with end-of-run summary counters.
+- Optional strict modes:
+  - `ENFORCE_COMMERCE_LIVE=1` on `team2-live-gate.sh`
+  - `REQUIRE_COMPLETED=1` on `payment-live-proof-smoke.sh`
+- Explicit provider readiness checks for PayPal/Stripe/VietQR and `email_provider`.
+- D1 proof checks now include completed-order and sent-email-with-provider-id counters (via `wrangler d1 execute --json`).
+- Network-failure resilience:
+  - HTTP fallback now reports `000` consistently (no `000000` concatenation artifact).
+  - Create-order / checkout / confirm calls are captured and validated instead of hard-crashing on transient DNS failures.
+
+Verification commands run:
+
+- `bash -n scripts/team2-live-gate.sh` -> pass.
+- `bash -n scripts/payment-live-proof-smoke.sh` -> pass.
+- `bash scripts/team2-live-gate.sh` -> pass run, summary `FAILURES=0`, `WARNINGS=4` (expected until secrets configured).
+- `bash scripts/payment-live-proof-smoke.sh` -> pass run, summary `FAILURES=0`, `WARNINGS=9` (expected until secrets/configured payments).
+- `ENFORCE_COMMERCE_LIVE=1 bash scripts/team2-live-gate.sh` -> exits non-zero as designed when readiness conditions are unmet.
+- `REQUIRE_COMPLETED=1 bash scripts/payment-live-proof-smoke.sh` -> exits non-zero as designed when completed-proof conditions are unmet.
+
+Environment caveat observed during strict reruns:
+
+- Intermittent local DNS resolution failures (`curl: could not resolve host`) occurred even though prior non-strict runs had succeeded.
+- One strict rerun also showed local wrangler log-file write permission error (`EPERM` under `~/.wrangler/logs`), treated as a local execution-environment issue, not a production payment-runtime regression.

@@ -376,3 +376,32 @@ Every defect that ships through this discipline gets added to the
 the **rule index** above the same week. The discipline is a living
 document — silence here means we have not yet been bitten in that
 shape.
+
+---
+
+## 17. Verification hygiene
+
+17.1. **Audit the commit you claim, not the working tree you happen to
+have.** Before verifying a report, run:
+
+```
+git fetch origin
+git status --short
+git rev-parse HEAD
+git rev-parse origin/main
+```
+
+If the report names a specific SHA, check out or reset to that SHA
+before grepping files. A stale local tree can create false-positive
+review findings and waste a release window.
+
+17.2. **Separate source verification from live verification.** Source
+claims are checked against the exact git SHA. Live claims are checked
+with `curl` against the custom domain and, when assets are involved,
+a cache-busted URL. Do not mix evidence from different layers in one
+claim.
+
+17.3. **When a finding is retracted, record why.** The retraction should
+name the stale SHA/tree, the corrected SHA, and the command that proved
+the corrected state. This keeps future reviewers from repeating the
+same audit mistake.

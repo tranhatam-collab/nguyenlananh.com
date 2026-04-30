@@ -5,6 +5,7 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 TEST_EMAIL="${TEST_EMAIL:-qa+team2-livegate@nguyenlananh.com}"
 ENFORCE_COMMERCE_LIVE="${ENFORCE_COMMERCE_LIVE:-0}"
+REQUIRE_STRIPE="${REQUIRE_STRIPE:-1}"
 
 DOMAIN_APEX="${DOMAIN_APEX:-https://nguyenlananh.com}"
 DOMAIN_WWW="${DOMAIN_WWW:-https://www.nguyenlananh.com}"
@@ -51,6 +52,7 @@ echo "== Team 2 Live Gate =="
 echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Local: $(date '+%Y-%m-%d %H:%M:%S %z')"
 echo "Enforce commerce-live criteria: $ENFORCE_COMMERCE_LIVE"
+echo "Require Stripe in this phase: $REQUIRE_STRIPE"
 echo
 
 echo "== Domain HTTP status =="
@@ -88,7 +90,12 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
   else
     warn "email_provider is $email_provider (expected mail_iai_one for Team 2 final runtime proof)"
   fi
-  for code in paypal stripe vietqr; do
+  provider_codes=(paypal vietqr)
+  if [ "$REQUIRE_STRIPE" = "1" ]; then
+    provider_codes=(paypal stripe vietqr)
+  fi
+
+  for code in "${provider_codes[@]}"; do
     enabled="$(printf "%s" "$providers_json" | jq -r --arg code "$code" '.providers[] | select(.code == $code) | (.enabled // false)')"
     mode="$(printf "%s" "$providers_json" | jq -r --arg code "$code" '.providers[] | select(.code == $code) | (.mode // "unknown")')"
     if [ "$enabled" = "true" ]; then
@@ -101,8 +108,49 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
       fi
     fi
   done
+  if [ "$REQUIRE_STRIPE" != "1" ]; then
+    pass "stripe readiness deferred for this phase (REQUIRE_STRIPE=0)"
+  fi
 else
   fail "providers response was not valid JSON"
+fi
+echo
+
+echo "== Payment rail guard probes =="
+RAILS_JSON="$(curl -sS "$BASE_URL/api/payments/rails" 2>/dev/null || true)"
+if printf "%s" "$RAILS_JSON" | jq empty >/dev/null 2>&1; then
+  if printf "%s" "$RAILS_JSON" | jq -e '.ok == true and (.rails | length) >= 2' >/dev/null 2>&1; then
+    pass "rails catalog endpoint returned expected structure"
+  else
+    fail "rails catalog endpoint JSON is missing expected structure"
+  fi
+else
+  fail "rails catalog endpoint was not valid JSON"
+fi
+
+VN_USD_KEY="livegate-vn-usd-$(date +%s)"
+INTL_VND_KEY="livegate-intl-vnd-$(date +%s)"
+
+VN_USD_PROBE="$(curl -sS -X POST "$BASE_URL/api/payments/create-checkout" \
+  -H "content-type: application/json" \
+  -H "x-idempotency-key: $VN_USD_KEY" \
+  --data "{\"email\":\"$TEST_EMAIL\",\"plan_code\":\"year1\",\"identity_country\":\"VN\",\"provider\":\"paypal\",\"locale\":\"vi\",\"next_path\":\"/members/dashboard/\"}" 2>/dev/null || true)"
+VN_USD_CODE="$(printf "%s" "$VN_USD_PROBE" | jq -r '.code // ""' 2>/dev/null || true)"
+if [ "$VN_USD_CODE" = "VN_ID_REQUIRES_VND" ]; then
+  pass "rail guard blocks VN identity from USD provider"
+else
+  fail "rail guard expected VN_ID_REQUIRES_VND, got ${VN_USD_CODE:-unknown}"
+fi
+
+INTL_VND_PROBE="$(curl -sS -X POST "$BASE_URL/api/payments/create-checkout" \
+  -H "content-type: application/json" \
+  -H "x-idempotency-key: $INTL_VND_KEY" \
+  --data "{\"email\":\"$TEST_EMAIL\",\"plan_code\":\"year1\",\"identity_country\":\"INTL\",\"provider\":\"vietqr\",\"locale\":\"en\",\"next_path\":\"/en/members/dashboard/\"}" 2>/dev/null || true)"
+INTL_VND_CODE="$(printf "%s" "$INTL_VND_PROBE" | jq -r '.code // ""' 2>/dev/null || true)"
+if [ "$INTL_VND_CODE" = "INTERNATIONAL_ID_REQUIRES_USD" ]; then
+  pass "rail guard blocks INTL identity from VND provider"
+else
+  fail "rail guard expected INTERNATIONAL_ID_REQUIRES_USD, got ${INTL_VND_CODE:-unknown}"
 fi
 echo
 

@@ -128,6 +128,35 @@ function paymentMethodProviders(env) {
   return PROVIDER_CATALOG.map((provider) => providerStatus(provider, env));
 }
 
+function paymentRailCatalog(env) {
+  const providers = paymentMethodProviders(env);
+  const byCode = new Map(providers.map((provider) => [provider.code, provider]));
+  const enrich = (providerCode) => ({
+    provider: providerCode,
+    ...(byCode.get(providerCode) || {
+      code: providerCode,
+      label: providerCode,
+      enabled: false,
+      mode: "unknown"
+    })
+  });
+
+  return [
+    {
+      rail: "VN_VND",
+      required_identity_country: "VN",
+      currency: "VND",
+      providers: ["vietqr", "momo", "vnpay", "zalopay"].map(enrich)
+    },
+    {
+      rail: "INTL_USD",
+      required_identity_country: "INTL",
+      currency: "USD",
+      providers: ["paypal", "stripe"].map(enrich)
+    }
+  ];
+}
+
 function idempotencyConflict(existing, requestHash) {
   return existing && existing.request_hash !== requestHash;
 }
@@ -812,6 +841,23 @@ export async function listProvidersResponse(context) {
   });
 }
 
+export async function listPaymentRailsResponse(context) {
+  return json({
+    ok: true,
+    rails: paymentRailCatalog(context.env),
+    policy: {
+      vn_identity_requires: {
+        currency: "VND",
+        providers: ["vietqr", "momo", "vnpay", "zalopay"]
+      },
+      intl_identity_requires: {
+        currency: "USD",
+        providers: ["paypal", "stripe"]
+      }
+    }
+  });
+}
+
 function requireAdminPaymentAccess(context) {
   const secret = String(context.env.PAYMENTS_ADMIN_KEY || context.env.ADMIN_PAYMENT_CONFIRM_KEY || "");
   assert(secret, "ADMIN_KEY_NOT_CONFIGURED", "Admin payment confirmation key is missing.", 503);
@@ -974,7 +1020,6 @@ export async function createCheckoutResponse(context) {
     const providerCode = String(body.provider || "").trim().toLowerCase();
     const provider = providerByCode(providerCode);
     assert(provider, "PROVIDER_UNSUPPORTED", "Unsupported payment provider.", 422);
-    assert(providerSecretsReady(provider, context.env), "PROVIDER_NOT_READY", `${provider.label} is not configured yet.`, 409);
 
     const plan = planByCode(body.plan_code);
     assert(plan, "PLAN_INVALID", "Unsupported plan code.", 422);
@@ -983,6 +1028,7 @@ export async function createCheckoutResponse(context) {
       providerCode
     });
     assert(rail.allowed, rail.code || "PAYMENT_RAIL_INVALID", rail.message || "Payment rail is not allowed for this identity country.", 422);
+    assert(providerSecretsReady(provider, context.env), "PROVIDER_NOT_READY", `${provider.label} is not configured yet.`, 409);
 
     const email = normalizeEmail(body.email);
     assert(email && email.includes("@"), "EMAIL_INVALID", "A valid email is required.", 422);

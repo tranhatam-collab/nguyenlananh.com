@@ -95,7 +95,8 @@ fifth/sixth nav item. Duplicating the CTA between nav and button
 shipped in the same release.
 
 4.3. **Section-aware navigation.** Public surfaces use the public 4-item
-nav (Hành trình · Phương pháp · Bài viết · Thành viên). Member
+nav (Hành trình · Hệ thống · Bài viết · Thành viên; EN: Journey ·
+System · Writings · Members). Member
 surfaces (`data-page="members-…"`, post-auth) use member nav
 (Bảng điều khiển · Hành trình · Thực hành · Chuyên sâu · Trải nghiệm
 · Pro). Admin surfaces use admin nav. A bulk normaliser must skip

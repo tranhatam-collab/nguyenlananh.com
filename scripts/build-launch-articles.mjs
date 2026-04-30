@@ -300,7 +300,7 @@ function renderArticlePage(article, articles, locale) {
         start: '/join/',
         homeLabel: 'Trang chủ',
         journeyLabel: 'Hành trình',
-        methodLabel: 'Phương pháp',
+        methodLabel: 'Hệ thống',
         articlesLabel: 'Bài viết',
         membersLabel: 'Thành viên',
         startLabel: 'Bắt đầu',
@@ -310,7 +310,7 @@ function renderArticlePage(article, articles, locale) {
         footerLinks: [
           ['Giới thiệu', '/gioi-thieu/'],
           ['Hành trình', '/hanh-trinh/'],
-          ['Phương pháp', '/phuong-phap/'],
+          ['Hệ thống', '/phuong-phap/'],
           ['Chương trình', '/chuong-trinh/'],
           ['Bài viết', '/bai-viet/'],
           ['Liên hệ', '/lien-he/']
@@ -330,7 +330,7 @@ function renderArticlePage(article, articles, locale) {
         start: '/en/join/',
         homeLabel: 'Home',
         journeyLabel: 'Journey',
-        methodLabel: 'Method',
+        methodLabel: 'System',
         articlesLabel: 'Articles',
         membersLabel: 'Membership',
         startLabel: 'Start',
@@ -340,7 +340,7 @@ function renderArticlePage(article, articles, locale) {
         footerLinks: [
           ['About', '/en/gioi-thieu/'],
           ['Journey', '/en/hanh-trinh/'],
-          ['Method', '/en/phuong-phap/'],
+          ['System', '/en/phuong-phap/'],
           ['Programs', '/en/chuong-trinh/'],
           ['Articles', '/en/bai-viet/'],
           ['Contact', '/en/lien-he/']

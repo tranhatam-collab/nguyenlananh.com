@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-04-30T04:14:48.037Z",
+    "generatedAt": "2026-04-30T04:33:25.978Z",
     "baseUrl": "http://localhost:4173",
     "pagesAudited": 235,
     "pagesWithIssues": 0,
@@ -2591,7 +2591,7 @@
       "route": "/en/bai-viet/dieu-ban-dang-tranh/",
       "file": "en/bai-viet/dieu-ban-dang-tranh/index.html",
       "title": "What You Avoid Is Exactly What You Need to See | Nguyenlananh.com",
-      "description": "What you avoid rarely disappears. It returns in other forms and quietly runs your life from behind. Naming it begins to loosen its grip.",
+      "description": "What you avoid does not disappear. It returns in other forms and keeps shaping your life from the shadows.",
       "issues": [],
       "refs": [
         "/assets/site.css",

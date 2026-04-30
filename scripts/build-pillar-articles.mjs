@@ -20,7 +20,7 @@ const PILLAR_DOCS = [
 ];
 
 const CATEGORY_LABELS = {
-  'phuong-phap': { vi: 'Phương pháp', en: 'Method' },
+  'phuong-phap': { vi: 'Hệ thống', en: 'System' },
   'hanh-trinh': { vi: 'Hành trình', en: 'Journey' },
   'lao-dong-sang-tao': { vi: 'Lao động sáng tạo', en: 'Creative Labor' },
   'gia-dinh': { vi: 'Gia đình và gốc rễ', en: 'Family and Roots' },
@@ -204,7 +204,7 @@ function navCopy(locale) {
       nav: [
         ['Home', '/en/'],
         ['Journey', '/en/hanh-trinh/'],
-        ['Method', '/en/phuong-phap/'],
+        ['System', '/en/phuong-phap/'],
         ['Writings', '/en/bai-viet/'],
         ['Members', '/en/members/'],
         ['Join', '/en/join/']

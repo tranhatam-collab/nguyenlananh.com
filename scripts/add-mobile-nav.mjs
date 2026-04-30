@@ -43,7 +43,7 @@ const DRAWER_VI = `\n  <div class="drawer" id="drawer" role="dialog" aria-modal=
       </div>
       <button class="btn" type="button" id="closeDrawer" aria-label="Đóng menu">Đóng</button>
     </div>
-    <nav aria-label="Điều hướng di động"><a href="/hanh-trinh/" data-close>Hành trình</a><a href="/phuong-phap/" data-close>Phương pháp</a><a href="/bai-viet/" data-close>Bài viết</a><a href="/members/" data-close>Thành viên</a><a href="/join/" data-close class="drawerCta">Đăng ký</a></nav>
+    <nav aria-label="Điều hướng di động"><a href="/hanh-trinh/" data-close>Hành trình</a><a href="/phuong-phap/" data-close>Hệ thống</a><a href="/bai-viet/" data-close>Bài viết</a><a href="/members/" data-close>Thành viên</a><a href="/join/" data-close class="drawerCta">Đăng ký</a></nav>
     <div class="foot">Đi chậm để đi sâu. Đi thật để đi xa.</div>
   </div>`;
 
@@ -55,7 +55,7 @@ const DRAWER_EN = `\n  <div class="drawer" id="drawer" role="dialog" aria-modal=
       </div>
       <button class="btn" type="button" id="closeDrawer" aria-label="Close menu">Close</button>
     </div>
-    <nav aria-label="Mobile navigation"><a href="/en/hanh-trinh/" data-close>Journey</a><a href="/en/phuong-phap/" data-close>Method</a><a href="/en/bai-viet/" data-close>Writings</a><a href="/en/members/" data-close>Members</a><a href="/en/join/" data-close class="drawerCta">Join</a></nav>
+    <nav aria-label="Mobile navigation"><a href="/en/hanh-trinh/" data-close>Journey</a><a href="/en/phuong-phap/" data-close>System</a><a href="/en/bai-viet/" data-close>Writings</a><a href="/en/members/" data-close>Members</a><a href="/en/join/" data-close class="drawerCta">Join</a></nav>
     <div class="foot">Move slowly to go deep. Move truthfully to go far.</div>
   </div>`;
 

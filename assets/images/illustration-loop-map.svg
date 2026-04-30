@@ -12,6 +12,4 @@
   <circle cx="1266" cy="180" r="36" fill="#C58B31" fill-opacity="0.18" stroke="#A16207" stroke-width="4"/>
   <circle cx="1266" cy="180" r="12" fill="#A16207"/>
   <path d="M1008 484C1074 502 1128 553 1187 628" stroke="#9A3412" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
-  <text x="180" y="170" fill="#111827" font-family="Georgia, serif" font-size="54">Ban do vong lap</text>
-  <text x="180" y="230" fill="#475569" font-family="Georgia, serif" font-size="24">goi ten -> nhin ro -> mo loi ra</text>
 </svg>

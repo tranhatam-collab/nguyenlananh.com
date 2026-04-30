@@ -13,6 +13,4 @@
   <path d="M1104 592L1222 644" stroke="#3F3B37" stroke-width="3"/>
   <path d="M1104 488C1140 434 1190 376 1270 308" stroke="#A16207" stroke-width="5" stroke-linecap="round"/>
   <circle cx="1270" cy="308" r="28" fill="#A16207" fill-opacity="0.18" stroke="#A16207" stroke-width="4"/>
-  <text x="150" y="170" fill="#111827" font-family="Georgia, serif" font-size="52">Gia dinh va goc re</text>
-  <text x="150" y="228" fill="#475569" font-family="Georgia, serif" font-size="24">nhin lai dieu dang truyen qua nhau</text>
 </svg>

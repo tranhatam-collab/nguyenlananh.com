@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1400" height="900" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="default-title">
-  <title id="default-title">Article visual</title>
+  <title id="default-title">Nguyenlananh.com article illustration</title>
   <defs>
     <linearGradient id="default-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fdf6e8"/>
@@ -13,5 +13,5 @@
     <path d="M260 680 L590 500 L830 620 L1140 410"/>
     <path d="M300 760 L560 690 L780 760 L1060 680"/>
   </g>
-  
+
   </svg>

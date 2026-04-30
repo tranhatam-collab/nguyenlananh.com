@@ -9,7 +9,7 @@ window.NLA_CONTENT_REGISTRY = {
     "brand": {
       "name": "Nguyễn Lan Anh",
       "tagline": "Đi vào bên trong để tái thiết cuộc đời",
-      "signature": "Không phải để trở thành ai đó. Mà để trở về đúng là mình."
+      "signature": "Không phải để trở thành ai khác. Mà để nhìn rõ mình đang là ai."
     },
     "chrome": {
       "skipToContent": "Bỏ qua điều hướng",
@@ -24,7 +24,7 @@ window.NLA_CONTENT_REGISTRY = {
       "nav": {
         "/": "Trang chủ",
         "/hanh-trinh/": "Hành trình",
-        "/phuong-phap/": "Phương pháp",
+        "/phuong-phap/": "Hệ thống",
         "/chuong-trinh/": "Chương trình",
         "/bai-viet/": "Bài viết",
         "/lien-he/": "Kết nối",
@@ -42,7 +42,7 @@ window.NLA_CONTENT_REGISTRY = {
       "joinNav": "Đăng ký thành viên",
       "joinPrimary": "Đồng hành miễn phí",
       "journey": "Đọc hành trình",
-      "method": "Xem phương pháp",
+      "method": "Xem hệ thống",
       "contact": "Kết nối",
       "articles": "Đọc bài viết",
       "backToArticles": "Về trang bài viết"
@@ -79,7 +79,7 @@ window.NLA_CONTENT_REGISTRY = {
       ],
       "terms": {
         "journey": "Hành trình",
-        "method": "Phương pháp",
+        "system": "Hệ thống",
         "writings": "Bài viết",
         "membership": "Thành viên",
         "freeCompanionship": "Đồng hành miễn phí"
@@ -103,7 +103,7 @@ window.NLA_CONTENT_REGISTRY = {
     "brand": {
       "name": "Lan Anh Nguyen",
       "tagline": "Rebuild your life from within",
-      "signature": "Not to become someone else. To return to who you truly are."
+      "signature": "Not to become someone else. To see clearly who you are now."
     },
     "chrome": {
       "skipToContent": "Skip to content",
@@ -118,7 +118,7 @@ window.NLA_CONTENT_REGISTRY = {
       "nav": {
         "/": "Home",
         "/hanh-trinh/": "Journey",
-        "/phuong-phap/": "Method",
+        "/phuong-phap/": "System",
         "/chuong-trinh/": "Programs",
         "/bai-viet/": "Writings",
         "/lien-he/": "Contact",
@@ -136,7 +136,7 @@ window.NLA_CONTENT_REGISTRY = {
       "joinNav": "Join membership",
       "joinPrimary": "Free companionship",
       "journey": "Read the journey",
-      "method": "View the method",
+      "method": "View the system",
       "contact": "Contact",
       "articles": "Read the writings",
       "backToArticles": "Back to writings"
@@ -173,7 +173,7 @@ window.NLA_CONTENT_REGISTRY = {
       ],
       "terms": {
         "journey": "Journey",
-        "method": "Method",
+        "system": "System",
         "writings": "Writings",
         "membership": "Members",
         "freeCompanionship": "Free companionship"

@@ -36,8 +36,6 @@
         fill="rgba(124,58,237,0.05)" stroke="#7c3aed" stroke-opacity="0.28" stroke-width="2.5"/>
   <path d="M 128 228 C 100 242 88 256 108 270" fill="none" stroke="#7c3aed" stroke-opacity="0.38" stroke-width="2" stroke-linecap="round"/>
   <polygon points="108,270 102,258 118,262" fill="#7c3aed" opacity="0.30"/>
-  <text x="153" y="168" text-anchor="middle" font-family="ui-sans-serif,sans-serif" font-size="11" fill="#7c3aed" opacity="0.50">vòng lặp</text>
-
   <!-- Loop 2 — medium loop center-left -->
   <path d="M 292 208 C 257 174 260 138 292 126 C 324 114 356 136 356 170 C 356 204 324 216 292 208 Z"
         fill="rgba(6,182,212,0.04)" stroke="#06b6d4" stroke-opacity="0.24" stroke-width="2"/>
@@ -86,6 +84,4 @@
   <circle cx="198" cy="294" r="2.5" fill="#f97316" opacity="0.24"/>
   <circle cx="428" cy="302" r="2.5" fill="#7c3aed" opacity="0.18"/>
 
-  <!-- Label -->
-  <text x="380" y="360" text-anchor="middle" font-family="ui-sans-serif,sans-serif" font-size="12" fill="#111827" opacity="0.30" letter-spacing="1">nhìn lại · bước tiếp</text>
 </svg>

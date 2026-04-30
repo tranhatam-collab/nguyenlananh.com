@@ -38,7 +38,8 @@ const RAW_FILES = execSync('git ls-files "*index.html"', { encoding: "utf8" })
   .filter((file) => !file.includes("/out/"))
   .filter((file) => !file.includes(" "))
   .filter((file) => !file.startsWith("nguyenlananh.com/"))
-  .filter((file) => !file.startsWith(".claude/"));
+  .filter((file) => !file.startsWith(".claude/"))
+  .filter((file) => fs.existsSync(path.join(ROOT, file)));
 
 const DEFAULT_FILES = RAW_FILES.filter((file) => !NON_DEFAULT_PREFIXES.some((prefix) => file.startsWith(prefix)));
 
@@ -510,7 +511,8 @@ function getAllIndexFiles() {
     .filter((file) => !file.includes("/out/"))
     .filter((file) => !file.includes(" "))
     .filter((file) => !file.startsWith("nguyenlananh.com/"))
-    .filter((file) => !NON_LIVE_PREFIXES.some((prefix) => file.startsWith(prefix)));
+    .filter((file) => !NON_LIVE_PREFIXES.some((prefix) => file.startsWith(prefix)))
+    .filter((file) => fs.existsSync(path.join(ROOT, file)));
 }
 
 function shouldIndex(file) {

@@ -1,6 +1,6 @@
 {
   "collection": "pillar_articles",
-  "generated_at": "2026-04-29T08:11:21.574Z",
+  "generated_at": "2026-04-30T04:12:16.909Z",
   "published_at": "2026-04-29",
   "source_docs": [
     "docs/PILLAR_ARTICLES_BATCH_2026-04-29.md",
@@ -12,10 +12,7 @@
     "docs/PILLAR_07_MOI_TRUONG.md",
     "docs/PILLAR_08_TRE_EM.md",
     "docs/PILLAR_09_LAO_DONG_SANG_TAO.md",
-    "docs/PILLAR_10_DAU_TU_BAN_THAN.md",
-    "docs/PILLAR_11_DI_VAO_BEN_TRONG.md",
-    "docs/PILLAR_12_CAN_PHONG.md",
-    "docs/PILLAR_13_TU_BIET_DEN_SONG.md"
+    "docs/PILLAR_10_DAU_TU_BAN_THAN.md"
   ],
   "routes": [
     {
@@ -107,33 +104,6 @@
       "title_vi": "Đầu Tư Bản Thân — Không Ảo Tưởng Đổi Đời",
       "title_en": "Investing in Yourself Without the Life-Change Illusion",
       "category": "dau-tu-ban-than"
-    },
-    {
-      "order": 11,
-      "slug": "di-vao-ben-trong-khong-phai-de-tron-doi",
-      "path_vi": "/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
-      "path_en": "/en/bai-viet/di-vao-ben-trong-khong-phai-de-tron-doi/",
-      "title_vi": "Đi Vào Bên Trong Không Phải Để Trốn Đời",
-      "title_en": "Going Inward Is Not Escaping Life",
-      "category": "hanh-trinh"
-    },
-    {
-      "order": 12,
-      "slug": "can-phong-nhu-mot-ban-do-cua-noi-tam",
-      "path_vi": "/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
-      "path_en": "/en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/",
-      "title_vi": "Căn Phòng Như Một Bản Đồ Của Nội Tâm",
-      "title_en": "The Room as a Map of the Inner Life",
-      "category": "mon-hoc"
-    },
-    {
-      "order": 13,
-      "slug": "tu-biet-nhieu-den-song-duoc",
-      "path_vi": "/bai-viet/tu-biet-nhieu-den-song-duoc/",
-      "path_en": "/en/bai-viet/tu-biet-nhieu-den-song-duoc/",
-      "title_vi": "Từ Biết Nhiều Đến Sống Được",
-      "title_en": "From Knowing More to Actually Living",
-      "category": "hanh-dong"
     }
   ]
 }

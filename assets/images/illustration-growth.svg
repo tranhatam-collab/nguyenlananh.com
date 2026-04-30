@@ -117,6 +117,4 @@
   <circle cx="680" cy="200" r="2.5" fill="#06b6d4" opacity="0.20"/>
   <circle cx="100" cy="260" r="3" fill="#f97316" opacity="0.18"/>
 
-  <!-- Label -->
-  <text x="380" y="358" text-anchor="middle" font-family="ui-sans-serif,sans-serif" font-size="12" fill="#111827" opacity="0.30" letter-spacing="1">tăng trưởng từ bên trong</text>
 </svg>

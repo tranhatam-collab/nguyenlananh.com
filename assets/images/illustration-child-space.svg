@@ -9,6 +9,4 @@
   <path d="M770 414C807 366 852 344 918 340" stroke="#A16207" stroke-width="5" stroke-linecap="round"/>
   <circle cx="958" cy="334" r="18" fill="#A16207"/>
   <path d="M790 692C854 736 960 748 1068 708" stroke="#A16207" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
-  <text x="170" y="156" fill="#111827" font-family="Georgia, serif" font-size="50">Tre em va khong gian lon len</text>
-  <text x="170" y="214" fill="#475569" font-family="Georgia, serif" font-size="24">dong hanh ma khong lam gay tu nhien</text>
 </svg>

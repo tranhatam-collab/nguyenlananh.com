@@ -16,10 +16,7 @@ const PILLAR_DOCS = [
   'docs/PILLAR_07_MOI_TRUONG.md',
   'docs/PILLAR_08_TRE_EM.md',
   'docs/PILLAR_09_LAO_DONG_SANG_TAO.md',
-  'docs/PILLAR_10_DAU_TU_BAN_THAN.md',
-  'docs/PILLAR_11_DI_VAO_BEN_TRONG.md',
-  'docs/PILLAR_12_CAN_PHONG.md',
-  'docs/PILLAR_13_TU_BIET_DEN_SONG.md'
+  'docs/PILLAR_10_DAU_TU_BAN_THAN.md'
 ];
 
 const CATEGORY_LABELS = {

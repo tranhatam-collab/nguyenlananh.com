@@ -20,7 +20,8 @@ function listIndexFiles(root) {
     .map((value) => value.trim())
     .filter(Boolean)
     .filter((file) => !file.includes("/[slug]/"))
-    .filter((file) => !EXCLUDED_PREFIXES.some((prefix) => file.startsWith(prefix)));
+    .filter((file) => !EXCLUDED_PREFIXES.some((prefix) => file.startsWith(prefix)))
+    .filter((file) => fs.existsSync(path.join(root, file)));
 }
 
 function routeFromFile(file) {

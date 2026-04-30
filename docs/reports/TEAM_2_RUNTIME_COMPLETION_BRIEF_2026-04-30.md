@@ -137,3 +137,41 @@ Team 2 may mark runtime commerce as live only when all conditions below are true
 Team 1/admin can treat content, SEO, sitemap, bilingual surface, admin routes, and public member pages as green at this checkpoint.
 
 Team 2 owns only the remaining production runtime proof: payment secrets, merchant dashboard webhooks, live checkout, D1 evidence, email delivery, and admin payment-confirm operations.
+
+## Verification Hygiene Recheck (2026-04-30 13:18:47 +0700)
+
+Source SHA verification:
+
+- Ran `git fetch origin`
+- `HEAD`: `5e4994981eb1f8042fff40fe86e1fc206991c740`
+- `origin/main`: `5e4994981eb1f8042fff40fe86e1fc206991c740`
+- Latest commit: `5e49949 docs(release): add verification hygiene rule`
+
+Runtime proof rerun (same SHA):
+
+- `bash scripts/team2-live-gate.sh` -> domain checks 200, health `ok: true`, D1 `db_ready: true`, admin smoke `PASS=21 FAIL=0`.
+- `bash scripts/payment-live-proof-smoke.sh` -> PayPal/Stripe/VietQR all still `mode: setup_required`.
+- VN create-order returned `PROVIDER_NOT_READY` (VietQR not configured).
+- USD create-checkout returned `PROVIDER_NOT_READY` (PayPal not configured).
+- D1 counters remained:
+  - `payment_orders`: 0
+  - `email_jobs`: 0
+  - `vietqr_orders`: 0
+  - `webhook_events`: 4
+
+Production secret names rechecked:
+
+- `wrangler pages secret list --project-name nguyenlananh-com` still shows only:
+  `API_BASE_URL`, `EMAIL_FROM_PAY`, `EMAIL_FROM_SYSTEM`, `EMAIL_PROVIDER`,
+  `EMAIL_REPLY_TO_SUPPORT`, `ENV_DEPLOY_TARGET`, `PAYMENTS_ADMIN_KEY`,
+  `PAYPAL_MERCHANT_EMAIL`, `REFUND_POLICY`, `VIETQR_TEMPLATE`.
+
+Live claim status:
+
+- Not eligible to claim "commerce live" yet.
+- Blocking items unchanged: missing PayPal/Stripe/VietQR live secrets and no completed VN/USD paid orders with email provider message IDs.
+
+Network note:
+
+- During direct follow-up `curl` with cache-bust query, local shell returned DNS resolution errors for the same hosts that had just passed gate checks.
+- `dig +short` for apex/www/admin still resolved Cloudflare IPs (`104.21.68.244`, `172.67.200.73`), indicating transient local resolver instability, not a confirmed production regression.

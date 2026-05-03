@@ -1070,7 +1070,9 @@ Current implementation files:
 - `members/start/index.html`
 - `en/members/start/index.html`
 - `members/practice/index.html`
+- `members/pilot/index.html`
 - `en/members/practice/index.html`
+- `en/members/pilot/index.html`
 - `members/journey/day-1/index.html`
 - `members/journey/day-2/index.html`
 - `members/journey/day-7/index.html`

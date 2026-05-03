@@ -445,3 +445,8 @@ stores `practiceTrack`, `reminderIntensity`, `reminderPausedUntil`,
 `practiceState`, `oneLine`, and `needsHumanReflection` in member runtime
 storage. D1 persistence can be added after payment proof and pilot
 readiness.
+
+18.6. **Pilot route stays hidden.** `/members/pilot/` and
+`/en/members/pilot/` may exist as noindex member-only preparation pages,
+but they must not be added to public nav, homepage CTAs, sitemap, or
+marketing copy before payment proof and pilot owner approval.

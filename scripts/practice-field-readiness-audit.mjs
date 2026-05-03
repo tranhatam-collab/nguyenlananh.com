@@ -69,6 +69,28 @@ const checks = [
     ]
   },
   {
+    file: "members/pilot/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Pilot 14 ngày/,
+      /Nhịp nhẹ/,
+      /Đối diện sâu/,
+      /Tôi đang né/,
+      /data-profile-track/
+    ]
+  },
+  {
+    file: "en/members/pilot/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /14-Day Pilot/,
+      /Gentle Rhythm/,
+      /Deep Facing/,
+      /I am avoiding/,
+      /data-profile-track/
+    ]
+  },
+  {
     file: "assets/members.js",
     patterns: [
       /practiceTrack/,
@@ -87,6 +109,12 @@ const checks = [
       /five_minute_step/,
       /Tạm dừng nhắc 7 ngày/,
       /Pause reminders for 7 days/
+    ]
+  },
+  {
+    file: "sitemap.xml",
+    patterns: [
+      /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/
     ]
   }
 ];

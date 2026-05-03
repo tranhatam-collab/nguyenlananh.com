@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-05-03T09:08:18.274Z",
+    "generatedAt": "2026-05-03T17:33:07.568Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 239,
+    "pagesAudited": 241,
     "pagesWithIssues": 0,
     "totalIssues": 0,
     "brokenInternalRefs": 0,
@@ -4962,6 +4962,30 @@
       ]
     },
     {
+      "route": "/en/members/pilot/",
+      "file": "en/members/pilot/index.html",
+      "title": "14-Day Pilot | Nguyenlananh.com",
+      "description": "Internal member pilot page: a 14-day test with small rhythm, avoidance-aware check-ins, and real human reflection points.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/members/dashboard/",
+        "/en/members/journey/",
+        "/en/members/practice/",
+        "/en/members/deep/",
+        "/en/members/experience/",
+        "/en/members/pro/",
+        "/en/members/start/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/practice/",
       "file": "en/members/practice/index.html",
       "title": "Members Practice | Nguyenlananh.com",
@@ -5985,6 +6009,30 @@
         "/members/deep/",
         "/members/experience/",
         "/members/pro/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/members/pilot/",
+      "file": "members/pilot/index.html",
+      "title": "Pilot 14 ngày | Nguyenlananh.com",
+      "description": "Trang pilot nội bộ cho thành viên: thử nghiệm 14 ngày với nhịp nhỏ, check-in điểm né, và mốc phản hồi người thật.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/members/dashboard/",
+        "/members/journey/",
+        "/members/practice/",
+        "/members/deep/",
+        "/members/experience/",
+        "/members/pro/",
+        "/members/start/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/members.js",

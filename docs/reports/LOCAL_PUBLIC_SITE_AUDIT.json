@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generatedAt": "2026-04-30T18:58:59.424Z",
+    "generatedAt": "2026-05-03T09:08:18.274Z",
     "baseUrl": "http://localhost:4173",
     "pagesAudited": 239,
     "pagesWithIssues": 0,
@@ -4133,7 +4133,7 @@
         "/en/members/",
         "/en/join/",
         "/en/huong-dan/",
-        "/members/start/",
+        "/en/members/start/",
         "/en/huong-dan/bat-dau-trong-15-phut/",
         "/en/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/",
         "/en/gioi-thieu/",
@@ -4164,7 +4164,7 @@
         "/en/members/",
         "/en/join/",
         "/en/huong-dan/",
-        "/members/start/",
+        "/en/members/start/",
         "/en/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/",
         "/en/huong-dan/7-ngay-thiet-lap-nhip-song-moi/",
         "/en/gioi-thieu/",

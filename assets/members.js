@@ -74,7 +74,16 @@
         transferMarkFailed: "Unable to mark transfer at this step.",
         adminConfirmHint: "Admin must confirm VietQR transfer inside /admin/payments/ before membership unlock.",
         alreadyFree: "Continue free companionship",
-        alreadyPaid: "Open paid member dashboard"
+        alreadyPaid: "Open paid member dashboard",
+        practiceTrackGentle: "Gentle Rhythm",
+        practiceTrackDeep: "Deep Facing",
+        reminderNone: "No reminders",
+        reminderGentle: "Gentle reminder",
+        reminderRhythm: "Rhythm reminder with one 5-minute step",
+        reminderPausedUntil: "Paused until",
+        practiceStateRequired: "Choose one check-in state.",
+        practiceOneLineRequired: "Write one honest line before saving.",
+        practiceCheckinSaved: "Your check-in has been saved."
       };
     }
 
@@ -104,7 +113,16 @@
       transferMarkFailed: "Chưa thể đánh dấu chuyển khoản ở bước này.",
       adminConfirmHint: "Admin cần xác nhận ở /admin/payments/ thì membership mới mở.",
       alreadyFree: "Tiếp tục đồng hành miễn phí",
-      alreadyPaid: "Mở dashboard thành viên đã trả phí"
+      alreadyPaid: "Mở dashboard thành viên đã trả phí",
+      practiceTrackGentle: "Nhịp nhẹ",
+      practiceTrackDeep: "Đối diện sâu",
+      reminderNone: "Không nhắc",
+      reminderGentle: "Nhắc nhẹ",
+      reminderRhythm: "Nhắc theo nhịp với một bước 5 phút",
+      reminderPausedUntil: "Tạm dừng đến",
+      practiceStateRequired: "Hãy chọn một trạng thái check-in.",
+      practiceOneLineRequired: "Hãy viết một dòng thật trước khi lưu.",
+      practiceCheckinSaved: "Check-in của bạn đã được lưu."
     };
   }
 
@@ -183,14 +201,33 @@
     return store[email] || null;
   }
 
+  function normalizePracticeTrack(value) {
+    return ["gentle", "deep"].includes(value) ? value : "";
+  }
+
+  function normalizeReminderIntensity(value) {
+    return ["none", "gentle", "rhythm"].includes(value) ? value : "";
+  }
+
+  function isFutureIso(value) {
+    const time = new Date(value || 0).getTime();
+    return Number.isFinite(time) && time > Date.now();
+  }
+
   function saveProfileForEmail(email, profile) {
     if (!email) return null;
     const store = getProfilesStore();
+    const existing = store[email] || {};
     store[email] = {
       fullName: String(profile.fullName || "").trim(),
       currentState: String(profile.currentState || "").trim(),
       desiredShift: String(profile.desiredShift || "").trim(),
       companionRhythm: String(profile.companionRhythm || "").trim(),
+      practiceTrack: normalizePracticeTrack(String(profile.practiceTrack || "")),
+      reminderIntensity: normalizeReminderIntensity(String(profile.reminderIntensity || "")),
+      reminderPausedUntil: profile.reminderPausedUntil === undefined
+        ? String(existing.reminderPausedUntil || "")
+        : String(profile.reminderPausedUntil || ""),
       updatedAt: new Date().toISOString()
     };
     saveProfilesStore(store);
@@ -199,7 +236,7 @@
 
   function profileIsComplete(profile) {
     if (!profile) return false;
-    return ["fullName", "currentState", "desiredShift", "companionRhythm"].every((key) => String(profile[key] || "").trim().length > 0);
+    return ["fullName", "currentState", "desiredShift", "companionRhythm", "practiceTrack", "reminderIntensity"].every((key) => String(profile[key] || "").trim().length > 0);
   }
 
   function getSession() {
@@ -268,8 +305,9 @@
     const journeyDone = [journey.look, journey.release, journey.build].filter(Boolean).length;
     const daily = progress.practice.days[todayKey()] || {};
     const practiceDone = [daily.observe, daily.clean, daily.write, daily.act].filter(Boolean).length;
-    const totalPoints = 7;
-    const score = journeyDone + practiceDone;
+    const checkinDone = daily.practiceState ? 1 : 0;
+    const totalPoints = 8;
+    const score = journeyDone + practiceDone + checkinDone;
     return Math.round((score / totalPoints) * 100);
   }
 
@@ -292,6 +330,19 @@
 
   function renderProfileInfo(session) {
     const profile = getProfileForEmail(session?.email);
+    const strings = memberStrings();
+    const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi-VN";
+    const trackLabel = profile?.practiceTrack === "deep" ? strings.practiceTrackDeep : profile?.practiceTrack === "gentle" ? strings.practiceTrackGentle : "-";
+    const reminderLabel = profile?.reminderIntensity === "rhythm"
+      ? strings.reminderRhythm
+      : profile?.reminderIntensity === "gentle"
+        ? strings.reminderGentle
+        : profile?.reminderIntensity === "none"
+          ? strings.reminderNone
+          : "-";
+    const pauseLabel = isFutureIso(profile?.reminderPausedUntil)
+      ? `${strings.reminderPausedUntil} ${new Date(profile.reminderPausedUntil).toLocaleDateString(locale)}`
+      : "-";
     $$("[data-profile-name]").forEach((el) => {
       el.textContent = profile?.fullName || "-";
     });
@@ -303,6 +354,15 @@
     });
     $$("[data-profile-rhythm]").forEach((el) => {
       el.textContent = profile?.companionRhythm || "-";
+    });
+    $$("[data-profile-track]").forEach((el) => {
+      el.textContent = trackLabel;
+    });
+    $$("[data-profile-reminder]").forEach((el) => {
+      el.textContent = reminderLabel;
+    });
+    $$("[data-profile-reminder-pause]").forEach((el) => {
+      el.textContent = pauseLabel;
     });
   }
 
@@ -339,27 +399,64 @@
   }
 
   function initPracticePage() {
+    const strings = memberStrings();
     const progress = getProgress();
     const key = todayKey();
+    const form = $("#practiceCheckinForm");
+    const oneLine = $("[data-practice-one-line]");
+    const status = $("#practiceCheckinStatus");
 
     if (!progress.practice.days[key]) {
       progress.practice.days[key] = {
         observe: false,
         clean: false,
         write: false,
-        act: false
+        act: false,
+        practiceState: "",
+        oneLine: "",
+        needsHumanReflection: false,
+        updatedAt: ""
       };
       saveProgress(progress);
     }
 
+    const today = progress.practice.days[key];
+
     $$("[data-practice-key]").forEach((input) => {
       const pKey = input.getAttribute("data-practice-key");
-      input.checked = Boolean(progress.practice.days[key][pKey]);
+      input.checked = Boolean(today[pKey]);
       input.addEventListener("change", () => {
-        progress.practice.days[key][pKey] = input.checked;
+        today[pKey] = input.checked;
+        today.updatedAt = new Date().toISOString();
         saveProgress(progress);
         renderProgress();
       });
+    });
+
+    if (oneLine) oneLine.value = today.oneLine || "";
+    $$('input[name="practiceState"]').forEach((input) => {
+      input.checked = input.value === today.practiceState;
+    });
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const selected = $('input[name="practiceState"]:checked', form);
+      const text = String(oneLine?.value || "").trim();
+      if (!selected) {
+        setBanner(status, strings.practiceStateRequired, "warning");
+        return;
+      }
+      if (!text) {
+        setBanner(status, strings.practiceOneLineRequired, "warning");
+        return;
+      }
+      today.practiceState = selected.value;
+      today.oneLine = text;
+      today.needsHumanReflection = selected.value === "human_reflection";
+      today.updatedAt = new Date().toISOString();
+      saveProgress(progress);
+      renderProgress();
+      setBanner(status, strings.practiceCheckinSaved, "success");
     });
   }
 
@@ -666,7 +763,10 @@
         fullName: "",
         currentState: "",
         desiredShift: "",
-        companionRhythm: ""
+        companionRhythm: "",
+        practiceTrack: "",
+        reminderIntensity: "",
+        reminderPausedUntil: ""
       };
     }
 
@@ -688,13 +788,19 @@
       const currentState = $("#profileCurrentState");
       const desiredShift = $("#profileDesiredShift");
       const companionRhythm = $("#profileCompanionRhythm");
+      const practiceTrack = $("#profilePracticeTrack");
+      const reminderIntensity = $("#profileReminderIntensity");
+      const reminderPause = $("#profileReminderPause");
 
       if (fullName && !fullName.value) fullName.value = profile.fullName || "";
       if (currentState && !currentState.value) currentState.value = profile.currentState || "";
       if (desiredShift && !desiredShift.value) desiredShift.value = profile.desiredShift || "";
       if (companionRhythm && !companionRhythm.value) companionRhythm.value = profile.companionRhythm || "";
+      if (practiceTrack && !practiceTrack.value) practiceTrack.value = profile.practiceTrack || "";
+      if (reminderIntensity && !reminderIntensity.value) reminderIntensity.value = profile.reminderIntensity || "";
+      if (reminderPause) reminderPause.checked = isFutureIso(profile.reminderPausedUntil);
 
-      profileGate?.classList.toggle("hidden", complete);
+      profileGate?.classList.remove("hidden");
       previewBlock?.classList.toggle("hidden", !complete);
       unlockBlock?.classList.toggle("hidden", !complete || paid);
       paidBlock?.classList.toggle("hidden", !paid);
@@ -710,7 +816,12 @@
         fullName: $("#profileFullName")?.value,
         currentState: $("#profileCurrentState")?.value,
         desiredShift: $("#profileDesiredShift")?.value,
-        companionRhythm: $("#profileCompanionRhythm")?.value
+        companionRhythm: $("#profileCompanionRhythm")?.value,
+        practiceTrack: $("#profilePracticeTrack")?.value,
+        reminderIntensity: $("#profileReminderIntensity")?.value,
+        reminderPausedUntil: $("#profileReminderPause")?.checked
+          ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+          : ""
       });
 
       renderProfileInfo(session);

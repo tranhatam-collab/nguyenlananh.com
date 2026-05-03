@@ -416,11 +416,12 @@ VietQR, Mail IAI One, or international-payment proof work. Stripe is
 temporarily deferred for the current phase, not removed from code or
 roadmap.
 
-18.2. **Keep repositioning hidden until a safe release window.** Internal
-docs may be committed, but homepage, members, journey, practice, and
-email-runtime copy must not be changed in the same commit as payment
-secret/proof work unless the release owner explicitly approves that
-combined scope.
+18.2. **Keep public repositioning hidden until a safe release window.**
+Internal docs may be committed, and member-runtime scaffolding may ship
+when it does not touch payment rails. Homepage, public navigation, and
+public marketing copy must not be repositioned in the same commit as
+payment secret/proof work unless the release owner explicitly approves
+that combined scope.
 
 18.3. **Future public activation gate.** Before exposing the new
 positioning publicly, the team must pass:
@@ -429,11 +430,18 @@ positioning publicly, the team must pass:
 node scripts/content-audit.mjs --fail
 node scripts/validate-bilingual-release.mjs
 node scripts/local-public-site-audit.mjs
+node scripts/practice-field-readiness-audit.mjs --fail
 BASE_URL=https://www.nguyenlananh.com ENFORCE_COMMERCE_LIVE=0 REQUIRE_STRIPE=0 bash scripts/team2-live-gate.sh
 ```
 
 18.4. **Practice-field product lock.** The site is a readiness filter and
 practice field, not a self-help blog, quick-trick habit app, mass-market
-course, or promise that change happens by itself. Check-in must eventually allow
-`I am avoiding` as a valid state, and reminder design must be based on
-consent, not pressure.
+course, or promise that change happens by itself. Member check-in must
+allow `I am avoiding` as a valid state, and reminder design must be
+based on consent, pause, and one small step, not pressure.
+
+18.5. **Current member-runtime contract.** The first implementation layer
+stores `practiceTrack`, `reminderIntensity`, `reminderPausedUntil`,
+`practiceState`, `oneLine`, and `needsHumanReflection` in member runtime
+storage. D1 persistence can be added after payment proof and pilot
+readiness.

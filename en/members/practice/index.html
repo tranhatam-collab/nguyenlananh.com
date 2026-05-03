@@ -57,6 +57,26 @@
         <div class="actionsRow"><a class="ghost" href="/en/members/experience/">Write weekly journal</a></div>
       </article>
     </section>
+    <section class="panel" style="margin-top:12px;">
+      <h3>Today&apos;s check-in</h3>
+      <p class="note">No need to report beautifully. Choose the true state and write one honest line.</p>
+      <form id="practiceCheckinForm">
+        <ul class="checkList" style="margin-top:10px;">
+          <li class="checkItem"><input type="radio" name="practiceState" value="done" id="practiceStateDone" /><label for="practiceStateDone">I did the practice</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="smaller_step" id="practiceStateSmaller" /><label for="practiceStateSmaller">I did one smaller step</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="avoiding" id="practiceStateAvoiding" /><label for="practiceStateAvoiding">I am avoiding, and I want to see it more clearly</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="human_reflection" id="practiceStateHuman" /><label for="practiceStateHuman">I need a real person to reflect back</label></li>
+        </ul>
+        <div class="field" style="margin-top:10px;">
+          <label for="practiceOneLine">One honest line today</label>
+          <textarea id="practiceOneLine" rows="3" data-practice-one-line placeholder="Today I notice I am avoiding..."></textarea>
+        </div>
+        <div class="actionsRow">
+          <button class="cta" type="submit">Save check-in</button>
+        </div>
+        <div id="practiceCheckinStatus" class="statusBanner hidden" role="status"></div>
+      </form>
+    </section>
   </main>
 
   <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Not to become someone else. To return to who you truly are.</div></div></footer>

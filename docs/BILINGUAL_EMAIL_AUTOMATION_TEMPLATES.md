@@ -36,6 +36,9 @@ Nếu chưa tạo đủ mailbox, tạm dùng:
 - `{{contact_url}}`
 - `{{dashboard_url}}`
 - `{{unsubscribe_url}}` (with retention emails)
+- `{{reminder_pause_url}}`
+- `{{reminder_settings_url}}`
+- `{{five_minute_step}}`
 
 ---
 
@@ -220,28 +223,32 @@ Trigger: Day 3 after activation
 From: `noreply@...`
 
 Subject VI:
-`Ngày 3: Đừng bỏ nhịp`
+`Ngày 3: Một bước nhỏ là đủ`
 
 Subject EN:
-`Day 3: Do not lose your rhythm`
+`Day 3: One small step is enough`
 
 Body VI:
 Chào {{first_name}},
 
-Đa số người bỏ cuộc ở ngày 3 vì quay lại thói quen cũ.
-Bạn không cần hoàn hảo, chỉ cần quay lại một bước nhỏ hôm nay.
+Nếu hôm nay bạn thấy mình đang né, đó không phải là thất bại.
+Hãy làm một bước 5 phút:
+{{five_minute_step}}
 
-Tiếp tục tại:
-{{dashboard_url}}
+Check-in tại: {{dashboard_url}}
+Tạm dừng nhắc 7 ngày: {{reminder_pause_url}}
+Đổi mức nhắc: {{reminder_settings_url}}
 
 Body EN:
 Hi {{first_name}},
 
-Most people drop off around day 3 by returning to old patterns.
-You do not need perfection. Just return for one small step today.
+If you notice yourself avoiding today, that is not failure.
+Take one 5-minute step:
+{{five_minute_step}}
 
-Continue here:
-{{dashboard_url}}
+Check in here: {{dashboard_url}}
+Pause reminders for 7 days: {{reminder_pause_url}}
+Change reminder level: {{reminder_settings_url}}
 
 ---
 
@@ -258,19 +265,21 @@ Subject EN:
 Body VI:
 Chào {{first_name}},
 
-Đây là nhắc nhẹ hàng tuần để bạn giữ nhịp.
-Hãy chọn 1 việc nhỏ bạn cam kết trong tuần này và hoàn thành nó.
+Đây là nhắc nhẹ theo mức bạn đã chọn.
+Tuần này, chỉ cần nhìn rõ một điểm né và làm một bước thật.
 
 Vào hệ: {{dashboard_url}}
+Tạm dừng nhắc 7 ngày: {{reminder_pause_url}}
 Hỗ trợ: {{support_email}}
 
 Body EN:
 Hi {{first_name}},
 
-This is your weekly nudge to keep momentum.
-Choose one small commitment this week and complete it.
+This is a gentle reminder based on the level you chose.
+This week, notice one avoidance point and take one real step.
 
 Open dashboard: {{dashboard_url}}
+Pause reminders for 7 days: {{reminder_pause_url}}
 Support: {{support_email}}
 
 ---

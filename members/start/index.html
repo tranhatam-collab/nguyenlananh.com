@@ -65,9 +65,30 @@
           <label for="profileCompanionRhythm">Nhịp đồng hành bạn cần</label>
           <textarea id="profileCompanionRhythm" rows="2" required placeholder="Chậm, rõ, đều, không áp lực..."></textarea>
         </div>
+        <div class="field">
+          <label for="profilePracticeTrack">Đường bắt đầu</label>
+          <select id="profilePracticeTrack" required>
+            <option value="">Chọn một đường phù hợp</option>
+            <option value="gentle">Nhịp nhẹ - bước nhỏ, không gồng</option>
+            <option value="deep">Đối diện sâu - câu hỏi trực diện hơn</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="profileReminderIntensity">Mức nhắc bạn cho phép</label>
+          <select id="profileReminderIntensity" required>
+            <option value="">Chọn mức nhắc</option>
+            <option value="none">Không nhắc</option>
+            <option value="gentle">Nhắc nhẹ mỗi ngày</option>
+            <option value="rhythm">Nhắc theo nhịp kèm một bước 5 phút</option>
+          </select>
+        </div>
+        <label class="checkItem" for="profileReminderPause">
+          <input id="profileReminderPause" type="checkbox" />
+          <span>Tạm dừng nhắc 7 ngày nếu bạn cần khoảng lặng.</span>
+        </label>
         <div id="profileStatus" class="statusBanner hidden" role="status"></div>
         <div class="actionsRow">
-          <button class="cta" type="submit">Lưu profile và đi tiếp</button>
+          <button class="cta" type="submit">Lưu profile và cài đặt nhắc</button>
         </div>
       </form>
     </section>
@@ -89,6 +110,9 @@
           <li><strong>Hiện tại:</strong> <span data-profile-state>-</span></li>
           <li><strong>Muốn dịch chuyển:</strong> <span data-profile-shift>-</span></li>
           <li><strong>Nhịp cần:</strong> <span data-profile-rhythm>-</span></li>
+          <li><strong>Đường bắt đầu:</strong> <span data-profile-track>-</span></li>
+          <li><strong>Mức nhắc:</strong> <span data-profile-reminder>-</span></li>
+          <li><strong>Tạm dừng nhắc:</strong> <span data-profile-reminder-pause>-</span></li>
         </ul>
       </article>
     </section>

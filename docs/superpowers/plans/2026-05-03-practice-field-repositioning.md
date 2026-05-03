@@ -1040,3 +1040,42 @@ The plan uses these stable values across tasks:
 - `practiceState`: `done`, `smaller_step`, `avoiding`, `human_reflection`
 
 These values must not be renamed without updating the audit script and all VI/EN forms.
+
+---
+
+## Execution Addendum 2026-05-03B
+
+The founder-approved psychology-behavior update narrows the immediate release
+scope:
+
+1. Keep homepage and public marketing copy unchanged in this pass.
+2. Implement the first product layer inside member runtime only.
+3. Keep all payment files untouched.
+4. Add the consolidated plan at
+   `docs/NGUYENLANANH_WEBSITE_PRODUCT_PLAN_2026-05-03.md`.
+5. Add `scripts/practice-field-readiness-audit.mjs` as the product gate.
+
+This pass is accepted when these commands pass:
+
+```bash
+node scripts/practice-field-readiness-audit.mjs --fail
+node scripts/content-audit.mjs --fail
+node scripts/validate-bilingual-release.mjs
+node scripts/local-public-site-audit.mjs
+bash scripts/deploy_cloudflare.sh
+```
+
+Current implementation files:
+
+- `members/start/index.html`
+- `en/members/start/index.html`
+- `members/practice/index.html`
+- `en/members/practice/index.html`
+- `members/journey/day-1/index.html`
+- `members/journey/day-2/index.html`
+- `members/journey/day-7/index.html`
+- `en/members/journey/day-1/index.html`
+- `en/members/journey/day-2/index.html`
+- `en/members/journey/day-7/index.html`
+- `assets/members.js`
+- `docs/DEV_TEAM_RELEASE_DISCIPLINE.md`

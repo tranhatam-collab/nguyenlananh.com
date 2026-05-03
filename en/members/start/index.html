@@ -65,9 +65,30 @@
           <label for="profileCompanionRhythm">What kind of rhythm you need</label>
           <textarea id="profileCompanionRhythm" rows="2" required placeholder="Slow, clear, steady, without pressure..."></textarea>
         </div>
+        <div class="field">
+          <label for="profilePracticeTrack">Entry track</label>
+          <select id="profilePracticeTrack" required>
+            <option value="">Choose the track that fits now</option>
+            <option value="gentle">Gentle Rhythm - small steps without pressure</option>
+            <option value="deep">Deep Facing - more direct questions</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="profileReminderIntensity">Reminder level you allow</label>
+          <select id="profileReminderIntensity" required>
+            <option value="">Choose reminder level</option>
+            <option value="none">No reminders</option>
+            <option value="gentle">Gentle daily reminder</option>
+            <option value="rhythm">Rhythm reminder with one 5-minute step</option>
+          </select>
+        </div>
+        <label class="checkItem" for="profileReminderPause">
+          <input id="profileReminderPause" type="checkbox" />
+          <span>Pause reminders for 7 days if you need quiet space.</span>
+        </label>
         <div id="profileStatus" class="statusBanner hidden" role="status"></div>
         <div class="actionsRow">
-          <button class="cta" type="submit">Save profile and continue</button>
+          <button class="cta" type="submit">Save profile and reminder settings</button>
         </div>
       </form>
     </section>
@@ -89,6 +110,9 @@
           <li><strong>Current state:</strong> <span data-profile-state>-</span></li>
           <li><strong>Desired shift:</strong> <span data-profile-shift>-</span></li>
           <li><strong>Needed rhythm:</strong> <span data-profile-rhythm>-</span></li>
+          <li><strong>Entry track:</strong> <span data-profile-track>-</span></li>
+          <li><strong>Reminder level:</strong> <span data-profile-reminder>-</span></li>
+          <li><strong>Reminder pause:</strong> <span data-profile-reminder-pause>-</span></li>
         </ul>
       </article>
     </section>

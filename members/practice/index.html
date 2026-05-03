@@ -57,6 +57,26 @@
         <div class="actionsRow"><a class="ghost" href="/members/experience/">Viết nhật ký tuần</a></div>
       </article>
     </section>
+    <section class="panel" style="margin-top:12px;">
+      <h3>Check-in hôm nay</h3>
+      <p class="note">Không cần báo cáo đẹp. Chỉ cần chọn trạng thái thật và viết một dòng thật.</p>
+      <form id="practiceCheckinForm">
+        <ul class="checkList" style="margin-top:10px;">
+          <li class="checkItem"><input type="radio" name="practiceState" value="done" id="practiceStateDone" /><label for="practiceStateDone">Tôi đã làm</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="smaller_step" id="practiceStateSmaller" /><label for="practiceStateSmaller">Tôi làm một bước nhỏ hơn</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="avoiding" id="practiceStateAvoiding" /><label for="practiceStateAvoiding">Tôi đang né, và tôi muốn nhìn nó rõ hơn</label></li>
+          <li class="checkItem"><input type="radio" name="practiceState" value="human_reflection" id="practiceStateHuman" /><label for="practiceStateHuman">Tôi cần một người thật phản hồi</label></li>
+        </ul>
+        <div class="field" style="margin-top:10px;">
+          <label for="practiceOneLine">Một dòng thật hôm nay</label>
+          <textarea id="practiceOneLine" rows="3" data-practice-one-line placeholder="Hôm nay tôi thấy mình đang né..."></textarea>
+        </div>
+        <div class="actionsRow">
+          <button class="cta" type="submit">Lưu check-in</button>
+        </div>
+        <div id="practiceCheckinStatus" class="statusBanner hidden" role="status"></div>
+      </form>
+    </section>
   </main>
 
   <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</div></div></footer>

@@ -423,6 +423,7 @@ function normalizeCommonUI(html, localeCode) {
           ["Dashboard", "Bảng điều khiển"],
           ["Journey", "Hành trình"],
           ["Practice", "Thực hành"],
+          ["profileThực hànhTrack", "profilePracticeTrack"],
           ["Deep", "Chuyên sâu"],
           ["Experience", "Trải nghiệm"],
           ["Pro Layer", "Tầng Pro"],

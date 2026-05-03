@@ -91,6 +91,28 @@ const checks = [
     ]
   },
   {
+    file: "members/circle/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Nhóm nhỏ thực hành/,
+      /8-20 người/,
+      /không feed lớn/i,
+      /Tôi đang né/,
+      /data-profile-track/
+    ]
+  },
+  {
+    file: "en/members/circle/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Quiet Practice Circle/,
+      /8-20 people/,
+      /No large feed/,
+      /I am avoiding/,
+      /data-profile-track/
+    ]
+  },
+  {
     file: "assets/members.js",
     patterns: [
       /practiceTrack/,
@@ -114,7 +136,8 @@ const checks = [
   {
     file: "sitemap.xml",
     patterns: [
-      /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/
+      /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/,
+      /^(?![\s\S]*\/members\/circle\/)[\s\S]*$/
     ]
   }
 ];

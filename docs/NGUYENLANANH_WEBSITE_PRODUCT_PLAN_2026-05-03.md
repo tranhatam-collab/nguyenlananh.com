@@ -57,6 +57,7 @@ This release implements the first safe layer inside the members area:
 - Daily practice stores one honest line with the check-in.
 - Journey Day 1, Day 2, and Day 7 explain micro-pass criteria.
 - Hidden noindex member pilot route prepares the 14-day quiet group without public navigation.
+- Hidden noindex member circle route prepares the 8-20 person quiet practice group without public navigation.
 - A readiness audit script verifies the practice-field contract stays present.
 
 This release does not change homepage positioning, public navigation, payment functions, payment secrets, or provider readiness rules.
@@ -137,6 +138,7 @@ Decision gate:
 - Members practice page includes avoidance-aware check-in in VI and EN.
 - Journey Day 1, Day 2, and Day 7 include micro-pass guidance in VI and EN.
 - Hidden pilot pages exist at `/members/pilot/` and `/en/members/pilot/`, are noindex, and are not added to public navigation.
+- Hidden circle pages exist at `/members/circle/` and `/en/members/circle/`, are noindex, and are not added to public navigation.
 - Existing public content gates pass.
 - Payment rails endpoint remains live and unchanged in contract.
 - Changes are committed, pushed, deployed, and smoke-tested.

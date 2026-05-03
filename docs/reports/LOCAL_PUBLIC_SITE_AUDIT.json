@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-05-03T17:33:07.568Z",
+    "generatedAt": "2026-05-03T17:39:44.649Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 241,
+    "pagesAudited": 243,
     "pagesWithIssues": 0,
     "totalIssues": 0,
     "brokenInternalRefs": 0,
@@ -4410,6 +4410,30 @@
       ]
     },
     {
+      "route": "/en/members/circle/",
+      "file": "en/members/circle/index.html",
+      "title": "Quiet Practice Circle | Nguyenlananh.com",
+      "description": "Internal member circle page: prepares an 8-20 person quiet practice circle with check-ins, weekly review, and real human reflection.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/members/dashboard/",
+        "/en/members/journey/",
+        "/en/members/practice/",
+        "/en/members/deep/",
+        "/en/members/experience/",
+        "/en/members/pro/",
+        "/en/members/pilot/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/creator/guidelines/",
       "file": "en/members/creator/guidelines/index.html",
       "title": "Creator Guidelines | Nguyenlananh.com",
@@ -5459,6 +5483,30 @@
         "/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/members/circle/",
+      "file": "members/circle/index.html",
+      "title": "Nhóm nhỏ thực hành | Nguyenlananh.com",
+      "description": "Trang nhóm nhỏ nội bộ cho thành viên: chuẩn bị circle 8-20 người, nhịp check-in, review tuần, và quy tắc thực hành yên.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/members/dashboard/",
+        "/members/journey/",
+        "/members/practice/",
+        "/members/deep/",
+        "/members/experience/",
+        "/members/pro/",
+        "/members/pilot/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
         "/assets/i18n-config.js",
         "/assets/lang-routing.js"
       ]

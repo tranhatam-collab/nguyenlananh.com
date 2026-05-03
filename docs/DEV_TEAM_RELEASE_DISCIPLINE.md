@@ -450,3 +450,9 @@ readiness.
 `/en/members/pilot/` may exist as noindex member-only preparation pages,
 but they must not be added to public nav, homepage CTAs, sitemap, or
 marketing copy before payment proof and pilot owner approval.
+
+18.7. **Circle route stays hidden.** `/members/circle/` and
+`/en/members/circle/` may exist as noindex member-only preparation pages
+for 8-20 person quiet practice groups. They must not become a public
+community/feed surface before payment proof, pilot evidence, and owner
+approval.

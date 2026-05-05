@@ -10,6 +10,11 @@ rules go into the next sprint; **Low** rules go onto the polish queue.
 The discipline applies to dev, content, design, marketing, and any tool
 or script that mutates HTML at scale.
 
+`docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md` is now a mandatory
+companion gate for web copy, SEO metadata, QA reports, release notes,
+release evidence, and team handoff files. It does not authorize backend,
+payment, auth, database, user-data, or legal-mapping changes.
+
 ---
 
 ## 1. Page existence (Blocker)

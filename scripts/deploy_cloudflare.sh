@@ -16,6 +16,9 @@ fi
 echo "Syncing i18n and content registry"
 node "$REPO_ROOT/scripts/sync-i18n.mjs"
 
+echo "Running human text, SEO, QA, and reporting gate"
+node "$REPO_ROOT/scripts/human-text-gate.mjs" --no-write --fail
+
 echo "Running bilingual release validation"
 node "$REPO_ROOT/scripts/validate-bilingual-release.mjs"
 

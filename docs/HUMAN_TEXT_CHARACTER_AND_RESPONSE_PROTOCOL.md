@@ -8,8 +8,12 @@ True state:
 PROTOCOL_APPLIES_TO_WEB_COPY_SEO_QA_REPORTING
 PROTOCOL_DOES_NOT_AUTHORIZE_BACKEND_PAYMENT_AUTH_DB_OR_LEGAL_CHANGES
 
-This protocol is mandatory for `nguyenlananh.com` web text, SEO metadata,
-public page QA, release evidence, report files, and team handoff commands.
+This protocol is portable. Any project that ships public web pages can drop
+this file into its repository as `docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md`
+and use it as a mandatory gate before calling a page web-ready, SEO-ready,
+publication-ready, or release-ready. Each project binds the protocol to its
+own gate scripts in section 11.
+
 It exists to make the text layer part of product infrastructure, not a
 decorative afterthought.
 
@@ -102,8 +106,9 @@ Approved exceptions:
 
 - Vietnamese diacritics.
 - Standard punctuation required by the language.
-- Approved language switch labels: `🇻🇳 Tiếng Việt` and `🇺🇸 English`.
-- Technical tokens listed in section 12.
+- Approved language switch labels per project (commonly `🇻🇳 Tiếng Việt` and
+  `🇺🇸 English`).
+- Technical tokens listed in section 10.
 
 Migration note:
 
@@ -236,6 +241,14 @@ deployment.
 
 If a text issue requires code change, create a separate technical work order.
 
+Bulk text changes on a live site must follow safe rollout discipline:
+
+- Group URLs by section before mass edit.
+- Snapshot the current HTML before rewrite.
+- Run all gates locally before push.
+- Deploy in batches, not all at once when 50+ pages are affected.
+- Keep rollback path open until the next release window.
+
 ---
 
 ## 10. Technical token exception
@@ -274,7 +287,10 @@ Do review public explanation around those tokens.
 
 ## 11. Release gate for this repo
 
-`nguyenlananh.com` uses:
+Each project binds the protocol to its own gate scripts here. The bound list
+must run green before any page is called web-ready in this repo.
+
+This repo (`nguyenlananh.com`) uses:
 
 - `node scripts/human-text-gate.mjs --fail`
 - `node scripts/content-audit.mjs --fail`
@@ -292,3 +308,52 @@ text, broken H1, missing title, missing description, missing canonical, missing
 Open Graph image, missing important alt text, wrong language, or unclear true
 state.
 
+---
+
+## 12. Page Definition of Done
+
+Before a page is moved to `WEB_READY`, all of the following must be checked:
+
+- One H1 only.
+- H2 and H3 hierarchy valid.
+- No forbidden decorative characters in visible text.
+- Vietnamese diacritics correct on Vietnamese pages.
+- English copy natural, not literal Vietnamese.
+- Meta title exists and is human-readable.
+- Meta description exists and is human-readable.
+- Canonical exists.
+- Open Graph title, description, and image exist.
+- Twitter title and description exist when supported.
+- Alt text exists for meaningful images, decorative images marked.
+- True state declared.
+- QA evidence attached.
+
+---
+
+## 13. Strictness levels
+
+Different projects need different strictness. The recommended levels:
+
+- HIGH STRICTNESS — trust, payment, identity, docs, developer surfaces. No
+  fake urgency, no over-marketing, no hidden completion claim. Every release
+  evidence packet must include a screenshot or HTML snapshot.
+- EDITORIAL STRICTNESS — personal brand and editorial sites. Voice may be
+  personal but characters must be clean and SEO must be complete.
+- PUBLICATION STRICTNESS — media and community sites. Article hygiene,
+  sponsorship copy, and trust statements are audited every release.
+
+A project may pick one level for the whole repo or set per-section levels.
+Whichever path is chosen must be written into section 11.
+
+---
+
+## 14. URL inventory shape
+
+Every release report must include a URL-by-URL inventory with these columns:
+
+| URL | page role | H1 status | character hygiene | SEO metadata | canonical | OG image | alt text | language | true state | next action |
+
+Status values use plain words: `PASS`, `FAIL`, `SKIPPED_404`, `MISSING`.
+
+Next action uses one of: `NONE`, `EDITORIAL_REVIEW_OPTIONAL`,
+`FIX_BEFORE_WEB_READY`, `FIX_BEFORE_RELEASE`.

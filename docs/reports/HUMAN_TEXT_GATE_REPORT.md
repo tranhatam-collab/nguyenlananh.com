@@ -36,7 +36,7 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-05T14:29:12.042Z
+- Generated at: 2026-05-05T14:34:29.327Z
 - Pages audited: 241
 - Total issues: 0
 - Total warnings: 51
@@ -194,6 +194,10 @@ Notes:
 | /en/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
 | /en/bai-viet/tu-55-trieu-den-tu-do/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
 | /en/bai-viet/vu-tru-vat-chat/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
+| /en/bat-dau/7-ngay-thiet-lap-nhip-song-moi/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /en/bat-dau/bat-dau-trong-15-phut/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /en/bat-dau/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /en/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
 | /en/chinh-sach-bao-mat/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/chuong-trinh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
 | /en/dieu-khoan/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
@@ -203,10 +207,6 @@ Notes:
 | /en/faq/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
 | /en/gioi-thieu/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
 | /en/hanh-trinh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
-| /en/huong-dan/7-ngay-thiet-lap-nhip-song-moi/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
-| /en/huong-dan/bat-dau-trong-15-phut/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
-| /en/huong-dan/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
-| /en/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
 | /en/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
 | /en/join/cancel/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | EDITORIAL_REVIEW_OPTIONAL |
 | /en/join/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |

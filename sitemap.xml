@@ -133,10 +133,10 @@
   <url><loc>https://www.nguyenlananh.com/en/faq/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/gioi-thieu/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/hanh-trinh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/en/huong-dan/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/en/huong-dan/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/en/huong-dan/bat-dau-trong-15-phut/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/en/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bat-dau/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bat-dau/bat-dau-trong-15-phut/</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bat-dau/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/join/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/lien-he/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/members/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -144,10 +144,10 @@
   <url><loc>https://www.nguyenlananh.com/faq/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/gioi-thieu/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/hanh-trinh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/huong-dan/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/huong-dan/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/huong-dan/bat-dau-trong-15-phut/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.nguyenlananh.com/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bat-dau/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bat-dau/bat-dau-trong-15-phut/</loc><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bat-dau/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://www.nguyenlananh.com/join/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/lien-he/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/members/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>

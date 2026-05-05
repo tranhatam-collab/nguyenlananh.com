@@ -12,6 +12,19 @@ https://nguyenlananh.com/* https://www.nguyenlananh.com/:splat 301
 /en/bai-viet/can-phong-nhu-mot-ban-do-cua-noi-tam/ /en/bai-viet/ 302
 /en/bai-viet/tu-biet-nhieu-den-song-duoc/ /en/bai-viet/ 302
 
+# VI Start Here hub renamed from /huong-dan/ to /bat-dau/ because the
+# /huong-dan/ static path was returning 404 at the Cloudflare platform
+# layer despite the files being deployed. The rename is the safe path
+# forward; these redirects keep any earlier links working.
+/huong-dan/ /bat-dau/ 301
+/huong-dan/bat-dau-trong-15-phut/ /bat-dau/bat-dau-trong-15-phut/ 301
+/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/ /bat-dau/vi-sao-day-la-mot-he-thuc-hanh/ 301
+/huong-dan/7-ngay-thiet-lap-nhip-song-moi/ /bat-dau/7-ngay-thiet-lap-nhip-song-moi/ 301
+/en/huong-dan/ /en/bat-dau/ 301
+/en/huong-dan/bat-dau-trong-15-phut/ /en/bat-dau/bat-dau-trong-15-phut/ 301
+/en/huong-dan/vi-sao-day-la-mot-he-thuc-hanh/ /en/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/ 301
+/en/huong-dan/7-ngay-thiet-lap-nhip-song-moi/ /en/bat-dau/7-ngay-thiet-lap-nhip-song-moi/ 301
+
 # Dedicated admin subdomain routing
 # admin.nguyenlananh.com should land directly to admin console on deploy
 https://admin.nguyenlananh.com/ /admin/ 301

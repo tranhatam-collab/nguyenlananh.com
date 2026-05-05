@@ -1,12 +1,12 @@
 {
   "summary": {
-    "generatedAt": "2026-05-05T14:36:04.649Z",
-    "pagesAudited": 241,
+    "generatedAt": "2026-05-05T16:51:18.085Z",
+    "pagesAudited": 245,
     "totalIssues": 0,
-    "totalWarnings": 51,
+    "totalWarnings": 55,
     "issueCounts": {},
     "warningCounts": {
-      "legacy_editorial_punctuation": 51
+      "legacy_editorial_punctuation": 55
     },
     "trueState": "HUMAN_TEXT_GATE_PASS"
   },
@@ -170,6 +170,38 @@
       "code": "legacy_editorial_punctuation",
       "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
       "count": 1,
+      "chars": "—"
+    },
+    {
+      "file": "bat-dau/7-ngay-thiet-lap-nhip-song-moi/index.html",
+      "route": "/bat-dau/7-ngay-thiet-lap-nhip-song-moi/",
+      "code": "legacy_editorial_punctuation",
+      "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+      "count": 2,
+      "chars": "—"
+    },
+    {
+      "file": "bat-dau/bat-dau-trong-15-phut/index.html",
+      "route": "/bat-dau/bat-dau-trong-15-phut/",
+      "code": "legacy_editorial_punctuation",
+      "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+      "count": 2,
+      "chars": "—"
+    },
+    {
+      "file": "bat-dau/index.html",
+      "route": "/bat-dau/",
+      "code": "legacy_editorial_punctuation",
+      "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+      "count": 2,
+      "chars": "—"
+    },
+    {
+      "file": "bat-dau/vi-sao-day-la-mot-he-thuc-hanh/index.html",
+      "route": "/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/",
+      "code": "legacy_editorial_punctuation",
+      "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+      "count": 2,
       "chars": "—"
     },
     {
@@ -1689,6 +1721,106 @@
       "next_action": "NONE",
       "issues": [],
       "warnings": []
+    },
+    {
+      "url": "/bat-dau/7-ngay-thiet-lap-nhip-song-moi/",
+      "file": "bat-dau/7-ngay-thiet-lap-nhip-song-moi/index.html",
+      "page_role": "public",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "INDEXABLE",
+      "next_action": "EDITORIAL_REVIEW_OPTIONAL",
+      "issues": [],
+      "warnings": [
+        {
+          "file": "bat-dau/7-ngay-thiet-lap-nhip-song-moi/index.html",
+          "route": "/bat-dau/7-ngay-thiet-lap-nhip-song-moi/",
+          "code": "legacy_editorial_punctuation",
+          "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+          "count": 2,
+          "chars": "—"
+        }
+      ]
+    },
+    {
+      "url": "/bat-dau/bat-dau-trong-15-phut/",
+      "file": "bat-dau/bat-dau-trong-15-phut/index.html",
+      "page_role": "public",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "INDEXABLE",
+      "next_action": "EDITORIAL_REVIEW_OPTIONAL",
+      "issues": [],
+      "warnings": [
+        {
+          "file": "bat-dau/bat-dau-trong-15-phut/index.html",
+          "route": "/bat-dau/bat-dau-trong-15-phut/",
+          "code": "legacy_editorial_punctuation",
+          "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+          "count": 2,
+          "chars": "—"
+        }
+      ]
+    },
+    {
+      "url": "/bat-dau/",
+      "file": "bat-dau/index.html",
+      "page_role": "public",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "INDEXABLE",
+      "next_action": "EDITORIAL_REVIEW_OPTIONAL",
+      "issues": [],
+      "warnings": [
+        {
+          "file": "bat-dau/index.html",
+          "route": "/bat-dau/",
+          "code": "legacy_editorial_punctuation",
+          "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+          "count": 2,
+          "chars": "—"
+        }
+      ]
+    },
+    {
+      "url": "/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/",
+      "file": "bat-dau/vi-sao-day-la-mot-he-thuc-hanh/index.html",
+      "page_role": "public",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "INDEXABLE",
+      "next_action": "EDITORIAL_REVIEW_OPTIONAL",
+      "issues": [],
+      "warnings": [
+        {
+          "file": "bat-dau/vi-sao-day-la-mot-he-thuc-hanh/index.html",
+          "route": "/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/",
+          "code": "legacy_editorial_punctuation",
+          "message": "Editorial dash or arrow found. New copy should use plain text unless editorially approved.",
+          "count": 2,
+          "chars": "—"
+        }
+      ]
     },
     {
       "url": "/chinh-sach-bao-mat/",

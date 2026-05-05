@@ -4,6 +4,7 @@ export const RELEASE_INCLUDE_PATHS = [
   "_redirects",
   "admin",
   "assets",
+  "bat-dau",
   "bai-viet",
   "chinh-sach-bao-mat",
   "chuong-trinh",

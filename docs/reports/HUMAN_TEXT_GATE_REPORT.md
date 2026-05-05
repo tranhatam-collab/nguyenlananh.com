@@ -4,7 +4,7 @@ Verdict:
 WEB_TEXT_GATE_PASS
 
 Evidence checked:
-- 241 HTML files in release scope.
+- 245 HTML files in release scope.
 - docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md.
 - docs/DEV_TEAM_RELEASE_DISCIPLINE.md link to the protocol.
 - H1 count, empty headings, SEO metadata, canonical, Open Graph image, language, alt text, visible text symbols, and true state.
@@ -36,10 +36,10 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-05T14:36:04.649Z
-- Pages audited: 241
+- Generated at: 2026-05-05T16:51:18.085Z
+- Pages audited: 245
 - Total issues: 0
-- Total warnings: 51
+- Total warnings: 55
 
 ## Issue Counts
 
@@ -47,7 +47,7 @@ Notes:
 
 ## Warning Counts
 
-- legacy_editorial_punctuation: 51
+- legacy_editorial_punctuation: 55
 
 ## URL Inventory
 
@@ -121,6 +121,10 @@ Notes:
 | /bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
 | /bai-viet/tu-55-trieu-den-tu-do/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
 | /bai-viet/vu-tru-vat-chat/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
+| /bat-dau/7-ngay-thiet-lap-nhip-song-moi/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /bat-dau/bat-dau-trong-15-phut/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /bat-dau/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
+| /bat-dau/vi-sao-day-la-mot-he-thuc-hanh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | EDITORIAL_REVIEW_OPTIONAL |
 | /chinh-sach-bao-mat/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /chuong-trinh/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
 | /dieu-khoan/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |

@@ -11,6 +11,7 @@ const INCLUDE_PATHS = [
   "404.html",
   "admin",
   "assets",
+  "bat-dau",
   "bai-viet",
   "chinh-sach-bao-mat",
   "chuong-trinh",

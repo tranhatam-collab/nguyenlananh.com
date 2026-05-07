@@ -76,7 +76,8 @@ const checks = [
       /Nhịp nhẹ/,
       /Đối diện sâu/,
       /Tôi đang né/,
-      /data-profile-track/
+      /data-profile-track/,
+      /id="pilot-readiness-status"/
     ]
   },
   {
@@ -87,7 +88,8 @@ const checks = [
       /Gentle Rhythm/,
       /Deep Facing/,
       /I am avoiding/,
-      /data-profile-track/
+      /data-profile-track/,
+      /id="pilot-readiness-status"/
     ]
   },
   {
@@ -188,7 +190,8 @@ const checks = [
       /oneLine/,
       /needsHumanReflection/,
       /reflectionReadyTitle/,
-      /data-practice-reflection-panel/
+      /data-practice-reflection-panel/,
+      /function initPilotPage\(session\)/
     ]
   },
   {

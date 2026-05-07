@@ -325,6 +325,22 @@
     return Math.round((score / totalPoints) * 100);
   }
 
+  function getLatestPracticeEntry(progress = getProgress()) {
+    const days = Object.entries(progress?.practice?.days || {});
+    if (!days.length) return null;
+    const [dateKey, day] = days
+      .slice()
+      .sort((left, right) => {
+        const leftTime = new Date(left[1]?.updatedAt || left[0]).getTime();
+        const rightTime = new Date(right[1]?.updatedAt || right[0]).getTime();
+        return rightTime - leftTime;
+      })[0];
+    return {
+      dateKey,
+      ...(day || {})
+    };
+  }
+
   function renderSessionInfo(session) {
     const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi-VN";
     const plan = planByCode(session.membershipType);
@@ -558,6 +574,138 @@
     });
 
     draw();
+  }
+
+  function initPilotPage(session) {
+    const status = $("#pilot-readiness-status");
+    const summary = $("#pilot-readiness-summary");
+    const next = $("#pilot-readiness-next");
+    if (!status && !summary && !next) return;
+
+    const isEnglish = document.documentElement.lang === "en-US";
+    const profile = getProfileForEmail(session?.email);
+    const progress = getProgress();
+    const latest = getLatestPracticeEntry(progress);
+    const readyProfile = profileIsComplete(profile);
+    const paused = isFutureIso(profile?.reminderPausedUntil);
+    const latestState = latest?.practiceState || "";
+    const latestLine = String(latest?.oneLine || "").trim();
+    const hasHonestCheckin = Boolean(latestState && latestLine);
+
+    let statusText = "";
+    let nextActions = [];
+
+    if (!readyProfile) {
+      statusText = isEnglish
+        ? "Your pilot base is not ready yet. Complete your companion profile first."
+        : "Nền để vào pilot của bạn chưa đủ. Hãy hoàn thiện hồ sơ đồng hành trước.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/start/" : "/members/start/",
+          label: isEnglish ? "Complete profile" : "Hoàn thiện profile",
+          primary: true
+        }
+      ];
+    } else if (!hasHonestCheckin) {
+      statusText = isEnglish
+        ? "Your profile is ready, but you still need one honest check-in before the pilot rhythm opens."
+        : "Profile của bạn đã đủ, nhưng bạn còn cần một check-in thật trước khi nhịp pilot mở ra.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/practice/" : "/members/practice/",
+          label: isEnglish ? "Open check-in" : "Mở check-in",
+          primary: true
+        }
+      ];
+    } else if (latestState === "human_reflection") {
+      statusText = isEnglish
+        ? "Your latest signal asks for a real person. Use the reflection handoff before entering the pilot rhythm."
+        : "Tín hiệu gần nhất của bạn đang xin một người thật phản hồi. Hãy đi qua bước reflection trước khi vào nhịp pilot.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/reflection/" : "/members/reflection/",
+          label: isEnglish ? "Open reflection" : "Mở reflection",
+          primary: true
+        },
+        {
+          href: isEnglish ? "/en/members/practice/" : "/members/practice/",
+          label: isEnglish ? "Return to check-in" : "Quay lại check-in"
+        }
+      ];
+    } else if (paused) {
+      statusText = isEnglish
+        ? "You are currently on a reminder pause. Respect that pause before joining the pilot rhythm."
+        : "Bạn đang ở trong giai đoạn tạm dừng nhắc. Hãy tôn trọng nhịp tạm dừng đó trước khi vào pilot.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/start/" : "/members/start/",
+          label: isEnglish ? "Review reminder settings" : "Xem lại mức nhắc",
+          primary: true
+        },
+        {
+          href: isEnglish ? "/en/members/practice/" : "/members/practice/",
+          label: isEnglish ? "Keep a small step" : "Giữ một bước nhỏ"
+        }
+      ];
+    } else if (latestState === "avoiding") {
+      statusText = isEnglish
+        ? "You have the base for pilot review, but your latest signal says you are avoiding. Keep the next step small and honest."
+        : "Bạn đã có nền để được rà vào pilot, nhưng tín hiệu gần nhất cho thấy bạn đang né. Hãy giữ bước tiếp theo nhỏ và thật.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/practice/" : "/members/practice/",
+          label: isEnglish ? "Keep the next check-in small" : "Giữ check-in tiếp theo thật nhỏ",
+          primary: true
+        },
+        {
+          href: isEnglish ? "/en/members/reflection/" : "/members/reflection/",
+          label: isEnglish ? "Ask for reflection" : "Xin phản hồi"
+        }
+      ];
+    } else {
+      statusText = isEnglish
+        ? "Your base is ready for quiet pilot review when the operations team opens the next 14-day group."
+        : "Nền của bạn đã sẵn để được rà vào pilot yên khi đội vận hành mở nhóm 14 ngày tiếp theo.";
+      nextActions = [
+        {
+          href: isEnglish ? "/en/members/practice/" : "/members/practice/",
+          label: isEnglish ? "Keep daily rhythm" : "Giữ nhịp hằng ngày",
+          primary: true
+        },
+        {
+          href: isEnglish ? "/en/members/circle/" : "/members/circle/",
+          label: isEnglish ? "View quiet circle" : "Xem nhóm nhỏ"
+        }
+      ];
+    }
+
+    if (status) {
+      status.textContent = statusText;
+    }
+
+    if (summary) {
+      const latestStateLabel = latestState === "human_reflection"
+        ? (isEnglish ? "Human reflection" : "Cần người thật phản hồi")
+        : latestState === "avoiding"
+          ? (isEnglish ? "Avoiding" : "Đang né")
+          : latestState === "smaller_step"
+            ? (isEnglish ? "Smaller step" : "Bước nhỏ hơn")
+            : latestState === "done"
+              ? (isEnglish ? "Done" : "Đã làm")
+              : (isEnglish ? "No check-in yet" : "Chưa có check-in");
+
+      summary.innerHTML = `<ul class="checkList">
+        <li class="checkItem"><input type="checkbox" disabled ${readyProfile ? "checked" : ""}><div><strong>${isEnglish ? "Profile is complete" : "Profile đã đủ"}</strong><p class="note">${safeText((profile?.fullName || session?.email || "-"))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${hasHonestCheckin ? "checked" : ""}><div><strong>${isEnglish ? "One honest check-in exists" : "Đã có một check-in thật"}</strong><p class="note">${safeText(latest?.dateKey || "-")} • ${safeText(latestStateLabel)}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${!paused ? "checked" : ""}><div><strong>${isEnglish ? "Reminder pause is clear" : "Không còn pause reminder"}</strong><p class="note">${safeText(paused ? (isEnglish ? "Pause is still active" : "Pause vẫn đang còn hiệu lực") : (isEnglish ? "No active pause" : "Không có pause đang mở"))}</p></div></li>
+      </ul>`;
+    }
+
+    if (next) {
+      next.innerHTML = nextActions.map((action) => (
+        `<a class="${action.primary ? "cta" : "ghost"}" href="${action.href}">${safeText(action.label)}</a>`
+      )).join("");
+    }
   }
 
   async function requestMagicLink(payload) {
@@ -1023,6 +1171,7 @@
     if (page === "members-start") initStartPage(session);
     if (page === "members-journey") initJourneyPage();
     if (page === "members-practice") initPracticePage();
+    if (page === "members-pilot") initPilotPage(session);
     if (page === "members-experience") initExperiencePage();
   }
 

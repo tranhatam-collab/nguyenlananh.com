@@ -1045,6 +1045,9 @@
     const pausedCount = opsSnapshot.counts.pausedProfiles;
     const readyWithCheckin = opsSnapshot.counts.readyProfilesWithCheckin;
     const importedMemberPackets = getMemberSnapshotQueue();
+    const queueReflectionReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "reflection").length;
+    const queuePilotReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "pilot").length;
+    const queueAlreadyRouted = importedMemberPackets.filter((item) => item.queueLastRoutedTo).length;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -1066,6 +1069,9 @@
         <ul class="list">
           ${membersOps.map((item) => `<li>${item.label}: <strong>${safeText(item.value)}</strong> (${safeText(item.hint)})`).join("")}
           <li>${safeText(isEnglish ? "Imported member packets" : "Member packet đã nhập")}: <strong>${importedMemberPackets.length}</strong></li>
+          <li>${safeText(isEnglish ? "Queue -> reflection" : "Queue -> reflection")}: <strong>${queueReflectionReady}</strong></li>
+          <li>${safeText(isEnglish ? "Queue -> pilot" : "Queue -> pilot")}: <strong>${queuePilotReady}</strong></li>
+          <li>${safeText(isEnglish ? "Already routed" : "Đã handoff")}: <strong>${queueAlreadyRouted}</strong></li>
         </ul>
       </article>
       <article class="panel">
@@ -1136,6 +1142,7 @@
       }
       memberSnapshotQueue.innerHTML = `<div>
         <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
+        <p class="note">${safeText(isEnglish ? "Reflection-ready" : "Sẵn cho reflection")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "reflection").length} • ${safeText(isEnglish ? "Pilot-ready" : "Sẵn cho pilot")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "pilot").length} • ${safeText(isEnglish ? "Already routed" : "Đã handoff")}: ${queue.filter((packet) => packet.queueLastRoutedTo).length}</p>
         <ul class="checkList">${queue.map((packet) => {
           const paused = isFutureIso(packet.reminderPausedUntil);
           const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");

@@ -1,6 +1,6 @@
 # Local Public Site Audit
 
-- Generated at: 2026-05-07T17:40:38.992Z
+- Generated at: 2026-05-07T18:10:50.616Z
 - Base URL: http://localhost:4173
 - Pages audited: 253
 - Pages with issues: 0

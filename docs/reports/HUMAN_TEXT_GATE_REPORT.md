@@ -36,7 +36,7 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-07T15:36:50.655Z
+- Generated at: 2026-05-07T15:58:37.995Z
 - Pages audited: 251
 - Total issues: 0
 - Total warnings: 55

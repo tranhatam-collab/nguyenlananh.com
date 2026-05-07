@@ -180,6 +180,28 @@ const checks = [
     ]
   },
   {
+    file: "admin/index.html",
+    patterns: [
+      /id="member-snapshot-import"/,
+      /id="member-snapshot-queue"/,
+      /id="member-snapshot-queue-packet"/,
+      /id="member-snapshot-queue-copy"/,
+      /id="member-snapshot-queue-export"/,
+      /id="member-snapshot-queue-merge"/
+    ]
+  },
+  {
+    file: "en/admin/index.html",
+    patterns: [
+      /id="member-snapshot-import"/,
+      /id="member-snapshot-queue"/,
+      /id="member-snapshot-queue-packet"/,
+      /id="member-snapshot-queue-copy"/,
+      /id="member-snapshot-queue-export"/,
+      /id="member-snapshot-queue-merge"/
+    ]
+  },
+  {
     file: "admin/pilot/index.html",
     patterns: [
       /<meta name="robots" content="noindex,follow" \/>/,
@@ -242,7 +264,14 @@ const checks = [
       /function initReflection\(\)/,
       /member-snapshot-import/,
       /member-snapshot-queue/,
+      /member-snapshot-queue-packet/,
+      /member-snapshot-queue-copy/,
+      /member-snapshot-queue-export/,
+      /member-snapshot-queue-merge/,
       /member-snapshot-save/,
+      /admin_member_snapshot_queue/,
+      /buildMemberSnapshotQueuePacket/,
+      /mergeMemberSnapshotQueueItems/,
       /recommendedRouteForSnapshot/,
       /queueRecommendedRoute/,
       /queueLastRoutedTo/,

@@ -261,6 +261,29 @@
     };
   }
 
+  function buildMemberSnapshotQueuePacket() {
+    return {
+      packet_type: "admin_member_snapshot_queue",
+      exportedAt: new Date().toISOString(),
+      items: getMemberSnapshotQueue()
+    };
+  }
+
+  function mergeMemberSnapshotQueueItems(items) {
+    const current = getMemberSnapshotQueue();
+    const merged = [];
+    const seen = new Set();
+    [...items, ...current].forEach((packet) => {
+      if (!packet || typeof packet.email !== "string" || !packet.email.trim()) return;
+      const email = packet.email.trim();
+      if (seen.has(email)) return;
+      seen.add(email);
+      const existing = current.find((item) => item.email === email) || null;
+      merged.push(normalizeMemberSnapshotQueueItem(packet, existing));
+    });
+    saveMemberSnapshotQueue(merged.slice(0, 12));
+  }
+
   function savePendingReflectionPacket(packet) {
     writeJSON(STORAGE_KEYS.pendingReflectionPacket, packet || null);
   }
@@ -971,6 +994,10 @@
     const memberSnapshotStatus = $("#member-snapshot-status");
     const memberSnapshotView = $("#member-snapshot-view");
     const memberSnapshotQueue = $("#member-snapshot-queue");
+    const memberSnapshotQueuePacket = $("#member-snapshot-queue-packet");
+    const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
+    const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
+    const memberSnapshotQueueMerge = $("#member-snapshot-queue-merge");
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
@@ -1072,6 +1099,9 @@
     function renderMemberSnapshotQueue() {
       if (!memberSnapshotQueue) return;
       const queue = getMemberSnapshotQueue();
+      if (memberSnapshotQueuePacket) {
+        memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);
+      }
       if (!queue.length) {
         memberSnapshotQueue.innerHTML = `<p class="note">${safeText(isEnglish ? "No imported member packet is saved yet." : "Chưa có member packet nào được lưu trong intake queue.")}</p>`;
         return;
@@ -1140,6 +1170,46 @@
       saveMemberSnapshotQueue([]);
       renderMemberSnapshotQueue();
       renderStatus(memberSnapshotStatus, isEnglish ? "Cleared intake queue." : "Đã xóa intake queue.", "ok");
+    });
+
+    memberSnapshotQueueCopy?.addEventListener("click", async () => {
+      try {
+        if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+        await navigator.clipboard.writeText(JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2));
+        renderStatus(memberSnapshotStatus, isEnglish ? "Copied intake queue packet." : "Đã copy intake queue packet.", "ok");
+      } catch (_error) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Unable to copy intake queue packet." : "Không copy được intake queue packet.", "danger");
+      }
+    });
+
+    memberSnapshotQueueExport?.addEventListener("click", () => {
+      try {
+        const blob = new Blob([JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2)], { type: "application/json;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `member-snapshot-queue-${new Date().toISOString().slice(0, 10)}.json`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        renderStatus(memberSnapshotStatus, isEnglish ? "Exported intake queue packet." : "Đã export intake queue packet.", "ok");
+      } catch (_error) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Unable to export intake queue packet." : "Không export được intake queue packet.", "danger");
+      }
+    });
+
+    memberSnapshotQueueMerge?.addEventListener("click", () => {
+      try {
+        const parsed = JSON.parse(memberSnapshotQueuePacket?.value || "{}");
+        const isQueuePacket = parsed?.packet_type === "admin_member_snapshot_queue"
+          && Array.isArray(parsed?.items);
+        if (!isQueuePacket) {
+          throw new Error("INVALID_MEMBER_QUEUE_PACKET");
+        }
+        mergeMemberSnapshotQueueItems(parsed.items);
+        renderMemberSnapshotQueue();
+        renderStatus(memberSnapshotStatus, isEnglish ? "Merged intake queue packet." : "Đã merge intake queue packet.", "ok");
+      } catch (_error) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Unable to merge intake queue packet." : "Không merge được intake queue packet.", "danger");
+      }
     });
 
     memberSnapshotQueue?.addEventListener("click", (event) => {

@@ -67,7 +67,7 @@ This release implements the first safe layer inside the members area:
 - Admin home now keeps a browser-local intake queue of imported member snapshot packets so operations can review multiple handoffs without losing them on the next paste.
 - Each saved member snapshot in admin home can now hand off directly into reflection ops or pilot ops, with the destination module preloaded from the queue packet.
 - The intake queue now records a recommended route and last handoff state for each imported member snapshot, so operations can send each packet into reflection ops or pilot ops with less guesswork.
-- Each saved member snapshot in admin home can now hand off directly into reflection ops or pilot ops, with the destination module preloaded from the queue packet.
+- Admin home can now export or merge the full intake queue as one portable packet, so multiple imported member snapshots can move between ops machines without one-by-one copy work.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

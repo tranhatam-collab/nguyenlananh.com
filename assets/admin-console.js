@@ -1321,6 +1321,8 @@
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
         : view?.source === "imported_member_reflection_handoff"
           ? (isEnglish ? "member handoff packet" : "handoff packet của thành viên")
+          : view?.source === "imported_admin_intake_queue"
+            ? (isEnglish ? "intake queue packet" : "intake queue packet")
           : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
@@ -1435,6 +1437,47 @@
             };
             renderReflectionView(imported);
             renderStatus(evidenceStatus, isEnglish ? "Loaded pasted reflection evidence." : "Đã nạp reflection evidence đã dán.", "ok");
+            return;
+          }
+
+          const isQueuePacket = parsed?.packet_type === "admin_member_snapshot_queue"
+            && Array.isArray(parsed?.items);
+          if (isQueuePacket) {
+            const relevantItems = parsed.items.filter((item) => recommendedRouteForSnapshot(item) === "reflection");
+            const imported = {
+              generatedAt: new Date().toISOString(),
+              source: "imported_admin_intake_queue",
+              total_signals: relevantItems.filter((item) => item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding").length,
+              human_reflection: relevantItems.filter((item) => item.latestPracticeState === "human_reflection").length,
+              avoiding: relevantItems.filter((item) => item.latestPracticeState === "avoiding").length,
+              saved_handoffs: relevantItems.filter((item) => item.hasSavedHandoff).length,
+              matched_handoffs: relevantItems.filter((item) => item.hasSavedHandoff && (item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding")).length,
+              next_gate: isEnglish
+                ? "Reflection-ready entries from the intake queue are loaded for a short grounded reply."
+                : "Các entry sẵn cho reflection từ intake queue đã được nạp để phản hồi ngắn và neo lại.",
+              signals: relevantItems
+                .filter((item) => item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding")
+                .map((item) => ({
+                  day: item.latestPracticeDay || "",
+                  practiceState: item.latestPracticeState || "",
+                  oneLine: item.latestPracticeLine || "",
+                  updatedAt: item.updatedAt || ""
+                })),
+              handoffs: relevantItems
+                .filter((item) => item.hasSavedHandoff)
+                .map((item) => ({
+                  email: item.email || "",
+                  line1: "",
+                  line2: "",
+                  line3: isEnglish ? "Member already saved a handoff in their own flow." : "Thành viên đã có handoff được lưu ở flow riêng.",
+                  sourceState: item.latestPracticeState || "",
+                  sourceDay: item.latestPracticeDay || "",
+                  sourceOneLine: item.latestPracticeLine || "",
+                  updatedAt: item.updatedAt || ""
+                }))
+            };
+            renderReflectionView(imported);
+            renderStatus(evidenceStatus, isEnglish ? "Loaded intake queue packet into reflection ops." : "Đã nạp intake queue packet vào reflection ops.", "ok");
             return;
           }
 
@@ -1572,6 +1615,8 @@
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
         : view?.source === "imported_member_pilot_readiness"
           ? (isEnglish ? "member readiness packet" : "readiness packet của thành viên")
+          : view?.source === "imported_admin_intake_queue"
+            ? (isEnglish ? "intake queue packet" : "intake queue packet")
           : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
@@ -1704,6 +1749,64 @@
             };
             renderPilotView(imported);
             renderStatus(evidenceStatus, isEnglish ? "Loaded pasted pilot evidence." : "Đã nạp pilot evidence đã dán.", "ok");
+            return;
+          }
+
+          const isQueuePacket = parsed?.packet_type === "admin_member_snapshot_queue"
+            && Array.isArray(parsed?.items);
+          if (isQueuePacket) {
+            const participants = parsed.items
+              .filter((item) => recommendedRouteForSnapshot(item) === "pilot")
+              .map((item) => ({
+                email: item.email || "",
+                fullName: item.fullName || "",
+                practiceTrack: item.practiceTrack || "",
+                reminderIntensity: item.reminderIntensity || "",
+                reminderPausedUntil: item.reminderPausedUntil || "",
+                profileReady: Boolean(item.profileReady),
+                updatedAt: item.updatedAt || "",
+                currentState: item.currentState || "",
+                latestPracticeState: item.latestPracticeState || "",
+                latestPracticeDay: item.latestPracticeDay || "",
+                latestPracticeLine: item.latestPracticeLine || "",
+                hasSavedHandoff: Boolean(item.hasSavedHandoff),
+                nextTouchpoint: isFutureIso(item.reminderPausedUntil)
+                  ? (isEnglish ? "Respect pause" : "Tôn trọng pause")
+                  : item.latestPracticeState === "human_reflection"
+                    ? (isEnglish ? "Day 3 human review" : "Day 3 phản hồi người thật")
+                    : item.latestPracticeState === "avoiding"
+                      ? (isEnglish ? "Day 3 avoidance follow-up" : "Day 3 follow-up điểm né")
+                      : Boolean(item.profileReady)
+                        ? (isEnglish ? "Ready for Day 1 welcome" : "Sẵn sàng welcome Day 1")
+                        : (isEnglish ? "Finish profile first" : "Hoàn thiện profile trước")
+              }));
+            const imported = {
+              generatedAt: new Date().toISOString(),
+              source: "imported_admin_intake_queue",
+              profiles_total: participants.length,
+              profiles_ready: participants.filter((item) => item.profileReady).length,
+              paused_profiles: participants.filter((item) => isFutureIso(item.reminderPausedUntil)).length,
+              tracks: {
+                gentle: participants.filter((item) => item.practiceTrack === "gentle").length,
+                deep: participants.filter((item) => item.practiceTrack === "deep").length
+              },
+              recent_practice: {
+                total_entries: participants.filter((item) => item.latestPracticeState).length,
+                human_reflection: participants.filter((item) => item.latestPracticeState === "human_reflection").length,
+                avoiding: participants.filter((item) => item.latestPracticeState === "avoiding").length
+              },
+              next_gate: isEnglish
+                ? "Pilot-ready entries from the intake queue are loaded for the next Day 1 / Day 3 / Day 7 review."
+                : "Các entry sẵn cho pilot từ intake queue đã được nạp để rà Day 1 / Day 3 / Day 7.",
+              shared_ops_language: {
+                saved_handoffs: participants.filter((item) => item.hasSavedHandoff).length,
+                matched_handoffs: participants.filter((item) => item.hasSavedHandoff && (item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding")).length,
+                ready_profiles_with_checkin: participants.filter((item) => item.profileReady && item.latestPracticeState && item.latestPracticeLine).length
+              },
+              participants
+            };
+            renderPilotView(imported);
+            renderStatus(evidenceStatus, isEnglish ? "Loaded intake queue packet into pilot ops." : "Đã nạp intake queue packet vào pilot ops.", "ok");
             return;
           }
 

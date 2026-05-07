@@ -17,7 +17,8 @@ const checks = [
       /avoiding/,
       /human_reflection/,
       /intake queue/i,
-      /recommended route/i
+      /recommended route/i,
+      /admin reflection and admin pilot can now import/i
     ]
   },
   {
@@ -165,6 +166,7 @@ const checks = [
       /Triage trước khi trả lời/,
       /id="reflection-status"/,
       /id="reflection-evidence-output"/,
+      /intake queue packet/i,
       /Quay lại Members/
     ]
   },
@@ -176,6 +178,7 @@ const checks = [
       /Triage before replying/,
       /id="reflection-status"/,
       /id="reflection-evidence-output"/,
+      /intake queue packet/i,
       /Back to Members/
     ]
   },
@@ -208,6 +211,7 @@ const checks = [
       /Readiness pilot 14 ngày/,
       /id="pilot-status"/,
       /id="pilot-evidence-output"/,
+      /intake queue packet/i,
       /Day 1/,
       /Day 3/,
       /Day 7/
@@ -220,6 +224,7 @@ const checks = [
       /14-day pilot readiness/,
       /id="pilot-status"/,
       /id="pilot-evidence-output"/,
+      /intake queue packet/i,
       /Day 1/,
       /Day 3/,
       /Day 7/
@@ -272,6 +277,7 @@ const checks = [
       /admin_member_snapshot_queue/,
       /buildMemberSnapshotQueuePacket/,
       /mergeMemberSnapshotQueueItems/,
+      /imported_admin_intake_queue/,
       /recommendedRouteForSnapshot/,
       /queueRecommendedRoute/,
       /queueLastRoutedTo/,

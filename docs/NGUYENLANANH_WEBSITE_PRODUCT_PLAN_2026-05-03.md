@@ -149,6 +149,7 @@ Decision gate:
 - Hidden admin reflection pages exist at `/admin/reflection/` and `/en/admin/reflection/`, are noindex, and stay outside public navigation.
 - Hidden admin reflection pages include a browser-local evidence packet with copy, export, import, and reset actions for quiet internal handoff before persistence exists.
 - Hidden admin pilot pages exist at `/admin/pilot/` and `/en/admin/pilot/`, are noindex, and stay outside public navigation.
+- Admin dashboard, reflection ops, and pilot ops now share the same browser-local counts for saved handoffs, matched handoffs, and ready profiles with honest check-ins so operations does not switch language between modules.
 - Existing public content gates pass.
 - Payment rails endpoint remains live and unchanged in contract.
 - Changes are committed, pushed, deployed, and smoke-tested.

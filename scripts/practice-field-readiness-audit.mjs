@@ -210,11 +210,13 @@ const checks = [
       /Needs human reflection|Cần phản hồi người thật/,
       /reflection-evidence-output/,
       /Copied reflection evidence|Đã copy reflection evidence/,
+      /matched_handoffs/,
       /function initPilot\(\)/,
       /nla_member_profiles/,
       /pilot-status/,
       /Ready for Day 1 welcome|Sẵn sàng welcome Day 1/,
       /pilot-evidence-output/,
+      /ready_profiles_with_checkin/,
       /Copy evidence|Đã copy pilot evidence/
     ]
   },

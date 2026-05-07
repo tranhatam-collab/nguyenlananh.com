@@ -338,6 +338,47 @@
       .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
   }
 
+  function reflectionHandoffMatchesSignal(handoff, signal) {
+    if (!handoff || !signal) return false;
+    if (handoff.sourceDay && signal.day && handoff.sourceDay === signal.day) return true;
+    if (handoff.sourceOneLine && signal.oneLine && handoff.sourceOneLine === signal.oneLine) return true;
+    return false;
+  }
+
+  function getOpsSnapshot() {
+    const signals = getMemberPracticeSignals();
+    const handoffs = getMemberReflectionHandoffs();
+    const profiles = getMemberProfiles();
+    const latestPractice = getLatestPracticeEntries();
+    const reflectionSignals = signals.filter((item) => item.practiceState === "human_reflection");
+    const avoidingSignals = signals.filter((item) => item.practiceState === "avoiding");
+    const readyProfiles = profiles.filter((item) => memberProfileIsComplete(item));
+    const pausedProfiles = profiles.filter((item) => isFutureIso(item.reminderPausedUntil));
+    const profilesWithHonestCheckin = readyProfiles.filter(() => {
+      const latest = latestPractice[0];
+      return Boolean(latest?.practiceState && latest?.oneLine);
+    });
+    const matchedHandoffs = handoffs.filter((handoff) =>
+      signals.some((signal) => reflectionHandoffMatchesSignal(handoff, signal))
+    );
+
+    return {
+      signals,
+      handoffs,
+      profiles,
+      latestPractice,
+      counts: {
+        reflectionSignals: reflectionSignals.length,
+        avoidingSignals: avoidingSignals.length,
+        savedHandoffs: handoffs.length,
+        matchedHandoffs: matchedHandoffs.length,
+        readyProfiles: readyProfiles.length,
+        pausedProfiles: pausedProfiles.length,
+        readyProfilesWithCheckin: profilesWithHonestCheckin.length
+      }
+    };
+  }
+
   function memberProfileIsComplete(profile) {
     return ["fullName", "currentState", "desiredShift", "companionRhythm", "practiceTrack", "reminderIntensity"]
       .every((key) => String(profile?.[key] || "").trim().length > 0);
@@ -879,12 +920,14 @@
     const published = Array.isArray(launchItems)
       ? launchItems.filter((item) => item?.status === "published").length
       : 0;
-    const reflectionSignals = getMemberPracticeSignals();
-    const reflectionCount = reflectionSignals.filter((item) => item.practiceState === "human_reflection").length;
-    const avoidingCount = reflectionSignals.filter((item) => item.practiceState === "avoiding").length;
-    const profiles = getMemberProfiles();
-    const pilotReadyCount = profiles.filter((item) => memberProfileIsComplete(item)).length;
-    const pausedCount = profiles.filter((item) => isFutureIso(item.reminderPausedUntil)).length;
+    const opsSnapshot = getOpsSnapshot();
+    const reflectionCount = opsSnapshot.counts.reflectionSignals;
+    const avoidingCount = opsSnapshot.counts.avoidingSignals;
+    const savedHandoffs = opsSnapshot.counts.savedHandoffs;
+    const matchedHandoffs = opsSnapshot.counts.matchedHandoffs;
+    const pilotReadyCount = opsSnapshot.counts.readyProfiles;
+    const pausedCount = opsSnapshot.counts.pausedProfiles;
+    const readyWithCheckin = opsSnapshot.counts.readyProfilesWithCheckin;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -912,6 +955,8 @@
         <ul class="list">
           <li>Human reflection: <strong>${reflectionCount}</strong></li>
           <li>Avoiding: <strong>${avoidingCount}</strong></li>
+          <li>Saved handoffs: <strong>${savedHandoffs}</strong></li>
+          <li>Signals with handoff: <strong>${matchedHandoffs}</strong></li>
           <li><a href="${location.pathname.startsWith("/en/") ? "/en/admin/reflection/" : "/admin/reflection/"}">Open reflection ops</a></li>
         </ul>
       </article>
@@ -919,6 +964,7 @@
         <h3>Pilot readiness</h3>
         <ul class="list">
           <li>Ready profiles: <strong>${pilotReadyCount}</strong></li>
+          <li>Ready + honest check-in: <strong>${readyWithCheckin}</strong></li>
           <li>Paused reminders: <strong>${pausedCount}</strong></li>
           <li><a href="${location.pathname.startsWith("/en/") ? "/en/admin/pilot/" : "/admin/pilot/"}">Open pilot ops</a></li>
         </ul>
@@ -956,7 +1002,8 @@
     }
 
     if (memberLog) {
-      memberLog.innerHTML = `<ul class="list"><li>Đề xuất: chuyển sang DB-driven theo sprint 2 để có real-time metrics.</li><li>Mở module reflection để xử lý tín hiệu <strong>tôi đang né</strong> và <strong>tôi cần người thật phản hồi</strong>.</li></ul>`;
+      const opsSnapshot = getOpsSnapshot();
+      memberLog.innerHTML = `<ul class="list"><li>Đề xuất: chuyển sang DB-driven theo sprint 2 để có real-time metrics.</li><li>Mở module reflection để xử lý tín hiệu <strong>tôi đang né</strong> và <strong>tôi cần người thật phản hồi</strong>.</li><li>Hiện có <strong>${opsSnapshot.counts.savedHandoffs}</strong> handoff 3 dòng đã được lưu local và <strong>${opsSnapshot.counts.readyProfilesWithCheckin}</strong> hồ sơ đã đủ profile + check-in để rà vào pilot.</li></ul>`;
     }
   }
 
@@ -974,10 +1021,14 @@
     if (!status && !list && !log) return;
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
-    const signals = getMemberPracticeSignals();
-    const handoffs = getMemberReflectionHandoffs();
+    const opsSnapshot = getOpsSnapshot();
+    const signals = opsSnapshot.signals;
+    const handoffs = opsSnapshot.handoffs;
     const reflectionItems = signals.filter((item) => item.practiceState === "human_reflection");
     const avoidingItems = signals.filter((item) => item.practiceState === "avoiding");
+    const matchedHandoffs = handoffs.filter((handoff) =>
+      signals.some((signal) => reflectionHandoffMatchesSignal(handoff, signal))
+    );
 
     function renderReflectionView(view) {
       const items = Array.isArray(view?.signals) ? view.signals : [];
@@ -989,8 +1040,8 @@
 
       if (status) {
         status.textContent = isEnglish
-          ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding.`
-          : `Đang hiển thị ${items.length} tín hiệu thực hành gần đây từ ${sourceLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né.`;
+          ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
+          : `Đang hiển thị ${items.length} tín hiệu thực hành gần đây từ ${sourceLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
       }
 
       if (list) {
@@ -1000,7 +1051,7 @@
             : `<p class="note">Chưa có reflection evidence nào. Tiếp tục dùng module này như khung triage cho tới khi hàng đợi chuyển sang persistence có D1.</p>`;
         } else {
           list.innerHTML = `<ul class="checkList">${items.map((item) => {
-            const handoff = handoffs.find((entry) => entry.sourceDay === item.day || entry.sourceOneLine === item.oneLine);
+            const handoff = handoffs.find((entry) => reflectionHandoffMatchesSignal(entry, item));
             const stateLabel = item.practiceState === "human_reflection"
               ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
               : (isEnglish ? "Avoiding" : "Đang né");
@@ -1041,8 +1092,9 @@
       human_reflection: reflectionItems.length,
       avoiding: avoidingItems.length,
       saved_handoffs: handoffs.length,
+      matched_handoffs: matchedHandoffs.length,
       next_gate: reflectionItems.length
-        ? (isEnglish ? "Human reflection signals are waiting for a short grounded reply." : "Các tín hiệu cần người thật phản hồi đang chờ một hồi đáp ngắn và neo lại.")
+        ? (isEnglish ? "Human reflection signals are waiting for a short grounded reply. Prioritize the ones that already include a saved handoff." : "Các tín hiệu cần người thật phản hồi đang chờ một hồi đáp ngắn và neo lại. Hãy ưu tiên những tín hiệu đã có handoff được lưu.")
         : (isEnglish ? "No human reflection signal is waiting right now." : "Hiện chưa có tín hiệu nào đang chờ người thật phản hồi."),
       signals: signals.map((item) => ({
         day: item.day || "",
@@ -1129,8 +1181,9 @@
     if (!status && !summary && !list && !log) return;
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
-    const profiles = getMemberProfiles();
-    const latestPractice = getLatestPracticeEntries()[0] || null;
+    const opsSnapshot = getOpsSnapshot();
+    const profiles = opsSnapshot.profiles;
+    const latestPractice = opsSnapshot.latestPractice[0] || null;
     const readyProfiles = profiles.filter((item) => memberProfileIsComplete(item));
     const pausedProfiles = profiles.filter((item) => isFutureIso(item.reminderPausedUntil));
     const gentleProfiles = readyProfiles.filter((item) => item.practiceTrack === "gentle");
@@ -1174,8 +1227,8 @@
 
       if (status) {
         status.textContent = isEnglish
-          ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused.`
-          : `Đang hiển thị ${participants.length} hồ sơ từ ${sourceLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc.`;
+          ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
+          : `Đang hiển thị ${participants.length} hồ sơ từ ${sourceLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
       }
 
       if (summary) {
@@ -1249,6 +1302,11 @@
       next_gate: readyProfiles.length >= 10
         ? (isEnglish ? "Enough ready profiles to review pilot invite list." : "Đã có đủ hồ sơ sẵn sàng để rà danh sách mời pilot.")
         : (isEnglish ? "Keep collecting complete profiles before opening a real pilot." : "Tiếp tục gom đủ profile hoàn chỉnh trước khi mở pilot thật."),
+      shared_ops_language: {
+        saved_handoffs: opsSnapshot.counts.savedHandoffs,
+        matched_handoffs: opsSnapshot.counts.matchedHandoffs,
+        ready_profiles_with_checkin: opsSnapshot.counts.readyProfilesWithCheckin
+      },
       participants: localParticipants
     };
 

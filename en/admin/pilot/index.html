@@ -121,6 +121,14 @@
         <textarea id="pilot-evidence-output" rows="12" readonly></textarea>
       </div>
       <p id="pilot-evidence-status" class="note"></p>
+      <div class="field" style="margin-top:12px;">
+        <label for="pilot-evidence-import">Import evidence from another machine</label>
+        <textarea id="pilot-evidence-import" rows="8" placeholder="Paste a JSON evidence packet here when you need to hand off across machines."></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="pilot-evidence-apply" class="ghost" type="button">Use pasted evidence</button>
+        <button id="pilot-evidence-reset" class="ghost" type="button">Return to local data</button>
+      </div>
     </section>
 
     <section class="panel admin-only" data-requires="members">

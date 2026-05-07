@@ -996,9 +996,12 @@
     const list = $("#pilot-list");
     const log = $("#pilot-log");
     const evidenceOutput = $("#pilot-evidence-output");
+    const evidenceImport = $("#pilot-evidence-import");
     const evidenceStatus = $("#pilot-evidence-status");
     const evidenceCopy = $("#pilot-evidence-copy");
     const evidenceExport = $("#pilot-evidence-export");
+    const evidenceApply = $("#pilot-evidence-apply");
+    const evidenceReset = $("#pilot-evidence-reset");
     if (!status && !summary && !list && !log) return;
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
@@ -1008,54 +1011,82 @@
     const pausedProfiles = profiles.filter((item) => isFutureIso(item.reminderPausedUntil));
     const gentleProfiles = readyProfiles.filter((item) => item.practiceTrack === "gentle");
     const deepProfiles = readyProfiles.filter((item) => item.practiceTrack === "deep");
+    const localParticipants = profiles.map((item) => {
+      const ready = memberProfileIsComplete(item);
+      const paused = isFutureIso(item.reminderPausedUntil);
+      const latestState = latestPractice?.practiceState || "";
+      const nextTouchpoint = paused
+        ? (isEnglish ? "Respect pause" : "Tôn trọng pause")
+        : latestState === "human_reflection"
+          ? (isEnglish ? "Day 3 human review" : "Day 3 phản hồi người thật")
+          : latestState === "avoiding"
+            ? (isEnglish ? "Day 3 avoidance follow-up" : "Day 3 follow-up điểm né")
+            : ready
+              ? (isEnglish ? "Ready for Day 1 welcome" : "Sẵn sàng welcome Day 1")
+              : (isEnglish ? "Finish profile first" : "Hoàn thiện profile trước");
+      return {
+        email: item.email,
+        fullName: item.fullName || "",
+        practiceTrack: item.practiceTrack || "",
+        reminderIntensity: item.reminderIntensity || "",
+        reminderPausedUntil: item.reminderPausedUntil || "",
+        profileReady: ready,
+        updatedAt: item.updatedAt || "",
+        currentState: item.currentState || "",
+        latestPracticeState: latestState,
+        nextTouchpoint
+      };
+    });
 
-    if (status) {
-      status.textContent = isEnglish
-        ? `Detected ${profiles.length} local member profiles in this browser. ${readyProfiles.length} are ready for pilot review, ${pausedProfiles.length} are currently paused.`
-        : `Phát hiện ${profiles.length} hồ sơ thành viên local trong trình duyệt này. ${readyProfiles.length} hồ sơ đã đủ để rà pilot, ${pausedProfiles.length} hồ sơ đang tạm dừng nhắc.`;
-    }
+    function renderPilotView(view) {
+      const participants = Array.isArray(view?.participants) ? view.participants : [];
+      const readyCount = Number(view?.profiles_ready || 0);
+      const pausedCount = Number(view?.paused_profiles || 0);
+      const gentleCount = Number(view?.tracks?.gentle || 0);
+      const deepCount = Number(view?.tracks?.deep || 0);
+      const sourceLabel = view?.source === "imported_pilot_ops"
+        ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
+        : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
-    if (summary) {
-      summary.innerHTML = `<div class="kpiRow">
-        <article class="kpi"><strong>${readyProfiles.length}</strong><span>${isEnglish ? "Ready" : "Sẵn sàng"}</span></article>
-        <article class="kpi"><strong>${gentleProfiles.length}</strong><span>${isEnglish ? "Gentle" : "Nhịp nhẹ"}</span></article>
-        <article class="kpi"><strong>${deepProfiles.length}</strong><span>${isEnglish ? "Deep" : "Đối diện sâu"}</span></article>
-        <article class="kpi"><strong>${pausedProfiles.length}</strong><span>${isEnglish ? "Paused" : "Tạm dừng"}</span></article>
-      </div>`;
-    }
+      if (status) {
+        status.textContent = isEnglish
+          ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused.`
+          : `Đang hiển thị ${participants.length} hồ sơ từ ${sourceLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc.`;
+      }
 
-    if (list) {
-      if (!profiles.length) {
-        list.innerHTML = isEnglish
-          ? `<p class="note">No local member profiles found in this browser yet. Use this module as the pilot contract until D1-backed participant state is added.</p>`
-          : `<p class="note">Chưa có hồ sơ thành viên local trong trình duyệt này. Dùng module này như khung pilot cho tới khi có participant state trên D1.</p>`;
-      } else {
-        list.innerHTML = `<ul class="checkList">${profiles.map((item) => {
-          const ready = memberProfileIsComplete(item);
-          const paused = isFutureIso(item.reminderPausedUntil);
-          const trackLabel = item.practiceTrack === "deep"
-            ? (isEnglish ? "Deep Facing" : "Đối diện sâu")
-            : item.practiceTrack === "gentle"
-              ? (isEnglish ? "Gentle Rhythm" : "Nhịp nhẹ")
-              : (isEnglish ? "Missing track" : "Thiếu track");
-          const reminderLabel = item.reminderIntensity || (isEnglish ? "missing reminder" : "thiếu mức nhắc");
-          const latestState = latestPractice?.practiceState || "";
-          const nextTouchpoint = paused
-            ? (isEnglish ? "Respect pause" : "Tôn trọng pause")
-            : latestState === "human_reflection"
-              ? (isEnglish ? "Day 3 human review" : "Day 3 phản hồi người thật")
-              : latestState === "avoiding"
-                ? (isEnglish ? "Day 3 avoidance follow-up" : "Day 3 follow-up điểm né")
-                : ready
-                  ? (isEnglish ? "Ready for Day 1 welcome" : "Sẵn sàng welcome Day 1")
-                  : (isEnglish ? "Finish profile first" : "Hoàn thiện profile trước");
-          return `<li class="checkItem"><input type="checkbox" disabled ${ready ? "checked" : ""}><div>
-            <strong>${safeText(item.fullName || item.email)}</strong>
-            <p class="note">${safeText(trackLabel)} • ${safeText(reminderLabel)} • ${paused ? safeText(isEnglish ? "paused" : "đang pause") : safeText(isEnglish ? "active" : "đang mở")}</p>
-            <p class="note">${safeText(isEnglish ? "Next touchpoint" : "Điểm chạm kế tiếp")}: ${safeText(nextTouchpoint)}</p>
-            <p>${safeText(item.currentState || (isEnglish ? "No current state yet." : "Chưa có current state."))}</p>
-          </div></li>`;
-        }).join("")}</ul>`;
+      if (summary) {
+        summary.innerHTML = `<div class="kpiRow">
+          <article class="kpi"><strong>${readyCount}</strong><span>${isEnglish ? "Ready" : "Sẵn sàng"}</span></article>
+          <article class="kpi"><strong>${gentleCount}</strong><span>${isEnglish ? "Gentle" : "Nhịp nhẹ"}</span></article>
+          <article class="kpi"><strong>${deepCount}</strong><span>${isEnglish ? "Deep" : "Đối diện sâu"}</span></article>
+          <article class="kpi"><strong>${pausedCount}</strong><span>${isEnglish ? "Paused" : "Tạm dừng"}</span></article>
+        </div>`;
+      }
+
+      if (list) {
+        if (!participants.length) {
+          list.innerHTML = isEnglish
+            ? `<p class="note">No participant evidence is available yet. Keep using this module as the pilot contract until D1-backed participant state is added.</p>`
+            : `<p class="note">Chưa có participant evidence nào. Tiếp tục dùng module này như khung pilot cho tới khi có participant state trên D1.</p>`;
+        } else {
+          list.innerHTML = `<ul class="checkList">${participants.map((item) => {
+            const trackLabel = item.practiceTrack === "deep"
+              ? (isEnglish ? "Deep Facing" : "Đối diện sâu")
+              : item.practiceTrack === "gentle"
+                ? (isEnglish ? "Gentle Rhythm" : "Nhịp nhẹ")
+                : (isEnglish ? "Missing track" : "Thiếu track");
+            const reminderLabel = item.reminderIntensity || (isEnglish ? "missing reminder" : "thiếu mức nhắc");
+            const paused = isFutureIso(item.reminderPausedUntil);
+            const stateLabel = item.latestPracticeState || (isEnglish ? "no recent check-in" : "chưa có check-in gần đây");
+            const nextTouchpoint = item.nextTouchpoint || (isEnglish ? "Review manually" : "Rà thủ công");
+            return `<li class="checkItem"><input type="checkbox" disabled ${item.profileReady ? "checked" : ""}><div>
+              <strong>${safeText(item.fullName || item.email)}</strong>
+              <p class="note">${safeText(trackLabel)} • ${safeText(reminderLabel)} • ${paused ? safeText(isEnglish ? "paused" : "đang pause") : safeText(isEnglish ? "active" : "đang mở")}</p>
+              <p class="note">${safeText(isEnglish ? "Latest state" : "Trạng thái gần nhất")}: ${safeText(stateLabel)} • ${safeText(isEnglish ? "Next touchpoint" : "Điểm chạm kế tiếp")}: ${safeText(nextTouchpoint)}</p>
+              <p>${safeText(item.currentState || (isEnglish ? "No current state yet." : "Chưa có current state."))}</p>
+            </div></li>`;
+          }).join("")}</ul>`;
+        }
       }
     }
 
@@ -1094,20 +1125,14 @@
       next_gate: readyProfiles.length >= 10
         ? (isEnglish ? "Enough ready profiles to review pilot invite list." : "Đã có đủ hồ sơ sẵn sàng để rà danh sách mời pilot.")
         : (isEnglish ? "Keep collecting complete profiles before opening a real pilot." : "Tiếp tục gom đủ profile hoàn chỉnh trước khi mở pilot thật."),
-      participants: profiles.map((item) => ({
-        email: item.email,
-        fullName: item.fullName || "",
-        practiceTrack: item.practiceTrack || "",
-        reminderIntensity: item.reminderIntensity || "",
-        reminderPausedUntil: item.reminderPausedUntil || "",
-        profileReady: memberProfileIsComplete(item),
-        updatedAt: item.updatedAt || ""
-      }))
+      participants: localParticipants
     };
 
     if (evidenceOutput) {
       evidenceOutput.value = JSON.stringify(evidence, null, 2);
     }
+
+    renderPilotView(evidence);
 
     if (evidenceCopy) {
       evidenceCopy.addEventListener("click", async () => {
@@ -1134,6 +1159,32 @@
         } catch (_error) {
           renderStatus(evidenceStatus, isEnglish ? "Unable to export pilot evidence." : "Không export được pilot evidence.", "danger");
         }
+      });
+    }
+
+    if (evidenceApply) {
+      evidenceApply.addEventListener("click", () => {
+        try {
+          const parsed = JSON.parse(evidenceImport?.value || "{}");
+          if (!Array.isArray(parsed.participants)) {
+            throw new Error("INVALID_PILOT_EVIDENCE");
+          }
+          const imported = {
+            ...parsed,
+            source: "imported_pilot_ops"
+          };
+          renderPilotView(imported);
+          renderStatus(evidenceStatus, isEnglish ? "Loaded pasted pilot evidence." : "Đã nạp pilot evidence đã dán.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to parse pasted pilot evidence." : "Không parse được pilot evidence đã dán.", "danger");
+        }
+      });
+    }
+
+    if (evidenceReset) {
+      evidenceReset.addEventListener("click", () => {
+        renderPilotView(evidence);
+        renderStatus(evidenceStatus, isEnglish ? "Returned to local pilot data." : "Đã quay lại dữ liệu pilot local.", "ok");
       });
     }
   }

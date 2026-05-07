@@ -9,7 +9,8 @@
     launchPack: "nla_admin_launch_pack_v2",
     siteConfig: "nla_admin_site_config_v2",
     roleMatrix: "nla_admin_role_matrix_v2",
-    users: "nla_admin_users_v2"
+    users: "nla_admin_users_v2",
+    memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1"
   };
 
   const ADMIN_PERMISSIONS = [
@@ -230,6 +231,14 @@
 
   function saveAccounts(accounts) {
     writeJSON(STORAGE_KEYS.users, accounts);
+  }
+
+  function getMemberSnapshotQueue() {
+    return readJSON(STORAGE_KEYS.memberSnapshotQueue, []);
+  }
+
+  function saveMemberSnapshotQueue(items) {
+    writeJSON(STORAGE_KEYS.memberSnapshotQueue, items);
   }
 
   function resolveAccount(username, password) {
@@ -913,8 +922,11 @@
     if (!container) return;
     const memberSnapshotImport = $("#member-snapshot-import");
     const memberSnapshotApply = $("#member-snapshot-apply");
+    const memberSnapshotSave = $("#member-snapshot-save");
+    const memberSnapshotClear = $("#member-snapshot-clear");
     const memberSnapshotStatus = $("#member-snapshot-status");
     const memberSnapshotView = $("#member-snapshot-view");
+    const memberSnapshotQueue = $("#member-snapshot-queue");
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
@@ -933,6 +945,7 @@
     const pilotReadyCount = opsSnapshot.counts.readyProfiles;
     const pausedCount = opsSnapshot.counts.pausedProfiles;
     const readyWithCheckin = opsSnapshot.counts.readyProfilesWithCheckin;
+    const importedMemberPackets = getMemberSnapshotQueue();
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -953,6 +966,7 @@
         <h3>Members Snapshot</h3>
         <ul class="list">
           ${membersOps.map((item) => `<li>${item.label}: <strong>${safeText(item.value)}</strong> (${safeText(item.hint)})`).join("")}
+          <li>${safeText(isEnglish ? "Imported member packets" : "Member packet đã nhập")}: <strong>${importedMemberPackets.length}</strong></li>
         </ul>
       </article>
       <article class="panel">
@@ -1011,6 +1025,27 @@
       </div>`;
     }
 
+    function renderMemberSnapshotQueue() {
+      if (!memberSnapshotQueue) return;
+      const queue = getMemberSnapshotQueue();
+      if (!queue.length) {
+        memberSnapshotQueue.innerHTML = `<p class="note">${safeText(isEnglish ? "No imported member packet is saved yet." : "Chưa có member packet nào được lưu trong intake queue.")}</p>`;
+        return;
+      }
+      memberSnapshotQueue.innerHTML = `<div>
+        <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
+        <ul class="checkList">${queue.map((packet) => {
+          const paused = isFutureIso(packet.reminderPausedUntil);
+          const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");
+          return `<li class="checkItem"><input type="checkbox" disabled ${packet.profileReady ? "checked" : ""}><div>
+            <strong>${safeText(packet.fullName || packet.email || "-")}</strong>
+            <p class="note">${safeText(packet.email || "-")} • ${safeText(packet.updatedAt || "-")}</p>
+            <p class="note">${safeText(isEnglish ? "Latest state" : "Trạng thái gần nhất")}: ${safeText(latestState)} • ${safeText(isEnglish ? "Pause" : "Pause")}: ${safeText(paused ? (isEnglish ? "active" : "đang mở") : (isEnglish ? "clear" : "đã thông"))}</p>
+          </div></li>`;
+        }).join("")}</ul>
+      </div>`;
+    }
+
     memberSnapshotApply?.addEventListener("click", () => {
       try {
         const parsed = JSON.parse(memberSnapshotImport?.value || "{}");
@@ -1025,6 +1060,32 @@
         renderStatus(memberSnapshotStatus, isEnglish ? "Unable to parse member snapshot packet." : "Không parse được member snapshot packet.", "danger");
       }
     });
+
+    memberSnapshotSave?.addEventListener("click", () => {
+      try {
+        const parsed = JSON.parse(memberSnapshotImport?.value || "{}");
+        const isMemberPacket = parsed?.packet_type === "member_ops_snapshot"
+          && typeof parsed?.email === "string";
+        if (!isMemberPacket) {
+          throw new Error("INVALID_MEMBER_SNAPSHOT");
+        }
+        const queue = getMemberSnapshotQueue().filter((item) => item.email !== parsed.email);
+        queue.unshift(parsed);
+        saveMemberSnapshotQueue(queue.slice(0, 12));
+        renderMemberSnapshotQueue();
+        renderStatus(memberSnapshotStatus, isEnglish ? "Saved member snapshot to intake queue." : "Đã lưu member snapshot vào intake queue.", "ok");
+      } catch (_error) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Unable to save member snapshot packet." : "Không lưu được member snapshot packet.", "danger");
+      }
+    });
+
+    memberSnapshotClear?.addEventListener("click", () => {
+      saveMemberSnapshotQueue([]);
+      renderMemberSnapshotQueue();
+      renderStatus(memberSnapshotStatus, isEnglish ? "Cleared intake queue." : "Đã xóa intake queue.", "ok");
+    });
+
+    renderMemberSnapshotQueue();
   }
 
   function initMembers() {

@@ -239,6 +239,8 @@ const checks = [
     patterns: [
       /function initReflection\(\)/,
       /member-snapshot-import/,
+      /member-snapshot-queue/,
+      /member-snapshot-save/,
       /member_ops_snapshot/,
       /nla_member_progress/,
       /nla_member_reflection_handoffs/,

@@ -10,7 +10,9 @@
     siteConfig: "nla_admin_site_config_v2",
     roleMatrix: "nla_admin_role_matrix_v2",
     users: "nla_admin_users_v2",
-    memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1"
+    memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1",
+    pendingReflectionPacket: "nla_admin_pending_reflection_packet_v1",
+    pendingPilotPacket: "nla_admin_pending_pilot_packet_v1"
   };
 
   const ADMIN_PERMISSIONS = [
@@ -239,6 +241,30 @@
 
   function saveMemberSnapshotQueue(items) {
     writeJSON(STORAGE_KEYS.memberSnapshotQueue, items);
+  }
+
+  function savePendingReflectionPacket(packet) {
+    writeJSON(STORAGE_KEYS.pendingReflectionPacket, packet || null);
+  }
+
+  function getPendingReflectionPacket() {
+    return readJSON(STORAGE_KEYS.pendingReflectionPacket, null);
+  }
+
+  function clearPendingReflectionPacket() {
+    localStorage.removeItem(STORAGE_KEYS.pendingReflectionPacket);
+  }
+
+  function savePendingPilotPacket(packet) {
+    writeJSON(STORAGE_KEYS.pendingPilotPacket, packet || null);
+  }
+
+  function getPendingPilotPacket() {
+    return readJSON(STORAGE_KEYS.pendingPilotPacket, null);
+  }
+
+  function clearPendingPilotPacket() {
+    localStorage.removeItem(STORAGE_KEYS.pendingPilotPacket);
   }
 
   function resolveAccount(username, password) {
@@ -1041,6 +1067,10 @@
             <strong>${safeText(packet.fullName || packet.email || "-")}</strong>
             <p class="note">${safeText(packet.email || "-")} • ${safeText(packet.updatedAt || "-")}</p>
             <p class="note">${safeText(isEnglish ? "Latest state" : "Trạng thái gần nhất")}: ${safeText(latestState)} • ${safeText(isEnglish ? "Pause" : "Pause")}: ${safeText(paused ? (isEnglish ? "active" : "đang mở") : (isEnglish ? "clear" : "đã thông"))}</p>
+            <div class="actionsRow" style="margin-top:8px;">
+              <button class="ghost" type="button" data-member-queue-action="reflection" data-member-queue-email="${safeText(packet.email || "")}">${safeText(isEnglish ? "Send to reflection ops" : "Gửi sang reflection ops")}</button>
+              <button class="ghost" type="button" data-member-queue-action="pilot" data-member-queue-email="${safeText(packet.email || "")}">${safeText(isEnglish ? "Send to pilot ops" : "Gửi sang pilot ops")}</button>
+            </div>
           </div></li>`;
         }).join("")}</ul>
       </div>`;
@@ -1083,6 +1113,27 @@
       saveMemberSnapshotQueue([]);
       renderMemberSnapshotQueue();
       renderStatus(memberSnapshotStatus, isEnglish ? "Cleared intake queue." : "Đã xóa intake queue.", "ok");
+    });
+
+    memberSnapshotQueue?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-member-queue-action]");
+      if (!trigger) return;
+      const email = String(trigger.getAttribute("data-member-queue-email") || "");
+      const action = String(trigger.getAttribute("data-member-queue-action") || "");
+      const packet = getMemberSnapshotQueue().find((item) => item.email === email);
+      if (!packet) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Packet not found in queue." : "Không tìm thấy packet trong queue.", "danger");
+        return;
+      }
+      if (action === "reflection") {
+        savePendingReflectionPacket(packet);
+        window.location.href = isEnglish ? "/en/admin/reflection/" : "/admin/reflection/";
+        return;
+      }
+      if (action === "pilot") {
+        savePendingPilotPacket(packet);
+        window.location.href = isEnglish ? "/en/admin/pilot/" : "/admin/pilot/";
+      }
     });
 
     renderMemberSnapshotQueue();
@@ -1312,6 +1363,30 @@
         renderReflectionView(evidence);
         renderStatus(evidenceStatus, isEnglish ? "Returned to local reflection data." : "Đã quay lại dữ liệu reflection local.", "ok");
       });
+    }
+
+    const pendingMemberSnapshot = getPendingReflectionPacket();
+    if (pendingMemberSnapshot && evidenceImport) {
+      const packet = {
+        packet_type: "member_reflection_handoff",
+        email: pendingMemberSnapshot.email || "",
+        line1: pendingMemberSnapshot.latestPracticeState === "avoiding"
+          ? (pendingMemberSnapshot.latestPracticeLine || "")
+          : "",
+        line2: "",
+        line3: pendingMemberSnapshot.latestPracticeState === "human_reflection"
+          ? (pendingMemberSnapshot.latestPracticeLine || "")
+          : (pendingMemberSnapshot.hasSavedHandoff
+            ? (isEnglish ? "Member already saved a handoff in their own flow." : "Thành viên đã có handoff được lưu ở flow riêng.")
+            : ""),
+        sourceState: pendingMemberSnapshot.latestPracticeState || "",
+        sourceDay: pendingMemberSnapshot.latestPracticeDay || "",
+        sourceOneLine: pendingMemberSnapshot.latestPracticeLine || "",
+        updatedAt: pendingMemberSnapshot.updatedAt || ""
+      };
+      evidenceImport.value = JSON.stringify(packet, null, 2);
+      evidenceApply?.click();
+      clearPendingReflectionPacket();
     }
   }
 
@@ -1578,6 +1653,27 @@
         renderPilotView(evidence);
         renderStatus(evidenceStatus, isEnglish ? "Returned to local pilot data." : "Đã quay lại dữ liệu pilot local.", "ok");
       });
+    }
+
+    const pendingMemberSnapshot = getPendingPilotPacket();
+    if (pendingMemberSnapshot && evidenceImport) {
+      const packet = {
+        packet_type: "member_pilot_readiness",
+        email: pendingMemberSnapshot.email || "",
+        fullName: pendingMemberSnapshot.fullName || "",
+        practiceTrack: "",
+        reminderIntensity: "",
+        reminderPausedUntil: pendingMemberSnapshot.reminderPausedUntil || "",
+        profileReady: Boolean(pendingMemberSnapshot.profileReady),
+        latestPracticeState: pendingMemberSnapshot.latestPracticeState || "",
+        latestPracticeDay: pendingMemberSnapshot.latestPracticeDay || "",
+        latestPracticeLine: pendingMemberSnapshot.latestPracticeLine || "",
+        currentState: pendingMemberSnapshot.currentState || "",
+        updatedAt: pendingMemberSnapshot.updatedAt || ""
+      };
+      evidenceImport.value = JSON.stringify(packet, null, 2);
+      evidenceApply?.click();
+      clearPendingPilotPacket();
     }
   }
 

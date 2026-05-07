@@ -286,6 +286,49 @@
       .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
   }
 
+  function getMemberProfiles() {
+    const profiles = readJSON("nla_member_profiles", null);
+    if (!profiles || typeof profiles !== "object") return [];
+
+    return Object.entries(profiles).map(([email, profile]) => ({
+      email,
+      fullName: String(profile?.fullName || "").trim(),
+      currentState: String(profile?.currentState || "").trim(),
+      desiredShift: String(profile?.desiredShift || "").trim(),
+      companionRhythm: String(profile?.companionRhythm || "").trim(),
+      practiceTrack: String(profile?.practiceTrack || "").trim(),
+      reminderIntensity: String(profile?.reminderIntensity || "").trim(),
+      reminderPausedUntil: String(profile?.reminderPausedUntil || "").trim(),
+      updatedAt: String(profile?.updatedAt || "").trim()
+    }));
+  }
+
+  function getLatestPracticeEntries() {
+    const progress = readJSON("nla_member_progress", null);
+    const days = progress?.practice?.days;
+    if (!days || typeof days !== "object") return [];
+
+    return Object.entries(days)
+      .map(([day, item]) => ({
+        day,
+        practiceState: item?.practiceState || "",
+        oneLine: String(item?.oneLine || "").trim(),
+        needsHumanReflection: Boolean(item?.needsHumanReflection),
+        updatedAt: item?.updatedAt || ""
+      }))
+      .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+  }
+
+  function memberProfileIsComplete(profile) {
+    return ["fullName", "currentState", "desiredShift", "companionRhythm", "practiceTrack", "reminderIntensity"]
+      .every((key) => String(profile?.[key] || "").trim().length > 0);
+  }
+
+  function isFutureIso(value) {
+    const time = new Date(value || 0).getTime();
+    return Number.isFinite(time) && time > Date.now();
+  }
+
   function renderStatus(el, message, variant = "info") {
     if (!el) return;
     el.textContent = message || "";
@@ -820,6 +863,9 @@
     const reflectionSignals = getMemberPracticeSignals();
     const reflectionCount = reflectionSignals.filter((item) => item.practiceState === "human_reflection").length;
     const avoidingCount = reflectionSignals.filter((item) => item.practiceState === "avoiding").length;
+    const profiles = getMemberProfiles();
+    const pilotReadyCount = profiles.filter((item) => memberProfileIsComplete(item)).length;
+    const pausedCount = profiles.filter((item) => isFutureIso(item.reminderPausedUntil)).length;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -848,6 +894,14 @@
           <li>Human reflection: <strong>${reflectionCount}</strong></li>
           <li>Avoiding: <strong>${avoidingCount}</strong></li>
           <li><a href="${location.pathname.startsWith("/en/") ? "/en/admin/reflection/" : "/admin/reflection/"}">Open reflection ops</a></li>
+        </ul>
+      </article>
+      <article class="panel">
+        <h3>Pilot readiness</h3>
+        <ul class="list">
+          <li>Ready profiles: <strong>${pilotReadyCount}</strong></li>
+          <li>Paused reminders: <strong>${pausedCount}</strong></li>
+          <li><a href="${location.pathname.startsWith("/en/") ? "/en/admin/pilot/" : "/admin/pilot/"}">Open pilot ops</a></li>
         </ul>
       </article>
     </div>`;
@@ -932,6 +986,88 @@
             <li>Phản hồi bằng một dòng neo lại, một điều soi lại, và một bước nhỏ tiếp theo.</li>
             <li>Chuyển ra ngoài website nếu ghi chú cho thấy khủng hoảng y tế, tâm lý, pháp lý, hoặc an toàn.</li>
             <li>Queue này hiện là local theo trình duyệt. Chưa được gọi là production ops hoàn chỉnh cho tới khi có D1 hoặc admin API persistence.</li>
+          </ul>`;
+    }
+  }
+
+  function initPilot() {
+    const status = $("#pilot-status");
+    const summary = $("#pilot-summary");
+    const list = $("#pilot-list");
+    const log = $("#pilot-log");
+    if (!status && !summary && !list && !log) return;
+
+    const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
+    const profiles = getMemberProfiles();
+    const latestPractice = getLatestPracticeEntries()[0] || null;
+    const readyProfiles = profiles.filter((item) => memberProfileIsComplete(item));
+    const pausedProfiles = profiles.filter((item) => isFutureIso(item.reminderPausedUntil));
+    const gentleProfiles = readyProfiles.filter((item) => item.practiceTrack === "gentle");
+    const deepProfiles = readyProfiles.filter((item) => item.practiceTrack === "deep");
+
+    if (status) {
+      status.textContent = isEnglish
+        ? `Detected ${profiles.length} local member profiles in this browser. ${readyProfiles.length} are ready for pilot review, ${pausedProfiles.length} are currently paused.`
+        : `Phát hiện ${profiles.length} hồ sơ thành viên local trong trình duyệt này. ${readyProfiles.length} hồ sơ đã đủ để rà pilot, ${pausedProfiles.length} hồ sơ đang tạm dừng nhắc.`;
+    }
+
+    if (summary) {
+      summary.innerHTML = `<div class="kpiRow">
+        <article class="kpi"><strong>${readyProfiles.length}</strong><span>${isEnglish ? "Ready" : "Sẵn sàng"}</span></article>
+        <article class="kpi"><strong>${gentleProfiles.length}</strong><span>${isEnglish ? "Gentle" : "Nhịp nhẹ"}</span></article>
+        <article class="kpi"><strong>${deepProfiles.length}</strong><span>${isEnglish ? "Deep" : "Đối diện sâu"}</span></article>
+        <article class="kpi"><strong>${pausedProfiles.length}</strong><span>${isEnglish ? "Paused" : "Tạm dừng"}</span></article>
+      </div>`;
+    }
+
+    if (list) {
+      if (!profiles.length) {
+        list.innerHTML = isEnglish
+          ? `<p class="note">No local member profiles found in this browser yet. Use this module as the pilot contract until D1-backed participant state is added.</p>`
+          : `<p class="note">Chưa có hồ sơ thành viên local trong trình duyệt này. Dùng module này như khung pilot cho tới khi có participant state trên D1.</p>`;
+      } else {
+        list.innerHTML = `<ul class="checkList">${profiles.map((item) => {
+          const ready = memberProfileIsComplete(item);
+          const paused = isFutureIso(item.reminderPausedUntil);
+          const trackLabel = item.practiceTrack === "deep"
+            ? (isEnglish ? "Deep Facing" : "Đối diện sâu")
+            : item.practiceTrack === "gentle"
+              ? (isEnglish ? "Gentle Rhythm" : "Nhịp nhẹ")
+              : (isEnglish ? "Missing track" : "Thiếu track");
+          const reminderLabel = item.reminderIntensity || (isEnglish ? "missing reminder" : "thiếu mức nhắc");
+          const latestState = latestPractice?.practiceState || "";
+          const nextTouchpoint = paused
+            ? (isEnglish ? "Respect pause" : "Tôn trọng pause")
+            : latestState === "human_reflection"
+              ? (isEnglish ? "Day 3 human review" : "Day 3 phản hồi người thật")
+              : latestState === "avoiding"
+                ? (isEnglish ? "Day 3 avoidance follow-up" : "Day 3 follow-up điểm né")
+                : ready
+                  ? (isEnglish ? "Ready for Day 1 welcome" : "Sẵn sàng welcome Day 1")
+                  : (isEnglish ? "Finish profile first" : "Hoàn thiện profile trước");
+          return `<li class="checkItem"><input type="checkbox" disabled ${ready ? "checked" : ""}><div>
+            <strong>${safeText(item.fullName || item.email)}</strong>
+            <p class="note">${safeText(trackLabel)} • ${safeText(reminderLabel)} • ${paused ? safeText(isEnglish ? "paused" : "đang pause") : safeText(isEnglish ? "active" : "đang mở")}</p>
+            <p class="note">${safeText(isEnglish ? "Next touchpoint" : "Điểm chạm kế tiếp")}: ${safeText(nextTouchpoint)}</p>
+            <p>${safeText(item.currentState || (isEnglish ? "No current state yet." : "Chưa có current state."))}</p>
+          </div></li>`;
+        }).join("")}</ul>`;
+      }
+    }
+
+    if (log) {
+      log.innerHTML = isEnglish
+        ? `<ul class="list">
+            <li>Day 1: confirm track and reminder consent before counting someone inside the pilot.</li>
+            <li>Day 3: look first at people who paused reminders, marked avoiding, or asked for human reflection.</li>
+            <li>Day 7: keep the review short, practical, and tied to one next step.</li>
+            <li>This module is browser-local for now. Do not call it production participant ops until D1 or admin API persistence exists.</li>
+          </ul>`
+        : `<ul class="list">
+            <li>Day 1: chốt track và consent reminder trước khi tính một người là đã vào pilot.</li>
+            <li>Day 3: nhìn trước vào người pause reminder, đánh dấu đang né, hoặc xin phản hồi người thật.</li>
+            <li>Day 7: giữ phần review ngắn, thực tế, và gắn với một bước kế tiếp.</li>
+            <li>Module này hiện là local theo trình duyệt. Chưa gọi là participant ops production cho tới khi có D1 hoặc admin API persistence.</li>
           </ul>`;
     }
   }
@@ -1265,6 +1401,7 @@
     initDashboard();
     initMembers();
     initReflection();
+    initPilot();
     initCreators();
     initSettingsTextArea();
     initAccountManager();

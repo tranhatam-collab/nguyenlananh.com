@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T04:48:25.918Z",
+    "generatedAt": "2026-05-07T05:20:02.155Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 251,
+    "pagesAudited": 253,
     "pagesWithIssues": 0,
     "totalIssues": 0,
     "brokenInternalRefs": 0,
@@ -110,6 +110,7 @@
         "/admin/content/",
         "/admin/members/",
         "/admin/reflection/",
+        "/admin/pilot/",
         "/admin/payments/",
         "/admin/creators/",
         "/admin/settings/",
@@ -164,6 +165,31 @@
       ]
     },
     {
+      "route": "/admin/pilot/",
+      "file": "admin/pilot/index.html",
+      "title": "Admin Pilot | Nguyễn Lan Anh",
+      "description": "Module vận hành nội bộ để rà readiness pilot 14 ngày: track, reminder consent, pause, check-in và điểm chạm Day 1 / Day 3 / Day 7.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/admin/",
+        "/join/",
+        "/admin/reflection/",
+        "/admin/members/",
+        "/members/pilot/",
+        "/assets/admin-console.js",
+        "/assets/content-registry.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/admin/reflection/",
       "file": "admin/reflection/index.html",
       "title": "Admin Reflection | Nguyễn Lan Anh",
@@ -180,6 +206,7 @@
         "/admin/",
         "/join/",
         "/admin/members/",
+        "/admin/pilot/",
         "/members/reflection/",
         "/assets/admin-console.js",
         "/assets/content-registry.js",
@@ -2267,6 +2294,7 @@
         "/en/admin/content/",
         "/en/admin/members/",
         "/en/admin/reflection/",
+        "/en/admin/pilot/",
         "/en/admin/creators/",
         "/en/admin/settings/",
         "/assets/admin-console.js",
@@ -2321,6 +2349,31 @@
       ]
     },
     {
+      "route": "/en/admin/pilot/",
+      "file": "en/admin/pilot/index.html",
+      "title": "Admin Pilot | Nguyenlananh.com",
+      "description": "Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/admin/",
+        "/en/join/",
+        "/en/admin/reflection/",
+        "/en/admin/members/",
+        "/en/members/pilot/",
+        "/assets/admin-console.js",
+        "/assets/content-registry.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/admin/reflection/",
       "file": "en/admin/reflection/index.html",
       "title": "Admin Reflection | Nguyenlananh.com",
@@ -2337,6 +2390,7 @@
         "/en/admin/",
         "/en/join/",
         "/en/admin/members/",
+        "/en/admin/pilot/",
         "/en/members/reflection/",
         "/assets/admin-console.js",
         "/assets/content-registry.js",

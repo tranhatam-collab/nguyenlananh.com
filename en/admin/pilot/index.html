@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Admin Reflection | Nguyenlananh.com</title>
+  <title>Admin Pilot | Nguyenlananh.com</title>
   <meta name="robots" content="noindex,follow" />
-  <link rel="canonical" href="https://www.nguyenlananh.com/en/admin/reflection/" />
-  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/reflection/" />
-  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/reflection/" />
-  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/reflection/" />
-  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/reflection/" />
-  <meta name="description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
+  <link rel="canonical" href="https://www.nguyenlananh.com/en/admin/pilot/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/pilot/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/pilot/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/pilot/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/pilot/" />
+  <meta name="description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
   <link rel="stylesheet" href="/assets/site.css" />
-  <meta property="og:title" content="Admin Reflection | Nguyenlananh.com" />
-  <meta property="og:description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
-  <meta property="og:url" content="https://www.nguyenlananh.com/en/admin/reflection/" />
+  <meta property="og:title" content="Admin Pilot | Nguyenlananh.com" />
+  <meta property="og:description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
+  <meta property="og:url" content="https://www.nguyenlananh.com/en/admin/pilot/" />
   <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Admin Reflection | Nguyenlananh.com" />
-  <meta name="twitter:description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
+  <meta name="twitter:title" content="Admin Pilot | Nguyenlananh.com" />
+  <meta name="twitter:description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
   <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
 </head>
-<body data-page="admin-reflection"><a class="skip" href="#admin-main">Skip to content</a>
+<body data-page="admin-pilot"><a class="skip" href="#admin-main">Skip to content</a>
   <header class="topbar" role="banner">
     <div class="container">
       <div class="navwrap">
@@ -49,9 +49,9 @@
 
   <main id="admin-main" class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Reflection ops</span>
-      <h1>Human reflection queue</h1>
-      <p class="sub">This module receives member signals of <strong>avoiding</strong> or <strong>needs a real person to reflect back</strong>, then routes them into a quiet triage frame with clear boundaries.</p>
+      <span class="badge">Pilot ops</span>
+      <h1>14-day pilot readiness</h1>
+      <p class="sub">This module gathers track, reminder consent, pause state, and latest check-in so operations can see who is ready for a small pilot, who needs Day 1 welcome, who needs Day 3 follow-up, and who should stay outside until the base is steadier.</p>
       <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
     </section>
 
@@ -76,38 +76,43 @@
 
     <section class="grid2 admin-only" data-requires="members">
       <article class="panel">
-        <h3>Triage before replying</h3>
+        <h3>Entry requirements</h3>
         <ul class="list">
-          <li>Start with one grounding line instead of adding a bigger lecture.</li>
-          <li>Reflect one repeating pattern, not every possible layer.</li>
-          <li>Offer one next small step, not pressure.</li>
+          <li>Complete profile: name, current state, desired shift, companion rhythm, track, and reminder level.</li>
+          <li>At least one honest check-in so operations does not invite people who are still fully outside the practice.</li>
+          <li>If reminders are paused, respect the pause before inviting someone into the group rhythm.</li>
         </ul>
       </article>
       <article class="panel">
-        <h3>Required boundary</h3>
+        <h3>Touchpoints to keep</h3>
         <ul class="list">
-          <li>This does not replace medical, mental-health, legal, or crisis support.</li>
-          <li>Do not turn this queue into performance or debate.</li>
-          <li>If the note suggests safety risk, move outside the site immediately.</li>
+          <li>Day 1: confirm track and reminder consent.</li>
+          <li>Day 3: review people who marked <strong>avoiding</strong> or <strong>need a real person</strong>.</li>
+          <li>Day 7: keep the review brief and tied to one next step.</li>
         </ul>
       </article>
     </section>
 
     <section class="panel admin-only" data-requires="members">
-      <h3>Recent signals</h3>
-      <p id="reflection-status" class="note"></p>
-      <div id="reflection-list" class="admin-section"></div>
+      <h3>Pilot status</h3>
+      <p id="pilot-status" class="note"></p>
+      <div id="pilot-summary"></div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Readiness list</h3>
+      <div id="pilot-list" class="admin-section"></div>
     </section>
 
     <section class="panel admin-only" data-requires="members">
       <h3>Operations log</h3>
-      <div id="reflection-log" class="note"></div>
+      <div id="pilot-log" class="note"></div>
     </section>
 
     <section class="panel admin-only" data-requires="members">
       <h3>Next move</h3>
-      <p>If the signal only needs a gentler rhythm, route the member back to check-in. If it needs human presence, keep the reply brief, real, and enough for the next step.</p>
-      <div class="actionsRow"><a class="ghost" href="/en/admin/members/">Back to Members</a><a class="ghost" href="/en/admin/pilot/">Open pilot ops</a><a class="ghost" href="/en/members/reflection/">View member handoff</a></div>
+      <p>Invite only the people whose base is ready. If the profile is still incomplete or check-in is missing, route them back to start or practice instead of pulling them into the pilot too early.</p>
+      <div class="actionsRow"><a class="ghost" href="/en/admin/reflection/">Open reflection ops</a><a class="ghost" href="/en/admin/members/">Back to Members</a><a class="ghost" href="/en/members/pilot/">View member pilot page</a></div>
     </section>
 
     <section id="health-panel" class="admin-only" data-requires="dashboard"></section>

@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Admin Reflection | Nguyễn Lan Anh</title>
+  <title>Admin Pilot | Nguyễn Lan Anh</title>
   <meta name="robots" content="noindex,follow" />
-  <link rel="canonical" href="https://www.nguyenlananh.com/admin/reflection/" />
-  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/reflection/" />
-  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/reflection/" />
-  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/reflection/" />
-  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/reflection/" />
-  <meta name="description" content="Module vận hành nội bộ để triage tín hiệu thành viên đang né hoặc cần người thật phản hồi trong practice field." />
+  <link rel="canonical" href="https://www.nguyenlananh.com/admin/pilot/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/pilot/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/pilot/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/pilot/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/pilot/" />
+  <meta name="description" content="Module vận hành nội bộ để rà readiness pilot 14 ngày: track, reminder consent, pause, check-in và điểm chạm Day 1 / Day 3 / Day 7." />
   <link rel="stylesheet" href="/assets/site.css" />
-  <meta property="og:title" content="Admin Reflection | Nguyễn Lan Anh" />
-  <meta property="og:description" content="Module vận hành nội bộ để triage tín hiệu thành viên đang né hoặc cần người thật phản hồi trong practice field." />
-  <meta property="og:url" content="https://www.nguyenlananh.com/admin/reflection/" />
+  <meta property="og:title" content="Admin Pilot | Nguyễn Lan Anh" />
+  <meta property="og:description" content="Module vận hành nội bộ để rà readiness pilot 14 ngày: track, reminder consent, pause, check-in và điểm chạm Day 1 / Day 3 / Day 7." />
+  <meta property="og:url" content="https://www.nguyenlananh.com/admin/pilot/" />
   <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Admin Reflection | Nguyễn Lan Anh" />
-  <meta name="twitter:description" content="Module vận hành nội bộ để triage tín hiệu thành viên đang né hoặc cần người thật phản hồi trong practice field." />
+  <meta name="twitter:title" content="Admin Pilot | Nguyễn Lan Anh" />
+  <meta name="twitter:description" content="Module vận hành nội bộ để rà readiness pilot 14 ngày: track, reminder consent, pause, check-in và điểm chạm Day 1 / Day 3 / Day 7." />
   <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
 </head>
-<body data-page="admin-reflection"><a class="skip" href="#admin-main">Bỏ qua và vào nội dung chính</a>
+<body data-page="admin-pilot"><a class="skip" href="#admin-main">Bỏ qua và vào nội dung chính</a>
   <header class="topbar" role="banner">
     <div class="container">
       <div class="navwrap">
@@ -49,9 +49,9 @@
 
   <main id="admin-main" class="container" role="main">
     <section class="pageHead">
-      <span class="badge">Reflection ops</span>
-      <h1>Hàng đợi phản hồi người thật</h1>
-      <p class="sub">Module này nhận tín hiệu thành viên chọn <strong>đang né</strong> hoặc <strong>cần người thật phản hồi</strong>, rồi đưa về một khung triage yên, ngắn và có ranh giới.</p>
+      <span class="badge">Pilot ops</span>
+      <h1>Readiness pilot 14 ngày</h1>
+      <p class="sub">Module này gom track, mức nhắc, pause, và check-in gần nhất để đội vận hành biết ai đã đủ nền cho pilot nhỏ, ai cần Day 1 welcome, ai cần Day 3 chạm lại, và ai nên đứng ngoài cho tới khi ổn hơn.</p>
       <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
     </section>
 
@@ -76,38 +76,43 @@
 
     <section class="grid2 admin-only" data-requires="members">
       <article class="panel">
-        <h3>Triage trước khi trả lời</h3>
+        <h3>Điều kiện vào pilot</h3>
         <ul class="list">
-          <li>Bắt đầu bằng một dòng neo lại trạng thái thật, không dạy dỗ thêm.</li>
-          <li>Soi lại đúng một pattern đang lặp, không mở rộng thành bài giảng.</li>
-          <li>Đề nghị đúng một bước nhỏ kế tiếp, không đẩy thêm áp lực.</li>
+          <li>Profile đủ: tên, trạng thái hiện tại, dịch chuyển mong muốn, nhịp đồng hành, track, mức nhắc.</li>
+          <li>Có ít nhất một check-in thật để đội vận hành không mời người đang còn đứng ngoài hẳn.</li>
+          <li>Nếu người dùng đang pause nhắc, tôn trọng pause trước khi mời vào nhịp nhóm nhỏ.</li>
         </ul>
       </article>
       <article class="panel">
-        <h3>Ranh giới bắt buộc</h3>
+        <h3>Điểm chạm cần giữ</h3>
         <ul class="list">
-          <li>Không thay thế hỗ trợ y tế, tâm lý, pháp lý, hoặc xử lý khủng hoảng.</li>
-          <li>Không dùng module này để biến reflection thành performance hay debate.</li>
-          <li>Nếu có dấu hiệu nguy cơ an toàn, đưa ra ngoài website ngay.</li>
+          <li>Day 1: chốt đúng track và consent reminder.</li>
+          <li>Day 3: xem người chọn <strong>đang né</strong> hoặc <strong>cần người thật phản hồi</strong>.</li>
+          <li>Day 7: review ngắn và chỉ để lại một bước tiếp theo.</li>
         </ul>
       </article>
     </section>
 
     <section class="panel admin-only" data-requires="members">
-      <h3>Tín hiệu gần đây</h3>
-      <p id="reflection-status" class="note"></p>
-      <div id="reflection-list" class="admin-section"></div>
+      <h3>Tình trạng pilot</h3>
+      <p id="pilot-status" class="note"></p>
+      <div id="pilot-summary"></div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Danh sách readiness</h3>
+      <div id="pilot-list" class="admin-section"></div>
     </section>
 
     <section class="panel admin-only" data-requires="members">
       <h3>Nhật ký vận hành</h3>
-      <div id="reflection-log" class="note"></div>
+      <div id="pilot-log" class="note"></div>
     </section>
 
     <section class="panel admin-only" data-requires="members">
       <h3>Đi tiếp từ đây</h3>
-      <p>Nếu tín hiệu cho thấy người dùng chỉ cần nhịp nhẹ hơn, quay họ về check-in. Nếu họ cần hiện diện người thật, giữ phản hồi ngắn, thật, và đủ để họ bước tiếp một bước.</p>
-      <div class="actionsRow"><a class="ghost" href="/admin/members/">Quay lại Members</a><a class="ghost" href="/admin/pilot/">Mở pilot ops</a><a class="ghost" href="/members/reflection/">Xem trang member handoff</a></div>
+      <p>Chỉ mời người đã đủ nền vào pilot nhỏ. Nếu profile còn hở hoặc check-in còn trống, quay họ về start hoặc practice thay vì cố kéo vào nhóm.</p>
+      <div class="actionsRow"><a class="ghost" href="/admin/reflection/">Mở reflection ops</a><a class="ghost" href="/admin/members/">Quay lại Members</a><a class="ghost" href="/members/pilot/">Xem trang member pilot</a></div>
     </section>
 
     <section id="health-panel" class="admin-only" data-requires="dashboard"></section>

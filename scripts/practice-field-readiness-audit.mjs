@@ -142,6 +142,28 @@ const checks = [
     ]
   },
   {
+    file: "admin/pilot/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Readiness pilot 14 ngày/,
+      /id="pilot-status"/,
+      /Day 1/,
+      /Day 3/,
+      /Day 7/
+    ]
+  },
+  {
+    file: "en/admin/pilot/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /14-day pilot readiness/,
+      /id="pilot-status"/,
+      /Day 1/,
+      /Day 3/,
+      /Day 7/
+    ]
+  },
+  {
     file: "en/members/circle/index.html",
     patterns: [
       /<meta name="robots" content="noindex,follow" \/>/,
@@ -171,7 +193,11 @@ const checks = [
       /function initReflection\(\)/,
       /nla_member_progress/,
       /reflection-status/,
-      /Needs human reflection|Cần phản hồi người thật/
+      /Needs human reflection|Cần phản hồi người thật/,
+      /function initPilot\(\)/,
+      /nla_member_profiles/,
+      /pilot-status/,
+      /Ready for Day 1 welcome|Sẵn sàng welcome Day 1/
     ]
   },
   {
@@ -190,7 +216,8 @@ const checks = [
       /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/,
       /^(?![\s\S]*\/members\/circle\/)[\s\S]*$/,
       /^(?![\s\S]*\/members\/reflection\/)[\s\S]*$/,
-      /^(?![\s\S]*\/admin\/reflection\/)[\s\S]*$/
+      /^(?![\s\S]*\/admin\/reflection\/)[\s\S]*$/,
+      /^(?![\s\S]*\/admin\/pilot\/)[\s\S]*$/
     ]
   }
 ];

@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T04:48:25.908Z",
-    "pagesAudited": 249,
+    "generatedAt": "2026-05-07T05:20:02.150Z",
+    "pagesAudited": 251,
     "totalIssues": 0,
     "totalWarnings": 55,
     "issueCounts": {},
@@ -553,6 +553,22 @@
     {
       "url": "/admin/payments/",
       "file": "admin/payments/index.html",
+      "page_role": "admin",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "NOINDEX",
+      "next_action": "NONE",
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "url": "/admin/pilot/",
+      "file": "admin/pilot/index.html",
       "page_role": "admin",
       "h1_status": "PASS",
       "character_hygiene": "PASS",
@@ -2056,6 +2072,22 @@
           "chars": "—"
         }
       ]
+    },
+    {
+      "url": "/en/admin/pilot/",
+      "file": "en/admin/pilot/index.html",
+      "page_role": "admin",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "en-US",
+      "true_state": "NOINDEX",
+      "next_action": "NONE",
+      "issues": [],
+      "warnings": []
     },
     {
       "url": "/en/admin/reflection/",

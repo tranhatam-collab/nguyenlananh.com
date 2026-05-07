@@ -4,7 +4,7 @@ Verdict:
 WEB_TEXT_GATE_PASS
 
 Evidence checked:
-- 249 HTML files in release scope.
+- 251 HTML files in release scope.
 - docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md.
 - docs/DEV_TEAM_RELEASE_DISCIPLINE.md link to the protocol.
 - H1 count, empty headings, SEO metadata, canonical, Open Graph image, language, alt text, visible text symbols, and true state.
@@ -36,8 +36,8 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-07T04:48:25.908Z
-- Pages audited: 249
+- Generated at: 2026-05-07T05:20:02.150Z
+- Pages audited: 251
 - Total issues: 0
 - Total warnings: 55
 
@@ -60,6 +60,7 @@ Notes:
 | /admin/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/members/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/payments/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
+| /admin/pilot/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/reflection/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/settings/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
@@ -138,6 +139,7 @@ Notes:
 | /en/admin/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | EDITORIAL_REVIEW_OPTIONAL |
 | /en/admin/members/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/admin/payments/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | EDITORIAL_REVIEW_OPTIONAL |
+| /en/admin/pilot/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/admin/reflection/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/admin/settings/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |

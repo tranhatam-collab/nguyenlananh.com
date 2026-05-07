@@ -67,6 +67,34 @@
       <p class="note" style="margin-top:10px;">Giữ ngắn, cụ thể, không tô đẹp. Mục tiêu là để người vận hành thấy đúng điểm, không phải để viết hay.</p>
     </section>
 
+    <section class="panel" style="margin-top:12px;">
+      <h3>Soạn handoff ngay tại đây</h3>
+      <p class="note">Nếu check-in gần nhất của bạn đang là “tôi đang né” hoặc “tôi cần người thật phản hồi”, phần này sẽ lấy đà từ dữ liệu local hiện tại để bạn không phải bắt đầu lại từ đầu.</p>
+      <form id="reflectionHandoffForm">
+        <div class="field">
+          <label for="reflectionLine1">Dòng 1 · Điều tôi đang né hoặc mắc lại</label>
+          <textarea id="reflectionLine1" rows="3" data-reflection-line="1"></textarea>
+        </div>
+        <div class="field">
+          <label for="reflectionLine2">Dòng 2 · Bước nhỏ tôi đã thử</label>
+          <textarea id="reflectionLine2" rows="3" data-reflection-line="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="reflectionLine3">Dòng 3 · Điểm tôi muốn người thật phản hồi</label>
+          <textarea id="reflectionLine3" rows="3" data-reflection-line="3"></textarea>
+        </div>
+        <div class="actionsRow" style="margin-top:14px;">
+          <button class="cta" type="submit">Lưu handoff</button>
+          <button id="reflectionHandoffCopy" class="ghost" type="button">Copy handoff</button>
+        </div>
+      </form>
+      <p id="reflectionHandoffStatus" class="note"></p>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflectionHandoffOutput">Reflection handoff packet</label>
+        <textarea id="reflectionHandoffOutput" rows="12" readonly></textarea>
+      </div>
+    </section>
+
     <section class="grid2" style="margin-top:12px;">
       <article class="panel">
         <h3>Trước khi gửi</h3>

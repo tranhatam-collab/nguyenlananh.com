@@ -303,6 +303,25 @@
     }));
   }
 
+  function getMemberReflectionHandoffs() {
+    const handoffs = readJSON("nla_member_reflection_handoffs", null);
+    if (!handoffs || typeof handoffs !== "object") return [];
+
+    return Object.entries(handoffs)
+      .map(([email, item]) => ({
+        email,
+        line1: String(item?.line1 || "").trim(),
+        line2: String(item?.line2 || "").trim(),
+        line3: String(item?.line3 || "").trim(),
+        sourceState: String(item?.sourceState || "").trim(),
+        sourceDay: String(item?.sourceDay || "").trim(),
+        sourceOneLine: String(item?.sourceOneLine || "").trim(),
+        updatedAt: String(item?.updatedAt || "").trim()
+      }))
+      .filter((item) => item.line1 || item.line2 || item.line3)
+      .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+  }
+
   function getLatestPracticeEntries() {
     const progress = readJSON("nla_member_progress", null);
     const days = progress?.practice?.days;
@@ -956,6 +975,7 @@
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
     const signals = getMemberPracticeSignals();
+    const handoffs = getMemberReflectionHandoffs();
     const reflectionItems = signals.filter((item) => item.practiceState === "human_reflection");
     const avoidingItems = signals.filter((item) => item.practiceState === "avoiding");
 
@@ -980,12 +1000,21 @@
             : `<p class="note">Chưa có reflection evidence nào. Tiếp tục dùng module này như khung triage cho tới khi hàng đợi chuyển sang persistence có D1.</p>`;
         } else {
           list.innerHTML = `<ul class="checkList">${items.map((item) => {
+            const handoff = handoffs.find((entry) => entry.sourceDay === item.day || entry.sourceOneLine === item.oneLine);
             const stateLabel = item.practiceState === "human_reflection"
               ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
               : (isEnglish ? "Avoiding" : "Đang né");
             const dayLabel = isEnglish ? "Day" : "Ngày";
             const line = item.oneLine || (isEnglish ? "No honest line recorded." : "Chưa có một dòng thật.");
-            return `<li class="checkItem"><input type="checkbox" disabled ${item.practiceState === "human_reflection" ? "checked" : ""}><div><strong>${safeText(stateLabel)}</strong><p class="note">${dayLabel}: ${safeText(item.day)} • ${safeText(item.updatedAt || "-")}</p><p>${safeText(line)}</p></div></li>`;
+            const handoffBlock = handoff
+              ? `<div class="note" style="margin-top:8px;">
+                  <strong>${safeText(isEnglish ? "Saved 3-line handoff" : "Đã có handoff 3 dòng")}</strong>
+                  <p>${safeText(handoff.line1 || "-")}</p>
+                  <p>${safeText(handoff.line2 || "-")}</p>
+                  <p>${safeText(handoff.line3 || "-")}</p>
+                </div>`
+              : "";
+            return `<li class="checkItem"><input type="checkbox" disabled ${item.practiceState === "human_reflection" ? "checked" : ""}><div><strong>${safeText(stateLabel)}</strong><p class="note">${dayLabel}: ${safeText(item.day)} • ${safeText(item.updatedAt || "-")}</p><p>${safeText(line)}</p>${handoffBlock}</div></li>`;
           }).join("")}</ul>`;
         }
       }
@@ -1011,6 +1040,7 @@
       total_signals: signals.length,
       human_reflection: reflectionItems.length,
       avoiding: avoidingItems.length,
+      saved_handoffs: handoffs.length,
       next_gate: reflectionItems.length
         ? (isEnglish ? "Human reflection signals are waiting for a short grounded reply." : "Các tín hiệu cần người thật phản hồi đang chờ một hồi đáp ngắn và neo lại.")
         : (isEnglish ? "No human reflection signal is waiting right now." : "Hiện chưa có tín hiệu nào đang chờ người thật phản hồi."),
@@ -1019,7 +1049,8 @@
         practiceState: item.practiceState || "",
         oneLine: item.oneLine || "",
         updatedAt: item.updatedAt || ""
-      }))
+      })),
+      handoffs
     };
 
     if (evidenceOutput) {

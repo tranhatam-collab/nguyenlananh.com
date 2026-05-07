@@ -2,7 +2,8 @@
   const STORAGE = {
     session: "nla_member_session",
     progress: "nla_member_progress",
-    profiles: "nla_member_profiles"
+    profiles: "nla_member_profiles",
+    reflectionHandoffs: "nla_member_reflection_handoffs"
   };
 
   const PLANS = {
@@ -90,7 +91,9 @@
         reflectionReadyAction: "Open reflection handoff",
         avoidingSupportTitle: "Name the point you are avoiding",
         avoidingSupportBody: "You do not need to solve it today. Name the point, keep one smaller step, and ask for human reflection if the same point keeps repeating.",
-        avoidingSupportAction: "Open reflection handoff"
+        avoidingSupportAction: "Open reflection handoff",
+        reflectionHandoffSaved: "Your reflection handoff has been saved.",
+        reflectionHandoffCopyFail: "Unable to copy the reflection handoff right now."
       };
     }
 
@@ -136,7 +139,9 @@
       reflectionReadyAction: "Mở bàn giao phản hồi",
       avoidingSupportTitle: "Gọi tên đúng điểm đang né",
       avoidingSupportBody: "Hôm nay chưa cần giải quyết hết. Chỉ cần gọi tên điểm né, giữ một bước nhỏ hơn, và xin phản hồi người thật nếu điểm này lặp lại.",
-      avoidingSupportAction: "Mở bàn giao phản hồi"
+      avoidingSupportAction: "Mở bàn giao phản hồi",
+      reflectionHandoffSaved: "Reflection handoff của bạn đã được lưu.",
+      reflectionHandoffCopyFail: "Chưa copy được reflection handoff lúc này."
     };
   }
 
@@ -213,6 +218,36 @@
     if (!email) return null;
     const store = getProfilesStore();
     return store[email] || null;
+  }
+
+  function getReflectionHandoffsStore() {
+    return readJSON(STORAGE.reflectionHandoffs, {});
+  }
+
+  function saveReflectionHandoffsStore(store) {
+    writeJSON(STORAGE.reflectionHandoffs, store);
+  }
+
+  function getReflectionHandoffForEmail(email) {
+    if (!email) return null;
+    const store = getReflectionHandoffsStore();
+    return store[email] || null;
+  }
+
+  function saveReflectionHandoffForEmail(email, handoff) {
+    if (!email) return null;
+    const store = getReflectionHandoffsStore();
+    store[email] = {
+      line1: String(handoff.line1 || "").trim(),
+      line2: String(handoff.line2 || "").trim(),
+      line3: String(handoff.line3 || "").trim(),
+      sourceState: String(handoff.sourceState || "").trim(),
+      sourceDay: String(handoff.sourceDay || "").trim(),
+      sourceOneLine: String(handoff.sourceOneLine || "").trim(),
+      updatedAt: new Date().toISOString()
+    };
+    saveReflectionHandoffsStore(store);
+    return store[email];
   }
 
   function normalizePracticeTrack(value) {
@@ -708,6 +743,82 @@
     }
   }
 
+  function initReflectionPage(session) {
+    const strings = memberStrings();
+    const form = $("#reflectionHandoffForm");
+    const line1 = $("#reflectionLine1");
+    const line2 = $("#reflectionLine2");
+    const line3 = $("#reflectionLine3");
+    const status = $("#reflectionHandoffStatus");
+    const output = $("#reflectionHandoffOutput");
+    const copyBtn = $("#reflectionHandoffCopy");
+    if (!form || !line1 || !line2 || !line3 || !output) return;
+
+    const progress = getProgress();
+    const latest = getLatestPracticeEntry(progress);
+    const existing = getReflectionHandoffForEmail(session?.email);
+
+    if (!line1.value) {
+      line1.value = existing?.line1 || (latest?.practiceState === "avoiding"
+        ? (latest?.oneLine || "")
+        : "");
+    }
+    if (!line2.value) {
+      line2.value = existing?.line2 || (latest?.practiceState === "smaller_step"
+        ? (latest?.oneLine || "")
+        : "");
+    }
+    if (!line3.value) {
+      line3.value = existing?.line3 || (latest?.practiceState === "human_reflection"
+        ? (latest?.oneLine || "")
+        : "");
+    }
+
+    function buildPacket(saved) {
+      return {
+        email: session?.email || "",
+        track: getProfileForEmail(session?.email)?.practiceTrack || "",
+        reminderIntensity: getProfileForEmail(session?.email)?.reminderIntensity || "",
+        sourceState: saved?.sourceState || latest?.practiceState || "",
+        sourceDay: saved?.sourceDay || latest?.dateKey || "",
+        sourceOneLine: saved?.sourceOneLine || latest?.oneLine || "",
+        line1: saved?.line1 || "",
+        line2: saved?.line2 || "",
+        line3: saved?.line3 || "",
+        updatedAt: saved?.updatedAt || ""
+      };
+    }
+
+    function renderPacket(packet) {
+      output.value = JSON.stringify(packet, null, 2);
+    }
+
+    renderPacket(buildPacket(existing));
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const saved = saveReflectionHandoffForEmail(session?.email, {
+        line1: line1.value,
+        line2: line2.value,
+        line3: line3.value,
+        sourceState: latest?.practiceState || "",
+        sourceDay: latest?.dateKey || "",
+        sourceOneLine: latest?.oneLine || ""
+      });
+      renderPacket(buildPacket(saved));
+      setBanner(status, strings.reflectionHandoffSaved, "success");
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(output.value || "");
+        setBanner(status, strings.copied, "success");
+      } catch (_error) {
+        setBanner(status, strings.reflectionHandoffCopyFail, "danger");
+      }
+    });
+  }
+
   async function requestMagicLink(payload) {
     const response = await fetch("/api/auth/signup", {
       method: "POST",
@@ -1172,6 +1283,7 @@
     if (page === "members-journey") initJourneyPage();
     if (page === "members-practice") initPracticePage();
     if (page === "members-pilot") initPilotPage(session);
+    if (page === "members-reflection") initReflectionPage(session);
     if (page === "members-experience") initExperiencePage();
   }
 

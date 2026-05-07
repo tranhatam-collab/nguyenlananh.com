@@ -67,6 +67,34 @@
       <p class="note" style="margin-top:10px;">Keep it short, concrete, and honest. The goal is readability and truth, not performance.</p>
     </section>
 
+    <section class="panel" style="margin-top:12px;">
+      <h3>Draft the handoff here</h3>
+      <p class="note">If your latest check-in says “I am avoiding” or “I need a real person,” this section pulls momentum from your current local data so you do not start from zero.</p>
+      <form id="reflectionHandoffForm">
+        <div class="field">
+          <label for="reflectionLine1">Line 1 · What I keep avoiding or repeating</label>
+          <textarea id="reflectionLine1" rows="3" data-reflection-line="1"></textarea>
+        </div>
+        <div class="field">
+          <label for="reflectionLine2">Line 2 · The smaller step I already tried</label>
+          <textarea id="reflectionLine2" rows="3" data-reflection-line="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="reflectionLine3">Line 3 · The exact point I want reflected back</label>
+          <textarea id="reflectionLine3" rows="3" data-reflection-line="3"></textarea>
+        </div>
+        <div class="actionsRow" style="margin-top:14px;">
+          <button class="cta" type="submit">Save handoff</button>
+          <button id="reflectionHandoffCopy" class="ghost" type="button">Copy handoff</button>
+        </div>
+      </form>
+      <p id="reflectionHandoffStatus" class="note"></p>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflectionHandoffOutput">Reflection handoff packet</label>
+        <textarea id="reflectionHandoffOutput" rows="12" readonly></textarea>
+      </div>
+    </section>
+
     <section class="grid2" style="margin-top:12px;">
       <article class="panel">
         <h3>Before you send</h3>

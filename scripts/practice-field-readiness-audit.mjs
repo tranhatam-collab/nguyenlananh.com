@@ -109,6 +109,8 @@ const checks = [
       /<meta name="robots" content="noindex,follow" \/>/,
       /Bàn giao phản hồi người thật/,
       /Khung bàn giao 3 dòng/,
+      /id="reflectionHandoffForm"/,
+      /id="reflectionHandoffOutput"/,
       /data-profile-track/,
       /Quay lại check-in/
     ]
@@ -119,6 +121,8 @@ const checks = [
       /<meta name="robots" content="noindex,follow" \/>/,
       /Human reflection handoff/,
       /The 3-line handoff/,
+      /id="reflectionHandoffForm"/,
+      /id="reflectionHandoffOutput"/,
       /data-profile-track/,
       /Return to check-in/
     ]
@@ -191,7 +195,9 @@ const checks = [
       /needsHumanReflection/,
       /reflectionReadyTitle/,
       /data-practice-reflection-panel/,
-      /function initPilotPage\(session\)/
+      /nla_member_reflection_handoffs/,
+      /function initPilotPage\(session\)/,
+      /function initReflectionPage\(session\)/
     ]
   },
   {
@@ -199,6 +205,7 @@ const checks = [
     patterns: [
       /function initReflection\(\)/,
       /nla_member_progress/,
+      /nla_member_reflection_handoffs/,
       /reflection-status/,
       /Needs human reflection|Cần phản hồi người thật/,
       /reflection-evidence-output/,

@@ -134,6 +134,19 @@
         <li>Không commit thay đổi admin nếu chưa chốt nội dung vận hành.</li>
       </ul>
     </section>
+    <section id="admin-member-snapshot-import" class="panel admin-only" data-requires="dashboard">
+      <h3>Import member snapshot</h3>
+      <p class="note">Dán packet từ member dashboard khi cần xem nhanh trạng thái hiện tại của một người trên máy khác, trước khi mở reflection hoặc pilot ops.</p>
+      <div class="field">
+        <label for="member-snapshot-import">Member snapshot packet</label>
+        <textarea id="member-snapshot-import" rows="8" placeholder="Dán JSON member snapshot packet ở đây."></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="member-snapshot-apply" class="ghost" type="button">Dùng packet đã dán</button>
+      </div>
+      <p id="member-snapshot-status" class="note"></p>
+      <div id="member-snapshot-view" class="admin-section"></div>
+    </section>
   </main>
 
   <footer role="contentinfo">

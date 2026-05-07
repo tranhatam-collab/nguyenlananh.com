@@ -63,6 +63,7 @@ This release implements the first safe layer inside the members area:
 - Hidden member reflection pages now let a member save a browser-local 3-line handoff packet that can be read back by admin reflection ops in the same browser session.
 - The member reflection handoff packet is now portable across machines: admin reflection can import a pasted member packet directly, without waiting for shared browser-local state.
 - Hidden member dashboard pages now expose a browser-local ops snapshot so the member can see profile readiness, honest check-in status, saved handoff status, and reminder-pause state in one place.
+- The member dashboard snapshot is now portable across machines: admin home can import a pasted member snapshot packet directly for quick ops review before opening reflection or pilot modules.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

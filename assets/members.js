@@ -95,6 +95,8 @@
         reflectionHandoffSaved: "Your reflection handoff has been saved.",
         reflectionHandoffCopyFail: "Unable to copy the reflection handoff right now."
         ,
+        memberSnapshotReady: "Your member snapshot packet is ready.",
+        memberSnapshotCopyFail: "Unable to copy the member snapshot packet right now.",
         pilotPacketReady: "Your pilot readiness packet is ready.",
         pilotPacketCopyFail: "Unable to copy the pilot readiness packet right now.",
         handoffReadyStatus: "A saved 3-line handoff already exists for this point.",
@@ -150,6 +152,8 @@
       avoidingSupportAction: "Mở bàn giao phản hồi",
       reflectionHandoffSaved: "Reflection handoff của bạn đã được lưu.",
       reflectionHandoffCopyFail: "Chưa copy được reflection handoff lúc này.",
+      memberSnapshotReady: "Member snapshot packet của bạn đã sẵn sàng.",
+      memberSnapshotCopyFail: "Chưa copy được member snapshot packet lúc này.",
       pilotPacketReady: "Pilot readiness packet của bạn đã sẵn sàng.",
       pilotPacketCopyFail: "Chưa copy được pilot readiness packet lúc này.",
       handoffReadyStatus: "Đã có handoff 3 dòng được lưu cho đúng điểm này.",
@@ -477,9 +481,13 @@
   }
 
   function initDashboardPage(session) {
+    const strings = memberStrings();
     const status = $("#member-ops-status");
     const summary = $("#member-ops-summary");
     const next = $("#member-ops-next");
+    const output = $("#memberOpsSnapshotOutput");
+    const copyBtn = $("#memberOpsSnapshotCopy");
+    const packetStatus = $("#memberOpsSnapshotStatus");
     if (!status && !summary && !next) return;
 
     const isEnglish = document.documentElement.lang === "en-US";
@@ -563,6 +571,35 @@
         `<a class="${action.primary ? "cta" : "ghost"}" href="${action.href}">${safeText(action.label)}</a>`
       ).join("");
     }
+
+    const packet = {
+      packet_type: "member_ops_snapshot",
+      email: session?.email || "",
+      fullName: profile?.fullName || "",
+      profileReady,
+      reminderPausedUntil: profile?.reminderPausedUntil || "",
+      latestPracticeState: latestState,
+      latestPracticeDay: latest?.dateKey || "",
+      latestPracticeLine: latestLine,
+      hasSavedHandoff,
+      currentState: profile?.currentState || "",
+      updatedAt: new Date().toISOString()
+    };
+
+    if (output) {
+      output.value = JSON.stringify(packet, null, 2);
+    }
+    if (packetStatus) {
+      packetStatus.textContent = strings.memberSnapshotReady;
+    }
+    copyBtn?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(output?.value || "");
+        setBanner(packetStatus, strings.copied, "success");
+      } catch (_error) {
+        setBanner(packetStatus, strings.memberSnapshotCopyFail, "danger");
+      }
+    });
   }
 
   function initJourneyPage() {

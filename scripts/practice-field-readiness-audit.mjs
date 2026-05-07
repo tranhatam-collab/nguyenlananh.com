@@ -23,7 +23,9 @@ const checks = [
     patterns: [
       /id="member-ops-status"/,
       /id="member-ops-summary"/,
-      /id="member-ops-next"/
+      /id="member-ops-next"/,
+      /id="memberOpsSnapshotOutput"/,
+      /admin home/
     ]
   },
   {
@@ -31,7 +33,9 @@ const checks = [
     patterns: [
       /id="member-ops-status"/,
       /id="member-ops-summary"/,
-      /id="member-ops-next"/
+      /id="member-ops-next"/,
+      /id="memberOpsSnapshotOutput"/,
+      /admin home/
     ]
   },
   {
@@ -223,6 +227,7 @@ const checks = [
       /packet_type: "member_reflection_handoff"/,
       /reflectionHandoffMatchesLatest/,
       /handoffReadyStatus/,
+      /packet_type: "member_ops_snapshot"/,
       /function initDashboardPage\(session\)/,
       /function initPilotPage\(session\)/,
       /packet_type: "member_pilot_readiness"/,
@@ -233,6 +238,8 @@ const checks = [
     file: "assets/admin-console.js",
     patterns: [
       /function initReflection\(\)/,
+      /member-snapshot-import/,
+      /member_ops_snapshot/,
       /nla_member_progress/,
       /nla_member_reflection_handoffs/,
       /reflection-status/,

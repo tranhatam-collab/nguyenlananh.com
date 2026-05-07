@@ -47,6 +47,15 @@
       <p id="member-ops-status" class="note"></p>
       <div id="member-ops-summary" class="admin-section"></div>
       <div id="member-ops-next" class="actionsRow" style="margin-top:14px;"></div>
+      <div class="field" style="margin-top:12px;">
+        <label for="memberOpsSnapshotOutput">Member snapshot packet</label>
+        <textarea id="memberOpsSnapshotOutput" rows="12" readonly></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="memberOpsSnapshotCopy" class="ghost" type="button">Copy snapshot packet</button>
+      </div>
+      <p id="memberOpsSnapshotStatus" class="note"></p>
+      <p class="note">This packet can be copied as-is and pasted into <a href="/en/admin/">admin home</a> when the current member state needs to move across machines.</p>
     </section>
 
     <section class="grid2">

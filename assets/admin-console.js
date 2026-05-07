@@ -911,6 +911,11 @@
   function initDashboard() {
     const container = $("#admin-dashboard-grid");
     if (!container) return;
+    const memberSnapshotImport = $("#member-snapshot-import");
+    const memberSnapshotApply = $("#member-snapshot-apply");
+    const memberSnapshotStatus = $("#member-snapshot-status");
+    const memberSnapshotView = $("#member-snapshot-view");
+    const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
     const launchItems = Array.isArray(manifest) ? manifest : (manifest?.items || []);
@@ -977,6 +982,49 @@
       const done = Math.min((published / Math.max(target, 1)) * 100, 100);
       progressPanel.innerHTML = `<div class="progressTrack" aria-hidden="true"><span style="width:${done.toFixed(0)}%"></span></div><p class="meta">Mục publish đã đạt: ${published}/${target}</p>`;
     }
+
+    function renderImportedMemberSnapshot(packet) {
+      if (!memberSnapshotView) return;
+      if (!packet) {
+        memberSnapshotView.innerHTML = "";
+        return;
+      }
+      const paused = isFutureIso(packet.reminderPausedUntil);
+      const latestStateLabel = packet.latestPracticeState === "human_reflection"
+        ? (isEnglish ? "Human reflection" : "Cần người thật phản hồi")
+        : packet.latestPracticeState === "avoiding"
+          ? (isEnglish ? "Avoiding" : "Đang né")
+          : packet.latestPracticeState === "smaller_step"
+            ? (isEnglish ? "Smaller step" : "Bước nhỏ hơn")
+            : packet.latestPracticeState === "done"
+              ? (isEnglish ? "Done" : "Đã làm")
+              : (isEnglish ? "No check-in yet" : "Chưa có check-in");
+      memberSnapshotView.innerHTML = `<ul class="checkList">
+        <li class="checkItem"><input type="checkbox" disabled ${packet.profileReady ? "checked" : ""}><div><strong>${safeText(packet.fullName || packet.email || "-")}</strong><p class="note">${safeText(isEnglish ? "Profile ready" : "Profile đã đủ")}: ${packet.profileReady ? safeText(isEnglish ? "yes" : "có") : safeText(isEnglish ? "no" : "chưa")}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${Boolean(packet.latestPracticeState && packet.latestPracticeLine) ? "checked" : ""}><div><strong>${safeText(isEnglish ? "Latest practice state" : "Trạng thái thực hành gần nhất")}</strong><p class="note">${safeText(packet.latestPracticeDay || "-")} • ${safeText(latestStateLabel)}</p><p>${safeText(packet.latestPracticeLine || (isEnglish ? "No honest line yet." : "Chưa có một dòng thật."))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${packet.hasSavedHandoff ? "checked" : ""}><div><strong>${safeText(isEnglish ? "Saved reflection handoff" : "Đã có reflection handoff")}</strong><p class="note">${safeText(packet.hasSavedHandoff ? (isEnglish ? "available" : "đã có") : (isEnglish ? "not yet" : "chưa có"))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${!paused ? "checked" : ""}><div><strong>${safeText(isEnglish ? "Reminder pause" : "Pause reminder")}</strong><p class="note">${safeText(paused ? (isEnglish ? "still active" : "vẫn còn hiệu lực") : (isEnglish ? "clear" : "đã thông"))}</p></div></li>
+      </ul>
+      <div class="actionsRow" style="margin-top:12px;">
+        <a class="ghost" href="${isEnglish ? "/en/admin/reflection/" : "/admin/reflection/"}">${safeText(isEnglish ? "Open reflection ops" : "Mở reflection ops")}</a>
+        <a class="ghost" href="${isEnglish ? "/en/admin/pilot/" : "/admin/pilot/"}">${safeText(isEnglish ? "Open pilot ops" : "Mở pilot ops")}</a>
+      </div>`;
+    }
+
+    memberSnapshotApply?.addEventListener("click", () => {
+      try {
+        const parsed = JSON.parse(memberSnapshotImport?.value || "{}");
+        const isMemberPacket = parsed?.packet_type === "member_ops_snapshot"
+          && typeof parsed?.email === "string";
+        if (!isMemberPacket) {
+          throw new Error("INVALID_MEMBER_SNAPSHOT");
+        }
+        renderImportedMemberSnapshot(parsed);
+        renderStatus(memberSnapshotStatus, isEnglish ? "Loaded member snapshot packet." : "Đã nạp member snapshot packet.", "ok");
+      } catch (_error) {
+        renderStatus(memberSnapshotStatus, isEnglish ? "Unable to parse member snapshot packet." : "Không parse được member snapshot packet.", "danger");
+      }
+    });
   }
 
   function initMembers() {

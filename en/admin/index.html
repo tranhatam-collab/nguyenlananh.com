@@ -127,6 +127,19 @@
         <li>Do not push admin changes without operation notes.</li>
       </ul>
     </section>
+    <section id="admin-member-snapshot-import" class="panel admin-only" data-requires="dashboard">
+      <h3>Import member snapshot</h3>
+      <p class="note">Paste a packet from member dashboard when you need to inspect one person’s current state on another machine before opening reflection or pilot ops.</p>
+      <div class="field">
+        <label for="member-snapshot-import">Member snapshot packet</label>
+        <textarea id="member-snapshot-import" rows="8" placeholder="Paste member snapshot JSON here."></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="member-snapshot-apply" class="ghost" type="button">Use pasted packet</button>
+      </div>
+      <p id="member-snapshot-status" class="note"></p>
+      <div id="member-snapshot-view" class="admin-section"></div>
+    </section>
   </main>
 
   <footer role="contentinfo">

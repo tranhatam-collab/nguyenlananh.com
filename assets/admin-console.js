@@ -12,7 +12,9 @@
     users: "nla_admin_users_v2",
     memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1",
     pendingReflectionPacket: "nla_admin_pending_reflection_packet_v1",
-    pendingPilotPacket: "nla_admin_pending_pilot_packet_v1"
+    pendingPilotPacket: "nla_admin_pending_pilot_packet_v1",
+    pendingReflectionQueuePacket: "nla_admin_pending_reflection_queue_packet_v1",
+    pendingPilotQueuePacket: "nla_admin_pending_pilot_queue_packet_v1"
   };
 
   const ADMIN_PERMISSIONS = [
@@ -306,6 +308,30 @@
 
   function clearPendingPilotPacket() {
     localStorage.removeItem(STORAGE_KEYS.pendingPilotPacket);
+  }
+
+  function savePendingReflectionQueuePacket(packet) {
+    writeJSON(STORAGE_KEYS.pendingReflectionQueuePacket, packet || null);
+  }
+
+  function getPendingReflectionQueuePacket() {
+    return readJSON(STORAGE_KEYS.pendingReflectionQueuePacket, null);
+  }
+
+  function clearPendingReflectionQueuePacket() {
+    localStorage.removeItem(STORAGE_KEYS.pendingReflectionQueuePacket);
+  }
+
+  function savePendingPilotQueuePacket(packet) {
+    writeJSON(STORAGE_KEYS.pendingPilotQueuePacket, packet || null);
+  }
+
+  function getPendingPilotQueuePacket() {
+    return readJSON(STORAGE_KEYS.pendingPilotQueuePacket, null);
+  }
+
+  function clearPendingPilotQueuePacket() {
+    localStorage.removeItem(STORAGE_KEYS.pendingPilotQueuePacket);
   }
 
   function resolveAccount(username, password) {
@@ -998,6 +1024,8 @@
     const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
     const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
     const memberSnapshotQueueMerge = $("#member-snapshot-queue-merge");
+    const memberSnapshotQueueOpenReflection = $("#member-snapshot-queue-open-reflection");
+    const memberSnapshotQueueOpenPilot = $("#member-snapshot-queue-open-pilot");
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
@@ -1210,6 +1238,18 @@
       } catch (_error) {
         renderStatus(memberSnapshotStatus, isEnglish ? "Unable to merge intake queue packet." : "Không merge được intake queue packet.", "danger");
       }
+    });
+
+    memberSnapshotQueueOpenReflection?.addEventListener("click", () => {
+      const packet = buildMemberSnapshotQueuePacket();
+      savePendingReflectionQueuePacket(packet);
+      window.location.href = isEnglish ? "/en/admin/reflection/" : "/admin/reflection/";
+    });
+
+    memberSnapshotQueueOpenPilot?.addEventListener("click", () => {
+      const packet = buildMemberSnapshotQueuePacket();
+      savePendingPilotQueuePacket(packet);
+      window.location.href = isEnglish ? "/en/admin/pilot/" : "/admin/pilot/";
     });
 
     memberSnapshotQueue?.addEventListener("click", (event) => {
@@ -1532,6 +1572,16 @@
     }
 
     const pendingMemberSnapshot = getPendingReflectionPacket();
+    const pendingQueuePacket = getPendingReflectionQueuePacket();
+    if (pendingQueuePacket && evidenceImport) {
+      evidenceImport.value = JSON.stringify(pendingQueuePacket, null, 2);
+      evidenceApply?.click();
+      clearPendingReflectionQueuePacket();
+    }
+    if (pendingQueuePacket) {
+      clearPendingReflectionPacket();
+      return;
+    }
     if (pendingMemberSnapshot && evidenceImport) {
       const packet = {
         packet_type: "member_reflection_handoff",
@@ -1882,6 +1932,16 @@
     }
 
     const pendingMemberSnapshot = getPendingPilotPacket();
+    const pendingQueuePacket = getPendingPilotQueuePacket();
+    if (pendingQueuePacket && evidenceImport) {
+      evidenceImport.value = JSON.stringify(pendingQueuePacket, null, 2);
+      evidenceApply?.click();
+      clearPendingPilotQueuePacket();
+    }
+    if (pendingQueuePacket) {
+      clearPendingPilotPacket();
+      return;
+    }
     if (pendingMemberSnapshot && evidenceImport) {
       const packet = {
         packet_type: "member_pilot_readiness",

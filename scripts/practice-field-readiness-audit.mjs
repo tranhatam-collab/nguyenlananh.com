@@ -18,7 +18,8 @@ const checks = [
       /human_reflection/,
       /intake queue/i,
       /recommended route/i,
-      /admin reflection and admin pilot can now import/i
+      /admin reflection and admin pilot can now import/i,
+      /open a module on the same machine with the full intake queue/i
     ]
   },
   {
@@ -190,7 +191,9 @@ const checks = [
       /id="member-snapshot-queue-packet"/,
       /id="member-snapshot-queue-copy"/,
       /id="member-snapshot-queue-export"/,
-      /id="member-snapshot-queue-merge"/
+      /id="member-snapshot-queue-merge"/,
+      /id="member-snapshot-queue-open-reflection"/,
+      /id="member-snapshot-queue-open-pilot"/
     ]
   },
   {
@@ -201,7 +204,9 @@ const checks = [
       /id="member-snapshot-queue-packet"/,
       /id="member-snapshot-queue-copy"/,
       /id="member-snapshot-queue-export"/,
-      /id="member-snapshot-queue-merge"/
+      /id="member-snapshot-queue-merge"/,
+      /id="member-snapshot-queue-open-reflection"/,
+      /id="member-snapshot-queue-open-pilot"/
     ]
   },
   {
@@ -284,6 +289,8 @@ const checks = [
       /data-member-queue-action/,
       /pendingReflectionPacket/,
       /pendingPilotPacket/,
+      /pendingReflectionQueuePacket/,
+      /pendingPilotQueuePacket/,
       /member_ops_snapshot/,
       /nla_member_progress/,
       /nla_member_reflection_handoffs/,

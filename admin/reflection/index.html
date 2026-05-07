@@ -105,6 +105,28 @@
     </section>
 
     <section class="panel admin-only" data-requires="members">
+      <h3>Evidence packet nội bộ</h3>
+      <p class="note">Snapshot này chỉ phản ánh queue local trong trình duyệt hiện tại. Dùng để bàn giao nhanh trước khi hàng đợi reflection có D1 hoặc admin API persistence.</p>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="reflection-evidence-copy" class="ghost" type="button">Copy evidence</button>
+        <button id="reflection-evidence-export" class="ghost" type="button">Export JSON</button>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-evidence-output">Reflection evidence</label>
+        <textarea id="reflection-evidence-output" rows="12" readonly></textarea>
+      </div>
+      <p id="reflection-evidence-status" class="note"></p>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-evidence-import">Import evidence từ máy khác</label>
+        <textarea id="reflection-evidence-import" rows="8" placeholder="Dán JSON evidence packet ở đây nếu cần bàn giao giữa 2 máy."></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="reflection-evidence-apply" class="ghost" type="button">Dùng evidence đã dán</button>
+        <button id="reflection-evidence-reset" class="ghost" type="button">Quay lại dữ liệu local</button>
+      </div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
       <h3>Đi tiếp từ đây</h3>
       <p>Nếu tín hiệu cho thấy người dùng chỉ cần nhịp nhẹ hơn, quay họ về check-in. Nếu họ cần hiện diện người thật, giữ phản hồi ngắn, thật, và đủ để họ bước tiếp một bước.</p>
       <div class="actionsRow"><a class="ghost" href="/admin/members/">Quay lại Members</a><a class="ghost" href="/admin/pilot/">Mở pilot ops</a><a class="ghost" href="/members/reflection/">Xem trang member handoff</a></div>

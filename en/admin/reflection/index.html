@@ -105,6 +105,28 @@
     </section>
 
     <section class="panel admin-only" data-requires="members">
+      <h3>Internal evidence packet</h3>
+      <p class="note">This snapshot only reflects the browser-local queue in the current session. Use it for quick handoff before the reflection queue moves to D1 or admin API persistence.</p>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="reflection-evidence-copy" class="ghost" type="button">Copy evidence</button>
+        <button id="reflection-evidence-export" class="ghost" type="button">Export JSON</button>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-evidence-output">Reflection evidence</label>
+        <textarea id="reflection-evidence-output" rows="12" readonly></textarea>
+      </div>
+      <p id="reflection-evidence-status" class="note"></p>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-evidence-import">Import evidence from another machine</label>
+        <textarea id="reflection-evidence-import" rows="8" placeholder="Paste a JSON evidence packet here when you need to hand off across machines."></textarea>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="reflection-evidence-apply" class="ghost" type="button">Use pasted evidence</button>
+        <button id="reflection-evidence-reset" class="ghost" type="button">Return to local data</button>
+      </div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
       <h3>Next move</h3>
       <p>If the signal only needs a gentler rhythm, route the member back to check-in. If it needs human presence, keep the reply brief, real, and enough for the next step.</p>
       <div class="actionsRow"><a class="ghost" href="/en/admin/members/">Back to Members</a><a class="ghost" href="/en/admin/pilot/">Open pilot ops</a><a class="ghost" href="/en/members/reflection/">View member handoff</a></div>

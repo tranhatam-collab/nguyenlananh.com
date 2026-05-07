@@ -128,6 +128,7 @@ const checks = [
       /Hàng đợi phản hồi người thật/,
       /Triage trước khi trả lời/,
       /id="reflection-status"/,
+      /id="reflection-evidence-output"/,
       /Quay lại Members/
     ]
   },
@@ -138,6 +139,7 @@ const checks = [
       /Human reflection queue/,
       /Triage before replying/,
       /id="reflection-status"/,
+      /id="reflection-evidence-output"/,
       /Back to Members/
     ]
   },
@@ -196,6 +198,8 @@ const checks = [
       /nla_member_progress/,
       /reflection-status/,
       /Needs human reflection|Cần phản hồi người thật/,
+      /reflection-evidence-output/,
+      /Copied reflection evidence|Đã copy reflection evidence/,
       /function initPilot\(\)/,
       /nla_member_profiles/,
       /pilot-status/,

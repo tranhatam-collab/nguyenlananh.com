@@ -945,6 +945,13 @@
     const status = $("#reflection-status");
     const list = $("#reflection-list");
     const log = $("#reflection-log");
+    const evidenceOutput = $("#reflection-evidence-output");
+    const evidenceImport = $("#reflection-evidence-import");
+    const evidenceStatus = $("#reflection-evidence-status");
+    const evidenceCopy = $("#reflection-evidence-copy");
+    const evidenceExport = $("#reflection-evidence-export");
+    const evidenceApply = $("#reflection-evidence-apply");
+    const evidenceReset = $("#reflection-evidence-reset");
     if (!status && !list && !log) return;
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
@@ -952,26 +959,35 @@
     const reflectionItems = signals.filter((item) => item.practiceState === "human_reflection");
     const avoidingItems = signals.filter((item) => item.practiceState === "avoiding");
 
-    if (status) {
-      status.textContent = isEnglish
-        ? `Detected ${signals.length} recent local practice signals in this browser: ${reflectionItems.length} human reflection, ${avoidingItems.length} avoiding.`
-        : `Phát hiện ${signals.length} tín hiệu thực hành gần đây trong trình duyệt này: ${reflectionItems.length} cần người thật phản hồi, ${avoidingItems.length} đang né.`;
-    }
+    function renderReflectionView(view) {
+      const items = Array.isArray(view?.signals) ? view.signals : [];
+      const humanReflectionCount = Number(view?.human_reflection || 0);
+      const avoidingCount = Number(view?.avoiding || 0);
+      const sourceLabel = view?.source === "imported_reflection_ops"
+        ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
+        : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
-    if (list) {
-      if (!signals.length) {
-        list.innerHTML = isEnglish
-          ? `<p class="note">No local queue found in this browser yet. This module stays useful as the triage contract before D1 persistence is added.</p>`
-          : `<p class="note">Chưa có queue local trong trình duyệt này. Module này vẫn là khung triage trước khi có D1 persistence.</p>`;
-      } else {
-        list.innerHTML = `<ul class="checkList">${signals.map((item) => {
-          const stateLabel = item.practiceState === "human_reflection"
-            ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
-            : (isEnglish ? "Avoiding" : "Đang né");
-          const dayLabel = isEnglish ? "Day" : "Ngày";
-          const line = item.oneLine || (isEnglish ? "No honest line recorded." : "Chưa có một dòng thật.");
-          return `<li class="checkItem"><input type="checkbox" disabled ${item.practiceState === "human_reflection" ? "checked" : ""}><div><strong>${safeText(stateLabel)}</strong><p class="note">${dayLabel}: ${safeText(item.day)} • ${safeText(item.updatedAt || "-")}</p><p>${safeText(line)}</p></div></li>`;
-        }).join("")}</ul>`;
+      if (status) {
+        status.textContent = isEnglish
+          ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding.`
+          : `Đang hiển thị ${items.length} tín hiệu thực hành gần đây từ ${sourceLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né.`;
+      }
+
+      if (list) {
+        if (!items.length) {
+          list.innerHTML = isEnglish
+            ? `<p class="note">No reflection evidence is available yet. Keep using this module as the triage contract until the queue moves to D1-backed persistence.</p>`
+            : `<p class="note">Chưa có reflection evidence nào. Tiếp tục dùng module này như khung triage cho tới khi hàng đợi chuyển sang persistence có D1.</p>`;
+        } else {
+          list.innerHTML = `<ul class="checkList">${items.map((item) => {
+            const stateLabel = item.practiceState === "human_reflection"
+              ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
+              : (isEnglish ? "Avoiding" : "Đang né");
+            const dayLabel = isEnglish ? "Day" : "Ngày";
+            const line = item.oneLine || (isEnglish ? "No honest line recorded." : "Chưa có một dòng thật.");
+            return `<li class="checkItem"><input type="checkbox" disabled ${item.practiceState === "human_reflection" ? "checked" : ""}><div><strong>${safeText(stateLabel)}</strong><p class="note">${dayLabel}: ${safeText(item.day)} • ${safeText(item.updatedAt || "-")}</p><p>${safeText(line)}</p></div></li>`;
+          }).join("")}</ul>`;
+        }
       }
     }
 
@@ -987,6 +1003,83 @@
             <li>Chuyển ra ngoài website nếu ghi chú cho thấy khủng hoảng y tế, tâm lý, pháp lý, hoặc an toàn.</li>
             <li>Queue này hiện là local theo trình duyệt. Chưa được gọi là production ops hoàn chỉnh cho tới khi có D1 hoặc admin API persistence.</li>
           </ul>`;
+    }
+
+    const evidence = {
+      generatedAt: new Date().toISOString(),
+      source: "browser_local_reflection_ops",
+      total_signals: signals.length,
+      human_reflection: reflectionItems.length,
+      avoiding: avoidingItems.length,
+      next_gate: reflectionItems.length
+        ? (isEnglish ? "Human reflection signals are waiting for a short grounded reply." : "Các tín hiệu cần người thật phản hồi đang chờ một hồi đáp ngắn và neo lại.")
+        : (isEnglish ? "No human reflection signal is waiting right now." : "Hiện chưa có tín hiệu nào đang chờ người thật phản hồi."),
+      signals: signals.map((item) => ({
+        day: item.day || "",
+        practiceState: item.practiceState || "",
+        oneLine: item.oneLine || "",
+        updatedAt: item.updatedAt || ""
+      }))
+    };
+
+    if (evidenceOutput) {
+      evidenceOutput.value = JSON.stringify(evidence, null, 2);
+    }
+
+    renderReflectionView(evidence);
+
+    if (evidenceCopy) {
+      evidenceCopy.addEventListener("click", async () => {
+        try {
+          if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+          await navigator.clipboard.writeText(evidenceOutput?.value || "");
+          renderStatus(evidenceStatus, isEnglish ? "Copied reflection evidence." : "Đã copy reflection evidence.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to copy reflection evidence." : "Không copy được reflection evidence.", "danger");
+        }
+      });
+    }
+
+    if (evidenceExport) {
+      evidenceExport.addEventListener("click", () => {
+        try {
+          const blob = new Blob([JSON.stringify(evidence, null, 2)], { type: "application/json;charset=utf-8;" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `reflection-evidence-${new Date().toISOString().slice(0, 10)}.json`;
+          link.click();
+          URL.revokeObjectURL(link.href);
+          renderStatus(evidenceStatus, isEnglish ? "Exported reflection evidence." : "Đã export reflection evidence.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to export reflection evidence." : "Không export được reflection evidence.", "danger");
+        }
+      });
+    }
+
+    if (evidenceApply) {
+      evidenceApply.addEventListener("click", () => {
+        try {
+          const parsed = JSON.parse(evidenceImport?.value || "{}");
+          if (!Array.isArray(parsed.signals)) {
+            throw new Error("INVALID_REFLECTION_EVIDENCE");
+          }
+          const imported = {
+            ...parsed,
+            source: "imported_reflection_ops"
+          };
+          renderReflectionView(imported);
+          renderStatus(evidenceStatus, isEnglish ? "Loaded pasted reflection evidence." : "Đã nạp reflection evidence đã dán.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to parse pasted reflection evidence." : "Không parse được reflection evidence đã dán.", "danger");
+        }
+      });
+    }
+
+    if (evidenceReset) {
+      evidenceReset.addEventListener("click", () => {
+        renderReflectionView(evidence);
+        renderStatus(evidenceStatus, isEnglish ? "Returned to local reflection data." : "Đã quay lại dữ liệu reflection local.", "ok");
+      });
     }
   }
 

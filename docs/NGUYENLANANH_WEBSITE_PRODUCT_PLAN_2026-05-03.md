@@ -145,6 +145,7 @@ Decision gate:
 - Hidden circle pages exist at `/members/circle/` and `/en/members/circle/`, are noindex, and are not added to public navigation.
 - Hidden reflection pages exist at `/members/reflection/` and `/en/members/reflection/`, are noindex, and are not added to public navigation.
 - Hidden admin reflection pages exist at `/admin/reflection/` and `/en/admin/reflection/`, are noindex, and stay outside public navigation.
+- Hidden admin reflection pages include a browser-local evidence packet with copy, export, import, and reset actions for quiet internal handoff before persistence exists.
 - Hidden admin pilot pages exist at `/admin/pilot/` and `/en/admin/pilot/`, are noindex, and stay outside public navigation.
 - Existing public content gates pass.
 - Payment rails endpoint remains live and unchanged in contract.

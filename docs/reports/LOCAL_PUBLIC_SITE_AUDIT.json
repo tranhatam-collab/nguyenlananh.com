@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T03:37:30.859Z",
+    "generatedAt": "2026-05-07T04:48:25.918Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 249,
+    "pagesAudited": 251,
     "pagesWithIssues": 0,
     "totalIssues": 0,
     "brokenInternalRefs": 0,
@@ -109,6 +109,7 @@
         "/admin/dashboard/",
         "/admin/content/",
         "/admin/members/",
+        "/admin/reflection/",
         "/admin/payments/",
         "/admin/creators/",
         "/admin/settings/",
@@ -134,6 +135,7 @@
         "/members/",
         "/admin/",
         "/join/",
+        "/admin/reflection/",
         "/assets/admin-console.js",
         "/assets/content-registry.js",
         "/assets/i18n-config.js",
@@ -157,6 +159,30 @@
         "/join/",
         "/assets/content-registry.js",
         "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/admin/reflection/",
+      "file": "admin/reflection/index.html",
+      "title": "Admin Reflection | Nguyễn Lan Anh",
+      "description": "Module vận hành nội bộ để triage tín hiệu thành viên đang né hoặc cần người thật phản hồi trong practice field.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/admin/",
+        "/join/",
+        "/admin/members/",
+        "/members/reflection/",
+        "/assets/admin-console.js",
+        "/assets/content-registry.js",
         "/assets/i18n-config.js",
         "/assets/lang-routing.js"
       ]
@@ -2240,6 +2266,7 @@
         "/en/admin/dashboard/",
         "/en/admin/content/",
         "/en/admin/members/",
+        "/en/admin/reflection/",
         "/en/admin/creators/",
         "/en/admin/settings/",
         "/assets/admin-console.js",
@@ -2264,6 +2291,7 @@
         "/en/members/",
         "/en/admin/",
         "/en/join/",
+        "/en/admin/reflection/",
         "/assets/admin-console.js",
         "/assets/content-registry.js",
         "/assets/i18n-config.js",
@@ -2288,6 +2316,30 @@
         "/en/admin/",
         "/assets/content-registry.js",
         "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/admin/reflection/",
+      "file": "en/admin/reflection/index.html",
+      "title": "Admin Reflection | Nguyenlananh.com",
+      "description": "Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/admin/",
+        "/en/join/",
+        "/en/admin/members/",
+        "/en/members/reflection/",
+        "/assets/admin-console.js",
+        "/assets/content-registry.js",
         "/assets/i18n-config.js",
         "/assets/lang-routing.js"
       ]

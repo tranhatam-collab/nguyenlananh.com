@@ -122,6 +122,26 @@ const checks = [
     ]
   },
   {
+    file: "admin/reflection/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Hàng đợi phản hồi người thật/,
+      /Triage trước khi trả lời/,
+      /id="reflection-status"/,
+      /Quay lại Members/
+    ]
+  },
+  {
+    file: "en/admin/reflection/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Human reflection queue/,
+      /Triage before replying/,
+      /id="reflection-status"/,
+      /Back to Members/
+    ]
+  },
+  {
     file: "en/members/circle/index.html",
     patterns: [
       /<meta name="robots" content="noindex,follow" \/>/,
@@ -146,6 +166,15 @@ const checks = [
     ]
   },
   {
+    file: "assets/admin-console.js",
+    patterns: [
+      /function initReflection\(\)/,
+      /nla_member_progress/,
+      /reflection-status/,
+      /Needs human reflection|Cần phản hồi người thật/
+    ]
+  },
+  {
     file: "docs/BILINGUAL_EMAIL_AUTOMATION_TEMPLATES.md",
     patterns: [
       /reminder_pause_url/,
@@ -160,7 +189,8 @@ const checks = [
     patterns: [
       /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/,
       /^(?![\s\S]*\/members\/circle\/)[\s\S]*$/,
-      /^(?![\s\S]*\/members\/reflection\/)[\s\S]*$/
+      /^(?![\s\S]*\/members\/reflection\/)[\s\S]*$/,
+      /^(?![\s\S]*\/admin\/reflection\/)[\s\S]*$/
     ]
   }
 ];

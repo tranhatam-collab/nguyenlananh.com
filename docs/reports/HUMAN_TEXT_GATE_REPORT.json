@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T03:37:30.635Z",
-    "pagesAudited": 247,
+    "generatedAt": "2026-05-07T04:48:25.908Z",
+    "pagesAudited": 249,
     "totalIssues": 0,
     "totalWarnings": 55,
     "issueCounts": {},
@@ -553,6 +553,22 @@
     {
       "url": "/admin/payments/",
       "file": "admin/payments/index.html",
+      "page_role": "admin",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "vi",
+      "true_state": "NOINDEX",
+      "next_action": "NONE",
+      "issues": [],
+      "warnings": []
+    },
+    {
+      "url": "/admin/reflection/",
+      "file": "admin/reflection/index.html",
       "page_role": "admin",
       "h1_status": "PASS",
       "character_hygiene": "PASS",
@@ -2040,6 +2056,22 @@
           "chars": "—"
         }
       ]
+    },
+    {
+      "url": "/en/admin/reflection/",
+      "file": "en/admin/reflection/index.html",
+      "page_role": "admin",
+      "h1_status": "PASS",
+      "character_hygiene": "PASS",
+      "seo_metadata": "PASS",
+      "canonical": "PASS",
+      "og_image": "PASS",
+      "alt_text": "PASS",
+      "language": "en-US",
+      "true_state": "NOINDEX",
+      "next_action": "NONE",
+      "issues": [],
+      "warnings": []
     },
     {
       "url": "/en/admin/settings/",

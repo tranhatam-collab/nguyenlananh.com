@@ -60,6 +60,7 @@ This release implements the first safe layer inside the members area:
 - Hidden noindex member pilot route prepares the 14-day quiet group without public navigation.
 - Hidden noindex member circle route prepares the 8-20 person quiet practice group without public navigation.
 - Hidden noindex member reflection pages prepare the human handoff layer without exposing a public support promise.
+- Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - A readiness audit script verifies the practice-field contract stays present.
 
 This release does not change homepage positioning, public navigation, payment functions, payment secrets, or provider readiness rules.
@@ -142,6 +143,7 @@ Decision gate:
 - Hidden pilot pages exist at `/members/pilot/` and `/en/members/pilot/`, are noindex, and are not added to public navigation.
 - Hidden circle pages exist at `/members/circle/` and `/en/members/circle/`, are noindex, and are not added to public navigation.
 - Hidden reflection pages exist at `/members/reflection/` and `/en/members/reflection/`, are noindex, and are not added to public navigation.
+- Hidden admin reflection pages exist at `/admin/reflection/` and `/en/admin/reflection/`, are noindex, and stay outside public navigation.
 - Existing public content gates pass.
 - Payment rails endpoint remains live and unchanged in contract.
 - Changes are committed, pushed, deployed, and smoke-tested.

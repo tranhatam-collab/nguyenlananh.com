@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Admin Reflection | Nguyenlananh.com</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/en/admin/reflection/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/admin/reflection/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/reflection/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/reflection/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/reflection/" />
+  <meta name="description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <meta property="og:title" content="Admin Reflection | Nguyenlananh.com" />
+  <meta property="og:description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
+  <meta property="og:url" content="https://www.nguyenlananh.com/en/admin/reflection/" />
+  <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Admin Reflection | Nguyenlananh.com" />
+  <meta name="twitter:description" content="Internal operations module for triaging member signals of avoiding or asking for human reflection inside the practice field." />
+  <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+</head>
+<body data-page="admin-reflection"><a class="skip" href="#admin-main">Skip to content</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/en/" aria-label="Lan Anh Nguyen — back to home"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Lan Anh Nguyen</strong><span class="tagline">Rebuild your life from within</span></span></a>
+        <nav class="navlinks" aria-label="Primary navigation"><a href="/en/hanh-trinh/">Journey</a><a href="/en/phuong-phap/">System</a><a href="/en/bai-viet/">Writings</a><a href="/en/members/">Members</a></nav>
+        <div class="actions">
+          <a class="btn" href="/en/admin/">Admin home</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Sign out</button>
+          <button class="hamburger" type="button" id="hamburger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true"></span></button>
+        </div>
+      </div>
+    </div>
+    <div class="drawer" id="drawer" role="dialog" aria-modal="false" aria-label="Navigation menu">
+      <div class="dhead">
+        <div>
+          <div style="font-weight:700; font-size:13px;">Menu</div>
+          <div class="hint">Choose a section to continue.</div>
+        </div>
+        <button class="btn" type="button" id="closeDrawer" aria-label="Close menu">Close</button>
+      </div>
+      <nav aria-label="Mobile navigation"><a href="/en/hanh-trinh/" data-close>Journey</a><a href="/en/phuong-phap/" data-close>System</a><a href="/en/bai-viet/" data-close>Writings</a><a href="/en/members/" data-close>Members</a><a href="/en/join/" data-close class="drawerCta">Join</a></nav>
+      <div class="foot">Move slowly to go deep. Move truthfully to go far.</div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Reflection ops</span>
+      <h1>Human reflection queue</h1>
+      <p class="sub">This module receives member signals of <strong>avoiding</strong> or <strong>needs a real person to reflect back</strong>, then routes them into a quiet triage frame with clear boundaries.</p>
+      <p id="admin-host-warning" class="statusBanner hidden" role="status"></p>
+    </section>
+
+    <section id="admin-auth" class="panel">
+      <h3>Open internal session</h3>
+      <div class="field"><label for="admin-key">Internal key</label><input id="admin-key" type="password" /></div>
+      <div class="field">
+        <label for="admin-role">Role</label>
+        <select id="admin-role">
+          <option value="super_admin">Super Admin</option>
+          <option value="ops">Operations</option>
+          <option value="content_editor">Content editor</option>
+          <option value="content">Content</option>
+          <option value="viewer">Viewer</option>
+        </select>
+      </div>
+      <div class="field"><label for="admin-ttl">Session minutes</label><input id="admin-ttl" type="number" min="15" max="720" value="480" /></div>
+      <div class="actionsRow"><button id="admin-enter" class="cta" type="button">Open session</button></div>
+      <p id="session-status" class="meta">No active internal session.</p>
+      <p id="admin-role-text" class="note"></p>
+    </section>
+
+    <section class="grid2 admin-only" data-requires="members">
+      <article class="panel">
+        <h3>Triage before replying</h3>
+        <ul class="list">
+          <li>Start with one grounding line instead of adding a bigger lecture.</li>
+          <li>Reflect one repeating pattern, not every possible layer.</li>
+          <li>Offer one next small step, not pressure.</li>
+        </ul>
+      </article>
+      <article class="panel">
+        <h3>Required boundary</h3>
+        <ul class="list">
+          <li>This does not replace medical, mental-health, legal, or crisis support.</li>
+          <li>Do not turn this queue into performance or debate.</li>
+          <li>If the note suggests safety risk, move outside the site immediately.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Recent signals</h3>
+      <p id="reflection-status" class="note"></p>
+      <div id="reflection-list" class="admin-section"></div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Operations log</h3>
+      <div id="reflection-log" class="note"></div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Next move</h3>
+      <p>If the signal only needs a gentler rhythm, route the member back to check-in. If it needs human presence, keep the reply brief, real, and enough for the next step.</p>
+      <div class="actionsRow"><a class="ghost" href="/en/admin/members/">Back to Members</a><a class="ghost" href="/en/members/reflection/">View member handoff</a></div>
+    </section>
+
+    <section id="health-panel" class="admin-only" data-requires="dashboard"></section>
+  </main>
+
+  <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Not to become someone else. To return to who you truly are.</div></div></footer>
+  <script src="/assets/admin-console.js"></script>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/i18n-config.js"></script>
+  <script src="/assets/lang-routing.js"></script>
+</body>
+</html>

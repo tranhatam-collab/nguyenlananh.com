@@ -269,6 +269,23 @@
     writeJSON(STORAGE_KEYS.session, session);
   }
 
+  function getMemberPracticeSignals() {
+    const progress = readJSON("nla_member_progress", null);
+    const days = progress?.practice?.days;
+    if (!days || typeof days !== "object") return [];
+
+    return Object.entries(days)
+      .map(([day, item]) => ({
+        day,
+        practiceState: item?.practiceState || "",
+        oneLine: String(item?.oneLine || "").trim(),
+        needsHumanReflection: Boolean(item?.needsHumanReflection),
+        updatedAt: item?.updatedAt || ""
+      }))
+      .filter((item) => item.practiceState === "human_reflection" || item.practiceState === "avoiding")
+      .sort((a, b) => String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")));
+  }
+
   function renderStatus(el, message, variant = "info") {
     if (!el) return;
     el.textContent = message || "";
@@ -800,6 +817,9 @@
     const published = Array.isArray(launchItems)
       ? launchItems.filter((item) => item?.status === "published").length
       : 0;
+    const reflectionSignals = getMemberPracticeSignals();
+    const reflectionCount = reflectionSignals.filter((item) => item.practiceState === "human_reflection").length;
+    const avoidingCount = reflectionSignals.filter((item) => item.practiceState === "avoiding").length;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -820,6 +840,14 @@
         <h3>Members Snapshot</h3>
         <ul class="list">
           ${membersOps.map((item) => `<li>${item.label}: <strong>${safeText(item.value)}</strong> (${safeText(item.hint)})`).join("")}
+        </ul>
+      </article>
+      <article class="panel">
+        <h3>Reflection queue</h3>
+        <ul class="list">
+          <li>Human reflection: <strong>${reflectionCount}</strong></li>
+          <li>Avoiding: <strong>${avoidingCount}</strong></li>
+          <li><a href="${location.pathname.startsWith("/en/") ? "/en/admin/reflection/" : "/admin/reflection/"}">Open reflection ops</a></li>
         </ul>
       </article>
     </div>`;
@@ -855,7 +883,56 @@
     }
 
     if (memberLog) {
-      memberLog.innerHTML = `<ul class="list"><li>Đề xuất: chuyển sang DB-driven theo sprint 2 để có real-time metrics.</li></ul>`;
+      memberLog.innerHTML = `<ul class="list"><li>Đề xuất: chuyển sang DB-driven theo sprint 2 để có real-time metrics.</li><li>Mở module reflection để xử lý tín hiệu <strong>tôi đang né</strong> và <strong>tôi cần người thật phản hồi</strong>.</li></ul>`;
+    }
+  }
+
+  function initReflection() {
+    const status = $("#reflection-status");
+    const list = $("#reflection-list");
+    const log = $("#reflection-log");
+    if (!status && !list && !log) return;
+
+    const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
+    const signals = getMemberPracticeSignals();
+    const reflectionItems = signals.filter((item) => item.practiceState === "human_reflection");
+    const avoidingItems = signals.filter((item) => item.practiceState === "avoiding");
+
+    if (status) {
+      status.textContent = isEnglish
+        ? `Detected ${signals.length} recent local practice signals in this browser: ${reflectionItems.length} human reflection, ${avoidingItems.length} avoiding.`
+        : `Phát hiện ${signals.length} tín hiệu thực hành gần đây trong trình duyệt này: ${reflectionItems.length} cần người thật phản hồi, ${avoidingItems.length} đang né.`;
+    }
+
+    if (list) {
+      if (!signals.length) {
+        list.innerHTML = isEnglish
+          ? `<p class="note">No local queue found in this browser yet. This module stays useful as the triage contract before D1 persistence is added.</p>`
+          : `<p class="note">Chưa có queue local trong trình duyệt này. Module này vẫn là khung triage trước khi có D1 persistence.</p>`;
+      } else {
+        list.innerHTML = `<ul class="checkList">${signals.map((item) => {
+          const stateLabel = item.practiceState === "human_reflection"
+            ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
+            : (isEnglish ? "Avoiding" : "Đang né");
+          const dayLabel = isEnglish ? "Day" : "Ngày";
+          const line = item.oneLine || (isEnglish ? "No honest line recorded." : "Chưa có một dòng thật.");
+          return `<li class="checkItem"><input type="checkbox" disabled ${item.practiceState === "human_reflection" ? "checked" : ""}><div><strong>${safeText(stateLabel)}</strong><p class="note">${dayLabel}: ${safeText(item.day)} • ${safeText(item.updatedAt || "-")}</p><p>${safeText(line)}</p></div></li>`;
+        }).join("")}</ul>`;
+      }
+    }
+
+    if (log) {
+      log.innerHTML = isEnglish
+        ? `<ul class="list">
+            <li>Respond with one grounding line, one reflected pattern, and one next small step.</li>
+            <li>Escalate outside the site if the note suggests medical, mental-health, legal, or safety crisis.</li>
+            <li>This queue is browser-local for now. Do not call it complete production ops until D1 or admin API persistence is added.</li>
+          </ul>`
+        : `<ul class="list">
+            <li>Phản hồi bằng một dòng neo lại, một điều soi lại, và một bước nhỏ tiếp theo.</li>
+            <li>Chuyển ra ngoài website nếu ghi chú cho thấy khủng hoảng y tế, tâm lý, pháp lý, hoặc an toàn.</li>
+            <li>Queue này hiện là local theo trình duyệt. Chưa được gọi là production ops hoàn chỉnh cho tới khi có D1 hoặc admin API persistence.</li>
+          </ul>`;
     }
   }
 
@@ -1187,6 +1264,7 @@
     initContent();
     initDashboard();
     initMembers();
+    initReflection();
     initCreators();
     initSettingsTextArea();
     initAccountManager();

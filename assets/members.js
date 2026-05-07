@@ -937,6 +937,7 @@
 
     function buildPacket(saved) {
       return {
+        packet_type: "member_reflection_handoff",
         email: session?.email || "",
         track: getProfileForEmail(session?.email)?.practiceTrack || "",
         reminderIntensity: getProfileForEmail(session?.email)?.reminderIntensity || "",

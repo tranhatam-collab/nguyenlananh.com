@@ -1036,7 +1036,9 @@
       const avoidingCount = Number(view?.avoiding || 0);
       const sourceLabel = view?.source === "imported_reflection_ops"
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
-        : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
+        : view?.source === "imported_member_reflection_handoff"
+          ? (isEnglish ? "member handoff packet" : "handoff packet của thành viên")
+          : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
         status.textContent = isEnglish
@@ -1143,15 +1145,53 @@
       evidenceApply.addEventListener("click", () => {
         try {
           const parsed = JSON.parse(evidenceImport?.value || "{}");
-          if (!Array.isArray(parsed.signals)) {
+          if (Array.isArray(parsed.signals)) {
+            const imported = {
+              ...parsed,
+              source: "imported_reflection_ops"
+            };
+            renderReflectionView(imported);
+            renderStatus(evidenceStatus, isEnglish ? "Loaded pasted reflection evidence." : "Đã nạp reflection evidence đã dán.", "ok");
+            return;
+          }
+
+          const isMemberPacket = parsed?.packet_type === "member_reflection_handoff"
+            && typeof parsed?.email === "string"
+            && typeof parsed?.sourceState === "string";
+          if (!isMemberPacket) {
             throw new Error("INVALID_REFLECTION_EVIDENCE");
           }
+
           const imported = {
-            ...parsed,
-            source: "imported_reflection_ops"
+            generatedAt: new Date().toISOString(),
+            source: "imported_member_reflection_handoff",
+            total_signals: parsed.sourceState ? 1 : 0,
+            human_reflection: parsed.sourceState === "human_reflection" ? 1 : 0,
+            avoiding: parsed.sourceState === "avoiding" ? 1 : 0,
+            saved_handoffs: 1,
+            matched_handoffs: parsed.sourceState === "human_reflection" || parsed.sourceState === "avoiding" ? 1 : 0,
+            next_gate: isEnglish
+              ? "Member handoff packet is ready for a short grounded reply."
+              : "Handoff packet của thành viên đã sẵn cho một phản hồi ngắn và neo lại.",
+            signals: parsed.sourceState ? [{
+              day: parsed.sourceDay || "",
+              practiceState: parsed.sourceState || "",
+              oneLine: parsed.sourceOneLine || "",
+              updatedAt: parsed.updatedAt || ""
+            }] : [],
+            handoffs: [{
+              email: parsed.email || "",
+              line1: parsed.line1 || "",
+              line2: parsed.line2 || "",
+              line3: parsed.line3 || "",
+              sourceState: parsed.sourceState || "",
+              sourceDay: parsed.sourceDay || "",
+              sourceOneLine: parsed.sourceOneLine || "",
+              updatedAt: parsed.updatedAt || ""
+            }]
           };
           renderReflectionView(imported);
-          renderStatus(evidenceStatus, isEnglish ? "Loaded pasted reflection evidence." : "Đã nạp reflection evidence đã dán.", "ok");
+          renderStatus(evidenceStatus, isEnglish ? "Loaded member handoff packet." : "Đã nạp handoff packet của thành viên.", "ok");
         } catch (_error) {
           renderStatus(evidenceStatus, isEnglish ? "Unable to parse pasted reflection evidence." : "Không parse được reflection evidence đã dán.", "danger");
         }

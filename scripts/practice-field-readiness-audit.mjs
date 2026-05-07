@@ -129,6 +129,7 @@ const checks = [
       /Khung bàn giao 3 dòng/,
       /id="reflectionHandoffForm"/,
       /id="reflectionHandoffOutput"/,
+      /admin reflection/,
       /data-profile-track/,
       /Quay lại check-in/
     ]
@@ -141,6 +142,7 @@ const checks = [
       /The 3-line handoff/,
       /id="reflectionHandoffForm"/,
       /id="reflectionHandoffOutput"/,
+      /admin reflection/,
       /data-profile-track/,
       /Return to check-in/
     ]
@@ -214,6 +216,7 @@ const checks = [
       /reflectionReadyTitle/,
       /data-practice-reflection-panel/,
       /nla_member_reflection_handoffs/,
+      /packet_type: "member_reflection_handoff"/,
       /reflectionHandoffMatchesLatest/,
       /handoffReadyStatus/,
       /function initDashboardPage\(session\)/,
@@ -231,6 +234,7 @@ const checks = [
       /Needs human reflection|Cần phản hồi người thật/,
       /reflection-evidence-output/,
       /Copied reflection evidence|Đã copy reflection evidence/,
+      /imported_member_reflection_handoff/,
       /matched_handoffs/,
       /function initPilot\(\)/,
       /nla_member_profiles/,

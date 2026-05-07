@@ -69,7 +69,8 @@ const checks = [
       /value="avoiding"/,
       /value="human_reflection"/,
       /data-practice-one-line/,
-      /Tôi đang né/
+      /Tôi đang né/,
+      /data-practice-handoff-status/
     ]
   },
   {
@@ -81,7 +82,8 @@ const checks = [
       /value="avoiding"/,
       /value="human_reflection"/,
       /data-practice-one-line/,
-      /I am avoiding/
+      /I am avoiding/,
+      /data-practice-handoff-status/
     ]
   },
   {
@@ -212,6 +214,8 @@ const checks = [
       /reflectionReadyTitle/,
       /data-practice-reflection-panel/,
       /nla_member_reflection_handoffs/,
+      /reflectionHandoffMatchesLatest/,
+      /handoffReadyStatus/,
       /function initDashboardPage\(session\)/,
       /function initPilotPage\(session\)/,
       /function initReflectionPage\(session\)/

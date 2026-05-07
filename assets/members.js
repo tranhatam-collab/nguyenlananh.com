@@ -94,6 +94,12 @@
         avoidingSupportAction: "Open reflection handoff",
         reflectionHandoffSaved: "Your reflection handoff has been saved.",
         reflectionHandoffCopyFail: "Unable to copy the reflection handoff right now."
+        ,
+        handoffReadyStatus: "A saved 3-line handoff already exists for this point.",
+        handoffNeedsUpdateStatus: "A saved handoff exists, but it does not match today's point yet.",
+        handoffMissingStatus: "No saved handoff exists yet for today's point.",
+        handoffOpenLabel: "Open handoff",
+        handoffReviewLabel: "Review pilot readiness"
       };
     }
 
@@ -141,7 +147,12 @@
       avoidingSupportBody: "Hôm nay chưa cần giải quyết hết. Chỉ cần gọi tên điểm né, giữ một bước nhỏ hơn, và xin phản hồi người thật nếu điểm này lặp lại.",
       avoidingSupportAction: "Mở bàn giao phản hồi",
       reflectionHandoffSaved: "Reflection handoff của bạn đã được lưu.",
-      reflectionHandoffCopyFail: "Chưa copy được reflection handoff lúc này."
+      reflectionHandoffCopyFail: "Chưa copy được reflection handoff lúc này.",
+      handoffReadyStatus: "Đã có handoff 3 dòng được lưu cho đúng điểm này.",
+      handoffNeedsUpdateStatus: "Đã có handoff được lưu, nhưng chưa khớp với điểm hôm nay.",
+      handoffMissingStatus: "Chưa có handoff nào được lưu cho điểm hôm nay.",
+      handoffOpenLabel: "Mở handoff",
+      handoffReviewLabel: "Xem readiness pilot"
     };
   }
 
@@ -248,6 +259,13 @@
     };
     saveReflectionHandoffsStore(store);
     return store[email];
+  }
+
+  function reflectionHandoffMatchesLatest(handoff, latest) {
+    if (!handoff || !latest) return false;
+    if (handoff.sourceDay && latest.dateKey && handoff.sourceDay === latest.dateKey) return true;
+    if (handoff.sourceOneLine && latest.oneLine && handoff.sourceOneLine === latest.oneLine) return true;
+    return false;
   }
 
   function normalizePracticeTrack(value) {
@@ -575,9 +593,46 @@
     const reflectionTitle = $("[data-practice-reflection-title]");
     const reflectionBody = $("[data-practice-reflection-body]");
     const reflectionAction = $("[data-practice-reflection-action]");
+    const handoffStatus = $("[data-practice-handoff-status]");
+    const handoffActions = $("[data-practice-handoff-actions]");
 
     function reflectionPath() {
       return isEnglishPath(window.location.pathname) ? "/en/members/reflection/" : "/members/reflection/";
+    }
+
+    function pilotPath() {
+      return isEnglishPath(window.location.pathname) ? "/en/members/pilot/" : "/members/pilot/";
+    }
+
+    function updateHandoffStatus(state) {
+      if (!handoffStatus && !handoffActions) return;
+      const session = getSession();
+      const handoff = getReflectionHandoffForEmail(session?.email);
+      const latest = progress.practice.days[key];
+      const matchesLatest = reflectionHandoffMatchesLatest(handoff, {
+        dateKey: key,
+        oneLine: String(latest?.oneLine || "").trim()
+      });
+
+      if (handoffStatus) {
+        if ((state === "human_reflection" || state === "avoiding") && handoff && matchesLatest) {
+          handoffStatus.textContent = strings.handoffReadyStatus;
+        } else if ((state === "human_reflection" || state === "avoiding") && handoff) {
+          handoffStatus.textContent = strings.handoffNeedsUpdateStatus;
+        } else if (state === "human_reflection" || state === "avoiding") {
+          handoffStatus.textContent = strings.handoffMissingStatus;
+        } else {
+          handoffStatus.textContent = "";
+        }
+      }
+
+      if (handoffActions) {
+        if (state === "human_reflection" || state === "avoiding") {
+          handoffActions.innerHTML = `<a class="ghost" href="${reflectionPath()}">${strings.handoffOpenLabel}</a><a class="ghost" href="${pilotPath()}">${strings.handoffReviewLabel}</a>`;
+        } else {
+          handoffActions.innerHTML = "";
+        }
+      }
     }
 
     function updateReflectionPanel(state) {
@@ -585,6 +640,7 @@
       const activeState = state || "";
       if (!activeState) {
         reflectionPanel.classList.add("hidden");
+        updateHandoffStatus("");
         return;
       }
 
@@ -594,6 +650,7 @@
         reflectionAction.textContent = strings.reflectionReadyAction;
         reflectionAction.setAttribute("href", reflectionPath());
         reflectionPanel.classList.remove("hidden");
+        updateHandoffStatus(activeState);
         return;
       }
 
@@ -603,10 +660,12 @@
         reflectionAction.textContent = strings.avoidingSupportAction;
         reflectionAction.setAttribute("href", reflectionPath());
         reflectionPanel.classList.remove("hidden");
+        updateHandoffStatus(activeState);
         return;
       }
 
       reflectionPanel.classList.add("hidden");
+      updateHandoffStatus("");
     }
 
     if (!progress.practice.days[key]) {
@@ -669,6 +728,7 @@
         selected.value === "human_reflection" ? strings.reflectionRequestSaved : strings.practiceCheckinSaved,
         "success"
       );
+      updateHandoffStatus(selected.value);
     });
   }
 

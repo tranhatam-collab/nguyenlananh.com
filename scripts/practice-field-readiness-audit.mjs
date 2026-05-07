@@ -15,7 +15,9 @@ const checks = [
       /done/,
       /smaller_step/,
       /avoiding/,
-      /human_reflection/
+      /human_reflection/,
+      /intake queue/i,
+      /recommended route/i
     ]
   },
   {
@@ -241,6 +243,9 @@ const checks = [
       /member-snapshot-import/,
       /member-snapshot-queue/,
       /member-snapshot-save/,
+      /recommendedRouteForSnapshot/,
+      /queueRecommendedRoute/,
+      /queueLastRoutedTo/,
       /data-member-queue-action/,
       /pendingReflectionPacket/,
       /pendingPilotPacket/,

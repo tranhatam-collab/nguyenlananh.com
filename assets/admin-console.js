@@ -243,6 +243,24 @@
     writeJSON(STORAGE_KEYS.memberSnapshotQueue, items);
   }
 
+  function recommendedRouteForSnapshot(packet) {
+    const state = String(packet?.latestPracticeState || "");
+    if (state === "human_reflection" || state === "avoiding" || !packet?.hasSavedHandoff) {
+      return "reflection";
+    }
+    return "pilot";
+  }
+
+  function normalizeMemberSnapshotQueueItem(packet, existing = null) {
+    return {
+      ...packet,
+      queueRecommendedRoute: recommendedRouteForSnapshot(packet),
+      queueSavedAt: existing?.queueSavedAt || new Date().toISOString(),
+      queueLastRoutedTo: existing?.queueLastRoutedTo || "",
+      queueLastRoutedAt: existing?.queueLastRoutedAt || ""
+    };
+  }
+
   function savePendingReflectionPacket(packet) {
     writeJSON(STORAGE_KEYS.pendingReflectionPacket, packet || null);
   }
@@ -1063,13 +1081,21 @@
         <ul class="checkList">${queue.map((packet) => {
           const paused = isFutureIso(packet.reminderPausedUntil);
           const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");
+          const routeLabel = packet.queueRecommendedRoute === "reflection"
+            ? (isEnglish ? "Reflection ops" : "Reflection ops")
+            : (isEnglish ? "Pilot ops" : "Pilot ops");
+          const routedLabel = packet.queueLastRoutedTo
+            ? `${packet.queueLastRoutedTo === "reflection" ? (isEnglish ? "Reflection ops" : "Reflection ops") : (isEnglish ? "Pilot ops" : "Pilot ops")} • ${safeText(packet.queueLastRoutedAt || "-")}`
+            : (isEnglish ? "not routed yet" : "chưa handoff");
           return `<li class="checkItem"><input type="checkbox" disabled ${packet.profileReady ? "checked" : ""}><div>
             <strong>${safeText(packet.fullName || packet.email || "-")}</strong>
             <p class="note">${safeText(packet.email || "-")} • ${safeText(packet.updatedAt || "-")}</p>
             <p class="note">${safeText(isEnglish ? "Latest state" : "Trạng thái gần nhất")}: ${safeText(latestState)} • ${safeText(isEnglish ? "Pause" : "Pause")}: ${safeText(paused ? (isEnglish ? "active" : "đang mở") : (isEnglish ? "clear" : "đã thông"))}</p>
+            <p class="note">${safeText(isEnglish ? "Recommended route" : "Route gợi ý")}: ${safeText(routeLabel)} • ${safeText(isEnglish ? "Last handoff" : "Handoff gần nhất")}: ${safeText(routedLabel)}</p>
             <div class="actionsRow" style="margin-top:8px;">
               <button class="ghost" type="button" data-member-queue-action="reflection" data-member-queue-email="${safeText(packet.email || "")}">${safeText(isEnglish ? "Send to reflection ops" : "Gửi sang reflection ops")}</button>
               <button class="ghost" type="button" data-member-queue-action="pilot" data-member-queue-email="${safeText(packet.email || "")}">${safeText(isEnglish ? "Send to pilot ops" : "Gửi sang pilot ops")}</button>
+              <button class="ghost" type="button" data-member-queue-action="remove" data-member-queue-email="${safeText(packet.email || "")}">${safeText(isEnglish ? "Remove" : "Bỏ item này")}</button>
             </div>
           </div></li>`;
         }).join("")}</ul>
@@ -1099,8 +1125,9 @@
         if (!isMemberPacket) {
           throw new Error("INVALID_MEMBER_SNAPSHOT");
         }
+        const existing = getMemberSnapshotQueue().find((item) => item.email === parsed.email) || null;
         const queue = getMemberSnapshotQueue().filter((item) => item.email !== parsed.email);
-        queue.unshift(parsed);
+        queue.unshift(normalizeMemberSnapshotQueueItem(parsed, existing));
         saveMemberSnapshotQueue(queue.slice(0, 12));
         renderMemberSnapshotQueue();
         renderStatus(memberSnapshotStatus, isEnglish ? "Saved member snapshot to intake queue." : "Đã lưu member snapshot vào intake queue.", "ok");
@@ -1120,18 +1147,44 @@
       if (!trigger) return;
       const email = String(trigger.getAttribute("data-member-queue-email") || "");
       const action = String(trigger.getAttribute("data-member-queue-action") || "");
+      if (action === "remove") {
+        saveMemberSnapshotQueue(getMemberSnapshotQueue().filter((item) => item.email !== email));
+        renderMemberSnapshotQueue();
+        renderStatus(memberSnapshotStatus, isEnglish ? "Removed packet from intake queue." : "Đã bỏ packet khỏi intake queue.", "ok");
+        return;
+      }
       const packet = getMemberSnapshotQueue().find((item) => item.email === email);
       if (!packet) {
         renderStatus(memberSnapshotStatus, isEnglish ? "Packet not found in queue." : "Không tìm thấy packet trong queue.", "danger");
         return;
       }
       if (action === "reflection") {
-        savePendingReflectionPacket(packet);
+        saveMemberSnapshotQueue(getMemberSnapshotQueue().map((item) =>
+          item.email === email
+            ? { ...item, queueLastRoutedTo: "reflection", queueLastRoutedAt: new Date().toISOString() }
+            : item
+        ));
+        renderMemberSnapshotQueue();
+        savePendingReflectionPacket({
+          ...packet,
+          queueLastRoutedTo: "reflection",
+          queueLastRoutedAt: new Date().toISOString()
+        });
         window.location.href = isEnglish ? "/en/admin/reflection/" : "/admin/reflection/";
         return;
       }
       if (action === "pilot") {
-        savePendingPilotPacket(packet);
+        saveMemberSnapshotQueue(getMemberSnapshotQueue().map((item) =>
+          item.email === email
+            ? { ...item, queueLastRoutedTo: "pilot", queueLastRoutedAt: new Date().toISOString() }
+            : item
+        ));
+        renderMemberSnapshotQueue();
+        savePendingPilotPacket({
+          ...packet,
+          queueLastRoutedTo: "pilot",
+          queueLastRoutedAt: new Date().toISOString()
+        });
         window.location.href = isEnglish ? "/en/admin/pilot/" : "/admin/pilot/";
       }
     });

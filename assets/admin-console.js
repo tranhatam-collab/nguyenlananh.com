@@ -1357,18 +1357,26 @@
       const items = Array.isArray(view?.signals) ? view.signals : [];
       const humanReflectionCount = Number(view?.human_reflection || 0);
       const avoidingCount = Number(view?.avoiding || 0);
+      const queueTotal = Number(view?.queue_total || 0);
+      const queueRelevant = Number(view?.queue_relevant || 0);
       const sourceLabel = view?.source === "imported_reflection_ops"
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
         : view?.source === "imported_member_reflection_handoff"
           ? (isEnglish ? "member handoff packet" : "handoff packet của thành viên")
-          : view?.source === "imported_admin_intake_queue"
+        : view?.source === "imported_admin_intake_queue"
             ? (isEnglish ? "intake queue packet" : "intake queue packet")
           : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
-        status.textContent = isEnglish
-          ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
-          : `Đang hiển thị ${items.length} tín hiệu thực hành gần đây từ ${sourceLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
+        if (view?.source === "imported_admin_intake_queue") {
+          status.textContent = isEnglish
+            ? `Loaded ${queueRelevant} reflection-ready entries from an intake queue packet with ${queueTotal} total items. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
+            : `Đã nạp ${queueRelevant} entry sẵn cho reflection từ intake queue packet có tổng ${queueTotal} item. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
+        } else {
+          status.textContent = isEnglish
+            ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
+            : `Đang hiển thị ${items.length} tín hiệu thực hành gần đây từ ${sourceLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
+        }
       }
 
       if (list) {
@@ -1487,6 +1495,8 @@
             const imported = {
               generatedAt: new Date().toISOString(),
               source: "imported_admin_intake_queue",
+              queue_total: parsed.items.length,
+              queue_relevant: relevantItems.length,
               total_signals: relevantItems.filter((item) => item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding").length,
               human_reflection: relevantItems.filter((item) => item.latestPracticeState === "human_reflection").length,
               avoiding: relevantItems.filter((item) => item.latestPracticeState === "avoiding").length,
@@ -1661,18 +1671,26 @@
       const pausedCount = Number(view?.paused_profiles || 0);
       const gentleCount = Number(view?.tracks?.gentle || 0);
       const deepCount = Number(view?.tracks?.deep || 0);
+      const queueTotal = Number(view?.queue_total || 0);
+      const queueRelevant = Number(view?.queue_relevant || 0);
       const sourceLabel = view?.source === "imported_pilot_ops"
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
         : view?.source === "imported_member_pilot_readiness"
           ? (isEnglish ? "member readiness packet" : "readiness packet của thành viên")
-          : view?.source === "imported_admin_intake_queue"
+        : view?.source === "imported_admin_intake_queue"
             ? (isEnglish ? "intake queue packet" : "intake queue packet")
           : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
-        status.textContent = isEnglish
-          ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
-          : `Đang hiển thị ${participants.length} hồ sơ từ ${sourceLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
+        if (view?.source === "imported_admin_intake_queue") {
+          status.textContent = isEnglish
+            ? `Loaded ${queueRelevant} pilot-ready entries from an intake queue packet with ${queueTotal} total items. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
+            : `Đã nạp ${queueRelevant} entry sẵn cho pilot từ intake queue packet có tổng ${queueTotal} item. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
+        } else {
+          status.textContent = isEnglish
+            ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
+            : `Đang hiển thị ${participants.length} hồ sơ từ ${sourceLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
+        }
       }
 
       if (summary) {
@@ -1833,6 +1851,8 @@
             const imported = {
               generatedAt: new Date().toISOString(),
               source: "imported_admin_intake_queue",
+              queue_total: parsed.items.length,
+              queue_relevant: participants.length,
               profiles_total: participants.length,
               profiles_ready: participants.filter((item) => item.profileReady).length,
               paused_profiles: participants.filter((item) => isFutureIso(item.reminderPausedUntil)).length,

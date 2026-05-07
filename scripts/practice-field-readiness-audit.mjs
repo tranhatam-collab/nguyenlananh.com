@@ -283,6 +283,8 @@ const checks = [
       /buildMemberSnapshotQueuePacket/,
       /mergeMemberSnapshotQueueItems/,
       /imported_admin_intake_queue/,
+      /queue_total/,
+      /queue_relevant/,
       /recommendedRouteForSnapshot/,
       /queueRecommendedRoute/,
       /queueLastRoutedTo/,

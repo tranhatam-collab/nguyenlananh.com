@@ -70,6 +70,7 @@ This release implements the first safe layer inside the members area:
 - Admin home can now export or merge the full intake queue as one portable packet, so multiple imported member snapshots can move between ops machines without one-by-one copy work.
 - Admin reflection and admin pilot can now import that full intake queue packet directly, so operations can open a module on another machine and load the relevant subset without revisiting admin home first.
 - Admin home can now open a module on the same machine with the full intake queue preloaded, so batch triage does not require a manual paste step.
+- When reflection ops or pilot ops load an intake queue packet, the module now shows how many relevant entries were filtered out of the total queue, so the operator can see the import scope immediately.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

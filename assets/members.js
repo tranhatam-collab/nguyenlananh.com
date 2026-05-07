@@ -83,7 +83,14 @@
         reminderPausedUntil: "Paused until",
         practiceStateRequired: "Choose one check-in state.",
         practiceOneLineRequired: "Write one honest line before saving.",
-        practiceCheckinSaved: "Your check-in has been saved."
+        practiceCheckinSaved: "Your check-in has been saved.",
+        reflectionRequestSaved: "Your check-in has been saved. Open the reflection handoff so a real person can read the true point.",
+        reflectionReadyTitle: "Human reflection is ready",
+        reflectionReadyBody: "If you want a real person to reflect back, move the true point into the reflection handoff. Keep it short, concrete, and honest.",
+        reflectionReadyAction: "Open reflection handoff",
+        avoidingSupportTitle: "Name the point you are avoiding",
+        avoidingSupportBody: "You do not need to solve it today. Name the point, keep one smaller step, and ask for human reflection if the same point keeps repeating.",
+        avoidingSupportAction: "Open reflection handoff"
       };
     }
 
@@ -122,7 +129,14 @@
       reminderPausedUntil: "Tạm dừng đến",
       practiceStateRequired: "Hãy chọn một trạng thái check-in.",
       practiceOneLineRequired: "Hãy viết một dòng thật trước khi lưu.",
-      practiceCheckinSaved: "Check-in của bạn đã được lưu."
+      practiceCheckinSaved: "Check-in của bạn đã được lưu.",
+      reflectionRequestSaved: "Check-in đã được lưu. Hãy mở bước bàn giao phản hồi người thật để một người thật đọc đúng điểm này.",
+      reflectionReadyTitle: "Bước phản hồi người thật đã sẵn sàng",
+      reflectionReadyBody: "Nếu bạn muốn một người thật phản hồi, hãy chuyển điểm thật hôm nay sang bước bàn giao. Giữ ngắn, cụ thể và thật.",
+      reflectionReadyAction: "Mở bàn giao phản hồi",
+      avoidingSupportTitle: "Gọi tên đúng điểm đang né",
+      avoidingSupportBody: "Hôm nay chưa cần giải quyết hết. Chỉ cần gọi tên điểm né, giữ một bước nhỏ hơn, và xin phản hồi người thật nếu điểm này lặp lại.",
+      avoidingSupportAction: "Mở bàn giao phản hồi"
     };
   }
 
@@ -405,6 +419,43 @@
     const form = $("#practiceCheckinForm");
     const oneLine = $("[data-practice-one-line]");
     const status = $("#practiceCheckinStatus");
+    const reflectionPanel = $("[data-practice-reflection-panel]");
+    const reflectionTitle = $("[data-practice-reflection-title]");
+    const reflectionBody = $("[data-practice-reflection-body]");
+    const reflectionAction = $("[data-practice-reflection-action]");
+
+    function reflectionPath() {
+      return isEnglishPath(window.location.pathname) ? "/en/members/reflection/" : "/members/reflection/";
+    }
+
+    function updateReflectionPanel(state) {
+      if (!reflectionPanel) return;
+      const activeState = state || "";
+      if (!activeState) {
+        reflectionPanel.classList.add("hidden");
+        return;
+      }
+
+      if (activeState === "human_reflection") {
+        reflectionTitle.textContent = strings.reflectionReadyTitle;
+        reflectionBody.textContent = strings.reflectionReadyBody;
+        reflectionAction.textContent = strings.reflectionReadyAction;
+        reflectionAction.setAttribute("href", reflectionPath());
+        reflectionPanel.classList.remove("hidden");
+        return;
+      }
+
+      if (activeState === "avoiding") {
+        reflectionTitle.textContent = strings.avoidingSupportTitle;
+        reflectionBody.textContent = strings.avoidingSupportBody;
+        reflectionAction.textContent = strings.avoidingSupportAction;
+        reflectionAction.setAttribute("href", reflectionPath());
+        reflectionPanel.classList.remove("hidden");
+        return;
+      }
+
+      reflectionPanel.classList.add("hidden");
+    }
 
     if (!progress.practice.days[key]) {
       progress.practice.days[key] = {
@@ -436,7 +487,11 @@
     if (oneLine) oneLine.value = today.oneLine || "";
     $$('input[name="practiceState"]').forEach((input) => {
       input.checked = input.value === today.practiceState;
+      input.addEventListener("change", () => {
+        updateReflectionPanel(input.checked ? input.value : "");
+      });
     });
+    updateReflectionPanel(today.practiceState);
 
     form?.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -456,7 +511,12 @@
       today.updatedAt = new Date().toISOString();
       saveProgress(progress);
       renderProgress();
-      setBanner(status, strings.practiceCheckinSaved, "success");
+      updateReflectionPanel(selected.value);
+      setBanner(
+        status,
+        selected.value === "human_reflection" ? strings.reflectionRequestSaved : strings.practiceCheckinSaved,
+        "success"
+      );
     });
   }
 

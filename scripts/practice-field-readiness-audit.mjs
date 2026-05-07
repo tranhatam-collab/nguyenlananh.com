@@ -102,6 +102,26 @@ const checks = [
     ]
   },
   {
+    file: "members/reflection/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Bàn giao phản hồi người thật/,
+      /Khung bàn giao 3 dòng/,
+      /data-profile-track/,
+      /Quay lại check-in/
+    ]
+  },
+  {
+    file: "en/members/reflection/index.html",
+    patterns: [
+      /<meta name="robots" content="noindex,follow" \/>/,
+      /Human reflection handoff/,
+      /The 3-line handoff/,
+      /data-profile-track/,
+      /Return to check-in/
+    ]
+  },
+  {
     file: "en/members/circle/index.html",
     patterns: [
       /<meta name="robots" content="noindex,follow" \/>/,
@@ -120,7 +140,9 @@ const checks = [
       /reminderPausedUntil/,
       /practiceState/,
       /oneLine/,
-      /needsHumanReflection/
+      /needsHumanReflection/,
+      /reflectionReadyTitle/,
+      /data-practice-reflection-panel/
     ]
   },
   {
@@ -137,7 +159,8 @@ const checks = [
     file: "sitemap.xml",
     patterns: [
       /^(?![\s\S]*\/members\/pilot\/)[\s\S]*$/,
-      /^(?![\s\S]*\/members\/circle\/)[\s\S]*$/
+      /^(?![\s\S]*\/members\/circle\/)[\s\S]*$/,
+      /^(?![\s\S]*\/members\/reflection\/)[\s\S]*$/
     ]
   }
 ];

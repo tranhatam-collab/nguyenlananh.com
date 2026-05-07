@@ -4,7 +4,7 @@ Verdict:
 WEB_TEXT_GATE_PASS
 
 Evidence checked:
-- 245 HTML files in release scope.
+- 247 HTML files in release scope.
 - docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md.
 - docs/DEV_TEAM_RELEASE_DISCIPLINE.md link to the protocol.
 - H1 count, empty headings, SEO metadata, canonical, Open Graph image, language, alt text, visible text symbols, and true state.
@@ -36,8 +36,8 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-05T16:51:18.085Z
-- Pages audited: 245
+- Generated at: 2026-05-07T03:37:30.635Z
+- Pages audited: 247
 - Total issues: 0
 - Total warnings: 55
 
@@ -250,6 +250,7 @@ Notes:
 | /en/members/pro/inner/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/pro/reset/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/pro/wealth/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
+| /en/members/reflection/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/start/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/mien-tru-trach-nhiem/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/phuong-phap/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
@@ -295,6 +296,7 @@ Notes:
 | /members/pro/inner/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/pro/reset/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/pro/wealth/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
+| /members/reflection/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/start/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /mien-tru-trach-nhiem/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /phuong-phap/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |

@@ -55,9 +55,11 @@ This release implements the first safe layer inside the members area:
   - `avoiding`
   - `human_reflection`
 - Daily practice stores one honest line with the check-in.
+- A hidden member reflection-handoff route gives `avoiding` and `human_reflection` a concrete next step without turning it into a public community feature.
 - Journey Day 1, Day 2, and Day 7 explain micro-pass criteria.
 - Hidden noindex member pilot route prepares the 14-day quiet group without public navigation.
 - Hidden noindex member circle route prepares the 8-20 person quiet practice group without public navigation.
+- Hidden noindex member reflection pages prepare the human handoff layer without exposing a public support promise.
 - A readiness audit script verifies the practice-field contract stays present.
 
 This release does not change homepage positioning, public navigation, payment functions, payment secrets, or provider readiness rules.
@@ -139,6 +141,7 @@ Decision gate:
 - Journey Day 1, Day 2, and Day 7 include micro-pass guidance in VI and EN.
 - Hidden pilot pages exist at `/members/pilot/` and `/en/members/pilot/`, are noindex, and are not added to public navigation.
 - Hidden circle pages exist at `/members/circle/` and `/en/members/circle/`, are noindex, and are not added to public navigation.
+- Hidden reflection pages exist at `/members/reflection/` and `/en/members/reflection/`, are noindex, and are not added to public navigation.
 - Existing public content gates pass.
 - Payment rails endpoint remains live and unchanged in contract.
 - Changes are committed, pushed, deployed, and smoke-tested.

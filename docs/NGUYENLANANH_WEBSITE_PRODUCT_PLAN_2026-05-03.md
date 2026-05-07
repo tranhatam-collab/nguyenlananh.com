@@ -147,6 +147,7 @@ Decision gate:
 - Journey Day 1, Day 2, and Day 7 include micro-pass guidance in VI and EN.
 - Hidden pilot pages exist at `/members/pilot/` and `/en/members/pilot/`, are noindex, and are not added to public navigation.
 - Hidden member pilot pages show a browser-local readiness snapshot so each member can see whether profile, honest check-in, reminder pause, and reflection state are ready before pilot review opens.
+- The member pilot readiness packet is now portable across machines: admin pilot can import a pasted member readiness packet directly, without waiting for shared browser-local state.
 - Hidden circle pages exist at `/members/circle/` and `/en/members/circle/`, are noindex, and are not added to public navigation.
 - Hidden reflection pages exist at `/members/reflection/` and `/en/members/reflection/`, are noindex, and are not added to public navigation.
 - Hidden admin reflection pages exist at `/admin/reflection/` and `/en/admin/reflection/`, are noindex, and stay outside public navigation.

@@ -95,6 +95,8 @@
         reflectionHandoffSaved: "Your reflection handoff has been saved.",
         reflectionHandoffCopyFail: "Unable to copy the reflection handoff right now."
         ,
+        pilotPacketReady: "Your pilot readiness packet is ready.",
+        pilotPacketCopyFail: "Unable to copy the pilot readiness packet right now.",
         handoffReadyStatus: "A saved 3-line handoff already exists for this point.",
         handoffNeedsUpdateStatus: "A saved handoff exists, but it does not match today's point yet.",
         handoffMissingStatus: "No saved handoff exists yet for today's point.",
@@ -148,6 +150,8 @@
       avoidingSupportAction: "Mở bàn giao phản hồi",
       reflectionHandoffSaved: "Reflection handoff của bạn đã được lưu.",
       reflectionHandoffCopyFail: "Chưa copy được reflection handoff lúc này.",
+      pilotPacketReady: "Pilot readiness packet của bạn đã sẵn sàng.",
+      pilotPacketCopyFail: "Chưa copy được pilot readiness packet lúc này.",
       handoffReadyStatus: "Đã có handoff 3 dòng được lưu cho đúng điểm này.",
       handoffNeedsUpdateStatus: "Đã có handoff được lưu, nhưng chưa khớp với điểm hôm nay.",
       handoffMissingStatus: "Chưa có handoff nào được lưu cho điểm hôm nay.",
@@ -773,9 +777,13 @@
   }
 
   function initPilotPage(session) {
+    const strings = memberStrings();
     const status = $("#pilot-readiness-status");
     const summary = $("#pilot-readiness-summary");
     const next = $("#pilot-readiness-next");
+    const output = $("#pilotReadinessOutput");
+    const copyBtn = $("#pilotReadinessCopy");
+    const packetStatus = $("#pilotReadinessPacketStatus");
     if (!status && !summary && !next) return;
 
     const isEnglish = document.documentElement.lang === "en-US";
@@ -902,6 +910,38 @@
         `<a class="${action.primary ? "cta" : "ghost"}" href="${action.href}">${safeText(action.label)}</a>`
       )).join("");
     }
+
+    const packet = {
+      packet_type: "member_pilot_readiness",
+      email: session?.email || "",
+      fullName: profile?.fullName || "",
+      practiceTrack: profile?.practiceTrack || "",
+      reminderIntensity: profile?.reminderIntensity || "",
+      reminderPausedUntil: profile?.reminderPausedUntil || "",
+      profileReady: readyProfile,
+      latestPracticeState: latestState,
+      latestPracticeDay: latest?.dateKey || "",
+      latestPracticeLine: latestLine,
+      currentState: profile?.currentState || "",
+      updatedAt: new Date().toISOString()
+    };
+
+    if (output) {
+      output.value = JSON.stringify(packet, null, 2);
+    }
+
+    if (packetStatus) {
+      packetStatus.textContent = strings.pilotPacketReady;
+    }
+
+    copyBtn?.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(output?.value || "");
+        setBanner(packetStatus, strings.copied, "success");
+      } catch (_error) {
+        setBanner(packetStatus, strings.pilotPacketCopyFail, "danger");
+      }
+    });
   }
 
   function initReflectionPage(session) {

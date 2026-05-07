@@ -95,7 +95,9 @@ const checks = [
       /Đối diện sâu/,
       /Tôi đang né/,
       /data-profile-track/,
-      /id="pilot-readiness-status"/
+      /id="pilot-readiness-status"/,
+      /id="pilotReadinessOutput"/,
+      /admin pilot/
     ]
   },
   {
@@ -107,7 +109,9 @@ const checks = [
       /Deep Facing/,
       /I am avoiding/,
       /data-profile-track/,
-      /id="pilot-readiness-status"/
+      /id="pilot-readiness-status"/,
+      /id="pilotReadinessOutput"/,
+      /admin pilot/
     ]
   },
   {
@@ -221,6 +225,7 @@ const checks = [
       /handoffReadyStatus/,
       /function initDashboardPage\(session\)/,
       /function initPilotPage\(session\)/,
+      /packet_type: "member_pilot_readiness"/,
       /function initReflectionPage\(session\)/
     ]
   },
@@ -241,6 +246,7 @@ const checks = [
       /pilot-status/,
       /Ready for Day 1 welcome|Sẵn sàng welcome Day 1/,
       /pilot-evidence-output/,
+      /imported_member_pilot_readiness/,
       /ready_profiles_with_checkin/,
       /Copy evidence|Đã copy pilot evidence/
     ]

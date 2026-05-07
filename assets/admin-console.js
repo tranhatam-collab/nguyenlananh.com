@@ -1263,7 +1263,9 @@
       const deepCount = Number(view?.tracks?.deep || 0);
       const sourceLabel = view?.source === "imported_pilot_ops"
         ? (isEnglish ? "imported evidence packet" : "evidence packet đã import")
-        : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
+        : view?.source === "imported_member_pilot_readiness"
+          ? (isEnglish ? "member readiness packet" : "readiness packet của thành viên")
+          : (isEnglish ? "local browser data" : "dữ liệu local của trình duyệt");
 
       if (status) {
         status.textContent = isEnglish
@@ -1388,15 +1390,74 @@
       evidenceApply.addEventListener("click", () => {
         try {
           const parsed = JSON.parse(evidenceImport?.value || "{}");
-          if (!Array.isArray(parsed.participants)) {
+          if (Array.isArray(parsed.participants)) {
+            const imported = {
+              ...parsed,
+              source: "imported_pilot_ops"
+            };
+            renderPilotView(imported);
+            renderStatus(evidenceStatus, isEnglish ? "Loaded pasted pilot evidence." : "Đã nạp pilot evidence đã dán.", "ok");
+            return;
+          }
+
+          const isMemberPacket = parsed?.packet_type === "member_pilot_readiness"
+            && typeof parsed?.email === "string"
+            && typeof parsed?.practiceTrack === "string";
+          if (!isMemberPacket) {
             throw new Error("INVALID_PILOT_EVIDENCE");
           }
+
+          const paused = isFutureIso(parsed.reminderPausedUntil);
+          const latestState = String(parsed.latestPracticeState || "");
+          const profileReady = Boolean(parsed.profileReady);
+          const nextTouchpoint = paused
+            ? (isEnglish ? "Respect pause" : "Tôn trọng pause")
+            : latestState === "human_reflection"
+              ? (isEnglish ? "Day 3 human review" : "Day 3 phản hồi người thật")
+              : latestState === "avoiding"
+                ? (isEnglish ? "Day 3 avoidance follow-up" : "Day 3 follow-up điểm né")
+                : profileReady
+                  ? (isEnglish ? "Ready for Day 1 welcome" : "Sẵn sàng welcome Day 1")
+                  : (isEnglish ? "Finish profile first" : "Hoàn thiện profile trước");
+          const participant = {
+            email: parsed.email || "",
+            fullName: parsed.fullName || "",
+            practiceTrack: parsed.practiceTrack || "",
+            reminderIntensity: parsed.reminderIntensity || "",
+            reminderPausedUntil: parsed.reminderPausedUntil || "",
+            profileReady,
+            updatedAt: parsed.updatedAt || "",
+            currentState: parsed.currentState || "",
+            latestPracticeState: latestState,
+            nextTouchpoint
+          };
           const imported = {
-            ...parsed,
-            source: "imported_pilot_ops"
+            generatedAt: new Date().toISOString(),
+            source: "imported_member_pilot_readiness",
+            profiles_total: 1,
+            profiles_ready: profileReady ? 1 : 0,
+            paused_profiles: paused ? 1 : 0,
+            tracks: {
+              gentle: parsed.practiceTrack === "gentle" ? 1 : 0,
+              deep: parsed.practiceTrack === "deep" ? 1 : 0
+            },
+            recent_practice: {
+              total_entries: latestState ? 1 : 0,
+              human_reflection: latestState === "human_reflection" ? 1 : 0,
+              avoiding: latestState === "avoiding" ? 1 : 0
+            },
+            next_gate: isEnglish
+              ? "Member readiness packet is ready for pilot review."
+              : "Readiness packet của thành viên đã sẵn để rà pilot.",
+            shared_ops_language: {
+              saved_handoffs: 0,
+              matched_handoffs: 0,
+              ready_profiles_with_checkin: profileReady && latestState && parsed.latestPracticeLine ? 1 : 0
+            },
+            participants: [participant]
           };
           renderPilotView(imported);
-          renderStatus(evidenceStatus, isEnglish ? "Loaded pasted pilot evidence." : "Đã nạp pilot evidence đã dán.", "ok");
+          renderStatus(evidenceStatus, isEnglish ? "Loaded member readiness packet." : "Đã nạp readiness packet của thành viên.", "ok");
         } catch (_error) {
           renderStatus(evidenceStatus, isEnglish ? "Unable to parse pasted pilot evidence." : "Không parse được pilot evidence đã dán.", "danger");
         }

@@ -19,6 +19,22 @@ const checks = [
     ]
   },
   {
+    file: "members/dashboard/index.html",
+    patterns: [
+      /id="member-ops-status"/,
+      /id="member-ops-summary"/,
+      /id="member-ops-next"/
+    ]
+  },
+  {
+    file: "en/members/dashboard/index.html",
+    patterns: [
+      /id="member-ops-status"/,
+      /id="member-ops-summary"/,
+      /id="member-ops-next"/
+    ]
+  },
+  {
     file: "members/start/index.html",
     patterns: [
       /id="profilePracticeTrack"/,
@@ -196,6 +212,7 @@ const checks = [
       /reflectionReadyTitle/,
       /data-practice-reflection-panel/,
       /nla_member_reflection_handoffs/,
+      /function initDashboardPage\(session\)/,
       /function initPilotPage\(session\)/,
       /function initReflectionPage\(session\)/
     ]

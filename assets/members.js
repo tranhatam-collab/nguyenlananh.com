@@ -442,6 +442,107 @@
     });
   }
 
+  function latestStateLabel(latestState, isEnglish) {
+    return latestState === "human_reflection"
+      ? (isEnglish ? "Human reflection" : "Cần người thật phản hồi")
+      : latestState === "avoiding"
+        ? (isEnglish ? "Avoiding" : "Đang né")
+        : latestState === "smaller_step"
+          ? (isEnglish ? "Smaller step" : "Bước nhỏ hơn")
+          : latestState === "done"
+            ? (isEnglish ? "Done" : "Đã làm")
+            : (isEnglish ? "No check-in yet" : "Chưa có check-in");
+  }
+
+  function initDashboardPage(session) {
+    const status = $("#member-ops-status");
+    const summary = $("#member-ops-summary");
+    const next = $("#member-ops-next");
+    if (!status && !summary && !next) return;
+
+    const isEnglish = document.documentElement.lang === "en-US";
+    const profile = getProfileForEmail(session?.email);
+    const progress = getProgress();
+    const latest = getLatestPracticeEntry(progress);
+    const handoff = getReflectionHandoffForEmail(session?.email);
+    const profileReady = profileIsComplete(profile);
+    const paused = isFutureIso(profile?.reminderPausedUntil);
+    const latestState = latest?.practiceState || "";
+    const latestLine = String(latest?.oneLine || "").trim();
+    const hasHonestCheckin = Boolean(latestState && latestLine);
+    const hasSavedHandoff = Boolean(handoff && (handoff.line1 || handoff.line2 || handoff.line3));
+
+    let statusText = "";
+    let actions = [];
+
+    if (!profileReady) {
+      statusText = isEnglish
+        ? "Your base is still incomplete. Finish the companion profile so the next steps are honest and usable."
+        : "Nền của bạn còn thiếu. Hãy hoàn thiện hồ sơ đồng hành để các bước tiếp theo thật và dùng được.";
+      actions = [
+        { href: isEnglish ? "/en/members/start/" : "/members/start/", label: isEnglish ? "Complete profile" : "Hoàn thiện profile", primary: true }
+      ];
+    } else if (!hasHonestCheckin) {
+      statusText = isEnglish
+        ? "Your profile is ready. The next real move is one honest check-in."
+        : "Profile của bạn đã đủ. Bước thật kế tiếp là một check-in trung thực.";
+      actions = [
+        { href: isEnglish ? "/en/members/practice/" : "/members/practice/", label: isEnglish ? "Open check-in" : "Mở check-in", primary: true }
+      ];
+    } else if (latestState === "human_reflection" && !hasSavedHandoff) {
+      statusText = isEnglish
+        ? "You asked for human reflection, but the 3-line handoff is still empty."
+        : "Bạn đã xin phản hồi người thật, nhưng handoff 3 dòng vẫn còn trống.";
+      actions = [
+        { href: isEnglish ? "/en/members/reflection/" : "/members/reflection/", label: isEnglish ? "Write handoff" : "Viết handoff", primary: true },
+        { href: isEnglish ? "/en/members/practice/" : "/members/practice/", label: isEnglish ? "Return to check-in" : "Quay lại check-in" }
+      ];
+    } else if (paused) {
+      statusText = isEnglish
+        ? "Your reminder pause is still active. Keep the rhythm light until that pause clears."
+        : "Pause reminder của bạn vẫn còn hiệu lực. Hãy giữ nhịp nhẹ cho tới khi khoảng tạm dừng này qua đi.";
+      actions = [
+        { href: isEnglish ? "/en/members/start/" : "/members/start/", label: isEnglish ? "Review reminder settings" : "Xem lại mức nhắc", primary: true },
+        { href: isEnglish ? "/en/members/practice/" : "/members/practice/", label: isEnglish ? "Keep a small step" : "Giữ một bước nhỏ" }
+      ];
+    } else if (latestState === "avoiding") {
+      statusText = isEnglish
+        ? "You are still in the field, but the latest signal says avoiding. Keep the next step very small."
+        : "Bạn vẫn đang ở trong trường thực hành, nhưng tín hiệu gần nhất đang là né. Hãy giữ bước kế tiếp thật nhỏ.";
+      actions = [
+        { href: isEnglish ? "/en/members/practice/" : "/members/practice/", label: isEnglish ? "Keep today's step small" : "Giữ bước hôm nay thật nhỏ", primary: true },
+        { href: isEnglish ? "/en/members/reflection/" : "/members/reflection/", label: isEnglish ? "Ask for reflection" : "Xin phản hồi" }
+      ];
+    } else {
+      statusText = isEnglish
+        ? "Your current base is coherent: profile, check-in, and next-step rhythm are aligned."
+        : "Nền hiện tại của bạn đang khá liền mạch: profile, check-in, và nhịp bước tiếp theo đang khớp nhau.";
+      actions = [
+        { href: isEnglish ? "/en/members/pilot/" : "/members/pilot/", label: isEnglish ? "Review pilot readiness" : "Xem readiness pilot", primary: true },
+        { href: isEnglish ? "/en/members/practice/" : "/members/practice/", label: isEnglish ? "Keep daily rhythm" : "Giữ nhịp hằng ngày" }
+      ];
+    }
+
+    if (status) {
+      status.textContent = statusText;
+    }
+
+    if (summary) {
+      summary.innerHTML = `<ul class="checkList">
+        <li class="checkItem"><input type="checkbox" disabled ${profileReady ? "checked" : ""}><div><strong>${isEnglish ? "Profile is complete" : "Profile đã đủ"}</strong><p class="note">${safeText((profile?.fullName || session?.email || "-"))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${hasHonestCheckin ? "checked" : ""}><div><strong>${isEnglish ? "Honest check-in exists" : "Đã có check-in thật"}</strong><p class="note">${safeText(latest?.dateKey || "-")} • ${safeText(latestStateLabel(latestState, isEnglish))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${hasSavedHandoff ? "checked" : ""}><div><strong>${isEnglish ? "Reflection handoff is saved" : "Đã lưu reflection handoff"}</strong><p class="note">${safeText(hasSavedHandoff ? (handoff?.updatedAt || "-") : (isEnglish ? "No saved handoff yet" : "Chưa có handoff nào được lưu"))}</p></div></li>
+        <li class="checkItem"><input type="checkbox" disabled ${!paused ? "checked" : ""}><div><strong>${isEnglish ? "Reminder pause is clear" : "Không còn pause reminder"}</strong><p class="note">${safeText(paused ? (isEnglish ? "Pause is still active" : "Pause vẫn đang còn hiệu lực") : (isEnglish ? "No active pause" : "Không có pause đang mở"))}</p></div></li>
+      </ul>`;
+    }
+
+    if (next) {
+      next.innerHTML = actions.map((action) =>
+        `<a class="${action.primary ? "cta" : "ghost"}" href="${action.href}">${safeText(action.label)}</a>`
+      ).join("");
+    }
+  }
+
   function initJourneyPage() {
     const strings = memberStrings();
     const progress = getProgress();
@@ -1280,6 +1381,7 @@
 
     const page = document.body.getAttribute("data-page");
     if (page === "members-start") initStartPage(session);
+    if (page === "members-dashboard") initDashboardPage(session);
     if (page === "members-journey") initJourneyPage();
     if (page === "members-practice") initPracticePage();
     if (page === "members-pilot") initPilotPage(session);

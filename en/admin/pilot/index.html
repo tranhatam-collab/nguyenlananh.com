@@ -10,7 +10,7 @@
   <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/admin/pilot/" />
   <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/admin/pilot/" />
   <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/admin/pilot/" />
-  <meta name="description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
+<meta name="description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
   <link rel="stylesheet" href="/assets/site.css" />
   <meta property="og:title" content="Admin Pilot | Nguyenlananh.com" />
   <meta property="og:description" content="Internal operations module for reviewing 14-day pilot readiness: track, reminder consent, pause state, check-in, and Day 1 / Day 3 / Day 7 touchpoints." />
@@ -107,6 +107,20 @@
     <section class="panel admin-only" data-requires="members">
       <h3>Operations log</h3>
       <div id="pilot-log" class="note"></div>
+    </section>
+
+    <section class="panel admin-only" data-requires="members">
+      <h3>Internal evidence packet</h3>
+      <p class="note">This snapshot only reflects browser-local data in the current session. Use it for quick handoff before participant state moves to D1.</p>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="pilot-evidence-copy" class="ghost" type="button">Copy evidence</button>
+        <button id="pilot-evidence-export" class="ghost" type="button">Export JSON</button>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="pilot-evidence-output">Pilot evidence</label>
+        <textarea id="pilot-evidence-output" rows="12" readonly></textarea>
+      </div>
+      <p id="pilot-evidence-status" class="note"></p>
     </section>
 
     <section class="panel admin-only" data-requires="members">

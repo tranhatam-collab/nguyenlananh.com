@@ -995,6 +995,10 @@
     const summary = $("#pilot-summary");
     const list = $("#pilot-list");
     const log = $("#pilot-log");
+    const evidenceOutput = $("#pilot-evidence-output");
+    const evidenceStatus = $("#pilot-evidence-status");
+    const evidenceCopy = $("#pilot-evidence-copy");
+    const evidenceExport = $("#pilot-evidence-export");
     if (!status && !summary && !list && !log) return;
 
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
@@ -1069,6 +1073,68 @@
             <li>Day 7: giữ phần review ngắn, thực tế, và gắn với một bước kế tiếp.</li>
             <li>Module này hiện là local theo trình duyệt. Chưa gọi là participant ops production cho tới khi có D1 hoặc admin API persistence.</li>
           </ul>`;
+    }
+
+    const recentPracticeEntries = getLatestPracticeEntries();
+    const evidence = {
+      generatedAt: new Date().toISOString(),
+      source: "browser_local_pilot_ops",
+      profiles_total: profiles.length,
+      profiles_ready: readyProfiles.length,
+      paused_profiles: pausedProfiles.length,
+      tracks: {
+        gentle: gentleProfiles.length,
+        deep: deepProfiles.length
+      },
+      recent_practice: {
+        total_entries: recentPracticeEntries.length,
+        human_reflection: recentPracticeEntries.filter((item) => item.practiceState === "human_reflection").length,
+        avoiding: recentPracticeEntries.filter((item) => item.practiceState === "avoiding").length
+      },
+      next_gate: readyProfiles.length >= 10
+        ? (isEnglish ? "Enough ready profiles to review pilot invite list." : "Đã có đủ hồ sơ sẵn sàng để rà danh sách mời pilot.")
+        : (isEnglish ? "Keep collecting complete profiles before opening a real pilot." : "Tiếp tục gom đủ profile hoàn chỉnh trước khi mở pilot thật."),
+      participants: profiles.map((item) => ({
+        email: item.email,
+        fullName: item.fullName || "",
+        practiceTrack: item.practiceTrack || "",
+        reminderIntensity: item.reminderIntensity || "",
+        reminderPausedUntil: item.reminderPausedUntil || "",
+        profileReady: memberProfileIsComplete(item),
+        updatedAt: item.updatedAt || ""
+      }))
+    };
+
+    if (evidenceOutput) {
+      evidenceOutput.value = JSON.stringify(evidence, null, 2);
+    }
+
+    if (evidenceCopy) {
+      evidenceCopy.addEventListener("click", async () => {
+        try {
+          if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+          await navigator.clipboard.writeText(evidenceOutput?.value || "");
+          renderStatus(evidenceStatus, isEnglish ? "Copied pilot evidence." : "Đã copy pilot evidence.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to copy pilot evidence." : "Không copy được pilot evidence.", "danger");
+        }
+      });
+    }
+
+    if (evidenceExport) {
+      evidenceExport.addEventListener("click", () => {
+        try {
+          const blob = new Blob([JSON.stringify(evidence, null, 2)], { type: "application/json;charset=utf-8;" });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `pilot-evidence-${new Date().toISOString().slice(0, 10)}.json`;
+          link.click();
+          URL.revokeObjectURL(link.href);
+          renderStatus(evidenceStatus, isEnglish ? "Exported pilot evidence." : "Đã export pilot evidence.", "ok");
+        } catch (_error) {
+          renderStatus(evidenceStatus, isEnglish ? "Unable to export pilot evidence." : "Không export được pilot evidence.", "danger");
+        }
+      });
     }
   }
 

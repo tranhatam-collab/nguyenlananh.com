@@ -147,6 +147,7 @@ const checks = [
       /<meta name="robots" content="noindex,follow" \/>/,
       /Readiness pilot 14 ngày/,
       /id="pilot-status"/,
+      /id="pilot-evidence-output"/,
       /Day 1/,
       /Day 3/,
       /Day 7/
@@ -158,6 +159,7 @@ const checks = [
       /<meta name="robots" content="noindex,follow" \/>/,
       /14-day pilot readiness/,
       /id="pilot-status"/,
+      /id="pilot-evidence-output"/,
       /Day 1/,
       /Day 3/,
       /Day 7/
@@ -197,7 +199,9 @@ const checks = [
       /function initPilot\(\)/,
       /nla_member_profiles/,
       /pilot-status/,
-      /Ready for Day 1 welcome|Sẵn sàng welcome Day 1/
+      /Ready for Day 1 welcome|Sẵn sàng welcome Day 1/,
+      /pilot-evidence-output/,
+      /Copy evidence|Đã copy pilot evidence/
     ]
   },
   {

@@ -1067,6 +1067,8 @@
     const memberSnapshotStatus = $("#member-snapshot-status");
     const memberSnapshotView = $("#member-snapshot-view");
     const memberSnapshotQueue = $("#member-snapshot-queue");
+    const memberSnapshotQueueRouteFilter = $("#member-snapshot-queue-route-filter");
+    const memberSnapshotQueueHandoffFilter = $("#member-snapshot-queue-handoff-filter");
     const memberSnapshotQueuePacket = $("#member-snapshot-queue-packet");
     const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
     const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
@@ -1180,6 +1182,15 @@
     function renderMemberSnapshotQueue() {
       if (!memberSnapshotQueue) return;
       const queue = sortedMemberSnapshotQueue(getMemberSnapshotQueue());
+      const routeFilter = String(memberSnapshotQueueRouteFilter?.value || "all");
+      const handoffFilter = String(memberSnapshotQueueHandoffFilter?.value || "all");
+      const filteredQueue = queue.filter((packet) => {
+        const routePass = routeFilter === "all" || packet.queueRecommendedRoute === routeFilter;
+        const handoffPass = handoffFilter === "all"
+          || (handoffFilter === "routed" && Boolean(packet.queueLastRoutedTo))
+          || (handoffFilter === "unrouted" && !packet.queueLastRoutedTo);
+        return routePass && handoffPass;
+      });
       if (memberSnapshotQueuePacket) {
         memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);
       }
@@ -1187,10 +1198,17 @@
         memberSnapshotQueue.innerHTML = `<p class="note">${safeText(isEnglish ? "No imported member packet is saved yet." : "Chưa có member packet nào được lưu trong intake queue.")}</p>`;
         return;
       }
+      if (!filteredQueue.length) {
+        memberSnapshotQueue.innerHTML = `<div>
+          <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
+          <p class="note">${safeText(isEnglish ? "No queue item matches the current filters." : "Không có item nào khớp bộ lọc hiện tại.")}</p>
+        </div>`;
+        return;
+      }
       memberSnapshotQueue.innerHTML = `<div>
         <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
-        <p class="note">${safeText(isEnglish ? "Reflection-ready" : "Sẵn cho reflection")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "reflection").length} • ${safeText(isEnglish ? "Pilot-ready" : "Sẵn cho pilot")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "pilot").length} • ${safeText(isEnglish ? "Already routed" : "Đã handoff")}: ${queue.filter((packet) => packet.queueLastRoutedTo).length}</p>
-        <ul class="checkList">${queue.map((packet) => {
+        <p class="note">${safeText(isEnglish ? "Reflection-ready" : "Sẵn cho reflection")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "reflection").length} • ${safeText(isEnglish ? "Pilot-ready" : "Sẵn cho pilot")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "pilot").length} • ${safeText(isEnglish ? "Already routed" : "Đã handoff")}: ${queue.filter((packet) => packet.queueLastRoutedTo).length} • ${safeText(isEnglish ? "Visible now" : "Đang hiện")}: ${filteredQueue.length}</p>
+        <ul class="checkList">${filteredQueue.map((packet) => {
           const paused = isFutureIso(packet.reminderPausedUntil);
           const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");
           const routeLabel = packet.queueRecommendedRoute === "reflection"
@@ -1215,6 +1233,14 @@
         }).join("")}</ul>
       </div>`;
     }
+
+    memberSnapshotQueueRouteFilter?.addEventListener("change", () => {
+      renderMemberSnapshotQueue();
+    });
+
+    memberSnapshotQueueHandoffFilter?.addEventListener("change", () => {
+      renderMemberSnapshotQueue();
+    });
 
     memberSnapshotApply?.addEventListener("click", () => {
       try {

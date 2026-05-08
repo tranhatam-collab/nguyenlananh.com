@@ -141,6 +141,24 @@
       </div>
       <p id="member-snapshot-status" class="note"></p>
       <div id="member-snapshot-view" class="admin-section"></div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="field">
+          <label for="member-snapshot-queue-route-filter">Filter by route</label>
+          <select id="member-snapshot-queue-route-filter">
+            <option value="all">All routes</option>
+            <option value="reflection">Reflection only</option>
+            <option value="pilot">Pilot only</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="member-snapshot-queue-handoff-filter">Filter by handoff</label>
+          <select id="member-snapshot-queue-handoff-filter">
+            <option value="all">All states</option>
+            <option value="unrouted">Not routed yet</option>
+            <option value="routed">Already routed</option>
+          </select>
+        </div>
+      </div>
       <div id="member-snapshot-queue" class="admin-section" style="margin-top:12px;"></div>
       <div class="field" style="margin-top:12px;">
         <label for="member-snapshot-queue-packet">Intake queue packet</label>

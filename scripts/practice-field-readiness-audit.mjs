@@ -189,6 +189,8 @@ const checks = [
     patterns: [
       /id="member-snapshot-import"/,
       /id="member-snapshot-queue"/,
+      /id="member-snapshot-queue-route-filter"/,
+      /id="member-snapshot-queue-handoff-filter"/,
       /id="member-snapshot-queue-packet"/,
       /id="member-snapshot-queue-copy"/,
       /id="member-snapshot-queue-export"/,
@@ -202,6 +204,8 @@ const checks = [
     patterns: [
       /id="member-snapshot-import"/,
       /id="member-snapshot-queue"/,
+      /id="member-snapshot-queue-route-filter"/,
+      /id="member-snapshot-queue-handoff-filter"/,
       /id="member-snapshot-queue-packet"/,
       /id="member-snapshot-queue-copy"/,
       /id="member-snapshot-queue-export"/,
@@ -316,7 +320,9 @@ const checks = [
       /Copy evidence|Đã copy pilot evidence/,
       /Needs reflection now|Cần reflection ngay/,
       /Ready for pilot review|Sẵn rà pilot/,
-      /Priority|Ưu tiên/
+      /Priority|Ưu tiên/,
+      /Visible now|Đang hiện/,
+      /No queue item matches the current filters|Không có item nào khớp bộ lọc hiện tại/
     ]
   },
   {

@@ -1436,7 +1436,7 @@
       if (memberSnapshotQueueActiveFilters) {
         const hasActiveFilters = routeFilter !== "all" || handoffFilter !== "all" || priorityFilter !== "all";
         const restoredAction = restoredFilterContext && pendingFilterSourcePath
-          ? `<div class="actionsRow" style="margin:6px 0 8px;"><a class="ghost" href="${safeText(pendingFilterSourcePath)}">${safeText(isEnglish ? `Open ${restoredFilterContext} again` : `Mở lại ${restoredFilterContext}`)}</a></div>`
+          ? `<div class="actionsRow" style="margin:6px 0 8px;"><button class="ghost" type="button" data-reopen-restored-source="true">${safeText(isEnglish ? `Open ${restoredFilterContext} again with this filtered queue` : `Mở lại ${restoredFilterContext} với phần đang lọc này`)}</button></div>`
           : "";
         if (!hasActiveFilters) {
           const restoredText = restoredFilterContext
@@ -1555,6 +1555,22 @@
       restoredFilterContext = null;
       pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
+    });
+
+    memberSnapshotQueueActiveFilters?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-reopen-restored-source]");
+      if (!trigger || !pendingFilterSourcePath) return;
+      const packet = buildFilteredMemberSnapshotQueuePacket(lastFilteredQueue, {
+        route: String(memberSnapshotQueueRouteFilter?.value || "all"),
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all"),
+        priority: String(memberSnapshotQueuePriorityFilter?.value || "all")
+      });
+      if (pendingFilterSourcePath.includes("/reflection/")) {
+        savePendingReflectionQueuePacket(packet);
+      } else if (pendingFilterSourcePath.includes("/pilot/")) {
+        savePendingPilotQueuePacket(packet);
+      }
+      window.location.href = pendingFilterSourcePath;
     });
 
     memberSnapshotQueueActiveFilters?.addEventListener("click", (event) => {

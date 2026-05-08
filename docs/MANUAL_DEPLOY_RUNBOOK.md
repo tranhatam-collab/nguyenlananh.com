@@ -68,6 +68,7 @@ Script này giờ sẽ:
    - `node scripts/validate-bilingual-release.mjs`
    - `node scripts/content-audit.mjs --fail`
    - `node scripts/local-public-site-audit.mjs` (mặc định bật)
+   - `wrangler pages functions build` (mặc định bật)
 3. deploy dist đó lên Cloudflare Pages
 
 Tùy chọn cho payment/runtime lane:
@@ -102,6 +103,7 @@ Script này sẽ:
    - `node scripts/validate-bilingual-release.mjs`
    - `node scripts/content-audit.mjs --fail`
    - `node scripts/local-public-site-audit.mjs` (mặc định bật)
+   - `wrangler pages functions build` (mặc định bật)
 5. nếu script sync làm thay đổi file, nó sẽ dừng để bạn commit trước
 6. push `main`
 7. gọi `./scripts/deploy_cloudflare.sh` với `SKIP_RELEASE_GATES=1` để tránh chạy gate trùng lần 2
@@ -123,6 +125,7 @@ export BUILD_DIR=/path/to/custom/dist
 export RUN_LOCAL_PUBLIC_SITE_AUDIT=1
 export RUN_TEAM2_RUNTIME_GATE=0
 export SKIP_RELEASE_GATES=0
+export RUN_FUNCTIONS_BUILD=1
 ```
 
 Mặc định hiện tại:

@@ -10,6 +10,7 @@ BUILD_DIR="${BUILD_DIR:-}"
 RUN_LOCAL_PUBLIC_SITE_AUDIT="${RUN_LOCAL_PUBLIC_SITE_AUDIT:-1}"
 RUN_TEAM2_RUNTIME_GATE="${RUN_TEAM2_RUNTIME_GATE:-0}"
 SKIP_RELEASE_GATES="${SKIP_RELEASE_GATES:-0}"
+RUN_FUNCTIONS_BUILD="${RUN_FUNCTIONS_BUILD:-1}"
 TEAM2_BASE_URL="${TEAM2_BASE_URL:-https://www.nguyenlananh.com}"
 TEAM2_REQUIRE_STRIPE="${TEAM2_REQUIRE_STRIPE:-0}"
 TEAM2_STRICT_MODE="${TEAM2_STRICT_MODE:-0}"
@@ -36,6 +37,11 @@ if [ "$SKIP_RELEASE_GATES" != "1" ]; then
   if [ "$RUN_LOCAL_PUBLIC_SITE_AUDIT" = "1" ]; then
     echo "Running local public site audit"
     node "$REPO_ROOT/scripts/local-public-site-audit.mjs"
+  fi
+
+  if [ "$RUN_FUNCTIONS_BUILD" = "1" ]; then
+    echo "Running Cloudflare Functions build gate"
+    wrangler pages functions build
   fi
 else
   echo "Skipping release gates in deploy script (SKIP_RELEASE_GATES=1)"

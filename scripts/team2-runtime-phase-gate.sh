@@ -11,24 +11,50 @@ CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-1}"
 INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
 PAYMENTS_ADMIN_KEY="${PAYMENTS_ADMIN_KEY:-}"
 D1_NAME="${D1_NAME:-nguyenlananh-payments-prod}"
+REPORT_DIR="${REPORT_DIR:-$ROOT_DIR/docs/reports}"
+REPORT_TS="$(date '+%Y%m%d_%H%M%S')"
+REPORT_PATH="${REPORT_PATH:-$REPORT_DIR/TEAM2_RUNTIME_PHASE_GATE_${REPORT_TS}.md}"
+TMP_LOG_DIR="$(mktemp -d /tmp/team2-runtime-phase-gate.XXXXXX)"
+STAMP_UTC="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+STAMP_LOCAL="$(date '+%Y-%m-%d %H:%M:%S %z')"
 
 TOTAL=0
 PASSED=0
 FAILED=0
+STEP_LABELS=()
+STEP_COMMANDS=()
+STEP_CODES=()
+STEP_LOGS=()
+
+cleanup() {
+  rm -rf "$TMP_LOG_DIR"
+}
+trap cleanup EXIT
 
 run_step() {
   local label="$1"
   shift
+  local cmd=("$@")
 
   TOTAL=$((TOTAL + 1))
+  local step_num="$TOTAL"
+  local log_file="$TMP_LOG_DIR/step_${step_num}.log"
+
   echo
-  echo "== STEP $TOTAL: $label =="
-  echo "Command: $*"
+  echo "== STEP $step_num: $label =="
+  echo "Command: ${cmd[*]}"
 
   set +e
-  "$@"
+  "${cmd[@]}" >"$log_file" 2>&1
   local rc=$?
   set -e
+
+  cat "$log_file"
+
+  STEP_LABELS+=("$label")
+  STEP_COMMANDS+=("${cmd[*]}")
+  STEP_CODES+=("$rc")
+  STEP_LOGS+=("$log_file")
 
   if [ "$rc" -eq 0 ]; then
     PASSED=$((PASSED + 1))
@@ -39,9 +65,60 @@ run_step() {
   fi
 }
 
+write_report() {
+  mkdir -p "$REPORT_DIR"
+  {
+    echo "# TEAM2_RUNTIME_PHASE_GATE"
+    echo
+    echo "- generated_at_utc: $STAMP_UTC"
+    echo "- generated_at_local: $STAMP_LOCAL"
+    echo "- base_url: \`$BASE_URL\`"
+    echo "- project_name: \`$PROJECT_NAME\`"
+    echo "- target_envs: \`$TARGET_ENVS\`"
+    echo "- require_stripe: \`$REQUIRE_STRIPE\`"
+    echo "- strict_mode: \`$STRICT_MODE\`"
+    echo "- check_pages_secrets: \`$CHECK_PAGES_SECRETS\`"
+    echo "- intl_provider: \`$INTL_PROVIDER\`"
+    echo
+    echo "## Step Results"
+    local i
+    for ((i=0; i<${#STEP_LABELS[@]}; i++)); do
+      local step_idx=$((i + 1))
+      local code="${STEP_CODES[$i]}"
+      local status="PASS"
+      if [ "$code" -ne 0 ]; then
+        status="FAIL"
+      fi
+      echo "### Step $step_idx: ${STEP_LABELS[$i]}"
+      echo "- status: \`$status\`"
+      echo "- exit_code: \`$code\`"
+      echo "- command: \`${STEP_COMMANDS[$i]}\`"
+      echo "- log_tail:"
+      echo
+      echo '```text'
+      tail -n 40 "${STEP_LOGS[$i]}"
+      echo '```'
+      echo
+    done
+    echo "## Summary"
+    echo
+    echo "- total_steps: \`$TOTAL\`"
+    echo "- passed_steps: \`$PASSED\`"
+    echo "- failed_steps: \`$FAILED\`"
+    if [ "$FAILED" -gt 0 ]; then
+      echo "- verdict: \`BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS\`"
+    else
+      echo "- verdict: \`RUNTIME_PHASE_GATE_PASS\`"
+    fi
+  } > "$REPORT_PATH"
+
+  echo
+  echo "Report: $REPORT_PATH"
+}
+
 echo "== Team 2 Runtime Phase Gate =="
-echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-echo "Local: $(date '+%Y-%m-%d %H:%M:%S %z')"
+echo "UTC: $STAMP_UTC"
+echo "Local: $STAMP_LOCAL"
 echo "Base URL: $BASE_URL"
 echo "Project: $PROJECT_NAME"
 echo "Target envs: $TARGET_ENVS"
@@ -73,6 +150,7 @@ run_step "Rails independent gate" \
   BASE_URL="$BASE_URL" \
   PROJECT_NAME="$PROJECT_NAME" \
   TARGET_ENVS="$TARGET_ENVS" \
+  REPORT_DIR="$TMP_LOG_DIR" \
   CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
   INTL_PROVIDER="$INTL_PROVIDER" \
   REQUIRE_PROVIDER_READY="$STRICT_MODE" \
@@ -95,6 +173,7 @@ run_step "Payment proof smoke" \
 echo
 echo "== Team 2 Runtime Phase Summary =="
 echo "TOTAL=$TOTAL PASSED=$PASSED FAILED=$FAILED"
+write_report
 
 if [ "$FAILED" -gt 0 ]; then
   exit 1

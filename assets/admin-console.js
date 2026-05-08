@@ -11,6 +11,7 @@
     roleMatrix: "nla_admin_role_matrix_v2",
     users: "nla_admin_users_v2",
     memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1",
+    pendingDashboardFilters: "nla_admin_pending_dashboard_filters_v1",
     pendingReflectionPacket: "nla_admin_pending_reflection_packet_v1",
     pendingPilotPacket: "nla_admin_pending_pilot_packet_v1",
     pendingReflectionQueuePacket: "nla_admin_pending_reflection_queue_packet_v1",
@@ -369,11 +370,13 @@
     const relevantLabel = isEnglish ? "Items used here" : "Item đang dùng ở đây";
     const scopeText = isEnglish ? "Filter scope" : "Phạm vi lọc";
     const priorityText = isEnglish ? "Priority mix" : "Tương quan ưu tiên";
+    const actionLabel = isEnglish ? "Open same filter on admin home" : "Mở lại filter này trên admin home";
     return `<div class="note" style="margin:12px 0;">
       <strong>${safeText(title)}</strong>
       <p>${safeText(totalLabel)}: ${queueTotal} • ${safeText(relevantLabel)}: ${queueRelevant}</p>
       <p>${safeText(scopeText)}: ${safeText(scopeLabel)}</p>
       <p>${safeText(priorityText)}: ${safeText(priorityLabel)}</p>
+      <div class="actionsRow" style="margin-top:8px;"><button class="ghost" type="button" data-return-dashboard-filters="true">${safeText(actionLabel)}</button></div>
     </div>`;
   }
 
@@ -440,6 +443,18 @@
       merged.push(normalizeMemberSnapshotQueueItem(packet, existing));
     });
     saveMemberSnapshotQueue(sortedMemberSnapshotQueue(merged).slice(0, 12));
+  }
+
+  function savePendingDashboardFilters(filters) {
+    writeJSON(STORAGE_KEYS.pendingDashboardFilters, filters || null);
+  }
+
+  function getPendingDashboardFilters() {
+    return readJSON(STORAGE_KEYS.pendingDashboardFilters, null);
+  }
+
+  function clearPendingDashboardFilters() {
+    localStorage.removeItem(STORAGE_KEYS.pendingDashboardFilters);
   }
 
   function savePendingReflectionPacket(packet) {
@@ -1373,6 +1388,20 @@
       </div>`;
     }
 
+    const pendingFilters = getPendingDashboardFilters();
+    if (pendingFilters) {
+      if (memberSnapshotQueueRouteFilter && typeof pendingFilters.route === "string") {
+        memberSnapshotQueueRouteFilter.value = pendingFilters.route;
+      }
+      if (memberSnapshotQueueHandoffFilter && typeof pendingFilters.handoff === "string") {
+        memberSnapshotQueueHandoffFilter.value = pendingFilters.handoff;
+      }
+      if (memberSnapshotQueuePriorityFilter && typeof pendingFilters.priority === "string") {
+        memberSnapshotQueuePriorityFilter.value = pendingFilters.priority;
+      }
+      clearPendingDashboardFilters();
+    }
+
     memberSnapshotQueueRouteFilter?.addEventListener("change", () => {
       renderMemberSnapshotQueue();
     });
@@ -1590,6 +1619,7 @@
     const handoffs = opsSnapshot.handoffs;
     const reflectionItems = signals.filter((item) => item.practiceState === "human_reflection");
     const avoidingItems = signals.filter((item) => item.practiceState === "avoiding");
+    let lastReflectionImportedFilters = null;
     const matchedHandoffs = handoffs.filter((handoff) =>
       signals.some((signal) => reflectionHandoffMatchesSignal(handoff, signal))
     );
@@ -1610,6 +1640,9 @@
       const queueFilterLabel = view?.source === "imported_admin_intake_queue" && view?.applied_filters
         ? describeQueueFilters(view.applied_filters, isEnglish)
         : "";
+      lastReflectionImportedFilters = view?.source === "imported_admin_intake_queue"
+        ? (view.applied_filters || {})
+        : null;
       const queuePriorityLabel = view?.source === "imported_admin_intake_queue"
         ? formatPriorityMix(view?.priority_breakdown || {}, isEnglish, ["reflection_now", "avoiding", "missing_handoff", "routed"])
         : "";
@@ -1651,6 +1684,7 @@
           }).join("")}</ul>`;
         }
       }
+
     }
 
     if (log) {
@@ -1692,6 +1726,13 @@
     }
 
     renderReflectionView(evidence);
+
+    list?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-return-dashboard-filters]");
+      if (!trigger || !lastReflectionImportedFilters) return;
+      savePendingDashboardFilters(lastReflectionImportedFilters);
+      window.location.href = isEnglish ? "/en/admin/" : "/admin/";
+    });
 
     if (evidenceCopy) {
       evidenceCopy.addEventListener("click", async () => {
@@ -1913,6 +1954,7 @@
         nextTouchpoint
       };
     });
+    let lastPilotImportedFilters = null;
 
     function renderPilotView(view) {
       const participants = Array.isArray(view?.participants) ? view.participants : [];
@@ -1932,6 +1974,9 @@
       const queueFilterLabel = view?.source === "imported_admin_intake_queue" && view?.applied_filters
         ? describeQueueFilters(view.applied_filters, isEnglish)
         : "";
+      lastPilotImportedFilters = view?.source === "imported_admin_intake_queue"
+        ? (view.applied_filters || {})
+        : null;
       const queuePriorityLabel = view?.source === "imported_admin_intake_queue"
         ? formatPriorityMix(view?.priority_breakdown || {}, isEnglish, ["pilot_ready", "paused", "pilot_later", "routed"])
         : "";
@@ -1982,6 +2027,7 @@
           }).join("")}</ul>`;
         }
       }
+
     }
 
     if (log) {
@@ -2032,6 +2078,13 @@
     }
 
     renderPilotView(evidence);
+
+    list?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-return-dashboard-filters]");
+      if (!trigger || !lastPilotImportedFilters) return;
+      savePendingDashboardFilters(lastPilotImportedFilters);
+      window.location.href = isEnglish ? "/en/admin/" : "/admin/";
+    });
 
     if (evidenceCopy) {
       evidenceCopy.addEventListener("click", async () => {

@@ -4,9 +4,20 @@ set -euo pipefail
 BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 EXPECT_EMAIL_PROVIDER="${EXPECT_EMAIL_PROVIDER:-mail_iai_one}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
+CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
+PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
+TARGET_ENVS="${TARGET_ENVS:-production}"
 
 FAILURES=0
 MISSING=()
+
+need_cmd() {
+  local cmd="$1"
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "[FAIL] missing required command: $cmd"
+    exit 1
+  fi
+}
 
 pass() {
   echo "[PASS] $1"
@@ -52,10 +63,73 @@ append_provider_missing() {
   esac
 }
 
+check_pages_secret_names() {
+  local target_env="$1"
+  local list_output
+  local parsed_names
+  local required=(
+    API_BASE_URL
+    ENV_DEPLOY_TARGET
+    REFUND_POLICY
+    EMAIL_PROVIDER
+    MAIL_API_BASE_URL
+    MAIL_API_KEY
+    MAIL_API_WORKSPACE_ID
+    MAIL_API_WEBHOOK_SECRET
+    EMAIL_FROM_SYSTEM
+    EMAIL_FROM_PAY
+    EMAIL_REPLY_TO_SUPPORT
+    PAYMENTS_ADMIN_KEY
+    PAYPAL_MERCHANT_EMAIL
+    PAYPAL_CLIENT_ID
+    PAYPAL_CLIENT_SECRET
+    PAYPAL_WEBHOOK_ID
+    VIETQR_BANK_BIN
+    VIETQR_ACCOUNT_NO
+    VIETQR_ACCOUNT_NAME
+  )
+
+  if [ "$REQUIRE_STRIPE" = "1" ]; then
+    required+=(
+      STRIPE_SECRET_KEY
+      STRIPE_PUBLISHABLE_KEY
+      STRIPE_WEBHOOK_SECRET
+    )
+  fi
+
+  if ! list_output="$(wrangler pages secret list --project-name "$PROJECT_NAME" --env "$target_env" 2>/dev/null)"; then
+    fail "unable to list Pages secrets for env=$target_env (check wrangler auth/project/env)"
+    return
+  fi
+
+  parsed_names="$(printf "%s\n" "$list_output" | sed -n 's/^  - \([^:]*\):.*/\1/p')"
+  local secret_count=0
+  if [ -n "$parsed_names" ]; then
+    secret_count="$(printf "%s\n" "$parsed_names" | wc -l | tr -d ' ')"
+  fi
+
+  pass "read Pages secret names for env=$target_env (count=$secret_count)"
+
+  local key
+  for key in "${required[@]}"; do
+    if ! grep -Fxq "$key" <<< "$parsed_names"; then
+      fail "Pages env=$target_env missing secret name: $key"
+      queue_missing "$key"
+    fi
+  done
+}
+
+need_cmd curl
+need_cmd jq
+if [ "$CHECK_PAGES_SECRETS" = "1" ]; then
+  need_cmd wrangler
+fi
+
 echo "== payment live secrets preflight =="
 echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Base URL: $BASE_URL"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
+echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
 
 health_json="$(curl -sS "$BASE_URL/api/payments/health" 2>/dev/null || true)"
@@ -111,6 +185,14 @@ else
     else
       fail "$code enabled=false (mode=$mode)"
     fi
+  done
+fi
+
+if [ "$CHECK_PAGES_SECRETS" = "1" ]; then
+  echo
+  echo "== Pages secret names check =="
+  for env_name in $TARGET_ENVS; do
+    check_pages_secret_names "$env_name"
   done
 fi
 

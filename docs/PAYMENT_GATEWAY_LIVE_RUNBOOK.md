@@ -254,6 +254,16 @@ REQUIRE_STRIPE=0 \
 bash scripts/payment-live-secrets-preflight.sh
 ```
 
+Neu muon doi chieu truc tiep voi danh sach secret name tren Cloudflare Pages:
+
+```bash
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production preview" \
+CHECK_PAGES_SECRETS=1 \
+REQUIRE_STRIPE=0 \
+bash scripts/payment-live-secrets-preflight.sh
+```
+
 Mode non-interactive cho CI/no-prompt:
 
 ```bash

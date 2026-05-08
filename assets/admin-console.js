@@ -350,6 +350,12 @@
     };
   }
 
+  function sanitizeQueueLimit(value, fallback = 120) {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) return Math.max(1, Math.min(200, Number(fallback) || 120));
+    return Math.max(1, Math.min(200, Math.round(parsed)));
+  }
+
   function recommendedRouteForSnapshot(packet) {
     const state = String(packet?.latestPracticeState || "");
     if (state === "human_reflection" || state === "avoiding" || !packet?.hasSavedHandoff) {
@@ -2079,6 +2085,9 @@
     const evidenceStatus = $("#reflection-evidence-status");
     const d1Status = $("#reflection-evidence-d1-status");
     const d1KeyInput = $("#reflection-d1-admin-key");
+    const d1HandoffFilter = $("#reflection-d1-handoff-filter");
+    const d1PriorityFilter = $("#reflection-d1-priority-filter");
+    const d1LimitInput = $("#reflection-d1-limit");
     const d1Load = $("#reflection-evidence-load-d1");
     const evidenceCopy = $("#reflection-evidence-copy");
     const evidenceExport = $("#reflection-evidence-export");
@@ -2282,16 +2291,20 @@
         );
         return;
       }
+      const handoff = String(d1HandoffFilter?.value || "all");
+      const priority = String(d1PriorityFilter?.value || "all");
+      const limit = sanitizeQueueLimit(d1LimitInput?.value, 120);
+      if (d1LimitInput) d1LimitInput.value = String(limit);
       d1Load.disabled = true;
       try {
         const payload = await callAdminOpsQueue("GET", adminKey, {
-          filters: { route: "reflection", handoff: "all", priority: "all", limit: 200 }
+          filters: { route: "reflection", handoff, priority, limit }
         });
         saveAdminOpsQueueKey(adminKey);
-        const normalized = normalizedQueueItemsFromApi(payload.items, 200);
+        const normalized = normalizedQueueItemsFromApi(payload.items, limit);
         const queuePacket = buildD1QueuePacket(
           normalized,
-          { route: "reflection", handoff: "all", priority: "all" },
+          { route: "reflection", handoff, priority },
           "d1_admin_ops_queue_reflection"
         );
         if (evidenceImport) {
@@ -2304,8 +2317,8 @@
         renderStatus(
           d1Status,
           isEnglish
-            ? `Loaded ${normalized.length} queue item(s) from D1 into reflection import${summaryCounts}.`
-            : `Đã nạp ${normalized.length} item từ queue D1 vào reflection import${summaryCounts}.`,
+            ? `Loaded ${normalized.length} queue item(s) from D1 into reflection import using ${describeQueueFilters({ route: "reflection", handoff, priority }, true)}${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào reflection import với ${describeQueueFilters({ route: "reflection", handoff, priority }, false)}${summaryCounts}.`,
           "ok"
         );
       } catch (error) {
@@ -2473,6 +2486,9 @@
     const evidenceStatus = $("#pilot-evidence-status");
     const d1Status = $("#pilot-evidence-d1-status");
     const d1KeyInput = $("#pilot-d1-admin-key");
+    const d1HandoffFilter = $("#pilot-d1-handoff-filter");
+    const d1PriorityFilter = $("#pilot-d1-priority-filter");
+    const d1LimitInput = $("#pilot-d1-limit");
     const d1Load = $("#pilot-evidence-load-d1");
     const evidenceCopy = $("#pilot-evidence-copy");
     const evidenceExport = $("#pilot-evidence-export");
@@ -2721,16 +2737,20 @@
         );
         return;
       }
+      const handoff = String(d1HandoffFilter?.value || "all");
+      const priority = String(d1PriorityFilter?.value || "all");
+      const limit = sanitizeQueueLimit(d1LimitInput?.value, 120);
+      if (d1LimitInput) d1LimitInput.value = String(limit);
       d1Load.disabled = true;
       try {
         const payload = await callAdminOpsQueue("GET", adminKey, {
-          filters: { route: "pilot", handoff: "all", priority: "all", limit: 200 }
+          filters: { route: "pilot", handoff, priority, limit }
         });
         saveAdminOpsQueueKey(adminKey);
-        const normalized = normalizedQueueItemsFromApi(payload.items, 200);
+        const normalized = normalizedQueueItemsFromApi(payload.items, limit);
         const queuePacket = buildD1QueuePacket(
           normalized,
-          { route: "pilot", handoff: "all", priority: "all" },
+          { route: "pilot", handoff, priority },
           "d1_admin_ops_queue_pilot"
         );
         if (evidenceImport) {
@@ -2743,8 +2763,8 @@
         renderStatus(
           d1Status,
           isEnglish
-            ? `Loaded ${normalized.length} queue item(s) from D1 into pilot import${summaryCounts}.`
-            : `Đã nạp ${normalized.length} item từ queue D1 vào pilot import${summaryCounts}.`,
+            ? `Loaded ${normalized.length} queue item(s) from D1 into pilot import using ${describeQueueFilters({ route: "pilot", handoff, priority }, true)}${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào pilot import với ${describeQueueFilters({ route: "pilot", handoff, priority }, false)}${summaryCounts}.`,
           "ok"
         );
       } catch (error) {

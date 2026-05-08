@@ -129,6 +129,30 @@
         <label for="pilot-d1-admin-key">Admin ops key (D1 sync)</label>
         <input id="pilot-d1-admin-key" type="password" autocomplete="off" placeholder="Nhập x-admin-key để nạp queue D1 trực tiếp vào pilot ops" />
       </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="field">
+          <label for="pilot-d1-handoff-filter">D1 handoff</label>
+          <select id="pilot-d1-handoff-filter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="unrouted">Chưa handoff</option>
+            <option value="routed">Đã handoff</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="pilot-d1-priority-filter">D1 priority</label>
+          <select id="pilot-d1-priority-filter">
+            <option value="all">Tất cả mức</option>
+            <option value="pilot_ready">Sẵn rà pilot</option>
+            <option value="paused">Đang pause nhắc</option>
+            <option value="pilot_later">Pilot sau khi đủ nền</option>
+            <option value="routed">Đã handoff</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="pilot-d1-limit">Giới hạn item từ D1</label>
+        <input id="pilot-d1-limit" type="number" min="1" max="200" step="1" value="120" />
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="pilot-evidence-load-d1" class="ghost" type="button">Nạp queue D1 cho pilot</button>
         <button id="pilot-evidence-apply" class="ghost" type="button">Dùng evidence đã dán</button>

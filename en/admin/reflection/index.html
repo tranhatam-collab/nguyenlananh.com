@@ -124,6 +124,30 @@
         <label for="reflection-d1-admin-key">Admin ops key (D1 sync)</label>
         <input id="reflection-d1-admin-key" type="password" autocomplete="off" placeholder="Enter x-admin-key to load D1 queue directly into reflection ops" />
       </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="field">
+          <label for="reflection-d1-handoff-filter">D1 handoff</label>
+          <select id="reflection-d1-handoff-filter">
+            <option value="all">All states</option>
+            <option value="unrouted">Not routed yet</option>
+            <option value="routed">Already routed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="reflection-d1-priority-filter">D1 priority</label>
+          <select id="reflection-d1-priority-filter">
+            <option value="all">All levels</option>
+            <option value="reflection_now">Needs reflection now</option>
+            <option value="avoiding">Avoiding, needs grounding</option>
+            <option value="missing_handoff">Missing 3-line handoff</option>
+            <option value="routed">Already routed</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-d1-limit">D1 item limit</label>
+        <input id="reflection-d1-limit" type="number" min="1" max="200" step="1" value="120" />
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="reflection-evidence-load-d1" class="ghost" type="button">Load D1 queue for reflection</button>
         <button id="reflection-evidence-apply" class="ghost" type="button">Use pasted evidence</button>

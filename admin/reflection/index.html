@@ -124,6 +124,30 @@
         <label for="reflection-d1-admin-key">Admin ops key (D1 sync)</label>
         <input id="reflection-d1-admin-key" type="password" autocomplete="off" placeholder="Nhập x-admin-key để nạp queue D1 trực tiếp vào reflection ops" />
       </div>
+      <div class="grid2" style="margin-top:12px;">
+        <div class="field">
+          <label for="reflection-d1-handoff-filter">D1 handoff</label>
+          <select id="reflection-d1-handoff-filter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="unrouted">Chưa handoff</option>
+            <option value="routed">Đã handoff</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="reflection-d1-priority-filter">D1 priority</label>
+          <select id="reflection-d1-priority-filter">
+            <option value="all">Tất cả mức</option>
+            <option value="reflection_now">Cần reflection ngay</option>
+            <option value="avoiding">Đang né, cần giữ nhịp</option>
+            <option value="missing_handoff">Thiếu handoff 3 dòng</option>
+            <option value="routed">Đã handoff</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-d1-limit">Giới hạn item từ D1</label>
+        <input id="reflection-d1-limit" type="number" min="1" max="200" step="1" value="120" />
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="reflection-evidence-load-d1" class="ghost" type="button">Nạp queue D1 cho reflection</button>
         <button id="reflection-evidence-apply" class="ghost" type="button">Dùng evidence đã dán</button>

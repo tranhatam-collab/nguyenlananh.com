@@ -343,6 +343,21 @@
     }).join("");
   }
 
+  function formatPriorityMix(counts, isEnglish, codes) {
+    const labels = {
+      reflection_now: isEnglish ? "reflection now" : "reflection ngay",
+      avoiding: isEnglish ? "avoiding" : "đang né",
+      missing_handoff: isEnglish ? "missing handoff" : "thiếu handoff",
+      pilot_ready: isEnglish ? "pilot ready" : "sẵn pilot",
+      paused: isEnglish ? "paused" : "pause",
+      pilot_later: isEnglish ? "pilot later" : "pilot sau",
+      routed: isEnglish ? "already routed" : "đã handoff"
+    };
+    return (Array.isArray(codes) ? codes : [])
+      .map((code) => `${labels[code] || code}: ${Number(counts?.[code] || 0)}`)
+      .join(" • ");
+  }
+
   function describeQueueFilters(filters, isEnglish) {
     const route = String(filters?.route || "all");
     const handoff = String(filters?.handoff || "all");
@@ -1576,12 +1591,15 @@
       const queueFilterLabel = view?.source === "imported_admin_intake_queue" && view?.applied_filters
         ? describeQueueFilters(view.applied_filters, isEnglish)
         : "";
+      const queuePriorityLabel = view?.source === "imported_admin_intake_queue"
+        ? formatPriorityMix(view?.priority_breakdown || {}, isEnglish, ["reflection_now", "avoiding", "missing_handoff", "routed"])
+        : "";
 
       if (status) {
         if (view?.source === "imported_admin_intake_queue") {
           status.textContent = isEnglish
-            ? `Loaded ${queueRelevant} reflection-ready entries from an intake queue packet with ${queueTotal} total items. Filter scope: ${queueFilterLabel || "all routes • all handoff states"}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
-            : `Đã nạp ${queueRelevant} entry sẵn cho reflection từ intake queue packet có tổng ${queueTotal} item. Phạm vi lọc: ${queueFilterLabel || "tất cả route • tất cả trạng thái handoff"}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
+            ? `Loaded ${queueRelevant} reflection-ready entries from an intake queue packet with ${queueTotal} total items. Filter scope: ${queueFilterLabel || "all routes • all handoff states"}. Priority mix: ${queuePriorityLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
+            : `Đã nạp ${queueRelevant} entry sẵn cho reflection từ intake queue packet có tổng ${queueTotal} item. Phạm vi lọc: ${queueFilterLabel || "tất cả route • tất cả trạng thái handoff"}. Tương quan ưu tiên: ${queuePriorityLabel}. ${humanReflectionCount} tín hiệu cần người thật phản hồi, ${avoidingCount} tín hiệu đang né, và ${matchedHandoffs.length} tín hiệu đã có handoff 3 dòng.`;
         } else {
           status.textContent = isEnglish
             ? `Showing ${items.length} recent practice signals from ${sourceLabel}. ${humanReflectionCount} need human reflection, ${avoidingCount} are marked avoiding, and ${matchedHandoffs.length} already include a saved 3-line handoff.`
@@ -1708,6 +1726,7 @@
               applied_filters: parsed.applied_filters || null,
               queue_total: parsed.items.length,
               queue_relevant: relevantItems.length,
+              priority_breakdown: summarizeQueuePriorities(relevantItems),
               total_signals: relevantItems.filter((item) => item.latestPracticeState === "human_reflection" || item.latestPracticeState === "avoiding").length,
               human_reflection: relevantItems.filter((item) => item.latestPracticeState === "human_reflection").length,
               avoiding: relevantItems.filter((item) => item.latestPracticeState === "avoiding").length,
@@ -1894,12 +1913,15 @@
       const queueFilterLabel = view?.source === "imported_admin_intake_queue" && view?.applied_filters
         ? describeQueueFilters(view.applied_filters, isEnglish)
         : "";
+      const queuePriorityLabel = view?.source === "imported_admin_intake_queue"
+        ? formatPriorityMix(view?.priority_breakdown || {}, isEnglish, ["pilot_ready", "paused", "pilot_later", "routed"])
+        : "";
 
       if (status) {
         if (view?.source === "imported_admin_intake_queue") {
           status.textContent = isEnglish
-            ? `Loaded ${queueRelevant} pilot-ready entries from an intake queue packet with ${queueTotal} total items. Filter scope: ${queueFilterLabel || "all routes • all handoff states"}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
-            : `Đã nạp ${queueRelevant} entry sẵn cho pilot từ intake queue packet có tổng ${queueTotal} item. Phạm vi lọc: ${queueFilterLabel || "tất cả route • tất cả trạng thái handoff"}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
+            ? `Loaded ${queueRelevant} pilot-ready entries from an intake queue packet with ${queueTotal} total items. Filter scope: ${queueFilterLabel || "all routes • all handoff states"}. Priority mix: ${queuePriorityLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
+            : `Đã nạp ${queueRelevant} entry sẵn cho pilot từ intake queue packet có tổng ${queueTotal} item. Phạm vi lọc: ${queueFilterLabel || "tất cả route • tất cả trạng thái handoff"}. Tương quan ưu tiên: ${queuePriorityLabel}. ${readyCount} hồ sơ đã đủ để rà pilot, ${pausedCount} hồ sơ đang tạm dừng nhắc, và ${opsSnapshot.counts.readyProfilesWithCheckin} hồ sơ đã có cả profile đủ lẫn check-in thật.`;
         } else {
           status.textContent = isEnglish
             ? `Showing ${participants.length} participant records from ${sourceLabel}. ${readyCount} are ready for pilot review, ${pausedCount} are currently paused, and ${opsSnapshot.counts.readyProfilesWithCheckin} already have both a complete profile and an honest check-in.`
@@ -2037,8 +2059,8 @@
           const isQueuePacket = parsed?.packet_type === "admin_member_snapshot_queue"
             && Array.isArray(parsed?.items);
           if (isQueuePacket) {
-            const participants = parsed.items
-              .filter((item) => recommendedRouteForSnapshot(item) === "pilot")
+            const relevantItems = parsed.items.filter((item) => recommendedRouteForSnapshot(item) === "pilot");
+            const participants = relevantItems
               .map((item) => ({
                 email: item.email || "",
                 fullName: item.fullName || "",
@@ -2068,6 +2090,7 @@
               applied_filters: parsed.applied_filters || null,
               queue_total: parsed.items.length,
               queue_relevant: participants.length,
+              priority_breakdown: summarizeQueuePriorities(relevantItems),
               profiles_total: participants.length,
               profiles_ready: participants.filter((item) => item.profileReady).length,
               paused_profiles: participants.filter((item) => isFutureIso(item.reminderPausedUntil)).length,

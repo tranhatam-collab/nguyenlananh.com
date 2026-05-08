@@ -224,7 +224,10 @@ if printf "%s" "$PROVIDERS_JSON" | jq empty >/dev/null 2>&1; then
   pass "providers endpoint returned valid JSON"
   email_provider="$(printf "%s" "$PROVIDERS_JSON" | jq -r '.environment.email_provider // "unknown"' 2>/dev/null || echo unknown)"
   if [ "$email_provider" != "mail_iai_one" ]; then
+    ready_fail_or_warn "email_provider is $email_provider (expected mail_iai_one)"
     append_mail_secret_hints
+  else
+    pass "email_provider is mail_iai_one"
   fi
 else
   fail "providers endpoint returned invalid JSON"

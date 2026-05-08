@@ -87,6 +87,7 @@ This release implements the first safe layer inside the members area:
 - Each active-filter chip now shows how many queue items would remain if that one dimension were cleared, so operators can predict the scope expansion before clicking.
 - Imported subset summaries in reflection ops and pilot ops now expose priority-slice return actions, so an operator can jump back to admin home already narrowed to one priority bucket inside the same imported subset.
 - When admin home restores queue filters from reflection ops or pilot ops, it now labels that restored scope in the active-filter area, so the operator can see where the current queue view came from before changing it.
+- That restored-scope banner on admin home now also links back to the source module, so the operator can reopen reflection ops or pilot ops directly from the restored queue context without rebuilding the loop manually.
 - Admin home batch handoff buttons now show the exact filtered item count and disable themselves when the current filter is empty, so operations can see the handoff size before clicking and avoid sending an empty subset.
 - Admin home now shows a short batch handoff preview line under the buttons, so the operator can verify both filter scope and visible item count before sending the subset into reflection ops or pilot ops.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.

@@ -310,6 +310,8 @@ const checks = [
       /pendingDashboardFilters/,
       /normalizePendingDashboardFilters/,
       /Restored from|Được mở lại từ/,
+      /sourcePath/,
+      /Open .* again|Mở lại /,
       /all priority levels|tất cả mức ưu tiên/,
       /Open reflection ops with filtered queue|Mở reflection ops với phần đang lọc/,
       /Open pilot ops with filtered queue|Mở pilot ops với phần đang lọc/,

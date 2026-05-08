@@ -506,6 +506,7 @@
       },
       source: String(raw.source || ""),
       sourceLabel: String(raw.sourceLabel || ""),
+      sourcePath: String(raw.sourcePath || ""),
       restoredAt: String(raw.restoredAt || "")
     };
   }
@@ -1313,6 +1314,7 @@
     const queuePriorityCounts = summarizeQueuePriorities(importedMemberPackets);
     let lastFilteredQueue = importedMemberPackets;
     let restoredFilterContext = null;
+    let pendingFilterSourcePath = "";
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -1433,22 +1435,26 @@
       }
       if (memberSnapshotQueueActiveFilters) {
         const hasActiveFilters = routeFilter !== "all" || handoffFilter !== "all" || priorityFilter !== "all";
+        const restoredAction = restoredFilterContext && pendingFilterSourcePath
+          ? `<div class="actionsRow" style="margin:6px 0 8px;"><a class="ghost" href="${safeText(pendingFilterSourcePath)}">${safeText(isEnglish ? `Open ${restoredFilterContext} again` : `Mở lại ${restoredFilterContext}`)}</a></div>`
+          : "";
         if (!hasActiveFilters) {
           const restoredText = restoredFilterContext
             ? ` ${safeText(isEnglish ? `Restored from ${restoredFilterContext}.` : `Được mở lại từ ${restoredFilterContext}.`)}`
             : "";
-          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.")}${restoredText}`;
+          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.")}${restoredText}${restoredAction}`;
         } else {
           const label = isEnglish ? "Active queue filters:" : "Bộ lọc queue đang dùng:";
           const restoredText = restoredFilterContext
             ? `<p class="note" style="margin:0 0 6px;">${safeText(isEnglish ? `Restored from ${restoredFilterContext}.` : `Được mở lại từ ${restoredFilterContext}.`)}</p>`
             : "";
+          const restoredActionBlock = restoredAction ? `${restoredAction}` : "";
           const chips = [
             routeFilter !== "all" ? { type: "route", value: routeFilter } : null,
             handoffFilter !== "all" ? { type: "handoff", value: handoffFilter } : null,
             priorityFilter !== "all" ? { type: "priority", value: priorityFilter } : null
           ].filter(Boolean);
-          memberSnapshotQueueActiveFilters.innerHTML = `${restoredText}${safeText(label)} <span>${chips.map((chip) => {
+          memberSnapshotQueueActiveFilters.innerHTML = `${restoredText}${restoredActionBlock}${safeText(label)} <span>${chips.map((chip) => {
             const nextFilters = {
               route: routeFilter,
               handoff: handoffFilter,
@@ -1520,21 +1526,25 @@
         memberSnapshotQueuePriorityFilter.value = pendingFilters.filters.priority;
       }
       restoredFilterContext = pendingFilters.sourceLabel || pendingFilters.source || "";
+      pendingFilterSourcePath = pendingFilters.sourcePath || "";
       clearPendingDashboardFilters();
     }
 
     memberSnapshotQueueRouteFilter?.addEventListener("change", () => {
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
     memberSnapshotQueueHandoffFilter?.addEventListener("change", () => {
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
     memberSnapshotQueuePriorityFilter?.addEventListener("change", () => {
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
@@ -1543,6 +1553,7 @@
       if (memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
       if (memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
@@ -1554,6 +1565,7 @@
       if (type === "handoff" && memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
       if (type === "priority" && memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
@@ -1563,6 +1575,7 @@
       const code = String(trigger.getAttribute("data-priority-quick-filter") || "all");
       memberSnapshotQueuePriorityFilter.value = code;
       restoredFilterContext = null;
+      pendingFilterSourcePath = "";
       renderMemberSnapshotQueue();
     });
 
@@ -1878,6 +1891,7 @@
         filters: lastReflectionImportedFilters,
         source: "reflection_ops",
         sourceLabel: isEnglish ? "reflection ops" : "reflection ops",
+        sourcePath: isEnglish ? "/en/admin/reflection/" : "/admin/reflection/",
         restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
@@ -1893,6 +1907,7 @@
         },
         source: "reflection_ops_priority_slice",
         sourceLabel: isEnglish ? "reflection ops priority slice" : "priority slice từ reflection ops",
+        sourcePath: isEnglish ? "/en/admin/reflection/" : "/admin/reflection/",
         restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
@@ -2255,6 +2270,7 @@
         filters: lastPilotImportedFilters,
         source: "pilot_ops",
         sourceLabel: isEnglish ? "pilot ops" : "pilot ops",
+        sourcePath: isEnglish ? "/en/admin/pilot/" : "/admin/pilot/",
         restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
@@ -2270,6 +2286,7 @@
         },
         source: "pilot_ops_priority_slice",
         sourceLabel: isEnglish ? "pilot ops priority slice" : "priority slice từ pilot ops",
+        sourcePath: isEnglish ? "/en/admin/pilot/" : "/admin/pilot/",
         restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";

@@ -7,6 +7,8 @@ EMAIL_PROVIDER="${EMAIL_PROVIDER:-mail_iai_one}"
 MAIL_API_BASE_URL_DEFAULT="${MAIL_API_BASE_URL:-https://api.mail.iai.one/v1}"
 TARGET_ENVS="${TARGET_ENVS:-production preview}"
 SKIP_STRIPE="${SKIP_STRIPE:-0}"
+NON_INTERACTIVE="${NON_INTERACTIVE:-0}"
+MISSING_REQUIRED_INPUT=0
 
 need_cmd() {
   local cmd="$1"
@@ -29,6 +31,17 @@ read_secret() {
   local prompt="$1"
   local outvar="$2"
   local value=""
+  local from_env="${!outvar-}"
+  if [ -n "$from_env" ]; then
+    printf -v "$outvar" "%s" "$from_env"
+    echo "Using $outvar from environment."
+    return
+  fi
+  if [ "$NON_INTERACTIVE" = "1" ]; then
+    echo "Missing required input in NON_INTERACTIVE mode: $outvar"
+    MISSING_REQUIRED_INPUT=1
+    return
+  fi
   read -rsp "$prompt: " value
   echo
   printf -v "$outvar" "%s" "$value"
@@ -38,10 +51,20 @@ read_value_with_default() {
   local prompt="$1"
   local default_value="$2"
   local outvar="$3"
+  local from_env="${!outvar-}"
+  if [ -n "$from_env" ]; then
+    printf -v "$outvar" "%s" "$from_env"
+    echo "Using $outvar from environment."
+    return
+  fi
   local value=""
-  read -rp "$prompt [$default_value]: " value
-  if [ -z "$value" ]; then
+  if [ "$NON_INTERACTIVE" = "1" ]; then
     value="$default_value"
+  else
+    read -rp "$prompt [$default_value]: " value
+    if [ -z "$value" ]; then
+      value="$default_value"
+    fi
   fi
   printf -v "$outvar" "%s" "$value"
 }
@@ -54,6 +77,7 @@ echo "Setting payment/email secrets for nguyenlananh.com"
 echo "Target environments: $TARGET_ENVS"
 echo "Email provider mode: $EMAIL_PROVIDER"
 echo "Stripe deferred for current phase: $SKIP_STRIPE"
+echo "Non-interactive mode: $NON_INTERACTIVE"
 echo
 
 read_secret "VIETQR_BANK_BIN" VIETQR_BANK_BIN
@@ -76,6 +100,13 @@ read_secret "MAIL_API_WEBHOOK_SECRET" MAIL_API_WEBHOOK_SECRET
 read_secret "EMAIL_FROM_SYSTEM" EMAIL_FROM_SYSTEM
 read_secret "EMAIL_FROM_PAY" EMAIL_FROM_PAY
 read_secret "EMAIL_REPLY_TO_SUPPORT" EMAIL_REPLY_TO_SUPPORT
+
+if [ "$MISSING_REQUIRED_INPUT" -ne 0 ]; then
+  echo
+  echo "Aborted: missing required secrets in NON_INTERACTIVE mode."
+  echo "Set required values as environment variables and run again."
+  exit 1
+fi
 
 echo
 echo "Applying secrets..."

@@ -12,6 +12,7 @@ DOMAIN_WWW="${DOMAIN_WWW:-https://www.nguyenlananh.com}"
 DOMAIN_ADMIN="${DOMAIN_ADMIN:-https://admin.nguyenlananh.com}"
 FAILURES=0
 WARNINGS=0
+MISSING_SECRET_HINTS=()
 
 pass() {
   local msg="$1"
@@ -28,6 +29,41 @@ fail() {
   local msg="$1"
   echo "[FAIL] $msg"
   FAILURES=$((FAILURES + 1))
+}
+
+queue_secret_hint() {
+  local item="$1"
+  local existing
+  for existing in "${MISSING_SECRET_HINTS[@]-}"; do
+    if [ "$existing" = "$item" ]; then
+      return
+    fi
+  done
+  MISSING_SECRET_HINTS+=("$item")
+}
+
+append_provider_secret_hints() {
+  local provider="$1"
+  case "$provider" in
+    paypal)
+      queue_secret_hint "PAYPAL_CLIENT_ID"
+      queue_secret_hint "PAYPAL_CLIENT_SECRET"
+      queue_secret_hint "PAYPAL_WEBHOOK_ID"
+      queue_secret_hint "PAYPAL_MERCHANT_EMAIL"
+      ;;
+    stripe)
+      queue_secret_hint "STRIPE_SECRET_KEY"
+      queue_secret_hint "STRIPE_PUBLISHABLE_KEY"
+      queue_secret_hint "STRIPE_WEBHOOK_SECRET"
+      ;;
+    vietqr)
+      queue_secret_hint "VIETQR_BANK_BIN"
+      queue_secret_hint "VIETQR_ACCOUNT_NO"
+      queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      ;;
+    *)
+      ;;
+  esac
 }
 
 print_status() {
@@ -89,6 +125,14 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
     pass "email_provider is mail_iai_one"
   else
     warn "email_provider is $email_provider (expected mail_iai_one for Team 2 final runtime proof)"
+    queue_secret_hint "EMAIL_PROVIDER=mail_iai_one"
+    queue_secret_hint "MAIL_API_BASE_URL"
+    queue_secret_hint "MAIL_API_KEY"
+    queue_secret_hint "MAIL_API_WORKSPACE_ID"
+    queue_secret_hint "MAIL_API_WEBHOOK_SECRET"
+    queue_secret_hint "EMAIL_FROM_SYSTEM"
+    queue_secret_hint "EMAIL_FROM_PAY"
+    queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
   fi
   provider_codes=(paypal vietqr)
   if [ "$REQUIRE_STRIPE" = "1" ]; then
@@ -101,6 +145,9 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
     if [ "$enabled" = "true" ]; then
       pass "$code is enabled (mode=$mode)"
     else
+      if [ "$mode" = "setup_required" ]; then
+        append_provider_secret_hints "$code"
+      fi
       if [ "$ENFORCE_COMMERCE_LIVE" = "1" ]; then
         fail "$code is not enabled (mode=$mode)"
       else
@@ -113,6 +160,17 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
   fi
 else
   fail "providers response was not valid JSON"
+fi
+echo
+
+echo "== Missing secret checklist (from live readiness signals) =="
+if [ "${#MISSING_SECRET_HINTS[@]}" -eq 0 ]; then
+  pass "no missing secret hints detected from provider/email readiness"
+else
+  warn "team should set the following secrets before strict live gate:"
+  for hint in "${MISSING_SECRET_HINTS[@]}"; do
+    echo "  - $hint"
+  done
 fi
 echo
 

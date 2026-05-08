@@ -43,6 +43,11 @@ check_http() {
   fi
 }
 
+fetch_body() {
+  local url="$1"
+  curl -fsSL --retry 2 --retry-delay 1 --connect-timeout 10 --max-time 30 "$url" 2>/dev/null || true
+}
+
 for route in "${ROUTES[@]}"; do
   check_http "$route"
 done
@@ -50,59 +55,70 @@ done
 echo
 echo "--- Admin HTML markers ---"
 
-settings_body="$(curl -s "$BASE_URL/admin/settings/")"
-en_settings_body="$(curl -s "$BASE_URL/en/admin/settings/")"
+settings_body="$(fetch_body "$BASE_URL/admin/settings/")"
+en_settings_body="$(fetch_body "$BASE_URL/en/admin/settings/")"
 
-if echo "$settings_body" | grep -q 'admin-account-manager'; then
+if [ -z "$settings_body" ]; then
+  log_fail "/admin/settings/ body fetch failed"
+fi
+if [ -z "$en_settings_body" ]; then
+  log_fail "/en/admin/settings/ body fetch failed"
+fi
+
+if grep -Fq 'admin-account-manager' <<< "$settings_body"; then
   log_ok "/admin/settings/ has admin account manager section"
 else
   log_fail "/admin/settings/ missing admin account manager"
 fi
 
-if echo "$settings_body" | grep -q 'admin-account-save'; then
+if grep -Fq 'admin-account-save' <<< "$settings_body"; then
   log_ok "/admin/settings/ has account save control"
 else
   log_fail "/admin/settings/ missing account save control"
 fi
 
-if echo "$settings_body" | grep -q 'admin-account-reset'; then
+if grep -Fq 'admin-account-reset' <<< "$settings_body"; then
   log_ok "/admin/settings/ has account reset control"
 else
   log_fail "/admin/settings/ missing account reset control"
 fi
 
-if echo "$settings_body" | grep -q 'admin-console.js'; then
+if grep -Fq 'admin-console.js' <<< "$settings_body"; then
   log_ok "/admin/settings/ loads admin-console"
 else
   log_fail "/admin/settings/ missing admin-console"
 fi
 
-if echo "$en_settings_body" | grep -q 'admin-account-manager'; then
+if grep -Fq 'admin-account-manager' <<< "$en_settings_body"; then
   log_ok "/en/admin/settings/ has admin account manager section"
 else
   log_fail "/en/admin/settings/ missing admin account manager"
 fi
 
-console_js="$(curl -s "$BASE_URL/assets/admin-console.js")"
-if echo "$console_js" | grep -q "content_editor"; then
+console_js="$(fetch_body "$BASE_URL/assets/admin-console.js")"
+if [ -z "$console_js" ]; then
+  log_fail "admin-console.js fetch failed"
+fi
+
+if grep -Fq "content_editor" <<< "$console_js"; then
   log_ok "admin-console.js includes content_editor role"
 else
   log_fail "admin-console.js missing content_editor role"
 fi
 
-if echo "$console_js" | grep -q "content_manage"; then
+if grep -Fq "content_manage" <<< "$console_js"; then
   log_ok "admin-console.js includes content_manage permission"
 else
   log_fail "admin-console.js missing content_manage permission"
 fi
 
-if echo "$console_js" | grep -q "content_image"; then
+if grep -Fq "content_image" <<< "$console_js"; then
   log_ok "admin-console.js includes content_image permission"
 else
   log_fail "admin-console.js missing content_image permission"
 fi
 
-if echo "$console_js" | grep -q "content.editor"; then
+if grep -Fq "content.editor" <<< "$console_js"; then
   log_ok "default seed account content.editor exists in admin-console.js"
 else
   log_fail "default seed account content.editor not found in admin-console.js"
@@ -114,4 +130,3 @@ echo "SUMMARY: PASS=$OK  FAIL=$FAIL"
 if [ "$FAIL" -ne 0 ]; then
   exit 1
 fi
-

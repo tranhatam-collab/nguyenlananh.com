@@ -30,6 +30,7 @@ REPORT_PATH="$REPORT_DIR/PAYMENT_RAILS_INDEPENDENT_GATE_${REPORT_TS}.md"
 
 FAILURES=0
 WARNINGS=0
+MISSING_SECRET_HINTS=()
 
 pass() {
   local msg="$1"
@@ -46,6 +47,41 @@ fail() {
   local msg="$1"
   echo "[FAIL] $msg"
   FAILURES=$((FAILURES + 1))
+}
+
+queue_secret_hint() {
+  local item="$1"
+  local existing
+  for existing in "${MISSING_SECRET_HINTS[@]-}"; do
+    if [ "$existing" = "$item" ]; then
+      return
+    fi
+  done
+  MISSING_SECRET_HINTS+=("$item")
+}
+
+append_provider_secret_hints() {
+  local provider="$1"
+  case "$provider" in
+    paypal)
+      queue_secret_hint "PAYPAL_CLIENT_ID"
+      queue_secret_hint "PAYPAL_CLIENT_SECRET"
+      queue_secret_hint "PAYPAL_WEBHOOK_ID"
+      queue_secret_hint "PAYPAL_MERCHANT_EMAIL"
+      ;;
+    stripe)
+      queue_secret_hint "STRIPE_SECRET_KEY"
+      queue_secret_hint "STRIPE_PUBLISHABLE_KEY"
+      queue_secret_hint "STRIPE_WEBHOOK_SECRET"
+      ;;
+    vietqr)
+      queue_secret_hint "VIETQR_BANK_BIN"
+      queue_secret_hint "VIETQR_ACCOUNT_NO"
+      queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      ;;
+    *)
+      ;;
+  esac
 }
 
 guard_fail_or_warn() {
@@ -105,6 +141,17 @@ fi
 PROVIDERS_JSON="$(curl -sS "$BASE_URL/api/payments/providers" 2>/dev/null || true)"
 if printf "%s" "$PROVIDERS_JSON" | jq empty >/dev/null 2>&1; then
   pass "providers endpoint returned valid JSON"
+  email_provider="$(printf "%s" "$PROVIDERS_JSON" | jq -r '.environment.email_provider // "unknown"' 2>/dev/null || echo unknown)"
+  if [ "$email_provider" != "mail_iai_one" ]; then
+    queue_secret_hint "EMAIL_PROVIDER=mail_iai_one"
+    queue_secret_hint "MAIL_API_BASE_URL"
+    queue_secret_hint "MAIL_API_KEY"
+    queue_secret_hint "MAIL_API_WORKSPACE_ID"
+    queue_secret_hint "MAIL_API_WEBHOOK_SECRET"
+    queue_secret_hint "EMAIL_FROM_SYSTEM"
+    queue_secret_hint "EMAIL_FROM_PAY"
+    queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
+  fi
 else
   fail "providers endpoint returned invalid JSON"
 fi
@@ -147,6 +194,7 @@ VN_VND_CODE="$(printf "%s" "$VN_VND_JSON" | jq -r '.code // ""' 2>/dev/null || t
 if [ "$VN_VND_OK" = "true" ]; then
   pass "VN rail probe on vietqr accepted"
 elif [ "$VN_VND_CODE" = "PROVIDER_NOT_READY" ]; then
+  append_provider_secret_hints "vietqr"
   ready_fail_or_warn "VN rail provider is not ready yet (code=PROVIDER_NOT_READY)"
 else
   fail "VN rail probe failed with code=${VN_VND_CODE:-unknown}"
@@ -159,9 +207,21 @@ INTL_USD_URL="$(printf "%s" "$INTL_USD_JSON" | jq -r '.checkout_url // ""' 2>/de
 if [ "$INTL_USD_OK" = "true" ] && [ -n "$INTL_USD_URL" ]; then
   pass "INTL rail probe on $INTL_PROVIDER returned checkout_url"
 elif [ "$INTL_USD_CODE" = "PROVIDER_NOT_READY" ]; then
+  append_provider_secret_hints "$INTL_PROVIDER"
   ready_fail_or_warn "INTL rail provider $INTL_PROVIDER is not ready yet (code=PROVIDER_NOT_READY)"
 else
   fail "INTL rail probe failed with code=${INTL_USD_CODE:-unknown}"
+fi
+
+echo
+echo "== Missing secret checklist (from rail/provider signals) =="
+if [ "${#MISSING_SECRET_HINTS[@]}" -eq 0 ]; then
+  pass "no missing secret hints detected from current rail checks"
+else
+  warn "set these secrets before strict provider-ready proof:"
+  for hint in "${MISSING_SECRET_HINTS[@]}"; do
+    echo "  - $hint"
+  done
 fi
 
 {

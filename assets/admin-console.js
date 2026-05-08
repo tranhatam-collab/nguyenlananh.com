@@ -1194,6 +1194,8 @@
     const memberSnapshotQueueRouteFilter = $("#member-snapshot-queue-route-filter");
     const memberSnapshotQueueHandoffFilter = $("#member-snapshot-queue-handoff-filter");
     const memberSnapshotQueuePriorityFilter = $("#member-snapshot-queue-priority-filter");
+    const memberSnapshotQueueClearFilters = $("#member-snapshot-queue-clear-filters");
+    const memberSnapshotQueueActiveFilters = $("#member-snapshot-queue-active-filters");
     const memberSnapshotQueuePacket = $("#member-snapshot-queue-packet");
     const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
     const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
@@ -1343,6 +1345,17 @@
           ? `Batch handoff preview: ${filteredQueue.length} visible item(s) from ${scopeLabel}.`
           : `Xem trước batch handoff: ${filteredQueue.length} item đang hiện từ phạm vi ${scopeLabel}.`;
       }
+      if (memberSnapshotQueueActiveFilters) {
+        const hasActiveFilters = routeFilter !== "all" || handoffFilter !== "all" || priorityFilter !== "all";
+        memberSnapshotQueueActiveFilters.textContent = hasActiveFilters
+          ? (isEnglish
+              ? `Active queue filters: ${describeQueueFilters({ route: routeFilter, handoff: handoffFilter, priority: priorityFilter }, true)}`
+              : `Bộ lọc queue đang dùng: ${describeQueueFilters({ route: routeFilter, handoff: handoffFilter, priority: priorityFilter }, false)}`)
+          : (isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.");
+      }
+      if (memberSnapshotQueueClearFilters) {
+        memberSnapshotQueueClearFilters.disabled = routeFilter === "all" && handoffFilter === "all" && priorityFilter === "all";
+      }
       if (memberSnapshotQueuePacket) {
         memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);
       }
@@ -1411,6 +1424,13 @@
     });
 
     memberSnapshotQueuePriorityFilter?.addEventListener("change", () => {
+      renderMemberSnapshotQueue();
+    });
+
+    memberSnapshotQueueClearFilters?.addEventListener("click", () => {
+      if (memberSnapshotQueueRouteFilter) memberSnapshotQueueRouteFilter.value = "all";
+      if (memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
+      if (memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
       renderMemberSnapshotQueue();
     });
 

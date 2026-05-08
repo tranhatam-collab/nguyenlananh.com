@@ -329,6 +329,27 @@
     return payload || {};
   }
 
+  function normalizedQueueItemsFromApi(items, limit = 200) {
+    return sortedMemberSnapshotQueue((Array.isArray(items) ? items : [])
+      .map((item) => normalizeQueuePacketForApi(item))
+      .filter(Boolean))
+      .slice(0, Math.max(1, Number(limit) || 200));
+  }
+
+  function buildD1QueuePacket(items, filters = {}, source = "d1_admin_ops_queue") {
+    return {
+      packet_type: "admin_member_snapshot_queue",
+      exportedAt: new Date().toISOString(),
+      source,
+      applied_filters: {
+        route: String(filters.route || "all"),
+        handoff: String(filters.handoff || "all"),
+        priority: String(filters.priority || "all")
+      },
+      items: Array.isArray(items) ? items : []
+    };
+  }
+
   function recommendedRouteForSnapshot(packet) {
     const state = String(packet?.latestPracticeState || "");
     if (state === "human_reflection" || state === "avoiding" || !packet?.hasSavedHandoff) {
@@ -2050,11 +2071,15 @@
 
   function initReflection() {
     const status = $("#reflection-status");
+    const summary = $("#reflection-summary");
     const list = $("#reflection-list");
     const log = $("#reflection-log");
     const evidenceOutput = $("#reflection-evidence-output");
     const evidenceImport = $("#reflection-evidence-import");
     const evidenceStatus = $("#reflection-evidence-status");
+    const d1Status = $("#reflection-evidence-d1-status");
+    const d1KeyInput = $("#reflection-d1-admin-key");
+    const d1Load = $("#reflection-evidence-load-d1");
     const evidenceCopy = $("#reflection-evidence-copy");
     const evidenceExport = $("#reflection-evidence-export");
     const evidenceApply = $("#reflection-evidence-apply");
@@ -2071,6 +2096,16 @@
     const matchedHandoffs = handoffs.filter((handoff) =>
       signals.some((signal) => reflectionHandoffMatchesSignal(handoff, signal))
     );
+
+    if (d1KeyInput) {
+      d1KeyInput.value = getAdminOpsQueueKey();
+      d1KeyInput.addEventListener("input", () => {
+        saveAdminOpsQueueKey(d1KeyInput.value || "");
+      });
+      d1KeyInput.addEventListener("blur", () => {
+        saveAdminOpsQueueKey(d1KeyInput.value || "");
+      });
+    }
 
     function renderReflectionView(view) {
       const items = Array.isArray(view?.signals) ? view.signals : [];
@@ -2237,6 +2272,53 @@
       });
     }
 
+    d1Load?.addEventListener("click", async () => {
+      const adminKey = String(d1KeyInput?.value || getAdminOpsQueueKey()).trim();
+      if (!adminKey) {
+        renderStatus(
+          d1Status,
+          isEnglish ? "Enter admin ops key before loading D1 queue." : "Nhập admin ops key trước khi nạp queue D1.",
+          "danger"
+        );
+        return;
+      }
+      d1Load.disabled = true;
+      try {
+        const payload = await callAdminOpsQueue("GET", adminKey, {
+          filters: { route: "reflection", handoff: "all", priority: "all", limit: 200 }
+        });
+        saveAdminOpsQueueKey(adminKey);
+        const normalized = normalizedQueueItemsFromApi(payload.items, 200);
+        const queuePacket = buildD1QueuePacket(
+          normalized,
+          { route: "reflection", handoff: "all", priority: "all" },
+          "d1_admin_ops_queue_reflection"
+        );
+        if (evidenceImport) {
+          evidenceImport.value = JSON.stringify(queuePacket, null, 2);
+        }
+        evidenceApply?.click();
+        const summaryCounts = payload.summary && typeof payload.summary === "object"
+          ? ` (${Number(payload.summary.total || 0)} total)`
+          : "";
+        renderStatus(
+          d1Status,
+          isEnglish
+            ? `Loaded ${normalized.length} queue item(s) from D1 into reflection import${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào reflection import${summaryCounts}.`,
+          "ok"
+        );
+      } catch (error) {
+        renderStatus(
+          d1Status,
+          isEnglish ? `Unable to load D1 queue: ${error.message}` : `Không nạp được queue D1: ${error.message}`,
+          "danger"
+        );
+      } finally {
+        d1Load.disabled = false;
+      }
+    });
+
     if (evidenceApply) {
       evidenceApply.addEventListener("click", () => {
         try {
@@ -2389,6 +2471,9 @@
     const evidenceOutput = $("#pilot-evidence-output");
     const evidenceImport = $("#pilot-evidence-import");
     const evidenceStatus = $("#pilot-evidence-status");
+    const d1Status = $("#pilot-evidence-d1-status");
+    const d1KeyInput = $("#pilot-d1-admin-key");
+    const d1Load = $("#pilot-evidence-load-d1");
     const evidenceCopy = $("#pilot-evidence-copy");
     const evidenceExport = $("#pilot-evidence-export");
     const evidenceApply = $("#pilot-evidence-apply");
@@ -2430,6 +2515,16 @@
       };
     });
     let lastPilotImportedFilters = null;
+
+    if (d1KeyInput) {
+      d1KeyInput.value = getAdminOpsQueueKey();
+      d1KeyInput.addEventListener("input", () => {
+        saveAdminOpsQueueKey(d1KeyInput.value || "");
+      });
+      d1KeyInput.addEventListener("blur", () => {
+        saveAdminOpsQueueKey(d1KeyInput.value || "");
+      });
+    }
 
     function renderPilotView(view) {
       const participants = Array.isArray(view?.participants) ? view.participants : [];
@@ -2615,6 +2710,53 @@
         }
       });
     }
+
+    d1Load?.addEventListener("click", async () => {
+      const adminKey = String(d1KeyInput?.value || getAdminOpsQueueKey()).trim();
+      if (!adminKey) {
+        renderStatus(
+          d1Status,
+          isEnglish ? "Enter admin ops key before loading D1 queue." : "Nhập admin ops key trước khi nạp queue D1.",
+          "danger"
+        );
+        return;
+      }
+      d1Load.disabled = true;
+      try {
+        const payload = await callAdminOpsQueue("GET", adminKey, {
+          filters: { route: "pilot", handoff: "all", priority: "all", limit: 200 }
+        });
+        saveAdminOpsQueueKey(adminKey);
+        const normalized = normalizedQueueItemsFromApi(payload.items, 200);
+        const queuePacket = buildD1QueuePacket(
+          normalized,
+          { route: "pilot", handoff: "all", priority: "all" },
+          "d1_admin_ops_queue_pilot"
+        );
+        if (evidenceImport) {
+          evidenceImport.value = JSON.stringify(queuePacket, null, 2);
+        }
+        evidenceApply?.click();
+        const summaryCounts = payload.summary && typeof payload.summary === "object"
+          ? ` (${Number(payload.summary.total || 0)} total)`
+          : "";
+        renderStatus(
+          d1Status,
+          isEnglish
+            ? `Loaded ${normalized.length} queue item(s) from D1 into pilot import${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào pilot import${summaryCounts}.`,
+          "ok"
+        );
+      } catch (error) {
+        renderStatus(
+          d1Status,
+          isEnglish ? `Unable to load D1 queue: ${error.message}` : `Không nạp được queue D1: ${error.message}`,
+          "danger"
+        );
+      } finally {
+        d1Load.disabled = false;
+      }
+    });
 
     if (evidenceApply) {
       evidenceApply.addEventListener("click", () => {

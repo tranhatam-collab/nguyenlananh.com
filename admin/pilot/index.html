@@ -125,10 +125,16 @@
         <label for="pilot-evidence-import">Import evidence từ máy khác</label>
         <textarea id="pilot-evidence-import" rows="8" placeholder="Dán JSON evidence packet, member readiness packet, hoặc intake queue packet ở đây."></textarea>
       </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="pilot-d1-admin-key">Admin ops key (D1 sync)</label>
+        <input id="pilot-d1-admin-key" type="password" autocomplete="off" placeholder="Nhập x-admin-key để nạp queue D1 trực tiếp vào pilot ops" />
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
+        <button id="pilot-evidence-load-d1" class="ghost" type="button">Nạp queue D1 cho pilot</button>
         <button id="pilot-evidence-apply" class="ghost" type="button">Dùng evidence đã dán</button>
         <button id="pilot-evidence-reset" class="ghost" type="button">Quay lại dữ liệu local</button>
       </div>
+      <p id="pilot-evidence-d1-status" class="note"></p>
     </section>
 
     <section class="panel admin-only" data-requires="members">

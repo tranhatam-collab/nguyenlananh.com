@@ -120,10 +120,16 @@
         <label for="reflection-evidence-import">Import evidence from another machine</label>
         <textarea id="reflection-evidence-import" rows="8" placeholder="Paste JSON evidence, a member handoff packet, or an intake queue packet here."></textarea>
       </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="reflection-d1-admin-key">Admin ops key (D1 sync)</label>
+        <input id="reflection-d1-admin-key" type="password" autocomplete="off" placeholder="Enter x-admin-key to load D1 queue directly into reflection ops" />
+      </div>
       <div class="actionsRow" style="margin-top:12px;">
+        <button id="reflection-evidence-load-d1" class="ghost" type="button">Load D1 queue for reflection</button>
         <button id="reflection-evidence-apply" class="ghost" type="button">Use pasted evidence</button>
         <button id="reflection-evidence-reset" class="ghost" type="button">Return to local data</button>
       </div>
+      <p id="reflection-evidence-d1-status" class="note"></p>
     </section>
 
     <section class="panel admin-only" data-requires="members">

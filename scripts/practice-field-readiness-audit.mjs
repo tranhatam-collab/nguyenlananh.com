@@ -292,6 +292,8 @@ const checks = [
       /mergeMemberSnapshotQueueItems/,
       /imported_admin_intake_queue/,
       /admin_home_filtered_queue/,
+      /describeQueueFilters/,
+      /Filter scope:|Phạm vi lọc:/,
       /queue_total/,
       /queue_relevant/,
       /Queue -> reflection|Sẵn cho reflection/,

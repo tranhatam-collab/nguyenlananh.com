@@ -344,6 +344,41 @@
     }).join("");
   }
 
+  function describeSingleQueueFilter(type, value, isEnglish) {
+    if (type === "route") {
+      return value === "reflection"
+        ? (isEnglish ? "reflection only" : "chỉ reflection")
+        : value === "pilot"
+          ? (isEnglish ? "pilot only" : "chỉ pilot")
+          : (isEnglish ? "all routes" : "tất cả route");
+    }
+    if (type === "handoff") {
+      return value === "unrouted"
+        ? (isEnglish ? "not routed yet" : "chưa handoff")
+        : value === "routed"
+          ? (isEnglish ? "already routed" : "đã handoff")
+          : (isEnglish ? "all handoff states" : "tất cả trạng thái handoff");
+    }
+    if (type === "priority") {
+      return value === "reflection_now"
+        ? (isEnglish ? "needs reflection now" : "cần reflection ngay")
+        : value === "avoiding"
+          ? (isEnglish ? "avoiding, needs grounding" : "đang né, cần giữ nhịp")
+          : value === "missing_handoff"
+            ? (isEnglish ? "missing 3-line handoff" : "thiếu handoff 3 dòng")
+            : value === "pilot_ready"
+              ? (isEnglish ? "ready for pilot review" : "sẵn rà pilot")
+              : value === "paused"
+                ? (isEnglish ? "reminder pause active" : "đang pause nhắc")
+                : value === "pilot_later"
+                  ? (isEnglish ? "pilot after more groundwork" : "pilot sau khi đủ nền")
+                  : value === "routed"
+                    ? (isEnglish ? "already routed priority" : "mức ưu tiên đã handoff")
+                    : (isEnglish ? "all priority levels" : "tất cả mức ưu tiên");
+    }
+    return "";
+  }
+
   function formatPriorityMix(counts, isEnglish, codes) {
     const labels = {
       reflection_now: isEnglish ? "reflection now" : "reflection ngay",
@@ -1347,11 +1382,17 @@
       }
       if (memberSnapshotQueueActiveFilters) {
         const hasActiveFilters = routeFilter !== "all" || handoffFilter !== "all" || priorityFilter !== "all";
-        memberSnapshotQueueActiveFilters.textContent = hasActiveFilters
-          ? (isEnglish
-              ? `Active queue filters: ${describeQueueFilters({ route: routeFilter, handoff: handoffFilter, priority: priorityFilter }, true)}`
-              : `Bộ lọc queue đang dùng: ${describeQueueFilters({ route: routeFilter, handoff: handoffFilter, priority: priorityFilter }, false)}`)
-          : (isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.");
+        if (!hasActiveFilters) {
+          memberSnapshotQueueActiveFilters.textContent = isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.";
+        } else {
+          const label = isEnglish ? "Active queue filters:" : "Bộ lọc queue đang dùng:";
+          const chips = [
+            routeFilter !== "all" ? { type: "route", value: routeFilter } : null,
+            handoffFilter !== "all" ? { type: "handoff", value: handoffFilter } : null,
+            priorityFilter !== "all" ? { type: "priority", value: priorityFilter } : null
+          ].filter(Boolean);
+          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(label)} <span>${chips.map((chip) => `<button class="ghost" type="button" data-clear-queue-filter="${safeText(chip.type)}">${safeText(describeSingleQueueFilter(chip.type, chip.value, isEnglish))} ×</button>`).join(" ")}</span>`;
+        }
       }
       if (memberSnapshotQueueClearFilters) {
         memberSnapshotQueueClearFilters.disabled = routeFilter === "all" && handoffFilter === "all" && priorityFilter === "all";
@@ -1431,6 +1472,16 @@
       if (memberSnapshotQueueRouteFilter) memberSnapshotQueueRouteFilter.value = "all";
       if (memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
       if (memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
+      renderMemberSnapshotQueue();
+    });
+
+    memberSnapshotQueueActiveFilters?.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-clear-queue-filter]");
+      if (!trigger) return;
+      const type = String(trigger.getAttribute("data-clear-queue-filter") || "");
+      if (type === "route" && memberSnapshotQueueRouteFilter) memberSnapshotQueueRouteFilter.value = "all";
+      if (type === "handoff" && memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
+      if (type === "priority" && memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
       renderMemberSnapshotQueue();
     });
 

@@ -77,6 +77,7 @@ This release implements the first safe layer inside the members area:
 - Admin home batch handoff now respects the current filters, so reflection ops or pilot ops can open with only the visible subset instead of always carrying the full queue.
 - Reflection ops and pilot ops now show the imported filter scope from a batch handoff packet, so operators can tell whether they are reviewing all routes or just a filtered subset after opening the destination module.
 - Admin home batch handoff buttons now show the exact filtered item count and disable themselves when the current filter is empty, so operations can see the handoff size before clicking and avoid sending an empty subset.
+- Admin home now shows a short batch handoff preview line under the buttons, so the operator can verify both filter scope and visible item count before sending the subset into reflection ops or pilot ops.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

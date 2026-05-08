@@ -1101,6 +1101,7 @@
     const memberSnapshotQueueMerge = $("#member-snapshot-queue-merge");
     const memberSnapshotQueueOpenReflection = $("#member-snapshot-queue-open-reflection");
     const memberSnapshotQueueOpenPilot = $("#member-snapshot-queue-open-pilot");
+    const memberSnapshotQueueHandoffPreview = $("#member-snapshot-queue-handoff-preview");
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
@@ -1230,6 +1231,12 @@
         memberSnapshotQueueOpenPilot.textContent = isEnglish
           ? `Open pilot ops with filtered queue (${filteredQueue.length})`
           : `Mở pilot ops với phần đang lọc (${filteredQueue.length})`;
+      }
+      if (memberSnapshotQueueHandoffPreview) {
+        const scopeLabel = describeQueueFilters({ route: routeFilter, handoff: handoffFilter }, isEnglish);
+        memberSnapshotQueueHandoffPreview.textContent = isEnglish
+          ? `Batch handoff preview: ${filteredQueue.length} visible item(s) from ${scopeLabel}.`
+          : `Xem trước batch handoff: ${filteredQueue.length} item đang hiện từ phạm vi ${scopeLabel}.`;
       }
       if (memberSnapshotQueuePacket) {
         memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);

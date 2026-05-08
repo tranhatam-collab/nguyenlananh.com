@@ -197,7 +197,8 @@ const checks = [
       /id="member-snapshot-queue-merge"/,
       /id="member-snapshot-queue-open-reflection"/,
       /id="member-snapshot-queue-open-pilot"/,
-      /phần đang lọc/
+      /phần đang lọc/,
+      /id="member-snapshot-queue-handoff-preview"/
     ]
   },
   {
@@ -213,7 +214,8 @@ const checks = [
       /id="member-snapshot-queue-merge"/,
       /id="member-snapshot-queue-open-reflection"/,
       /id="member-snapshot-queue-open-pilot"/,
-      /filtered queue/
+      /filtered queue/,
+      /id="member-snapshot-queue-handoff-preview"/
     ]
   },
   {
@@ -296,6 +298,7 @@ const checks = [
       /Filter scope:|Phạm vi lọc:/,
       /Open reflection ops with filtered queue|Mở reflection ops với phần đang lọc/,
       /Open pilot ops with filtered queue|Mở pilot ops với phần đang lọc/,
+      /Batch handoff preview:|Xem trước batch handoff:/,
       /queue_total/,
       /queue_relevant/,
       /Queue -> reflection|Sẵn cho reflection/,

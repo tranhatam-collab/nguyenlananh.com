@@ -358,6 +358,25 @@
       .join(" • ");
   }
 
+  function renderImportedSubsetSummary(view, isEnglish, options = {}) {
+    if (view?.source !== "imported_admin_intake_queue") return "";
+    const queueTotal = Number(view?.queue_total || 0);
+    const queueRelevant = Number(view?.queue_relevant || 0);
+    const scopeLabel = describeQueueFilters(view?.applied_filters || {}, isEnglish);
+    const priorityLabel = formatPriorityMix(view?.priority_breakdown || {}, isEnglish, options.priorityCodes || []);
+    const title = isEnglish ? "Imported subset summary" : "Tóm tắt subset đã nạp";
+    const totalLabel = isEnglish ? "Total queue items" : "Tổng item trong queue";
+    const relevantLabel = isEnglish ? "Items used here" : "Item đang dùng ở đây";
+    const scopeText = isEnglish ? "Filter scope" : "Phạm vi lọc";
+    const priorityText = isEnglish ? "Priority mix" : "Tương quan ưu tiên";
+    return `<div class="note" style="margin:12px 0;">
+      <strong>${safeText(title)}</strong>
+      <p>${safeText(totalLabel)}: ${queueTotal} • ${safeText(relevantLabel)}: ${queueRelevant}</p>
+      <p>${safeText(scopeText)}: ${safeText(scopeLabel)}</p>
+      <p>${safeText(priorityText)}: ${safeText(priorityLabel)}</p>
+    </div>`;
+  }
+
   function describeQueueFilters(filters, isEnglish) {
     const route = String(filters?.route || "all");
     const handoff = String(filters?.handoff || "all");
@@ -1613,7 +1632,7 @@
             ? `<p class="note">No reflection evidence is available yet. Keep using this module as the triage contract until the queue moves to D1-backed persistence.</p>`
             : `<p class="note">Chưa có reflection evidence nào. Tiếp tục dùng module này như khung triage cho tới khi hàng đợi chuyển sang persistence có D1.</p>`;
         } else {
-          list.innerHTML = `<ul class="checkList">${items.map((item) => {
+          list.innerHTML = `${renderImportedSubsetSummary(view, isEnglish, { priorityCodes: ["reflection_now", "avoiding", "missing_handoff", "routed"] })}<ul class="checkList">${items.map((item) => {
             const handoff = handoffs.find((entry) => reflectionHandoffMatchesSignal(entry, item));
             const stateLabel = item.practiceState === "human_reflection"
               ? (isEnglish ? "Needs human reflection" : "Cần phản hồi người thật")
@@ -1935,7 +1954,7 @@
           <article class="kpi"><strong>${gentleCount}</strong><span>${isEnglish ? "Gentle" : "Nhịp nhẹ"}</span></article>
           <article class="kpi"><strong>${deepCount}</strong><span>${isEnglish ? "Deep" : "Đối diện sâu"}</span></article>
           <article class="kpi"><strong>${pausedCount}</strong><span>${isEnglish ? "Paused" : "Tạm dừng"}</span></article>
-        </div>`;
+        </div>${renderImportedSubsetSummary(view, isEnglish, { priorityCodes: ["pilot_ready", "paused", "pilot_later", "routed"] })}`;
       }
 
       if (list) {

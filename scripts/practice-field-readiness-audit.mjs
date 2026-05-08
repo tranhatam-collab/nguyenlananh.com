@@ -348,6 +348,7 @@ const checks = [
       /Priority now|Ưu tiên hiện tại/,
       /Active queue filters:|Bộ lọc queue đang dùng:/,
       /data-clear-queue-filter/,
+      /data-return-dashboard-priority/,
       /describeSingleQueueFilter/,
       /countQueueWithFilters/,
       /member-snapshot-queue-clear-filters/,

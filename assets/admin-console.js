@@ -408,6 +408,18 @@
       .join(" • ");
   }
 
+  function renderImportedSubsetPriorityActions(counts, codes, isEnglish) {
+    return (Array.isArray(codes) ? codes : [])
+      .map((code) => {
+        const count = Number(counts?.[code] || 0);
+        if (count <= 0) return "";
+        const label = describeSingleQueueFilter("priority", code, isEnglish);
+        return `<button class="ghost" type="button" data-return-dashboard-priority="${safeText(code)}">${safeText(label)} (${count})</button>`;
+      })
+      .filter(Boolean)
+      .join("");
+  }
+
   function renderImportedSubsetSummary(view, isEnglish, options = {}) {
     if (view?.source !== "imported_admin_intake_queue") return "";
     const queueTotal = Number(view?.queue_total || 0);
@@ -420,12 +432,15 @@
     const scopeText = isEnglish ? "Filter scope" : "Phạm vi lọc";
     const priorityText = isEnglish ? "Priority mix" : "Tương quan ưu tiên";
     const actionLabel = isEnglish ? "Open same filter on admin home" : "Mở lại filter này trên admin home";
+    const priorityActionLabel = isEnglish ? "Reopen one priority slice" : "Mở lại một priority slice";
+    const priorityActions = renderImportedSubsetPriorityActions(view?.priority_breakdown || {}, options.priorityCodes || [], isEnglish);
     return `<div class="note" style="margin:12px 0;">
       <strong>${safeText(title)}</strong>
       <p>${safeText(totalLabel)}: ${queueTotal} • ${safeText(relevantLabel)}: ${queueRelevant}</p>
       <p>${safeText(scopeText)}: ${safeText(scopeLabel)}</p>
       <p>${safeText(priorityText)}: ${safeText(priorityLabel)}</p>
       <div class="actionsRow" style="margin-top:8px;"><button class="ghost" type="button" data-return-dashboard-filters="true">${safeText(actionLabel)}</button></div>
+      ${priorityActions ? `<div style="margin-top:8px;"><p class="note" style="margin-bottom:6px;">${safeText(priorityActionLabel)}</p><div class="actionsRow">${priorityActions}</div></div>` : ""}
     </div>`;
   }
 
@@ -1821,12 +1836,27 @@
 
     renderReflectionView(evidence);
 
-    list?.addEventListener("click", (event) => {
+    function handleReflectionSubsetAction(event) {
       const trigger = event.target.closest("[data-return-dashboard-filters]");
       if (!trigger || !lastReflectionImportedFilters) return;
       savePendingDashboardFilters(lastReflectionImportedFilters);
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
-    });
+    }
+
+    function handleReflectionPriorityAction(event) {
+      const trigger = event.target.closest("[data-return-dashboard-priority]");
+      if (!trigger || !lastReflectionImportedFilters) return;
+      savePendingDashboardFilters({
+        ...lastReflectionImportedFilters,
+        priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+      });
+      window.location.href = isEnglish ? "/en/admin/" : "/admin/";
+    }
+
+    list?.addEventListener("click", handleReflectionSubsetAction);
+    list?.addEventListener("click", handleReflectionPriorityAction);
+    summary?.addEventListener("click", handleReflectionSubsetAction);
+    summary?.addEventListener("click", handleReflectionPriorityAction);
 
     if (evidenceCopy) {
       evidenceCopy.addEventListener("click", async () => {
@@ -2173,12 +2203,27 @@
 
     renderPilotView(evidence);
 
-    list?.addEventListener("click", (event) => {
+    function handlePilotSubsetAction(event) {
       const trigger = event.target.closest("[data-return-dashboard-filters]");
       if (!trigger || !lastPilotImportedFilters) return;
       savePendingDashboardFilters(lastPilotImportedFilters);
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
-    });
+    }
+
+    function handlePilotPriorityAction(event) {
+      const trigger = event.target.closest("[data-return-dashboard-priority]");
+      if (!trigger || !lastPilotImportedFilters) return;
+      savePendingDashboardFilters({
+        ...lastPilotImportedFilters,
+        priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+      });
+      window.location.href = isEnglish ? "/en/admin/" : "/admin/";
+    }
+
+    list?.addEventListener("click", handlePilotSubsetAction);
+    list?.addEventListener("click", handlePilotPriorityAction);
+    summary?.addEventListener("click", handlePilotSubsetAction);
+    summary?.addEventListener("click", handlePilotPriorityAction);
 
     if (evidenceCopy) {
       evidenceCopy.addEventListener("click", async () => {

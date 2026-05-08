@@ -360,6 +360,18 @@ Nen subscribe toi thieu:
 
 ### B8. Smoke proof sau cutover DNS
 
+Run gate + next-actions in one command (recommended for Team Pay handoff):
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+REQUIRE_STRIPE=0 \
+STRICT_MODE=0 \
+CHECK_PAGES_SECRETS=1 \
+bash scripts/team2-runtime-ops-loop.sh
+```
+
 Run all runtime checks in one command (recommended):
 
 ```bash

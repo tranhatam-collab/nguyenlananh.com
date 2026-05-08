@@ -438,6 +438,8 @@ node scripts/local-public-site-audit.mjs
 node scripts/practice-field-readiness-audit.mjs --fail
 BASE_URL=https://www.nguyenlananh.com REQUIRE_STRIPE=0 STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh
 bash scripts/team2-runtime-next-actions.sh
+# Optional one-command wrapper for pay handoff:
+BASE_URL=https://www.nguyenlananh.com REQUIRE_STRIPE=0 STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-ops-loop.sh
 ```
 
 18.4. **Practice-field product lock.** The site is a readiness filter and

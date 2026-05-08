@@ -11,6 +11,8 @@ CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-1}"
 INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
 PAYMENTS_ADMIN_KEY="${PAYMENTS_ADMIN_KEY:-}"
 D1_NAME="${D1_NAME:-nguyenlananh-payments-prod}"
+CONNECTIVITY_PREFLIGHT="${CONNECTIVITY_PREFLIGHT:-1}"
+SKIP_ON_CONNECTIVITY_FAIL="${SKIP_ON_CONNECTIVITY_FAIL:-1}"
 REPORT_DIR="${REPORT_DIR:-$ROOT_DIR/docs/reports}"
 REPORT_TS="$(date '+%Y%m%d_%H%M%S')"
 REPORT_PATH="${REPORT_PATH:-$REPORT_DIR/TEAM2_RUNTIME_PHASE_GATE_${REPORT_TS}.md}"
@@ -22,6 +24,7 @@ STAMP_LOCAL="$(date '+%Y-%m-%d %H:%M:%S %z')"
 TOTAL=0
 PASSED=0
 FAILED=0
+SKIPPED=0
 STEP_LABELS=()
 STEP_COMMANDS=()
 STEP_CODES=()
@@ -134,6 +137,29 @@ run_step() {
     FAILED=$((FAILED + 1))
     echo "[FAIL] $label (exit=$rc)"
   fi
+
+  return "$rc"
+}
+
+connectivity_preflight() {
+  local code
+  if code="$(curl -sS -o /dev/null -w "%{http_code}" "$BASE_URL" 2>/dev/null)"; then
+    :
+  else
+    code="000"
+  fi
+
+  echo "Connectivity check: $BASE_URL -> $code"
+  if [ "$code" = "000" ]; then
+    echo "[FAIL] base URL is unreachable (network or DNS)"
+    return 1
+  fi
+  if [ "$code" -ge 200 ] && [ "$code" -lt 500 ]; then
+    echo "[PASS] base URL reachable"
+    return 0
+  fi
+  echo "[WARN] base URL returned HTTP $code"
+  return 0
 }
 
 write_report() {
@@ -177,6 +203,8 @@ write_report() {
     echo "- total_steps: \`$TOTAL\`"
     echo "- passed_steps: \`$PASSED\`"
     echo "- failed_steps: \`$FAILED\`"
+    echo "- skipped_steps: \`$SKIPPED\`"
+    echo "- connectivity_failed: \`$CONNECTIVITY_FAILED\`"
     if [ "$FAILED" -gt 0 ]; then
       echo "- verdict: \`BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS\`"
     else
@@ -227,6 +255,9 @@ write_report() {
     echo "  \"require_stripe\": $REQUIRE_STRIPE,"
     echo "  \"strict_mode\": $STRICT_MODE,"
     echo "  \"check_pages_secrets\": $CHECK_PAGES_SECRETS,"
+    echo "  \"connectivity_preflight\": $CONNECTIVITY_PREFLIGHT,"
+    echo "  \"skip_on_connectivity_fail\": $SKIP_ON_CONNECTIVITY_FAIL,"
+    echo "  \"connectivity_failed\": $CONNECTIVITY_FAILED,"
     echo "  \"intl_provider\": $(json_escape "$INTL_PROVIDER"),"
     echo "  \"steps\": ["
     local i
@@ -294,6 +325,7 @@ write_report() {
     echo "    \"total_steps\": $TOTAL,"
     echo "    \"passed_steps\": $PASSED,"
     echo "    \"failed_steps\": $FAILED,"
+    echo "    \"skipped_steps\": $SKIPPED,"
     if [ "$FAILED" -gt 0 ]; then
       echo "    \"verdict\": \"BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS\""
     else
@@ -317,54 +349,73 @@ echo "Target envs: $TARGET_ENVS"
 echo "Require Stripe: $REQUIRE_STRIPE"
 echo "Strict mode: $STRICT_MODE"
 echo "Check Pages secrets: $CHECK_PAGES_SECRETS"
+echo "Connectivity preflight: $CONNECTIVITY_PREFLIGHT"
+echo "Skip steps on connectivity fail: $SKIP_ON_CONNECTIVITY_FAIL"
 
-run_step "Secrets preflight" \
-  env \
-  BASE_URL="$BASE_URL" \
-  PROJECT_NAME="$PROJECT_NAME" \
-  TARGET_ENVS="$TARGET_ENVS" \
-  REQUIRE_STRIPE="$REQUIRE_STRIPE" \
-  CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
-  bash "$ROOT_DIR/scripts/payment-live-secrets-preflight.sh"
+CONNECTIVITY_FAILED=0
+if [ "$CONNECTIVITY_PREFLIGHT" = "1" ]; then
+  if ! run_step "Connectivity preflight" connectivity_preflight; then
+    CONNECTIVITY_FAILED=1
+    queue_external_blocker "BASE_URL_UNREACHABLE"
+    if [ "$SKIP_ON_CONNECTIVITY_FAIL" = "1" ]; then
+      echo
+      echo "[WARN] Connectivity preflight failed. Skipping deep runtime steps."
+      SKIPPED=4
+    fi
+  fi
+fi
 
-run_step "Team 2 live gate" \
-  env \
-  BASE_URL="$BASE_URL" \
-  PROJECT_NAME="$PROJECT_NAME" \
-  TARGET_ENVS="$TARGET_ENVS" \
-  REQUIRE_STRIPE="$REQUIRE_STRIPE" \
-  CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
-  ENFORCE_COMMERCE_LIVE="$STRICT_MODE" \
-  bash "$ROOT_DIR/scripts/team2-live-gate.sh"
+if [ "$CONNECTIVITY_FAILED" = "1" ] && [ "$SKIP_ON_CONNECTIVITY_FAIL" = "1" ]; then
+  :
+else
+  run_step "Secrets preflight" \
+    env \
+    BASE_URL="$BASE_URL" \
+    PROJECT_NAME="$PROJECT_NAME" \
+    TARGET_ENVS="$TARGET_ENVS" \
+    REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    bash "$ROOT_DIR/scripts/payment-live-secrets-preflight.sh"
 
-run_step "Rails independent gate" \
-  env \
-  BASE_URL="$BASE_URL" \
-  PROJECT_NAME="$PROJECT_NAME" \
-  TARGET_ENVS="$TARGET_ENVS" \
-  REPORT_DIR="$TMP_LOG_DIR" \
-  CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
-  INTL_PROVIDER="$INTL_PROVIDER" \
-  REQUIRE_PROVIDER_READY="$STRICT_MODE" \
-  REQUIRE_COMPLETED="$STRICT_MODE" \
-  bash "$ROOT_DIR/scripts/payment-rails-independent-gate.sh"
+  run_step "Team 2 live gate" \
+    env \
+    BASE_URL="$BASE_URL" \
+    PROJECT_NAME="$PROJECT_NAME" \
+    TARGET_ENVS="$TARGET_ENVS" \
+    REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    ENFORCE_COMMERCE_LIVE="$STRICT_MODE" \
+    bash "$ROOT_DIR/scripts/team2-live-gate.sh"
 
-run_step "Payment proof smoke" \
-  env \
-  BASE_URL="$BASE_URL" \
-  PROJECT_NAME="$PROJECT_NAME" \
-  TARGET_ENVS="$TARGET_ENVS" \
-  CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
-  REQUIRE_STRIPE="$REQUIRE_STRIPE" \
-  REQUIRE_COMPLETED="$STRICT_MODE" \
-  USD_PROVIDER="$INTL_PROVIDER" \
-  D1_NAME="$D1_NAME" \
-  PAYMENTS_ADMIN_KEY="$PAYMENTS_ADMIN_KEY" \
-  bash "$ROOT_DIR/scripts/payment-live-proof-smoke.sh"
+  run_step "Rails independent gate" \
+    env \
+    BASE_URL="$BASE_URL" \
+    PROJECT_NAME="$PROJECT_NAME" \
+    TARGET_ENVS="$TARGET_ENVS" \
+    REPORT_DIR="$TMP_LOG_DIR" \
+    CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    INTL_PROVIDER="$INTL_PROVIDER" \
+    REQUIRE_PROVIDER_READY="$STRICT_MODE" \
+    REQUIRE_COMPLETED="$STRICT_MODE" \
+    bash "$ROOT_DIR/scripts/payment-rails-independent-gate.sh"
+
+  run_step "Payment proof smoke" \
+    env \
+    BASE_URL="$BASE_URL" \
+    PROJECT_NAME="$PROJECT_NAME" \
+    TARGET_ENVS="$TARGET_ENVS" \
+    CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    REQUIRE_COMPLETED="$STRICT_MODE" \
+    USD_PROVIDER="$INTL_PROVIDER" \
+    D1_NAME="$D1_NAME" \
+    PAYMENTS_ADMIN_KEY="$PAYMENTS_ADMIN_KEY" \
+    bash "$ROOT_DIR/scripts/payment-live-proof-smoke.sh"
+fi
 
 echo
 echo "== Team 2 Runtime Phase Summary =="
-echo "TOTAL=$TOTAL PASSED=$PASSED FAILED=$FAILED"
+echo "TOTAL=$TOTAL PASSED=$PASSED FAILED=$FAILED SKIPPED=$SKIPPED"
 write_report
 
 if [ "$FAILED" -gt 0 ]; then

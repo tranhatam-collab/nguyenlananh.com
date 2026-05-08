@@ -372,6 +372,19 @@ CHECK_PAGES_SECRETS=1 \
 bash scripts/team2-runtime-phase-gate.sh
 ```
 
+Connectivity behavior defaults:
+
+- `CONNECTIVITY_PREFLIGHT=1`
+- `SKIP_ON_CONNECTIVITY_FAIL=1`
+
+If DNS/network is unstable and you still want to force all deep steps:
+
+```bash
+CONNECTIVITY_PREFLIGHT=1 \
+SKIP_ON_CONNECTIVITY_FAIL=0 \
+bash scripts/team2-runtime-phase-gate.sh
+```
+
 Default evidence output:
 
 - `docs/reports/TEAM2_RUNTIME_PHASE_GATE_<timestamp>.md`

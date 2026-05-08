@@ -186,6 +186,19 @@
         <button id="member-snapshot-queue-export" class="ghost" type="button">Export intake queue</button>
         <button id="member-snapshot-queue-merge" class="ghost" type="button">Merge packet into queue</button>
       </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="member-snapshot-queue-admin-key">Admin ops key (D1 sync)</label>
+        <input id="member-snapshot-queue-admin-key" type="password" autocomplete="off" placeholder="Enter x-admin-key to sync with /api/admin/ops/queue" />
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="member-snapshot-queue-pull-d1" class="ghost" type="button">Load from D1 (merge into queue)</button>
+        <button id="member-snapshot-queue-replace-from-d1" class="ghost" type="button">Use D1 queue (replace local)</button>
+      </div>
+      <div class="actionsRow" style="margin-top:12px;">
+        <button id="member-snapshot-queue-push-d1" class="ghost" type="button">Push local queue to D1</button>
+        <button id="member-snapshot-queue-clear-d1" class="ghost" type="button">Clear queue on D1</button>
+      </div>
+      <p id="member-snapshot-queue-sync-status" class="note"></p>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="member-snapshot-queue-open-reflection" class="ghost" type="button">Open reflection ops with filtered queue</button>
         <button id="member-snapshot-queue-open-pilot" class="ghost" type="button">Open pilot ops with filtered queue</button>

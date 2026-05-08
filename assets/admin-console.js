@@ -11,6 +11,7 @@
     roleMatrix: "nla_admin_role_matrix_v2",
     users: "nla_admin_users_v2",
     memberSnapshotQueue: "nla_admin_member_snapshot_queue_v1",
+    adminOpsQueueKey: "nla_admin_ops_queue_key_v1",
     pendingDashboardFilters: "nla_admin_pending_dashboard_filters_v1",
     pendingReflectionPacket: "nla_admin_pending_reflection_packet_v1",
     pendingPilotPacket: "nla_admin_pending_pilot_packet_v1",
@@ -244,6 +245,88 @@
 
   function saveMemberSnapshotQueue(items) {
     writeJSON(STORAGE_KEYS.memberSnapshotQueue, items);
+  }
+
+  function getAdminOpsQueueKey() {
+    return String(localStorage.getItem(STORAGE_KEYS.adminOpsQueueKey) || "").trim();
+  }
+
+  function saveAdminOpsQueueKey(value) {
+    const normalized = String(value || "").trim();
+    if (!normalized) {
+      localStorage.removeItem(STORAGE_KEYS.adminOpsQueueKey);
+      return;
+    }
+    localStorage.setItem(STORAGE_KEYS.adminOpsQueueKey, normalized);
+  }
+
+  function normalizeQueuePacketForApi(packet) {
+    if (!packet || typeof packet !== "object") return null;
+    const payload = packet.payload_json && typeof packet.payload_json === "object" ? packet.payload_json : {};
+    const merged = {
+      ...payload,
+      email: packet.email || payload.email || "",
+      fullName: packet.full_name || payload.fullName || "",
+      profileReady: typeof packet.profile_ready === "boolean" ? packet.profile_ready : Boolean(payload.profileReady),
+      latestPracticeState: packet.latest_practice_state || payload.latestPracticeState || "",
+      latestPracticeLine: packet.latest_practice_line || payload.latestPracticeLine || "",
+      latestPracticeDay: packet.latest_practice_day || payload.latestPracticeDay || "",
+      reminderPausedUntil: packet.reminder_paused_until || payload.reminderPausedUntil || "",
+      hasSavedHandoff: typeof packet.has_saved_handoff === "boolean" ? packet.has_saved_handoff : Boolean(payload.hasSavedHandoff),
+      queueRecommendedRoute: packet.queue_recommended_route || payload.queueRecommendedRoute || "",
+      queueLastRoutedTo: packet.queue_last_routed_to || payload.queueLastRoutedTo || "",
+      queueLastRoutedAt: packet.queue_last_routed_at || payload.queueLastRoutedAt || "",
+      updatedAt: packet.updated_at || payload.updatedAt || "",
+      queueSavedAt: payload.queueSavedAt || packet.created_at || packet.updated_at || new Date().toISOString()
+    };
+    if (!String(merged.email || "").trim()) return null;
+    return normalizeMemberSnapshotQueueItem(merged, merged);
+  }
+
+  async function callAdminOpsQueue(method, adminKey, { items = null, source = "", filters = null } = {}) {
+    const key = String(adminKey || "").trim();
+    if (!key) {
+      throw new Error("ADMIN_KEY_REQUIRED");
+    }
+
+    const url = new URL("/api/admin/ops/queue", location.origin);
+    if (filters && typeof filters === "object") {
+      if (filters.route) url.searchParams.set("route", String(filters.route));
+      if (filters.handoff) url.searchParams.set("handoff", String(filters.handoff));
+      if (filters.priority) url.searchParams.set("priority", String(filters.priority));
+      if (filters.limit) url.searchParams.set("limit", String(filters.limit));
+    }
+
+    const options = {
+      method,
+      cache: "no-store",
+      headers: {
+        "x-admin-key": key
+      }
+    };
+
+    if (method === "POST") {
+      options.headers["content-type"] = "application/json";
+      options.body = JSON.stringify({
+        packet_type: "admin_member_snapshot_queue",
+        source: source || "admin_home_browser_queue_sync",
+        items: Array.isArray(items) ? items : []
+      });
+    }
+
+    const response = await fetch(`${url.pathname}${url.search}`, options);
+    let payload = null;
+    try {
+      payload = await response.json();
+    } catch (_error) {
+      payload = null;
+    }
+    if (!response.ok) {
+      const code = String(payload?.error || "ADMIN_OPS_QUEUE_REQUEST_FAILED");
+      const message = String(payload?.message || `HTTP ${response.status}`);
+      throw new Error(`${code}: ${message}`);
+    }
+    return payload || {};
   }
 
   function recommendedRouteForSnapshot(packet) {
@@ -1286,6 +1369,12 @@
     const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
     const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
     const memberSnapshotQueueMerge = $("#member-snapshot-queue-merge");
+    const memberSnapshotQueueAdminKey = $("#member-snapshot-queue-admin-key");
+    const memberSnapshotQueuePullD1 = $("#member-snapshot-queue-pull-d1");
+    const memberSnapshotQueueReplaceFromD1 = $("#member-snapshot-queue-replace-from-d1");
+    const memberSnapshotQueuePushD1 = $("#member-snapshot-queue-push-d1");
+    const memberSnapshotQueueClearD1 = $("#member-snapshot-queue-clear-d1");
+    const memberSnapshotQueueSyncStatus = $("#member-snapshot-queue-sync-status");
     const memberSnapshotQueueOpenReflection = $("#member-snapshot-queue-open-reflection");
     const memberSnapshotQueueOpenPilot = $("#member-snapshot-queue-open-pilot");
     const memberSnapshotQueueHandoffPreview = $("#member-snapshot-queue-handoff-preview");
@@ -1315,6 +1404,43 @@
     let lastFilteredQueue = importedMemberPackets;
     let restoredFilterContext = null;
     let pendingFilterSourcePath = "";
+    let lastD1QueueSummary = null;
+
+    function queueFilterValues() {
+      return {
+        route: String(memberSnapshotQueueRouteFilter?.value || "all"),
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all"),
+        priority: String(memberSnapshotQueuePriorityFilter?.value || "all")
+      };
+    }
+
+    function getAdminOpsKeyFromInput() {
+      return String(memberSnapshotQueueAdminKey?.value || getAdminOpsQueueKey()).trim();
+    }
+
+    function queueCountLabelFromSummary(summary) {
+      if (!summary || typeof summary !== "object") return "";
+      const total = Number(summary.total || 0);
+      const reflection = Number(summary.routes?.reflection || 0);
+      const pilot = Number(summary.routes?.pilot || 0);
+      const routed = Number(summary.routes?.routed || 0);
+      if (isEnglish) {
+        return `D1 queue total ${total} (reflection ${reflection}, pilot ${pilot}, routed ${routed}).`;
+      }
+      return `Queue D1 tổng ${total} (reflection ${reflection}, pilot ${pilot}, đã handoff ${routed}).`;
+    }
+
+    function syncMessageWithSummary(message, summary) {
+      const summaryLabel = queueCountLabelFromSummary(summary);
+      if (!summaryLabel) return message;
+      return `${message} ${summaryLabel}`;
+    }
+
+    function normalizedQueueItemsFromApi(items) {
+      return sortedMemberSnapshotQueue((Array.isArray(items) ? items : [])
+        .map((item) => normalizeQueuePacketForApi(item))
+        .filter(Boolean));
+    }
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -1530,6 +1656,16 @@
       clearPendingDashboardFilters();
     }
 
+    if (memberSnapshotQueueAdminKey) {
+      memberSnapshotQueueAdminKey.value = getAdminOpsQueueKey();
+      memberSnapshotQueueAdminKey.addEventListener("input", () => {
+        saveAdminOpsQueueKey(memberSnapshotQueueAdminKey.value || "");
+      });
+      memberSnapshotQueueAdminKey.addEventListener("blur", () => {
+        saveAdminOpsQueueKey(memberSnapshotQueueAdminKey.value || "");
+      });
+    }
+
     memberSnapshotQueueRouteFilter?.addEventListener("change", () => {
       restoredFilterContext = null;
       pendingFilterSourcePath = "";
@@ -1672,6 +1808,145 @@
         renderStatus(memberSnapshotStatus, isEnglish ? "Merged intake queue packet." : "Đã merge intake queue packet.", "ok");
       } catch (_error) {
         renderStatus(memberSnapshotStatus, isEnglish ? "Unable to merge intake queue packet." : "Không merge được intake queue packet.", "danger");
+      }
+    });
+
+    function setQueueSyncBusy(isBusy) {
+      [memberSnapshotQueuePullD1, memberSnapshotQueueReplaceFromD1, memberSnapshotQueuePushD1, memberSnapshotQueueClearD1]
+        .filter(Boolean)
+        .forEach((button) => {
+          button.disabled = Boolean(isBusy);
+        });
+    }
+
+    async function loadQueueFromD1({ replaceLocal = false } = {}) {
+      const adminKey = getAdminOpsKeyFromInput();
+      if (!adminKey) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? "Enter admin ops key before syncing D1 queue." : "Nhập admin ops key trước khi sync queue D1.",
+          "danger"
+        );
+        return;
+      }
+      setQueueSyncBusy(true);
+      try {
+        const filters = queueFilterValues();
+        const payload = await callAdminOpsQueue("GET", adminKey, {
+          filters: { ...filters, limit: 200 }
+        });
+        saveAdminOpsQueueKey(adminKey);
+        const normalized = normalizedQueueItemsFromApi(payload.items).slice(0, 200);
+        if (replaceLocal) {
+          saveMemberSnapshotQueue(normalized.slice(0, 12));
+        } else {
+          mergeMemberSnapshotQueueItems(normalized);
+        }
+        renderMemberSnapshotQueue();
+        lastD1QueueSummary = payload.summary || null;
+        const actionLabel = replaceLocal
+          ? (isEnglish ? "Replaced local queue from D1." : "Đã replace local queue từ D1.")
+          : (isEnglish ? "Merged D1 queue into local intake queue." : "Đã merge queue D1 vào intake queue local.");
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          syncMessageWithSummary(`${actionLabel} ${isEnglish ? "Loaded" : "Nạp"} ${normalized.length} item(s).`, lastD1QueueSummary),
+          "ok"
+        );
+      } catch (error) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? `Unable to load queue from D1: ${error.message}` : `Không nạp được queue từ D1: ${error.message}`,
+          "danger"
+        );
+      } finally {
+        setQueueSyncBusy(false);
+      }
+    }
+
+    memberSnapshotQueuePullD1?.addEventListener("click", async () => {
+      await loadQueueFromD1({ replaceLocal: false });
+    });
+
+    memberSnapshotQueueReplaceFromD1?.addEventListener("click", async () => {
+      await loadQueueFromD1({ replaceLocal: true });
+    });
+
+    memberSnapshotQueuePushD1?.addEventListener("click", async () => {
+      const adminKey = getAdminOpsKeyFromInput();
+      if (!adminKey) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? "Enter admin ops key before pushing to D1." : "Nhập admin ops key trước khi đẩy lên D1.",
+          "danger"
+        );
+        return;
+      }
+      const localItems = getMemberSnapshotQueue();
+      if (!localItems.length) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? "Local intake queue is empty." : "Intake queue local đang trống.",
+          "danger"
+        );
+        return;
+      }
+      setQueueSyncBusy(true);
+      try {
+        const payload = await callAdminOpsQueue("POST", adminKey, {
+          items: localItems.slice(0, 200),
+          source: "admin_home_local_queue_push"
+        });
+        saveAdminOpsQueueKey(adminKey);
+        lastD1QueueSummary = payload.summary || null;
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          syncMessageWithSummary(
+            isEnglish
+              ? `Pushed ${Math.min(localItems.length, 200)} local item(s) to D1 queue.`
+              : `Đã đẩy ${Math.min(localItems.length, 200)} item local lên queue D1.`,
+            lastD1QueueSummary
+          ),
+          "ok"
+        );
+      } catch (error) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? `Unable to push queue to D1: ${error.message}` : `Không đẩy được queue lên D1: ${error.message}`,
+          "danger"
+        );
+      } finally {
+        setQueueSyncBusy(false);
+      }
+    });
+
+    memberSnapshotQueueClearD1?.addEventListener("click", async () => {
+      const adminKey = getAdminOpsKeyFromInput();
+      if (!adminKey) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? "Enter admin ops key before clearing D1 queue." : "Nhập admin ops key trước khi xóa queue D1.",
+          "danger"
+        );
+        return;
+      }
+      setQueueSyncBusy(true);
+      try {
+        await callAdminOpsQueue("DELETE", adminKey);
+        saveAdminOpsQueueKey(adminKey);
+        lastD1QueueSummary = { total: 0, routes: { reflection: 0, pilot: 0, routed: 0 } };
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? "Cleared D1 queue." : "Đã xóa queue trên D1.",
+          "ok"
+        );
+      } catch (error) {
+        renderStatus(
+          memberSnapshotQueueSyncStatus,
+          isEnglish ? `Unable to clear D1 queue: ${error.message}` : `Không xóa được queue D1: ${error.message}`,
+          "danger"
+        );
+      } finally {
+        setQueueSyncBusy(false);
       }
     });
 

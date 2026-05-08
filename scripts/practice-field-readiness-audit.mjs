@@ -349,6 +349,7 @@ const checks = [
       /Active queue filters:|Bộ lọc queue đang dùng:/,
       /data-clear-queue-filter/,
       /describeSingleQueueFilter/,
+      /countQueueWithFilters/,
       /member-snapshot-queue-clear-filters/,
       /data-priority-quick-filter/,
       /Visible now|Đang hiện/,

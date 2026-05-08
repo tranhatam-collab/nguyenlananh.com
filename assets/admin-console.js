@@ -379,6 +379,20 @@
     return "";
   }
 
+  function countQueueWithFilters(items, filters = {}) {
+    const routeFilter = String(filters.route || "all");
+    const handoffFilter = String(filters.handoff || "all");
+    const priorityFilter = String(filters.priority || "all");
+    return (Array.isArray(items) ? items : []).filter((packet) => {
+      const routePass = routeFilter === "all" || packet.queueRecommendedRoute === routeFilter;
+      const handoffPass = handoffFilter === "all"
+        || (handoffFilter === "routed" && Boolean(packet.queueLastRoutedTo))
+        || (handoffFilter === "unrouted" && !packet.queueLastRoutedTo);
+      const priorityPass = priorityFilter === "all" || packet.queuePriority?.code === priorityFilter;
+      return routePass && handoffPass && priorityPass;
+    }).length;
+  }
+
   function formatPriorityMix(counts, isEnglish, codes) {
     const labels = {
       reflection_now: isEnglish ? "reflection now" : "reflection ngay",
@@ -1391,7 +1405,16 @@
             handoffFilter !== "all" ? { type: "handoff", value: handoffFilter } : null,
             priorityFilter !== "all" ? { type: "priority", value: priorityFilter } : null
           ].filter(Boolean);
-          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(label)} <span>${chips.map((chip) => `<button class="ghost" type="button" data-clear-queue-filter="${safeText(chip.type)}">${safeText(describeSingleQueueFilter(chip.type, chip.value, isEnglish))} ×</button>`).join(" ")}</span>`;
+          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(label)} <span>${chips.map((chip) => {
+            const nextFilters = {
+              route: routeFilter,
+              handoff: handoffFilter,
+              priority: priorityFilter
+            };
+            nextFilters[chip.type] = "all";
+            const nextCount = countQueueWithFilters(queue, nextFilters);
+            return `<button class="ghost" type="button" data-clear-queue-filter="${safeText(chip.type)}">${safeText(describeSingleQueueFilter(chip.type, chip.value, isEnglish))} × (${nextCount})</button>`;
+          }).join(" ")}</span>`;
         }
       }
       if (memberSnapshotQueueClearFilters) {

@@ -166,6 +166,19 @@
           </select>
         </div>
       </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="member-snapshot-queue-priority-filter">Lọc theo ưu tiên</label>
+        <select id="member-snapshot-queue-priority-filter">
+          <option value="all">Tất cả mức ưu tiên</option>
+          <option value="reflection_now">Cần reflection ngay</option>
+          <option value="avoiding">Đang né, cần giữ nhịp</option>
+          <option value="missing_handoff">Thiếu handoff 3 dòng</option>
+          <option value="pilot_ready">Sẵn rà pilot</option>
+          <option value="paused">Đang pause nhắc</option>
+          <option value="pilot_later">Pilot sau khi đủ nền</option>
+          <option value="routed">Đã handoff</option>
+        </select>
+      </div>
       <div id="member-snapshot-queue" class="admin-section" style="margin-top:12px;"></div>
       <div class="field" style="margin-top:12px;">
         <label for="member-snapshot-queue-packet">Intake queue packet</label>

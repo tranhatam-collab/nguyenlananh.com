@@ -159,6 +159,19 @@
           </select>
         </div>
       </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="member-snapshot-queue-priority-filter">Filter by priority</label>
+        <select id="member-snapshot-queue-priority-filter">
+          <option value="all">All priority levels</option>
+          <option value="reflection_now">Needs reflection now</option>
+          <option value="avoiding">Avoiding, needs grounding</option>
+          <option value="missing_handoff">Missing 3-line handoff</option>
+          <option value="pilot_ready">Ready for pilot review</option>
+          <option value="paused">Reminder pause active</option>
+          <option value="pilot_later">Pilot after more groundwork</option>
+          <option value="routed">Already routed</option>
+        </select>
+      </div>
       <div id="member-snapshot-queue" class="admin-section" style="margin-top:12px;"></div>
       <div class="field" style="margin-top:12px;">
         <label for="member-snapshot-queue-packet">Intake queue packet</label>

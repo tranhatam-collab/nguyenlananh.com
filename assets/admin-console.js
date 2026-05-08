@@ -273,24 +273,24 @@
     const hasHandoff = Boolean(packet?.hasSavedHandoff);
 
     if (!routed && route === "reflection" && latestState === "human_reflection") {
-      return { score: 0, labelVi: "Cần reflection ngay", labelEn: "Needs reflection now" };
+      return { code: "reflection_now", score: 0, labelVi: "Cần reflection ngay", labelEn: "Needs reflection now" };
     }
     if (!routed && route === "reflection" && latestState === "avoiding") {
-      return { score: 1, labelVi: "Đang né, cần giữ nhịp", labelEn: "Avoiding, needs grounding" };
+      return { code: "avoiding", score: 1, labelVi: "Đang né, cần giữ nhịp", labelEn: "Avoiding, needs grounding" };
     }
     if (!routed && route === "reflection" && !hasHandoff) {
-      return { score: 2, labelVi: "Thiếu handoff 3 dòng", labelEn: "Missing 3-line handoff" };
+      return { code: "missing_handoff", score: 2, labelVi: "Thiếu handoff 3 dòng", labelEn: "Missing 3-line handoff" };
     }
     if (!routed && route === "pilot" && profileReady && hasPracticeLine && !paused) {
-      return { score: 3, labelVi: "Sẵn rà pilot", labelEn: "Ready for pilot review" };
+      return { code: "pilot_ready", score: 3, labelVi: "Sẵn rà pilot", labelEn: "Ready for pilot review" };
     }
     if (!routed && route === "pilot" && paused) {
-      return { score: 4, labelVi: "Đang pause nhắc", labelEn: "Reminder pause active" };
+      return { code: "paused", score: 4, labelVi: "Đang pause nhắc", labelEn: "Reminder pause active" };
     }
     if (!routed && route === "pilot") {
-      return { score: 5, labelVi: "Pilot sau khi đủ nền", labelEn: "Pilot after more groundwork" };
+      return { code: "pilot_later", score: 5, labelVi: "Pilot sau khi đủ nền", labelEn: "Pilot after more groundwork" };
     }
-    return { score: 6, labelVi: "Đã handoff", labelEn: "Already routed" };
+    return { code: "routed", score: 6, labelVi: "Đã handoff", labelEn: "Already routed" };
   }
 
   function queueItemSortValue(packet) {
@@ -313,6 +313,7 @@
   function describeQueueFilters(filters, isEnglish) {
     const route = String(filters?.route || "all");
     const handoff = String(filters?.handoff || "all");
+    const priority = String(filters?.priority || "all");
     const routeLabel = route === "reflection"
       ? (isEnglish ? "reflection only" : "chỉ reflection")
       : route === "pilot"
@@ -323,7 +324,22 @@
       : handoff === "routed"
         ? (isEnglish ? "already routed" : "đã handoff")
         : (isEnglish ? "all handoff states" : "tất cả trạng thái handoff");
-    return `${routeLabel} • ${handoffLabel}`;
+    const priorityLabel = priority === "reflection_now"
+      ? (isEnglish ? "needs reflection now" : "cần reflection ngay")
+      : priority === "avoiding"
+        ? (isEnglish ? "avoiding, needs grounding" : "đang né, cần giữ nhịp")
+        : priority === "missing_handoff"
+          ? (isEnglish ? "missing 3-line handoff" : "thiếu handoff 3 dòng")
+          : priority === "pilot_ready"
+            ? (isEnglish ? "ready for pilot review" : "sẵn rà pilot")
+            : priority === "paused"
+              ? (isEnglish ? "reminder pause active" : "đang pause nhắc")
+              : priority === "pilot_later"
+                ? (isEnglish ? "pilot after more groundwork" : "pilot sau khi đủ nền")
+                : priority === "routed"
+                  ? (isEnglish ? "already routed priority" : "mức ưu tiên đã handoff")
+                  : (isEnglish ? "all priority levels" : "tất cả mức ưu tiên");
+    return `${routeLabel} • ${handoffLabel} • ${priorityLabel}`;
   }
 
   function buildMemberSnapshotQueuePacket() {
@@ -1095,6 +1111,7 @@
     const memberSnapshotQueue = $("#member-snapshot-queue");
     const memberSnapshotQueueRouteFilter = $("#member-snapshot-queue-route-filter");
     const memberSnapshotQueueHandoffFilter = $("#member-snapshot-queue-handoff-filter");
+    const memberSnapshotQueuePriorityFilter = $("#member-snapshot-queue-priority-filter");
     const memberSnapshotQueuePacket = $("#member-snapshot-queue-packet");
     const memberSnapshotQueueCopy = $("#member-snapshot-queue-copy");
     const memberSnapshotQueueExport = $("#member-snapshot-queue-export");
@@ -1212,12 +1229,14 @@
       const queue = sortedMemberSnapshotQueue(getMemberSnapshotQueue());
       const routeFilter = String(memberSnapshotQueueRouteFilter?.value || "all");
       const handoffFilter = String(memberSnapshotQueueHandoffFilter?.value || "all");
+      const priorityFilter = String(memberSnapshotQueuePriorityFilter?.value || "all");
       const filteredQueue = queue.filter((packet) => {
         const routePass = routeFilter === "all" || packet.queueRecommendedRoute === routeFilter;
         const handoffPass = handoffFilter === "all"
           || (handoffFilter === "routed" && Boolean(packet.queueLastRoutedTo))
           || (handoffFilter === "unrouted" && !packet.queueLastRoutedTo);
-        return routePass && handoffPass;
+        const priorityPass = priorityFilter === "all" || packet.queuePriority?.code === priorityFilter;
+        return routePass && handoffPass && priorityPass;
       });
       lastFilteredQueue = filteredQueue;
       if (memberSnapshotQueueOpenReflection) {
@@ -1233,7 +1252,7 @@
           : `Mở pilot ops với phần đang lọc (${filteredQueue.length})`;
       }
       if (memberSnapshotQueueHandoffPreview) {
-        const scopeLabel = describeQueueFilters({ route: routeFilter, handoff: handoffFilter }, isEnglish);
+        const scopeLabel = describeQueueFilters({ route: routeFilter, handoff: handoffFilter, priority: priorityFilter }, isEnglish);
         memberSnapshotQueueHandoffPreview.textContent = isEnglish
           ? `Batch handoff preview: ${filteredQueue.length} visible item(s) from ${scopeLabel}.`
           : `Xem trước batch handoff: ${filteredQueue.length} item đang hiện từ phạm vi ${scopeLabel}.`;
@@ -1286,6 +1305,10 @@
     });
 
     memberSnapshotQueueHandoffFilter?.addEventListener("change", () => {
+      renderMemberSnapshotQueue();
+    });
+
+    memberSnapshotQueuePriorityFilter?.addEventListener("change", () => {
       renderMemberSnapshotQueue();
     });
 
@@ -1372,7 +1395,8 @@
     memberSnapshotQueueOpenReflection?.addEventListener("click", () => {
       const packet = buildFilteredMemberSnapshotQueuePacket(lastFilteredQueue, {
         route: String(memberSnapshotQueueRouteFilter?.value || "all"),
-        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all")
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all"),
+        priority: String(memberSnapshotQueuePriorityFilter?.value || "all")
       });
       savePendingReflectionQueuePacket(packet);
       window.location.href = isEnglish ? "/en/admin/reflection/" : "/admin/reflection/";
@@ -1381,7 +1405,8 @@
     memberSnapshotQueueOpenPilot?.addEventListener("click", () => {
       const packet = buildFilteredMemberSnapshotQueuePacket(lastFilteredQueue, {
         route: String(memberSnapshotQueueRouteFilter?.value || "all"),
-        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all")
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all"),
+        priority: String(memberSnapshotQueuePriorityFilter?.value || "all")
       });
       savePendingPilotQueuePacket(packet);
       window.location.href = isEnglish ? "/en/admin/pilot/" : "/admin/pilot/";

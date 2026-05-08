@@ -26,6 +26,8 @@ STEP_LABELS=()
 STEP_COMMANDS=()
 STEP_CODES=()
 STEP_LOGS=()
+AGG_MISSING_HINTS=()
+AGG_EXTERNAL_BLOCKERS=()
 
 cleanup() {
   rm -rf "$TMP_LOG_DIR"
@@ -34,6 +36,65 @@ trap cleanup EXIT
 
 json_escape() {
   printf '%s' "$1" | jq -Rs .
+}
+
+queue_missing_hint() {
+  local item="$1"
+  local existing
+  for existing in "${AGG_MISSING_HINTS[@]-}"; do
+    if [ "$existing" = "$item" ]; then
+      return
+    fi
+  done
+  AGG_MISSING_HINTS+=("$item")
+}
+
+queue_external_blocker() {
+  local item="$1"
+  local existing
+  for existing in "${AGG_EXTERNAL_BLOCKERS[@]-}"; do
+    if [ "$existing" = "$item" ]; then
+      return
+    fi
+  done
+  AGG_EXTERNAL_BLOCKERS+=("$item")
+}
+
+collect_step_aggregates() {
+  local log_file
+  local line
+  local candidate
+  for log_file in "${STEP_LOGS[@]-}"; do
+    while IFS= read -r line; do
+      if [[ "$line" == *"Could not resolve host"* ]]; then
+        queue_external_blocker "DNS_RESOLUTION_FAILED"
+      fi
+      if [[ "$line" == *"returned HTTP 000"* ]]; then
+        queue_external_blocker "HTTP_000_NETWORK_OR_DNS"
+      fi
+      if [[ "$line" == *"unable to list Pages secrets"* ]]; then
+        queue_external_blocker "PAGES_SECRET_LIST_UNAVAILABLE"
+      fi
+      if [[ "$line" == *"unable to query D1"* ]]; then
+        queue_external_blocker "D1_QUERY_UNAVAILABLE"
+      fi
+      if [[ "$line" == *"operation not permitted"* ]]; then
+        queue_external_blocker "LOCAL_PERMISSION_RESTRICTED"
+      fi
+
+      if [[ "$line" == *"missing secret name:"* ]]; then
+        candidate="${line##*: }"
+        if [ -n "$candidate" ]; then
+          queue_missing_hint "$candidate"
+        fi
+      fi
+
+      if [[ "$line" =~ ^[[:space:]]+-[[:space:]]([A-Z0-9_]+(=[^[:space:]]+)?)$ ]]; then
+        candidate="${BASH_REMATCH[1]}"
+        queue_missing_hint "$candidate"
+      fi
+    done < "$log_file"
+  done
 }
 
 if ! command -v jq >/dev/null 2>&1; then
@@ -77,6 +138,7 @@ run_step() {
 
 write_report() {
   mkdir -p "$REPORT_DIR"
+  collect_step_aggregates
   {
     echo "# TEAM2_RUNTIME_PHASE_GATE"
     echo
@@ -120,6 +182,39 @@ write_report() {
     else
       echo "- verdict: \`RUNTIME_PHASE_GATE_PASS\`"
     fi
+    echo
+    echo "## Aggregates"
+    echo
+    echo "### Missing Secret Hints"
+    if [ "${#AGG_MISSING_HINTS[@]}" -eq 0 ]; then
+      echo "- none"
+    else
+      local hint
+      for hint in "${AGG_MISSING_HINTS[@]}"; do
+        echo "- \`$hint\`"
+      done
+    fi
+    echo
+    echo "### External Blockers"
+    if [ "${#AGG_EXTERNAL_BLOCKERS[@]}" -eq 0 ]; then
+      echo "- none"
+    else
+      local blocker
+      for blocker in "${AGG_EXTERNAL_BLOCKERS[@]}"; do
+        echo "- \`$blocker\`"
+      done
+    fi
+    echo
+    echo "### Next Actions"
+    if [ "${#AGG_EXTERNAL_BLOCKERS[@]}" -gt 0 ]; then
+      echo "- Fix external blockers first (DNS, Cloudflare access, local wrangler permission) then rerun gate."
+    fi
+    if [ "${#AGG_MISSING_HINTS[@]}" -gt 0 ]; then
+      echo "- Set missing secrets using \`scripts/provision-payment-live-secrets.sh\`, redeploy, rerun strict mode."
+    fi
+    if [ "${#AGG_EXTERNAL_BLOCKERS[@]}" -eq 0 ] && [ "${#AGG_MISSING_HINTS[@]}" -eq 0 ]; then
+      echo "- No blockers detected from aggregate parser."
+    fi
   } > "$REPORT_PATH"
 
   {
@@ -157,6 +252,43 @@ write_report() {
       echo "      \"log_tail\": $(json_escape "$log_tail")"
       echo "    }"
     done
+    echo "  ],"
+    echo "  \"aggregate_missing_hints\": ["
+    local i
+    for ((i=0; i<${#AGG_MISSING_HINTS[@]}; i++)); do
+      if [ "$i" -gt 0 ]; then
+        echo "    ,$(json_escape "${AGG_MISSING_HINTS[$i]}")"
+      else
+        echo "    $(json_escape "${AGG_MISSING_HINTS[$i]}")"
+      fi
+    done
+    echo "  ],"
+    echo "  \"external_blockers\": ["
+    for ((i=0; i<${#AGG_EXTERNAL_BLOCKERS[@]}; i++)); do
+      if [ "$i" -gt 0 ]; then
+        echo "    ,$(json_escape "${AGG_EXTERNAL_BLOCKERS[$i]}")"
+      else
+        echo "    $(json_escape "${AGG_EXTERNAL_BLOCKERS[$i]}")"
+      fi
+    done
+    echo "  ],"
+    echo "  \"next_actions\": ["
+    local action_count=0
+    if [ "${#AGG_EXTERNAL_BLOCKERS[@]}" -gt 0 ]; then
+      echo "    $(json_escape "Fix external blockers first (DNS, Cloudflare access, local wrangler permission) then rerun gate.")"
+      action_count=$((action_count + 1))
+    fi
+    if [ "${#AGG_MISSING_HINTS[@]}" -gt 0 ]; then
+      if [ "$action_count" -gt 0 ]; then
+        echo "    ,$(json_escape "Set missing secrets using scripts/provision-payment-live-secrets.sh, redeploy, rerun strict mode.")"
+      else
+        echo "    $(json_escape "Set missing secrets using scripts/provision-payment-live-secrets.sh, redeploy, rerun strict mode.")"
+      fi
+      action_count=$((action_count + 1))
+    fi
+    if [ "$action_count" -eq 0 ]; then
+      echo "    $(json_escape "No blockers detected from aggregate parser.")"
+    fi
     echo "  ],"
     echo "  \"summary\": {"
     echo "    \"total_steps\": $TOTAL,"

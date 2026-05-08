@@ -384,6 +384,32 @@ TARGET_ENVS="production" \
 bash scripts/team2-live-gate.sh
 ```
 
+Rails gate voi check secret-name readiness:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+INTL_PROVIDER=paypal \
+CHECK_PAGES_SECRETS=1 \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+REQUIRE_PROVIDER_READY=0 \
+REQUIRE_COMPLETED=0 \
+bash scripts/payment-rails-independent-gate.sh
+```
+
+Rails strict mode:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+INTL_PROVIDER=paypal \
+CHECK_PAGES_SECRETS=1 \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+REQUIRE_PROVIDER_READY=1 \
+REQUIRE_COMPLETED=1 \
+bash scripts/payment-rails-independent-gate.sh
+```
+
 Sau khi DNS custom domain da xanh, chay script proof:
 
 ```bash

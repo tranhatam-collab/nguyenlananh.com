@@ -10,6 +10,9 @@ INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
 REQUIRE_RAIL_GUARD="${REQUIRE_RAIL_GUARD:-1}"
 REQUIRE_PROVIDER_READY="${REQUIRE_PROVIDER_READY:-0}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
+CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
+PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
+TARGET_ENVS="${TARGET_ENVS:-production}"
 REPORT_DIR="${REPORT_DIR:-$ROOT_DIR/docs/reports}"
 
 need_cmd() {
@@ -22,6 +25,9 @@ need_cmd() {
 
 need_cmd curl
 need_cmd jq
+if [ "$CHECK_PAGES_SECRETS" = "1" ]; then
+  need_cmd wrangler
+fi
 
 STAMP_UTC="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 STAMP_LOCAL="$(date '+%Y-%m-%d %H:%M:%S %z')"
@@ -84,6 +90,17 @@ append_provider_secret_hints() {
   esac
 }
 
+append_mail_secret_hints() {
+  queue_secret_hint "EMAIL_PROVIDER=mail_iai_one"
+  queue_secret_hint "MAIL_API_BASE_URL"
+  queue_secret_hint "MAIL_API_KEY"
+  queue_secret_hint "MAIL_API_WORKSPACE_ID"
+  queue_secret_hint "MAIL_API_WEBHOOK_SECRET"
+  queue_secret_hint "EMAIL_FROM_SYSTEM"
+  queue_secret_hint "EMAIL_FROM_PAY"
+  queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
+}
+
 guard_fail_or_warn() {
   local msg="$1"
   if [ "$REQUIRE_RAIL_GUARD" = "1" ]; then
@@ -100,6 +117,69 @@ ready_fail_or_warn() {
   else
     warn "$msg"
   fi
+}
+
+check_pages_secret_names() {
+  local target_env="$1"
+  local list_output
+  local parsed_names
+  local required=(
+    API_BASE_URL
+    ENV_DEPLOY_TARGET
+    REFUND_POLICY
+    EMAIL_PROVIDER
+    MAIL_API_BASE_URL
+    MAIL_API_KEY
+    MAIL_API_WORKSPACE_ID
+    MAIL_API_WEBHOOK_SECRET
+    EMAIL_FROM_SYSTEM
+    EMAIL_FROM_PAY
+    EMAIL_REPLY_TO_SUPPORT
+    PAYMENTS_ADMIN_KEY
+    VIETQR_BANK_BIN
+    VIETQR_ACCOUNT_NO
+    VIETQR_ACCOUNT_NAME
+  )
+
+  case "$INTL_PROVIDER" in
+    paypal)
+      required+=(
+        PAYPAL_CLIENT_ID
+        PAYPAL_CLIENT_SECRET
+        PAYPAL_WEBHOOK_ID
+        PAYPAL_MERCHANT_EMAIL
+      )
+      ;;
+    stripe)
+      required+=(
+        STRIPE_SECRET_KEY
+        STRIPE_PUBLISHABLE_KEY
+        STRIPE_WEBHOOK_SECRET
+      )
+      ;;
+    *)
+      ;;
+  esac
+
+  if ! list_output="$(wrangler pages secret list --project-name "$PROJECT_NAME" --env "$target_env" 2>/dev/null)"; then
+    ready_fail_or_warn "unable to list Pages secrets for env=$target_env (check wrangler auth/project/env)"
+    return
+  fi
+
+  parsed_names="$(printf "%s\n" "$list_output" | sed -n 's/^  - \([^:]*\):.*/\1/p')"
+  local secret_count=0
+  if [ -n "$parsed_names" ]; then
+    secret_count="$(printf "%s\n" "$parsed_names" | wc -l | tr -d ' ')"
+  fi
+  pass "read Pages secret names for env=$target_env (count=$secret_count)"
+
+  local key
+  for key in "${required[@]}"; do
+    if ! grep -Fxq "$key" <<< "$parsed_names"; then
+      queue_secret_hint "$key"
+      ready_fail_or_warn "Pages env=$target_env missing secret name: $key"
+    fi
+  done
 }
 
 mkdir -p "$REPORT_DIR"
@@ -125,6 +205,7 @@ echo "Base URL: $BASE_URL"
 echo "Require rail guard: $REQUIRE_RAIL_GUARD"
 echo "Require provider ready: $REQUIRE_PROVIDER_READY"
 echo "Require completed: $REQUIRE_COMPLETED"
+echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
 
 HEALTH_JSON="$(curl -sS "$BASE_URL/api/payments/health" 2>/dev/null || true)"
@@ -143,17 +224,18 @@ if printf "%s" "$PROVIDERS_JSON" | jq empty >/dev/null 2>&1; then
   pass "providers endpoint returned valid JSON"
   email_provider="$(printf "%s" "$PROVIDERS_JSON" | jq -r '.environment.email_provider // "unknown"' 2>/dev/null || echo unknown)"
   if [ "$email_provider" != "mail_iai_one" ]; then
-    queue_secret_hint "EMAIL_PROVIDER=mail_iai_one"
-    queue_secret_hint "MAIL_API_BASE_URL"
-    queue_secret_hint "MAIL_API_KEY"
-    queue_secret_hint "MAIL_API_WORKSPACE_ID"
-    queue_secret_hint "MAIL_API_WEBHOOK_SECRET"
-    queue_secret_hint "EMAIL_FROM_SYSTEM"
-    queue_secret_hint "EMAIL_FROM_PAY"
-    queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
+    append_mail_secret_hints
   fi
 else
   fail "providers endpoint returned invalid JSON"
+fi
+
+if [ "$CHECK_PAGES_SECRETS" = "1" ]; then
+  echo
+  echo "== Pages secret names check =="
+  for env_name in $TARGET_ENVS; do
+    check_pages_secret_names "$env_name"
+  done
 fi
 
 RAILS_JSON="$(curl -sS "$BASE_URL/api/payments/rails" 2>/dev/null || true)"

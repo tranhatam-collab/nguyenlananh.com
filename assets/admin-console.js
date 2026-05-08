@@ -329,6 +329,20 @@
     return counts;
   }
 
+  function renderPriorityQuickFilters(counts, isEnglish) {
+    const config = [
+      { code: "reflection_now", label: isEnglish ? "Reflection now" : "Reflection ngay" },
+      { code: "avoiding", label: isEnglish ? "Avoiding" : "Đang né" },
+      { code: "missing_handoff", label: isEnglish ? "Missing handoff" : "Thiếu handoff" },
+      { code: "pilot_ready", label: isEnglish ? "Pilot ready" : "Sẵn pilot" },
+      { code: "paused", label: isEnglish ? "Paused" : "Pause" }
+    ];
+    return config.map((item) => {
+      const count = Number(counts?.[item.code] || 0);
+      return `<button class="ghost" type="button" data-priority-quick-filter="${item.code}" ${count === 0 ? "disabled" : ""}>${safeText(item.label)} (${count})</button>`;
+    }).join("");
+  }
+
   function describeQueueFilters(filters, isEnglish) {
     const route = String(filters?.route || "all");
     const handoff = String(filters?.handoff || "all");
@@ -1188,6 +1202,7 @@
           <li>${safeText(isEnglish ? "Already routed" : "Đã handoff")}: <strong>${queueAlreadyRouted}</strong></li>
           <li>${safeText(isEnglish ? "Priority now" : "Ưu tiên hiện tại")}: <strong>${queuePriorityCounts.reflection_now}</strong> / <strong>${queuePriorityCounts.avoiding}</strong> / <strong>${queuePriorityCounts.missing_handoff}</strong> / <strong>${queuePriorityCounts.pilot_ready}</strong></li>
         </ul>
+        <div class="actionsRow" style="margin-top:12px;">${renderPriorityQuickFilters(queuePriorityCounts, isEnglish)}</div>
       </article>
       <article class="panel">
         <h3>Reflection queue</h3>
@@ -1297,6 +1312,7 @@
         <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
         <p class="note">${safeText(isEnglish ? "Reflection-ready" : "Sẵn cho reflection")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "reflection").length} • ${safeText(isEnglish ? "Pilot-ready" : "Sẵn cho pilot")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "pilot").length} • ${safeText(isEnglish ? "Already routed" : "Đã handoff")}: ${queue.filter((packet) => packet.queueLastRoutedTo).length} • ${safeText(isEnglish ? "Visible now" : "Đang hiện")}: ${filteredQueue.length}</p>
         <p class="note">${safeText(isEnglish ? "Priority now" : "Ưu tiên hiện tại")}: ${safeText(isEnglish ? "reflection-now" : "reflection-ngay")}: ${filteredPriorityCounts.reflection_now} • ${safeText(isEnglish ? "avoiding" : "đang né")}: ${filteredPriorityCounts.avoiding} • ${safeText(isEnglish ? "missing handoff" : "thiếu handoff")}: ${filteredPriorityCounts.missing_handoff} • ${safeText(isEnglish ? "pilot-ready" : "sẵn pilot")}: ${filteredPriorityCounts.pilot_ready} • ${safeText(isEnglish ? "paused" : "pause")}: ${filteredPriorityCounts.paused}</p>
+        <div class="actionsRow" style="margin:8px 0 12px;">${renderPriorityQuickFilters(filteredPriorityCounts, isEnglish)}</div>
         <ul class="checkList">${filteredQueue.map((packet) => {
           const paused = isFutureIso(packet.reminderPausedUntil);
           const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");
@@ -1332,6 +1348,14 @@
     });
 
     memberSnapshotQueuePriorityFilter?.addEventListener("change", () => {
+      renderMemberSnapshotQueue();
+    });
+
+    container.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-priority-quick-filter]");
+      if (!trigger || !memberSnapshotQueuePriorityFilter) return;
+      const code = String(trigger.getAttribute("data-priority-quick-filter") || "all");
+      memberSnapshotQueuePriorityFilter.value = code;
       renderMemberSnapshotQueue();
     });
 

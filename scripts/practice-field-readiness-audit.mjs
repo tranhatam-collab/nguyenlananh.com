@@ -336,6 +336,7 @@ const checks = [
       /Ready for pilot review|Sẵn rà pilot/,
       /Priority|Ưu tiên/,
       /Priority now|Ưu tiên hiện tại/,
+      /data-priority-quick-filter/,
       /Visible now|Đang hiện/,
       /No queue item matches the current filters|Không có item nào khớp bộ lọc hiện tại/
     ]

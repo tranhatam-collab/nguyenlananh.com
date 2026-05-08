@@ -2302,6 +2302,7 @@
         });
         saveAdminOpsQueueKey(adminKey);
         const normalized = normalizedQueueItemsFromApi(payload.items, limit);
+        mergeMemberSnapshotQueueItems(normalized);
         const queuePacket = buildD1QueuePacket(
           normalized,
           { route: "reflection", handoff, priority },
@@ -2317,8 +2318,8 @@
         renderStatus(
           d1Status,
           isEnglish
-            ? `Loaded ${normalized.length} queue item(s) from D1 into reflection import using ${describeQueueFilters({ route: "reflection", handoff, priority }, true)}${summaryCounts}.`
-            : `Đã nạp ${normalized.length} item từ queue D1 vào reflection import với ${describeQueueFilters({ route: "reflection", handoff, priority }, false)}${summaryCounts}.`,
+            ? `Loaded ${normalized.length} queue item(s) from D1 into reflection import using ${describeQueueFilters({ route: "reflection", handoff, priority }, true)} and merged them into admin home queue${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào reflection import với ${describeQueueFilters({ route: "reflection", handoff, priority }, false)} và đã merge vào queue của admin home${summaryCounts}.`,
           "ok"
         );
       } catch (error) {
@@ -2748,6 +2749,7 @@
         });
         saveAdminOpsQueueKey(adminKey);
         const normalized = normalizedQueueItemsFromApi(payload.items, limit);
+        mergeMemberSnapshotQueueItems(normalized);
         const queuePacket = buildD1QueuePacket(
           normalized,
           { route: "pilot", handoff, priority },
@@ -2763,8 +2765,8 @@
         renderStatus(
           d1Status,
           isEnglish
-            ? `Loaded ${normalized.length} queue item(s) from D1 into pilot import using ${describeQueueFilters({ route: "pilot", handoff, priority }, true)}${summaryCounts}.`
-            : `Đã nạp ${normalized.length} item từ queue D1 vào pilot import với ${describeQueueFilters({ route: "pilot", handoff, priority }, false)}${summaryCounts}.`,
+            ? `Loaded ${normalized.length} queue item(s) from D1 into pilot import using ${describeQueueFilters({ route: "pilot", handoff, priority }, true)} and merged them into admin home queue${summaryCounts}.`
+            : `Đã nạp ${normalized.length} item từ queue D1 vào pilot import với ${describeQueueFilters({ route: "pilot", handoff, priority }, false)} và đã merge vào queue của admin home${summaryCounts}.`,
           "ok"
         );
       } catch (error) {

@@ -363,6 +363,30 @@ const checks = [
     ]
   },
   {
+    file: "functions/_lib/admin_ops.js",
+    patterns: [
+      /requireAdminOpsAccess/,
+      /x-admin-key/,
+      /admin_member_snapshot_queue/,
+      /queuePriorityCode/,
+      /packet_type/,
+      /listAdminOpsQueueResponse/,
+      /upsertAdminOpsQueueResponse/,
+      /clearAdminOpsQueueResponse/
+    ]
+  },
+  {
+    file: "functions/api/admin/ops/queue.js",
+    patterns: [
+      /onRequestGet/,
+      /onRequestPost/,
+      /onRequestDelete/,
+      /listAdminOpsQueueResponse/,
+      /upsertAdminOpsQueueResponse/,
+      /clearAdminOpsQueueResponse/
+    ]
+  },
+  {
     file: "docs/BILINGUAL_EMAIL_AUTOMATION_TEMPLATES.md",
     patterns: [
       /reminder_pause_url/,

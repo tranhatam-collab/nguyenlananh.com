@@ -142,3 +142,28 @@ CREATE INDEX IF NOT EXISTS idx_vietqr_orders_status
 
 CREATE INDEX IF NOT EXISTS idx_vietqr_orders_email
   ON vietqr_orders(email, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS admin_member_snapshot_queue (
+  email TEXT PRIMARY KEY,
+  full_name TEXT,
+  profile_ready INTEGER NOT NULL DEFAULT 0,
+  latest_practice_state TEXT,
+  latest_practice_line TEXT,
+  latest_practice_day TEXT,
+  reminder_paused_until TEXT,
+  has_saved_handoff INTEGER NOT NULL DEFAULT 0,
+  queue_recommended_route TEXT NOT NULL DEFAULT 'reflection',
+  queue_priority_code TEXT NOT NULL DEFAULT 'missing_handoff',
+  queue_last_routed_to TEXT,
+  queue_last_routed_at TEXT,
+  payload_json TEXT NOT NULL,
+  source TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_route
+  ON admin_member_snapshot_queue(queue_recommended_route, updated_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_priority
+  ON admin_member_snapshot_queue(queue_priority_code, updated_at DESC);

@@ -518,3 +518,174 @@ export async function updateVietQrOrder(db, internalOrderId, patch) {
   const values = keys.map((key) => patch[key]);
   await db.prepare(sql).bind(...values, internalOrderId).run();
 }
+
+let adminOpsSchemaReady = false;
+
+async function ensureAdminOpsSchema(db) {
+  if (adminOpsSchemaReady) return;
+  await db.batch([
+    db.prepare(
+      `CREATE TABLE IF NOT EXISTS admin_member_snapshot_queue (
+        email TEXT PRIMARY KEY,
+        full_name TEXT,
+        profile_ready INTEGER NOT NULL DEFAULT 0,
+        latest_practice_state TEXT,
+        latest_practice_line TEXT,
+        latest_practice_day TEXT,
+        reminder_paused_until TEXT,
+        has_saved_handoff INTEGER NOT NULL DEFAULT 0,
+        queue_recommended_route TEXT NOT NULL DEFAULT 'reflection',
+        queue_priority_code TEXT NOT NULL DEFAULT 'missing_handoff',
+        queue_last_routed_to TEXT,
+        queue_last_routed_at TEXT,
+        payload_json TEXT NOT NULL,
+        source TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      )`
+    ),
+    db.prepare("CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_route ON admin_member_snapshot_queue(queue_recommended_route, updated_at DESC)"),
+    db.prepare("CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_priority ON admin_member_snapshot_queue(queue_priority_code, updated_at DESC)")
+  ]);
+  adminOpsSchemaReady = true;
+}
+
+function parseAdminMemberSnapshot(row) {
+  if (!row) return null;
+  return {
+    ...row,
+    profile_ready: Boolean(row.profile_ready),
+    has_saved_handoff: Boolean(row.has_saved_handoff),
+    payload_json: safeJsonParse(row.payload_json, {})
+  };
+}
+
+export async function upsertAdminMemberSnapshot(db, record) {
+  await ensureAdminOpsSchema(db);
+  await db
+    .prepare(
+      `INSERT INTO admin_member_snapshot_queue (
+        email,
+        full_name,
+        profile_ready,
+        latest_practice_state,
+        latest_practice_line,
+        latest_practice_day,
+        reminder_paused_until,
+        has_saved_handoff,
+        queue_recommended_route,
+        queue_priority_code,
+        queue_last_routed_to,
+        queue_last_routed_at,
+        payload_json,
+        source,
+        created_at,
+        updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(email) DO UPDATE SET
+        full_name = excluded.full_name,
+        profile_ready = excluded.profile_ready,
+        latest_practice_state = excluded.latest_practice_state,
+        latest_practice_line = excluded.latest_practice_line,
+        latest_practice_day = excluded.latest_practice_day,
+        reminder_paused_until = excluded.reminder_paused_until,
+        has_saved_handoff = excluded.has_saved_handoff,
+        queue_recommended_route = excluded.queue_recommended_route,
+        queue_priority_code = excluded.queue_priority_code,
+        queue_last_routed_to = excluded.queue_last_routed_to,
+        queue_last_routed_at = excluded.queue_last_routed_at,
+        payload_json = excluded.payload_json,
+        source = excluded.source,
+        updated_at = excluded.updated_at`
+    )
+    .bind(
+      record.email,
+      record.full_name || null,
+      record.profile_ready ? 1 : 0,
+      record.latest_practice_state || null,
+      record.latest_practice_line || null,
+      record.latest_practice_day || null,
+      record.reminder_paused_until || null,
+      record.has_saved_handoff ? 1 : 0,
+      record.queue_recommended_route || "reflection",
+      record.queue_priority_code || "missing_handoff",
+      record.queue_last_routed_to || null,
+      record.queue_last_routed_at || null,
+      JSON.stringify(record.payload_json || {}),
+      record.source || "api",
+      record.created_at || nowIso(),
+      record.updated_at || nowIso()
+    )
+    .run();
+}
+
+export async function clearAdminMemberSnapshots(db) {
+  await ensureAdminOpsSchema(db);
+  await db.prepare("DELETE FROM admin_member_snapshot_queue").run();
+}
+
+export async function listAdminMemberSnapshots(db, { route = "all", handoff = "all", priority = "all", limit = 100 } = {}) {
+  await ensureAdminOpsSchema(db);
+  const safeLimit = Number.isFinite(Number(limit)) ? Math.max(1, Math.min(300, Number(limit))) : 100;
+  const where = [];
+  const params = [];
+
+  if (route !== "all") {
+    where.push("queue_recommended_route = ?");
+    params.push(route);
+  }
+
+  if (handoff === "routed") {
+    where.push("queue_last_routed_to IS NOT NULL AND queue_last_routed_to != ''");
+  } else if (handoff === "unrouted") {
+    where.push("(queue_last_routed_to IS NULL OR queue_last_routed_to = '')");
+  }
+
+  if (priority !== "all") {
+    where.push("queue_priority_code = ?");
+    params.push(priority);
+  }
+
+  const sql = `SELECT * FROM admin_member_snapshot_queue${where.length ? ` WHERE ${where.join(" AND ")}` : ""} ORDER BY updated_at DESC LIMIT ?`;
+  const result = await db.prepare(sql).bind(...params, safeLimit).all();
+  return (result.results || []).map(parseAdminMemberSnapshot);
+}
+
+export async function summarizeAdminMemberSnapshots(db) {
+  await ensureAdminOpsSchema(db);
+  const result = await db
+    .prepare(
+      `SELECT
+        COUNT(*) AS total,
+        SUM(CASE WHEN queue_recommended_route = 'reflection' THEN 1 ELSE 0 END) AS reflection_count,
+        SUM(CASE WHEN queue_recommended_route = 'pilot' THEN 1 ELSE 0 END) AS pilot_count,
+        SUM(CASE WHEN queue_last_routed_to IS NOT NULL AND queue_last_routed_to != '' THEN 1 ELSE 0 END) AS routed_count,
+        SUM(CASE WHEN queue_priority_code = 'reflection_now' THEN 1 ELSE 0 END) AS reflection_now_count,
+        SUM(CASE WHEN queue_priority_code = 'avoiding' THEN 1 ELSE 0 END) AS avoiding_count,
+        SUM(CASE WHEN queue_priority_code = 'missing_handoff' THEN 1 ELSE 0 END) AS missing_handoff_count,
+        SUM(CASE WHEN queue_priority_code = 'pilot_ready' THEN 1 ELSE 0 END) AS pilot_ready_count,
+        SUM(CASE WHEN queue_priority_code = 'paused' THEN 1 ELSE 0 END) AS paused_count,
+        SUM(CASE WHEN queue_priority_code = 'pilot_later' THEN 1 ELSE 0 END) AS pilot_later_count,
+        SUM(CASE WHEN queue_priority_code = 'routed' THEN 1 ELSE 0 END) AS routed_priority_count
+      FROM admin_member_snapshot_queue`
+    )
+    .first();
+
+  return {
+    total: Number(result?.total || 0),
+    routes: {
+      reflection: Number(result?.reflection_count || 0),
+      pilot: Number(result?.pilot_count || 0),
+      routed: Number(result?.routed_count || 0)
+    },
+    priorities: {
+      reflection_now: Number(result?.reflection_now_count || 0),
+      avoiding: Number(result?.avoiding_count || 0),
+      missing_handoff: Number(result?.missing_handoff_count || 0),
+      pilot_ready: Number(result?.pilot_ready_count || 0),
+      paused: Number(result?.paused_count || 0),
+      pilot_later: Number(result?.pilot_later_count || 0),
+      routed: Number(result?.routed_priority_count || 0)
+    }
+  };
+}

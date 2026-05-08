@@ -89,6 +89,7 @@ This release implements the first safe layer inside the members area:
 - When admin home restores queue filters from reflection ops or pilot ops, it now labels that restored scope in the active-filter area, so the operator can see where the current queue view came from before changing it.
 - That restored-scope banner on admin home now also links back to the source module, so the operator can reopen reflection ops or pilot ops directly from the restored queue context without rebuilding the loop manually.
 - That source-module action on the restored-scope banner now carries the current filtered queue back into the source module, so reopening reflection ops or pilot ops preserves the exact subset instead of only reopening the route shell.
+- An admin-only D1 queue API now exists at `/api/admin/ops/queue` (GET/POST/DELETE with `x-admin-key`), so operations can persist intake queue packets beyond browser-local storage when the team is ready to move from local-only evidence toward server-backed ops.
 - Admin home batch handoff buttons now show the exact filtered item count and disable themselves when the current filter is empty, so operations can see the handoff size before clicking and avoid sending an empty subset.
 - Admin home now shows a short batch handoff preview line under the buttons, so the operator can verify both filter scope and visible item count before sending the subset into reflection ops or pilot ops.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
@@ -122,7 +123,7 @@ Daily practice fields stored in browser progress storage:
 - `needsHumanReflection`: boolean
 - `updatedAt`
 
-These fields are intentionally local/member-runtime first. D1 persistence can be added after payment proof and pilot readiness.
+These fields are intentionally local/member-runtime first. A guarded admin queue persistence endpoint is now available for ops handoff, while full participant-state persistence can still be staged after payment proof and pilot readiness.
 
 ## 6. Payment Boundary
 

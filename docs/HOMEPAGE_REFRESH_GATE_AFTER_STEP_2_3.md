@@ -1,6 +1,6 @@
 # Homepage Refresh Gate After Step 2-3
 
-Date: 2026-04-29  
+Date: 2026-05-09  
 Status: HOMEPAGE UPDATE BLOCKED UNTIL GATE PASSES
 
 This gate exists so the homepage does not promise a paid system before the system is built enough to carry the promise.
@@ -19,11 +19,11 @@ Homepage refresh is allowed only after every condition below is true.
 | Step 2-3 master plan locked | done | `docs/NGUYENLANANH_STEP_2_3_PAID_MEMBER_COMMERCE_CREATOR_MASTER_PLAN_2026-04-29.md` |
 | Paid member content canon locked | done | `docs/MEMBER_PROGRAMS_CONTENT_CANON_2026-04-29.md` |
 | Member programs manifest validates | done | `admin/content/member-programs-collection.json` |
-| Deep/pro pages reflect final tracks | pending | needs implementation |
-| Creator curriculum visible in member creator area | pending | needs implementation |
-| Package/entitlement map reflected in runtime docs or code | pending | needs implementation |
-| Admin release checklist visible | pending | needs implementation |
-| Production route smoke after Step 2-3 build | pending | needs implementation + deploy |
+| Deep/pro pages reflect final tracks | done | `/members/pro/family/`, `/members/pro/children/`, `/en/members/pro/family/`, `/en/members/pro/children/` |
+| Creator curriculum visible in member creator area | done | `members/creator/guidelines/` + `en/members/creator/guidelines/` curriculum sections |
+| Package/entitlement map reflected in runtime docs or code | done | `admin/content/member-programs-collection.json` (`route_status: existing`) |
+| Admin release checklist visible | done | `admin/content/index.html` section `Step 2-3 release checklist` |
+| Production route smoke after Step 2-3 build | pending | run `node scripts/homepage-refresh-readiness-gate.mjs --fail --require-live` with `BASE_URL` after deploy |
 
 Homepage refresh should include:
 
@@ -42,4 +42,3 @@ Homepage refresh must not include:
 - hard-coded routes that do not exist
 - vague package copy without entitlement mapping
 - “coming soon” blocks without a real owner and build path
-

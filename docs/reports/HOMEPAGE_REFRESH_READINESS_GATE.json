@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "generatedAt": "2026-05-08T22:35:12.844Z",
+    "baseUrl": null,
+    "requireLive": false,
+    "totalChecks": 7,
+    "blockingCount": 0,
+    "verdict": "HOMEPAGE_REFRESH_GATE_PASS"
+  },
+  "checks": [
+    {
+      "id": "deep_pages_reflect_final_tracks",
+      "title": "Deep pages reflect final track structure",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "members/deep/ and en/members/deep/ list all 10 deep topics"
+      ]
+    },
+    {
+      "id": "pro_required_new_routes_exist",
+      "title": "Required new Pro routes exist",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "members/pro/family/index.html",
+        "members/pro/children/index.html",
+        "en/members/pro/family/index.html",
+        "en/members/pro/children/index.html"
+      ]
+    },
+    {
+      "id": "pro_index_exposes_8_tracks",
+      "title": "Pro index pages expose 8-track surface",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "members/pro/index.html and en/members/pro/index.html show 8 tracks including family and children"
+      ]
+    },
+    {
+      "id": "creator_curriculum_visible_to_members",
+      "title": "Creator curriculum visible in member creator area",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "members/creator/guidelines/index.html",
+        "en/members/creator/guidelines/index.html"
+      ]
+    },
+    {
+      "id": "entitlement_map_exists",
+      "title": "Package/entitlement map reflected in runtime docs/code",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "homepage_gate.required_before_refresh includes entitlement_map_exists",
+        "pro_tracks family_relationship_systems route_status=existing",
+        "pro_tracks children_education_environment route_status=existing"
+      ]
+    },
+    {
+      "id": "admin_release_checklist_exists",
+      "title": "Admin release checklist visible",
+      "status": "pass",
+      "blocker": true,
+      "evidence": [
+        "admin/content/index.html contains the release checklist section"
+      ]
+    },
+    {
+      "id": "production_smoke_passes",
+      "title": "Production route smoke after Step 2-3 build",
+      "status": "pending",
+      "blocker": false,
+      "evidence": [
+        "Set BASE_URL to run live smoke (example: https://www.nguyenlananh.com)"
+      ]
+    }
+  ]
+}

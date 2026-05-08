@@ -481,7 +481,7 @@
     {
       "code": "family_relationship_systems",
       "title_vi": "Family & Relationship Systems",
-      "route_status": "required_new_route",
+      "route_status": "existing",
       "route_vi": "/members/pro/family/",
       "tier_required": "year3",
       "module_count": 8
@@ -489,7 +489,7 @@
     {
       "code": "children_education_environment",
       "title_vi": "Children & Education Environment",
-      "route_status": "required_new_route",
+      "route_status": "existing",
       "route_vi": "/members/pro/children/",
       "tier_required": "year3",
       "module_count": 8
@@ -555,4 +555,3 @@
     ]
   }
 }
-

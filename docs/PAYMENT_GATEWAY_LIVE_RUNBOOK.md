@@ -360,6 +360,30 @@ Nen subscribe toi thieu:
 
 ### B8. Smoke proof sau cutover DNS
 
+Gate tong hop runtime + secret-name readiness:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+REQUIRE_STRIPE=0 \
+ENFORCE_COMMERCE_LIVE=0 \
+CHECK_PAGES_SECRETS=1 \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+bash scripts/team2-live-gate.sh
+```
+
+Strict mode (chi chay khi da set xong live secrets):
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+REQUIRE_STRIPE=0 \
+ENFORCE_COMMERCE_LIVE=1 \
+CHECK_PAGES_SECRETS=1 \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+bash scripts/team2-live-gate.sh
+```
+
 Sau khi DNS custom domain da xanh, chay script proof:
 
 ```bash

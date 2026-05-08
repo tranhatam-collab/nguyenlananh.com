@@ -246,6 +246,25 @@ CLOUDFLARE_ACCOUNT_ID=62d57eaa548617aeecac766e5a1cb98e \
 ./scripts/provision-payment-live-secrets.sh
 ```
 
+Neu Team Pay muon check nhanh "con thieu secret nao" truoc khi chay gate dai:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+REQUIRE_STRIPE=0 \
+bash scripts/payment-live-secrets-preflight.sh
+```
+
+Mode non-interactive cho CI/no-prompt:
+
+```bash
+NON_INTERACTIVE=1 \
+SKIP_STRIPE=1 \
+TARGET_ENVS="production preview" \
+bash scripts/provision-payment-live-secrets.sh
+```
+
+Khi non-interactive mode thieu input, script se fail som va in danh sach bien can set trong env.
+
 Script tren se yeu cau nhap va set day du:
 
 - `VIETQR_*`

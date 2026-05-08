@@ -196,7 +196,8 @@ const checks = [
       /id="member-snapshot-queue-export"/,
       /id="member-snapshot-queue-merge"/,
       /id="member-snapshot-queue-open-reflection"/,
-      /id="member-snapshot-queue-open-pilot"/
+      /id="member-snapshot-queue-open-pilot"/,
+      /phần đang lọc/
     ]
   },
   {
@@ -211,7 +212,8 @@ const checks = [
       /id="member-snapshot-queue-export"/,
       /id="member-snapshot-queue-merge"/,
       /id="member-snapshot-queue-open-reflection"/,
-      /id="member-snapshot-queue-open-pilot"/
+      /id="member-snapshot-queue-open-pilot"/,
+      /filtered queue/
     ]
   },
   {
@@ -286,8 +288,10 @@ const checks = [
       /member-snapshot-save/,
       /admin_member_snapshot_queue/,
       /buildMemberSnapshotQueuePacket/,
+      /buildFilteredMemberSnapshotQueuePacket/,
       /mergeMemberSnapshotQueueItems/,
       /imported_admin_intake_queue/,
+      /admin_home_filtered_queue/,
       /queue_total/,
       /queue_relevant/,
       /Queue -> reflection|Sẵn cho reflection/,

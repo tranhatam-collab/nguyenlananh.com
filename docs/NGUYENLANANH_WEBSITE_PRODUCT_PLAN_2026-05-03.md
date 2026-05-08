@@ -74,6 +74,7 @@ This release implements the first safe layer inside the members area:
 - Admin home now shows queue route counts for reflection, pilot, and already-routed items, so the operator can see queue shape before opening any module.
 - Admin home now sorts the intake queue by real ops priority and labels each item, so reflection-now cases surface first, pilot-ready cases stay visible, and already-routed items fall to the end.
 - Admin home now filters the intake queue by route and handoff state, so operations can isolate reflection-only, pilot-only, or not-yet-routed work without scanning the full list.
+- Admin home batch handoff now respects the current filters, so reflection ops or pilot ops can open with only the visible subset instead of always carrying the full queue.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

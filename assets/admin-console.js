@@ -318,6 +318,16 @@
     };
   }
 
+  function buildFilteredMemberSnapshotQueuePacket(items, filters = {}) {
+    return {
+      packet_type: "admin_member_snapshot_queue",
+      exportedAt: new Date().toISOString(),
+      source: "admin_home_filtered_queue",
+      applied_filters: filters,
+      items: Array.isArray(items) ? items : []
+    };
+  }
+
   function mergeMemberSnapshotQueueItems(items) {
     const current = getMemberSnapshotQueue();
     const merged = [];
@@ -1097,6 +1107,7 @@
     const queueReflectionReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "reflection").length;
     const queuePilotReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "pilot").length;
     const queueAlreadyRouted = importedMemberPackets.filter((item) => item.queueLastRoutedTo).length;
+    let lastFilteredQueue = importedMemberPackets;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -1191,6 +1202,7 @@
           || (handoffFilter === "unrouted" && !packet.queueLastRoutedTo);
         return routePass && handoffPass;
       });
+      lastFilteredQueue = filteredQueue;
       if (memberSnapshotQueuePacket) {
         memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);
       }
@@ -1323,13 +1335,19 @@
     });
 
     memberSnapshotQueueOpenReflection?.addEventListener("click", () => {
-      const packet = buildMemberSnapshotQueuePacket();
+      const packet = buildFilteredMemberSnapshotQueuePacket(lastFilteredQueue, {
+        route: String(memberSnapshotQueueRouteFilter?.value || "all"),
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all")
+      });
       savePendingReflectionQueuePacket(packet);
       window.location.href = isEnglish ? "/en/admin/reflection/" : "/admin/reflection/";
     });
 
     memberSnapshotQueueOpenPilot?.addEventListener("click", () => {
-      const packet = buildMemberSnapshotQueuePacket();
+      const packet = buildFilteredMemberSnapshotQueuePacket(lastFilteredQueue, {
+        route: String(memberSnapshotQueueRouteFilter?.value || "all"),
+        handoff: String(memberSnapshotQueueHandoffFilter?.value || "all")
+      });
       savePendingPilotQueuePacket(packet);
       window.location.href = isEnglish ? "/en/admin/pilot/" : "/admin/pilot/";
     });

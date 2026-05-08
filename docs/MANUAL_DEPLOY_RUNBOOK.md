@@ -97,9 +97,14 @@ Script này sẽ:
 1. kiểm tra bạn đang ở `main`
 2. kiểm tra working tree sạch
 3. chạy `node scripts/sync-i18n.mjs`
-4. nếu script sync làm thay đổi file, nó sẽ dừng để bạn commit trước
-5. push `main`
-6. gọi `./scripts/deploy_cloudflare.sh`
+4. chạy strict release gates:
+   - `node scripts/human-text-gate.mjs --no-write --fail`
+   - `node scripts/validate-bilingual-release.mjs`
+   - `node scripts/content-audit.mjs --fail`
+   - `node scripts/local-public-site-audit.mjs` (mặc định bật)
+5. nếu script sync làm thay đổi file, nó sẽ dừng để bạn commit trước
+6. push `main`
+7. gọi `./scripts/deploy_cloudflare.sh` với `SKIP_RELEASE_GATES=1` để tránh chạy gate trùng lần 2
 
 ---
 
@@ -117,6 +122,7 @@ Tùy chọn:
 export BUILD_DIR=/path/to/custom/dist
 export RUN_LOCAL_PUBLIC_SITE_AUDIT=1
 export RUN_TEAM2_RUNTIME_GATE=0
+export SKIP_RELEASE_GATES=0
 ```
 
 Mặc định hiện tại:

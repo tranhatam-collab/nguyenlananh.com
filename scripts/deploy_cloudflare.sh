@@ -9,6 +9,7 @@ export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-62d57eaa548617aeecac766e5
 BUILD_DIR="${BUILD_DIR:-}"
 RUN_LOCAL_PUBLIC_SITE_AUDIT="${RUN_LOCAL_PUBLIC_SITE_AUDIT:-1}"
 RUN_TEAM2_RUNTIME_GATE="${RUN_TEAM2_RUNTIME_GATE:-0}"
+SKIP_RELEASE_GATES="${SKIP_RELEASE_GATES:-0}"
 TEAM2_BASE_URL="${TEAM2_BASE_URL:-https://www.nguyenlananh.com}"
 TEAM2_REQUIRE_STRIPE="${TEAM2_REQUIRE_STRIPE:-0}"
 TEAM2_STRICT_MODE="${TEAM2_STRICT_MODE:-0}"
@@ -22,18 +23,22 @@ fi
 echo "Syncing i18n and content registry"
 node "$REPO_ROOT/scripts/sync-i18n.mjs"
 
-echo "Running human text, SEO, QA, and reporting gate"
-node "$REPO_ROOT/scripts/human-text-gate.mjs" --no-write --fail
+if [ "$SKIP_RELEASE_GATES" != "1" ]; then
+  echo "Running human text, SEO, QA, and reporting gate"
+  node "$REPO_ROOT/scripts/human-text-gate.mjs" --no-write --fail
 
-echo "Running bilingual release validation"
-node "$REPO_ROOT/scripts/validate-bilingual-release.mjs"
+  echo "Running bilingual release validation"
+  node "$REPO_ROOT/scripts/validate-bilingual-release.mjs"
 
-echo "Running strict content audit"
-node "$REPO_ROOT/scripts/content-audit.mjs" --fail
+  echo "Running strict content audit"
+  node "$REPO_ROOT/scripts/content-audit.mjs" --fail
 
-if [ "$RUN_LOCAL_PUBLIC_SITE_AUDIT" = "1" ]; then
-  echo "Running local public site audit"
-  node "$REPO_ROOT/scripts/local-public-site-audit.mjs"
+  if [ "$RUN_LOCAL_PUBLIC_SITE_AUDIT" = "1" ]; then
+    echo "Running local public site audit"
+    node "$REPO_ROOT/scripts/local-public-site-audit.mjs"
+  fi
+else
+  echo "Skipping release gates in deploy script (SKIP_RELEASE_GATES=1)"
 fi
 
 if [ "$RUN_TEAM2_RUNTIME_GATE" = "1" ]; then

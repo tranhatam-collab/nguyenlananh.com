@@ -106,7 +106,7 @@
 
     <section class="panel admin-only" data-requires="members">
       <h3>Evidence packet nội bộ</h3>
-      <p class="note">Snapshot này chỉ phản ánh queue local trong trình duyệt hiện tại. Dùng để bàn giao nhanh trước khi hàng đợi reflection có D1 hoặc admin API persistence.</p>
+      <p class="note">Snapshot này phản ánh evidence local trong trình duyệt hiện tại. Queue intake đã sync trên D1, còn ghi chú reflection và handoff của module này vẫn local cho tới khi có admin API persistence.</p>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="reflection-evidence-copy" class="ghost" type="button">Copy evidence</button>
         <button id="reflection-evidence-export" class="ghost" type="button">Export JSON</button>

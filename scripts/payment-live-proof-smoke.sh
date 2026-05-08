@@ -19,6 +19,9 @@ USD_LOCALE="${USD_LOCALE:-en}"
 NEXT_PATH="${NEXT_PATH:-/members/dashboard/}"
 PAYMENTS_ADMIN_KEY="${PAYMENTS_ADMIN_KEY:-}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
+REQUIRE_STRIPE="${REQUIRE_STRIPE:-1}"
+CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
+TARGET_ENVS="${TARGET_ENVS:-production}"
 
 VN_KEY="smoke-vn-$(date +%s)"
 USD_KEY="smoke-usd-$(date +%s)"
@@ -26,6 +29,7 @@ CONFIRM_KEY="smoke-confirm-$(date +%s)"
 PROVIDER_REF="ops_smoke_$(date +%s)"
 FAILURES=0
 WARNINGS=0
+MISSING_SECRET_HINTS=()
 
 need_cmd() {
   local cmd="$1"
@@ -56,6 +60,52 @@ fail() {
   FAILURES=$((FAILURES + 1))
 }
 
+queue_secret_hint() {
+  local item="$1"
+  local existing
+  for existing in "${MISSING_SECRET_HINTS[@]-}"; do
+    if [ "$existing" = "$item" ]; then
+      return
+    fi
+  done
+  MISSING_SECRET_HINTS+=("$item")
+}
+
+append_provider_secret_hints() {
+  local provider="$1"
+  case "$provider" in
+    paypal)
+      queue_secret_hint "PAYPAL_CLIENT_ID"
+      queue_secret_hint "PAYPAL_CLIENT_SECRET"
+      queue_secret_hint "PAYPAL_WEBHOOK_ID"
+      queue_secret_hint "PAYPAL_MERCHANT_EMAIL"
+      ;;
+    stripe)
+      queue_secret_hint "STRIPE_SECRET_KEY"
+      queue_secret_hint "STRIPE_PUBLISHABLE_KEY"
+      queue_secret_hint "STRIPE_WEBHOOK_SECRET"
+      ;;
+    vietqr)
+      queue_secret_hint "VIETQR_BANK_BIN"
+      queue_secret_hint "VIETQR_ACCOUNT_NO"
+      queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      ;;
+    *)
+      ;;
+  esac
+}
+
+append_mail_secret_hints() {
+  queue_secret_hint "EMAIL_PROVIDER=mail_iai_one"
+  queue_secret_hint "MAIL_API_BASE_URL"
+  queue_secret_hint "MAIL_API_KEY"
+  queue_secret_hint "MAIL_API_WORKSPACE_ID"
+  queue_secret_hint "MAIL_API_WEBHOOK_SECRET"
+  queue_secret_hint "EMAIL_FROM_SYSTEM"
+  queue_secret_hint "EMAIL_FROM_PAY"
+  queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
+}
+
 require_or_warn() {
   local msg="$1"
   if [ "$REQUIRE_COMPLETED" = "1" ]; then
@@ -63,6 +113,68 @@ require_or_warn() {
   else
     warn "$msg"
   fi
+}
+
+run_d1_query() {
+  local sql="$1"
+  local output
+  if output="$(wrangler d1 execute "$D1_NAME" --remote --json --command "$sql" 2>/dev/null)"; then
+    printf "%s\n" "$output"
+    return 0
+  fi
+  require_or_warn "unable to query D1 ($D1_NAME) via wrangler (auth/network/local wrangler logs permission)"
+  return 1
+}
+
+check_pages_secret_names() {
+  local target_env="$1"
+  local list_output
+  local parsed_names
+  local required=(
+    API_BASE_URL
+    ENV_DEPLOY_TARGET
+    REFUND_POLICY
+    EMAIL_PROVIDER
+    MAIL_API_BASE_URL
+    MAIL_API_KEY
+    MAIL_API_WORKSPACE_ID
+    MAIL_API_WEBHOOK_SECRET
+    EMAIL_FROM_SYSTEM
+    EMAIL_FROM_PAY
+    EMAIL_REPLY_TO_SUPPORT
+    PAYMENTS_ADMIN_KEY
+    VIETQR_BANK_BIN
+    VIETQR_ACCOUNT_NO
+    VIETQR_ACCOUNT_NAME
+  )
+
+  # USD provider secrets for this proof run
+  if [ "$USD_PROVIDER" = "paypal" ] || [ "$REQUIRE_STRIPE" = "1" ]; then
+    required+=(PAYPAL_CLIENT_ID PAYPAL_CLIENT_SECRET PAYPAL_WEBHOOK_ID PAYPAL_MERCHANT_EMAIL)
+  fi
+  if [ "$USD_PROVIDER" = "stripe" ] || [ "$REQUIRE_STRIPE" = "1" ]; then
+    required+=(STRIPE_SECRET_KEY STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET)
+  fi
+
+  if ! list_output="$(wrangler pages secret list --project-name "$PROJECT_NAME" --env "$target_env" 2>/dev/null)"; then
+    require_or_warn "unable to list Pages secrets for env=$target_env (check wrangler auth/project/env)"
+    return
+  fi
+
+  parsed_names="$(printf "%s\n" "$list_output" | sed -n 's/^  - \([^:]*\):.*/\1/p')"
+  local secret_count=0
+  if [ -n "$parsed_names" ]; then
+    secret_count="$(printf "%s\n" "$parsed_names" | wc -l | tr -d ' ')"
+  fi
+  pass "read Pages secret names for env=$target_env (count=$secret_count)"
+
+  local key
+  for key in "${required[@]}"; do
+    if ! grep -Fxq "$key" <<< "$parsed_names"; then
+      queue_secret_hint "$key"
+      require_or_warn "Pages env=$target_env missing secret name: $key"
+    fi
+  done
 }
 
 print_status() {
@@ -85,6 +197,8 @@ print_status() {
 
 echo "== web cutover status =="
 echo "Require completed proof: $REQUIRE_COMPLETED"
+echo "Require Stripe in this phase: $REQUIRE_STRIPE"
+echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 print_status "$VN_DOMAIN" "apex domain"
 print_status "$WWW_DOMAIN" "www domain"
 print_status "$ADMIN_DOMAIN" "admin domain"
@@ -94,19 +208,30 @@ echo "== providers =="
 PROVIDERS_RES="$(curl -sS "$BASE_URL/api/payments/providers" 2>/dev/null || true)"
 if printf "%s" "$PROVIDERS_RES" | jq empty >/dev/null 2>&1; then
   printf "%s" "$PROVIDERS_RES" | jq .
-  for code in paypal stripe vietqr; do
+  provider_codes=(paypal vietqr)
+  if [ "$REQUIRE_STRIPE" = "1" ]; then
+    provider_codes=(paypal stripe vietqr)
+  fi
+  for code in "${provider_codes[@]}"; do
     enabled="$(printf "%s" "$PROVIDERS_RES" | jq -r --arg code "$code" '.providers[] | select(.code == $code) | (.enabled // false)')"
     mode="$(printf "%s" "$PROVIDERS_RES" | jq -r --arg code "$code" '.providers[] | select(.code == $code) | (.mode // "unknown")')"
     if [ "$enabled" = "true" ]; then
       pass "$code enabled (mode=$mode)"
     else
+      if [ "$mode" = "setup_required" ]; then
+        append_provider_secret_hints "$code"
+      fi
       require_or_warn "$code not enabled (mode=$mode)"
     fi
   done
+  if [ "$REQUIRE_STRIPE" != "1" ]; then
+    pass "stripe readiness deferred for this phase (REQUIRE_STRIPE=0)"
+  fi
   email_provider="$(printf "%s" "$PROVIDERS_RES" | jq -r '.environment.email_provider // "unknown"')"
   if [ "$email_provider" = "mail_iai_one" ]; then
     pass "email_provider is mail_iai_one"
   else
+    append_mail_secret_hints
     require_or_warn "email_provider is $email_provider (expected mail_iai_one)"
   fi
 else
@@ -114,6 +239,14 @@ else
 fi
 echo
 echo
+
+if [ "$CHECK_PAGES_SECRETS" = "1" ]; then
+  echo "== Pages secret names check =="
+  for env_name in $TARGET_ENVS; do
+    check_pages_secret_names "$env_name"
+  done
+  echo
+fi
 
 echo "== health =="
 HEALTH_RES="$(curl -sS "$BASE_URL/api/payments/health" 2>/dev/null || true)"
@@ -216,7 +349,8 @@ fi
 
 echo "== D1 evidence counters =="
 cd "$ROOT_DIR"
-COUNTS_JSON="$(wrangler d1 execute "$D1_NAME" --remote --json --command \
+COUNTS_JSON=""
+if COUNTS_JSON="$(run_d1_query \
   "SELECT COUNT(*) AS payment_orders FROM payment_orders; \
    SELECT COUNT(*) AS email_jobs FROM email_jobs; \
    SELECT COUNT(*) AS vietqr_orders FROM vietqr_orders; \
@@ -224,42 +358,58 @@ COUNTS_JSON="$(wrangler d1 execute "$D1_NAME" --remote --json --command \
    SELECT COUNT(*) AS vn_completed FROM payment_orders WHERE provider='vietqr' AND payment_status='completed'; \
    SELECT COUNT(*) AS usd_completed FROM payment_orders WHERE provider IN ('paypal','stripe') AND payment_status='completed'; \
    SELECT COUNT(*) AS sent_email_with_provider_id FROM email_jobs WHERE status='sent' AND provider_message_id IS NOT NULL; \
-   SELECT COUNT(*) AS smoke_sent_email_with_provider_id FROM email_jobs WHERE recipient_email IN ('$VN_EMAIL', '$USD_EMAIL') AND status='sent' AND provider_message_id IS NOT NULL;")"
-printf "%s\n" "$COUNTS_JSON" | jq .
-payment_orders_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[0].results[0].payment_orders // 0')"
-email_jobs_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[1].results[0].email_jobs // 0')"
-vietqr_orders_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[2].results[0].vietqr_orders // 0')"
-webhook_events_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[3].results[0].webhook_events // 0')"
-vn_completed_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[4].results[0].vn_completed // 0')"
-usd_completed_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[5].results[0].usd_completed // 0')"
-sent_email_with_id_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[6].results[0].sent_email_with_provider_id // 0')"
-smoke_sent_email_with_id_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[7].results[0].smoke_sent_email_with_provider_id // 0')"
+   SELECT COUNT(*) AS smoke_sent_email_with_provider_id FROM email_jobs WHERE recipient_email IN ('$VN_EMAIL', '$USD_EMAIL') AND status='sent' AND provider_message_id IS NOT NULL;")"; then
+  printf "%s\n" "$COUNTS_JSON" | jq .
+  payment_orders_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[0].results[0].payment_orders // 0')"
+  email_jobs_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[1].results[0].email_jobs // 0')"
+  vietqr_orders_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[2].results[0].vietqr_orders // 0')"
+  webhook_events_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[3].results[0].webhook_events // 0')"
+  vn_completed_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[4].results[0].vn_completed // 0')"
+  usd_completed_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[5].results[0].usd_completed // 0')"
+  sent_email_with_id_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[6].results[0].sent_email_with_provider_id // 0')"
+  smoke_sent_email_with_id_count="$(printf "%s" "$COUNTS_JSON" | jq -r '.[7].results[0].smoke_sent_email_with_provider_id // 0')"
 
-echo "payment_orders=$payment_orders_count email_jobs=$email_jobs_count vietqr_orders=$vietqr_orders_count webhook_events=$webhook_events_count"
-echo "vn_completed=$vn_completed_count usd_completed=$usd_completed_count sent_email_with_provider_id=$sent_email_with_id_count smoke_sent_email_with_provider_id=$smoke_sent_email_with_id_count"
+  echo "payment_orders=$payment_orders_count email_jobs=$email_jobs_count vietqr_orders=$vietqr_orders_count webhook_events=$webhook_events_count"
+  echo "vn_completed=$vn_completed_count usd_completed=$usd_completed_count sent_email_with_provider_id=$sent_email_with_id_count smoke_sent_email_with_provider_id=$smoke_sent_email_with_id_count"
+  echo
+
+  echo "== D1 latest order evidence for smoke emails =="
+  ORDERS_JSON=""
+  if ORDERS_JSON="$(run_d1_query \
+    "SELECT internal_order_id, provider, email, payment_status, fulfillment_status, created_at FROM payment_orders WHERE email IN ('$VN_EMAIL', '$USD_EMAIL') ORDER BY created_at DESC LIMIT 10;")"; then
+    printf "%s\n" "$ORDERS_JSON" | jq '.[0].results'
+  fi
+
+  if [ "$vn_completed_count" -gt 0 ]; then
+    pass "VN completed orders found in D1"
+  else
+    require_or_warn "No VN completed orders in D1 yet"
+  fi
+
+  if [ "$usd_completed_count" -gt 0 ]; then
+    pass "USD completed orders found in D1"
+  else
+    require_or_warn "No USD completed orders in D1 yet"
+  fi
+
+  if [ "$sent_email_with_id_count" -gt 0 ]; then
+    pass "D1 has sent email rows with provider message IDs"
+  else
+    require_or_warn "No sent email rows with provider message IDs in D1 yet"
+  fi
+else
+  warn "Skipping detailed D1 counters because query could not be executed."
+fi
+
 echo
-
-echo "== D1 latest order evidence for smoke emails =="
-ORDERS_JSON="$(wrangler d1 execute "$D1_NAME" --remote --json --command \
-  "SELECT internal_order_id, provider, email, payment_status, fulfillment_status, created_at FROM payment_orders WHERE email IN ('$VN_EMAIL', '$USD_EMAIL') ORDER BY created_at DESC LIMIT 10;")"
-printf "%s\n" "$ORDERS_JSON" | jq '.[0].results'
-
-if [ "$vn_completed_count" -gt 0 ]; then
-  pass "VN completed orders found in D1"
+echo "== Missing secret checklist (from proof signals) =="
+if [ "${#MISSING_SECRET_HINTS[@]}" -eq 0 ]; then
+  pass "no missing secret hints detected from proof checks"
 else
-  require_or_warn "No VN completed orders in D1 yet"
-fi
-
-if [ "$usd_completed_count" -gt 0 ]; then
-  pass "USD completed orders found in D1"
-else
-  require_or_warn "No USD completed orders in D1 yet"
-fi
-
-if [ "$sent_email_with_id_count" -gt 0 ]; then
-  pass "D1 has sent email rows with provider message IDs"
-else
-  require_or_warn "No sent email rows with provider message IDs in D1 yet"
+  warn "set these secrets before strict proof run:"
+  for hint in "${MISSING_SECRET_HINTS[@]}"; do
+    echo "  - $hint"
+  done
 fi
 
 echo

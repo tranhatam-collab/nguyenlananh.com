@@ -335,6 +335,7 @@ const checks = [
       /Needs reflection now|Cần reflection ngay/,
       /Ready for pilot review|Sẵn rà pilot/,
       /Priority|Ưu tiên/,
+      /Priority now|Ưu tiên hiện tại/,
       /Visible now|Đang hiện/,
       /No queue item matches the current filters|Không có item nào khớp bộ lọc hiện tại/
     ]

@@ -75,6 +75,7 @@ This release implements the first safe layer inside the members area:
 - Admin home now sorts the intake queue by real ops priority and labels each item, so reflection-now cases surface first, pilot-ready cases stay visible, and already-routed items fall to the end.
 - Admin home now filters the intake queue by route and handoff state, so operations can isolate reflection-only, pilot-only, or not-yet-routed work without scanning the full list.
 - Admin home now also filters the intake queue by priority, so operations can isolate reflection-now, missing-handoff, pilot-ready, paused, or already-routed work without re-sorting the full queue by eye.
+- Admin home now shows a compact priority summary on both the dashboard card and the queue block, so operations can see whether the current workload leans toward reflection-now, missing-handoff, pilot-ready, or paused cases before changing filters.
 - Admin home batch handoff now respects the current filters, so reflection ops or pilot ops can open with only the visible subset instead of always carrying the full queue.
 - Reflection ops and pilot ops now show the imported filter scope from a batch handoff packet, so operators can tell whether they are reviewing all routes or just a filtered subset after opening the destination module.
 - Admin home batch handoff buttons now show the exact filtered item count and disable themselves when the current filter is empty, so operations can see the handoff size before clicking and avoid sending an empty subset.

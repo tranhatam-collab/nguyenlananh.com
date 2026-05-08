@@ -310,6 +310,25 @@
       });
   }
 
+  function summarizeQueuePriorities(items) {
+    const counts = {
+      reflection_now: 0,
+      avoiding: 0,
+      missing_handoff: 0,
+      pilot_ready: 0,
+      paused: 0,
+      pilot_later: 0,
+      routed: 0
+    };
+    (Array.isArray(items) ? items : []).forEach((item) => {
+      const code = String(item?.queuePriority?.code || "");
+      if (code && Object.prototype.hasOwnProperty.call(counts, code)) {
+        counts[code] += 1;
+      }
+    });
+    return counts;
+  }
+
   function describeQueueFilters(filters, isEnglish) {
     const route = String(filters?.route || "all");
     const handoff = String(filters?.handoff || "all");
@@ -1141,6 +1160,7 @@
     const queueReflectionReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "reflection").length;
     const queuePilotReady = importedMemberPackets.filter((item) => item.queueRecommendedRoute === "pilot").length;
     const queueAlreadyRouted = importedMemberPackets.filter((item) => item.queueLastRoutedTo).length;
+    const queuePriorityCounts = summarizeQueuePriorities(importedMemberPackets);
     let lastFilteredQueue = importedMemberPackets;
 
     const membersOps = [
@@ -1166,6 +1186,7 @@
           <li>${safeText(isEnglish ? "Queue -> reflection" : "Queue -> reflection")}: <strong>${queueReflectionReady}</strong></li>
           <li>${safeText(isEnglish ? "Queue -> pilot" : "Queue -> pilot")}: <strong>${queuePilotReady}</strong></li>
           <li>${safeText(isEnglish ? "Already routed" : "Đã handoff")}: <strong>${queueAlreadyRouted}</strong></li>
+          <li>${safeText(isEnglish ? "Priority now" : "Ưu tiên hiện tại")}: <strong>${queuePriorityCounts.reflection_now}</strong> / <strong>${queuePriorityCounts.avoiding}</strong> / <strong>${queuePriorityCounts.missing_handoff}</strong> / <strong>${queuePriorityCounts.pilot_ready}</strong></li>
         </ul>
       </article>
       <article class="panel">
@@ -1239,6 +1260,7 @@
         return routePass && handoffPass && priorityPass;
       });
       lastFilteredQueue = filteredQueue;
+      const filteredPriorityCounts = summarizeQueuePriorities(filteredQueue);
       if (memberSnapshotQueueOpenReflection) {
         memberSnapshotQueueOpenReflection.disabled = filteredQueue.length === 0;
         memberSnapshotQueueOpenReflection.textContent = isEnglish
@@ -1274,6 +1296,7 @@
       memberSnapshotQueue.innerHTML = `<div>
         <h4 style="margin:0 0 8px;">${safeText(isEnglish ? "Intake queue" : "Intake queue")}</h4>
         <p class="note">${safeText(isEnglish ? "Reflection-ready" : "Sẵn cho reflection")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "reflection").length} • ${safeText(isEnglish ? "Pilot-ready" : "Sẵn cho pilot")}: ${queue.filter((packet) => packet.queueRecommendedRoute === "pilot").length} • ${safeText(isEnglish ? "Already routed" : "Đã handoff")}: ${queue.filter((packet) => packet.queueLastRoutedTo).length} • ${safeText(isEnglish ? "Visible now" : "Đang hiện")}: ${filteredQueue.length}</p>
+        <p class="note">${safeText(isEnglish ? "Priority now" : "Ưu tiên hiện tại")}: ${safeText(isEnglish ? "reflection-now" : "reflection-ngay")}: ${filteredPriorityCounts.reflection_now} • ${safeText(isEnglish ? "avoiding" : "đang né")}: ${filteredPriorityCounts.avoiding} • ${safeText(isEnglish ? "missing handoff" : "thiếu handoff")}: ${filteredPriorityCounts.missing_handoff} • ${safeText(isEnglish ? "pilot-ready" : "sẵn pilot")}: ${filteredPriorityCounts.pilot_ready} • ${safeText(isEnglish ? "paused" : "pause")}: ${filteredPriorityCounts.paused}</p>
         <ul class="checkList">${filteredQueue.map((packet) => {
           const paused = isFutureIso(packet.reminderPausedUntil);
           const latestState = packet.latestPracticeState || (isEnglish ? "no check-in yet" : "chưa có check-in");

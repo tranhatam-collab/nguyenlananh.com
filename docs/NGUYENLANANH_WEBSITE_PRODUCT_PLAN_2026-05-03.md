@@ -141,9 +141,14 @@ Files that this update must not modify:
 
 - `functions/_lib/payments.js`
 - `functions/api/payments/*`
-- `scripts/provision-payment-live-secrets.sh`
-- `scripts/payment-rails-independent-gate.sh`
-- `scripts/team2-live-gate.sh`
+- `scripts/provision-payment-live-secrets.sh` (except secret-input/reporting UX updates)
+- `scripts/payment-rails-independent-gate.sh` (except reporting/gate UX updates)
+- `scripts/team2-live-gate.sh` (except reporting/gate UX updates)
+
+Runtime-gate orchestration for current operations:
+
+- `scripts/team2-runtime-phase-gate.sh` (canonical one-command gate)
+- `scripts/team2-runtime-next-actions.sh` (short action checklist from latest JSON report)
 
 ## 7. Pilot Plan After Payment Proof
 

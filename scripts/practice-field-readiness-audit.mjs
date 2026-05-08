@@ -308,6 +308,8 @@ const checks = [
       /Imported subset summary|Tóm tắt subset đã nạp/,
       /Open same filter on admin home|Mở lại filter này trên admin home/,
       /pendingDashboardFilters/,
+      /normalizePendingDashboardFilters/,
+      /Restored from|Được mở lại từ/,
       /all priority levels|tất cả mức ưu tiên/,
       /Open reflection ops with filtered queue|Mở reflection ops với phần đang lọc/,
       /Open pilot ops with filtered queue|Mở pilot ops với phần đang lọc/,

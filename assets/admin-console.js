@@ -494,6 +494,22 @@
     };
   }
 
+  function normalizePendingDashboardFilters(payload) {
+    const raw = payload && typeof payload === "object" && payload.filters
+      ? payload
+      : { filters: payload || {} };
+    return {
+      filters: {
+        route: String(raw.filters?.route || "all"),
+        handoff: String(raw.filters?.handoff || "all"),
+        priority: String(raw.filters?.priority || "all")
+      },
+      source: String(raw.source || ""),
+      sourceLabel: String(raw.sourceLabel || ""),
+      restoredAt: String(raw.restoredAt || "")
+    };
+  }
+
   function mergeMemberSnapshotQueueItems(items) {
     const current = getMemberSnapshotQueue();
     const merged = [];
@@ -510,11 +526,16 @@
   }
 
   function savePendingDashboardFilters(filters) {
-    writeJSON(STORAGE_KEYS.pendingDashboardFilters, filters || null);
+    if (!filters) {
+      writeJSON(STORAGE_KEYS.pendingDashboardFilters, null);
+      return;
+    }
+    writeJSON(STORAGE_KEYS.pendingDashboardFilters, normalizePendingDashboardFilters(filters));
   }
 
   function getPendingDashboardFilters() {
-    return readJSON(STORAGE_KEYS.pendingDashboardFilters, null);
+    const raw = readJSON(STORAGE_KEYS.pendingDashboardFilters, null);
+    return raw ? normalizePendingDashboardFilters(raw) : null;
   }
 
   function clearPendingDashboardFilters() {
@@ -1291,6 +1312,7 @@
     const queueAlreadyRouted = importedMemberPackets.filter((item) => item.queueLastRoutedTo).length;
     const queuePriorityCounts = summarizeQueuePriorities(importedMemberPackets);
     let lastFilteredQueue = importedMemberPackets;
+    let restoredFilterContext = null;
 
     const membersOps = [
       { label: "Ngày", value: "2", hint: "check join/login" },
@@ -1412,15 +1434,21 @@
       if (memberSnapshotQueueActiveFilters) {
         const hasActiveFilters = routeFilter !== "all" || handoffFilter !== "all" || priorityFilter !== "all";
         if (!hasActiveFilters) {
-          memberSnapshotQueueActiveFilters.textContent = isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.";
+          const restoredText = restoredFilterContext
+            ? ` ${safeText(isEnglish ? `Restored from ${restoredFilterContext}.` : `Được mở lại từ ${restoredFilterContext}.`)}`
+            : "";
+          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(isEnglish ? "Active queue filters: none." : "Bộ lọc queue đang dùng: không có.")}${restoredText}`;
         } else {
           const label = isEnglish ? "Active queue filters:" : "Bộ lọc queue đang dùng:";
+          const restoredText = restoredFilterContext
+            ? `<p class="note" style="margin:0 0 6px;">${safeText(isEnglish ? `Restored from ${restoredFilterContext}.` : `Được mở lại từ ${restoredFilterContext}.`)}</p>`
+            : "";
           const chips = [
             routeFilter !== "all" ? { type: "route", value: routeFilter } : null,
             handoffFilter !== "all" ? { type: "handoff", value: handoffFilter } : null,
             priorityFilter !== "all" ? { type: "priority", value: priorityFilter } : null
           ].filter(Boolean);
-          memberSnapshotQueueActiveFilters.innerHTML = `${safeText(label)} <span>${chips.map((chip) => {
+          memberSnapshotQueueActiveFilters.innerHTML = `${restoredText}${safeText(label)} <span>${chips.map((chip) => {
             const nextFilters = {
               route: routeFilter,
               handoff: handoffFilter,
@@ -1482,27 +1510,31 @@
 
     const pendingFilters = getPendingDashboardFilters();
     if (pendingFilters) {
-      if (memberSnapshotQueueRouteFilter && typeof pendingFilters.route === "string") {
-        memberSnapshotQueueRouteFilter.value = pendingFilters.route;
+      if (memberSnapshotQueueRouteFilter && typeof pendingFilters.filters?.route === "string") {
+        memberSnapshotQueueRouteFilter.value = pendingFilters.filters.route;
       }
-      if (memberSnapshotQueueHandoffFilter && typeof pendingFilters.handoff === "string") {
-        memberSnapshotQueueHandoffFilter.value = pendingFilters.handoff;
+      if (memberSnapshotQueueHandoffFilter && typeof pendingFilters.filters?.handoff === "string") {
+        memberSnapshotQueueHandoffFilter.value = pendingFilters.filters.handoff;
       }
-      if (memberSnapshotQueuePriorityFilter && typeof pendingFilters.priority === "string") {
-        memberSnapshotQueuePriorityFilter.value = pendingFilters.priority;
+      if (memberSnapshotQueuePriorityFilter && typeof pendingFilters.filters?.priority === "string") {
+        memberSnapshotQueuePriorityFilter.value = pendingFilters.filters.priority;
       }
+      restoredFilterContext = pendingFilters.sourceLabel || pendingFilters.source || "";
       clearPendingDashboardFilters();
     }
 
     memberSnapshotQueueRouteFilter?.addEventListener("change", () => {
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
     memberSnapshotQueueHandoffFilter?.addEventListener("change", () => {
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
     memberSnapshotQueuePriorityFilter?.addEventListener("change", () => {
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
@@ -1510,6 +1542,7 @@
       if (memberSnapshotQueueRouteFilter) memberSnapshotQueueRouteFilter.value = "all";
       if (memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
       if (memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
@@ -1520,6 +1553,7 @@
       if (type === "route" && memberSnapshotQueueRouteFilter) memberSnapshotQueueRouteFilter.value = "all";
       if (type === "handoff" && memberSnapshotQueueHandoffFilter) memberSnapshotQueueHandoffFilter.value = "all";
       if (type === "priority" && memberSnapshotQueuePriorityFilter) memberSnapshotQueuePriorityFilter.value = "all";
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
@@ -1528,6 +1562,7 @@
       if (!trigger || !memberSnapshotQueuePriorityFilter) return;
       const code = String(trigger.getAttribute("data-priority-quick-filter") || "all");
       memberSnapshotQueuePriorityFilter.value = code;
+      restoredFilterContext = null;
       renderMemberSnapshotQueue();
     });
 
@@ -1839,7 +1874,12 @@
     function handleReflectionSubsetAction(event) {
       const trigger = event.target.closest("[data-return-dashboard-filters]");
       if (!trigger || !lastReflectionImportedFilters) return;
-      savePendingDashboardFilters(lastReflectionImportedFilters);
+      savePendingDashboardFilters({
+        filters: lastReflectionImportedFilters,
+        source: "reflection_ops",
+        sourceLabel: isEnglish ? "reflection ops" : "reflection ops",
+        restoredAt: new Date().toISOString()
+      });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
     }
 
@@ -1847,8 +1887,13 @@
       const trigger = event.target.closest("[data-return-dashboard-priority]");
       if (!trigger || !lastReflectionImportedFilters) return;
       savePendingDashboardFilters({
-        ...lastReflectionImportedFilters,
-        priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+        filters: {
+          ...lastReflectionImportedFilters,
+          priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+        },
+        source: "reflection_ops_priority_slice",
+        sourceLabel: isEnglish ? "reflection ops priority slice" : "priority slice từ reflection ops",
+        restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
     }
@@ -2206,7 +2251,12 @@
     function handlePilotSubsetAction(event) {
       const trigger = event.target.closest("[data-return-dashboard-filters]");
       if (!trigger || !lastPilotImportedFilters) return;
-      savePendingDashboardFilters(lastPilotImportedFilters);
+      savePendingDashboardFilters({
+        filters: lastPilotImportedFilters,
+        source: "pilot_ops",
+        sourceLabel: isEnglish ? "pilot ops" : "pilot ops",
+        restoredAt: new Date().toISOString()
+      });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
     }
 
@@ -2214,8 +2264,13 @@
       const trigger = event.target.closest("[data-return-dashboard-priority]");
       if (!trigger || !lastPilotImportedFilters) return;
       savePendingDashboardFilters({
-        ...lastPilotImportedFilters,
-        priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+        filters: {
+          ...lastPilotImportedFilters,
+          priority: trigger.getAttribute("data-return-dashboard-priority") || "all"
+        },
+        source: "pilot_ops_priority_slice",
+        sourceLabel: isEnglish ? "pilot ops priority slice" : "priority slice từ pilot ops",
+        restoredAt: new Date().toISOString()
       });
       window.location.href = isEnglish ? "/en/admin/" : "/admin/";
     }

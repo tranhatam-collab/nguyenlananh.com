@@ -63,7 +63,28 @@ Dùng khi:
 Script này giờ sẽ:
 
 1. tự build dist sạch bằng `scripts/prepare_release_dist.mjs` nếu `BUILD_DIR` chưa được set
-2. deploy dist đó lên Cloudflare Pages
+2. chạy release gates:
+   - `node scripts/human-text-gate.mjs --no-write --fail`
+   - `node scripts/validate-bilingual-release.mjs`
+   - `node scripts/content-audit.mjs --fail`
+   - `node scripts/local-public-site-audit.mjs` (mặc định bật)
+3. deploy dist đó lên Cloudflare Pages
+
+Tùy chọn cho payment/runtime lane:
+
+- `RUN_TEAM2_RUNTIME_GATE=1` để chạy thêm `scripts/team2-runtime-ops-loop.sh`
+- `TEAM2_BASE_URL`, `TEAM2_REQUIRE_STRIPE`, `TEAM2_STRICT_MODE`, `TEAM2_CHECK_PAGES_SECRETS` để điều chỉnh phase gate
+
+Ví dụ:
+
+```bash
+RUN_TEAM2_RUNTIME_GATE=1 \
+TEAM2_BASE_URL=https://www.nguyenlananh.com \
+TEAM2_REQUIRE_STRIPE=0 \
+TEAM2_STRICT_MODE=0 \
+TEAM2_CHECK_PAGES_SECRETS=1 \
+./scripts/deploy_cloudflare.sh
+```
 
 ### 3.3. Publish một lệnh
 
@@ -94,6 +115,8 @@ Tùy chọn:
 
 ```bash
 export BUILD_DIR=/path/to/custom/dist
+export RUN_LOCAL_PUBLIC_SITE_AUDIT=1
+export RUN_TEAM2_RUNTIME_GATE=0
 ```
 
 Mặc định hiện tại:

@@ -31,6 +31,7 @@ STEP_CODES=()
 STEP_LOGS=()
 AGG_MISSING_HINTS=()
 AGG_EXTERNAL_BLOCKERS=()
+EXPECTED_SECRET_CONTRACT=()
 
 cleanup() {
   rm -rf "$TMP_LOG_DIR"
@@ -100,6 +101,38 @@ collect_step_aggregates() {
   done
 }
 
+build_expected_secret_contract() {
+  EXPECTED_SECRET_CONTRACT=(
+    API_BASE_URL
+    ENV_DEPLOY_TARGET
+    REFUND_POLICY
+    EMAIL_PROVIDER=mail_iai_one
+    MAIL_API_BASE_URL
+    MAIL_API_KEY
+    MAIL_API_WORKSPACE_ID
+    MAIL_API_WEBHOOK_SECRET
+    EMAIL_FROM_SYSTEM
+    EMAIL_FROM_PAY
+    EMAIL_REPLY_TO_SUPPORT
+    PAYMENTS_ADMIN_KEY
+    VIETQR_BANK_BIN
+    VIETQR_ACCOUNT_NO
+    VIETQR_ACCOUNT_NAME
+    PAYPAL_CLIENT_ID
+    PAYPAL_CLIENT_SECRET
+    PAYPAL_WEBHOOK_ID
+    PAYPAL_MERCHANT_EMAIL
+  )
+
+  if [ "$REQUIRE_STRIPE" = "1" ]; then
+    EXPECTED_SECRET_CONTRACT+=(
+      STRIPE_SECRET_KEY
+      STRIPE_PUBLISHABLE_KEY
+      STRIPE_WEBHOOK_SECRET
+    )
+  fi
+}
+
 if ! command -v jq >/dev/null 2>&1; then
   echo "Missing required command: jq"
   exit 1
@@ -164,6 +197,7 @@ connectivity_preflight() {
 
 write_report() {
   mkdir -p "$REPORT_DIR"
+  build_expected_secret_contract
   collect_step_aggregates
   {
     echo "# TEAM2_RUNTIME_PHASE_GATE"
@@ -212,6 +246,16 @@ write_report() {
     fi
     echo
     echo "## Aggregates"
+    echo
+    echo "### Expected Secret Contract"
+    if [ "${#EXPECTED_SECRET_CONTRACT[@]}" -eq 0 ]; then
+      echo "- none"
+    else
+      local expected
+      for expected in "${EXPECTED_SECRET_CONTRACT[@]}"; do
+        echo "- \`$expected\`"
+      done
+    fi
     echo
     echo "### Missing Secret Hints"
     if [ "${#AGG_MISSING_HINTS[@]}" -eq 0 ]; then
@@ -284,8 +328,17 @@ write_report() {
       echo "    }"
     done
     echo "  ],"
-    echo "  \"aggregate_missing_hints\": ["
+    echo "  \"expected_secret_contract\": ["
     local i
+    for ((i=0; i<${#EXPECTED_SECRET_CONTRACT[@]}; i++)); do
+      if [ "$i" -gt 0 ]; then
+        echo "    ,$(json_escape "${EXPECTED_SECRET_CONTRACT[$i]}")"
+      else
+        echo "    $(json_escape "${EXPECTED_SECRET_CONTRACT[$i]}")"
+      fi
+    done
+    echo "  ],"
+    echo "  \"aggregate_missing_hints\": ["
     for ((i=0; i<${#AGG_MISSING_HINTS[@]}; i++)); do
       if [ "$i" -gt 0 ]; then
         echo "    ,$(json_escape "${AGG_MISSING_HINTS[$i]}")"

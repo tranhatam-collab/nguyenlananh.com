@@ -389,7 +389,7 @@ Default evidence output:
 
 - `docs/reports/TEAM2_RUNTIME_PHASE_GATE_<timestamp>.md`
 - `docs/reports/TEAM2_RUNTIME_PHASE_GATE_<timestamp>.json`
-- JSON includes `summary`, `steps`, `aggregate_missing_hints`, `external_blockers`, `next_actions`
+- JSON includes `summary`, `steps`, `expected_secret_contract`, `aggregate_missing_hints`, `external_blockers`, `next_actions`
 
 Optional custom output path:
 

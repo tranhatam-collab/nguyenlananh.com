@@ -72,20 +72,34 @@ else
 fi
 echo
 
+echo "== Expected secret contract =="
+expected="$(jq -r '.expected_secret_contract[]? // empty' "$REPORT_PATH")"
+if [ -z "$expected" ]; then
+  echo "- none"
+else
+  printf "%s\n" "$expected" | sed 's/^/- /'
+fi
+echo
+
+if [ -z "$missing" ] && [ -n "$expected" ] && [ "$verdict" != "RUNTIME_PHASE_GATE_PASS" ]; then
+  echo "[INFO] Missing hints are empty because probes did not reach runtime fully. Use expected contract above."
+  echo
+fi
+
 echo "== Suggested commands =="
 if [ "$connectivity_failed" = "1" ]; then
-  echo "1. Fix DNS/network reachability to $base_url"
+  echo "- Fix DNS/network reachability to $base_url"
 fi
-if [ -n "$missing" ]; then
-  echo "2. Provision missing secrets:"
-  echo "   TARGET_ENVS=\"production preview\" SKIP_STRIPE=$(( 1 - require_stripe )) bash scripts/provision-payment-live-secrets.sh"
-  echo "3. Redeploy:"
-  echo "   bash scripts/deploy_cloudflare.sh"
+if [ -n "$missing" ] || [ -n "$expected" ]; then
+  echo "- Provision secrets (phase-aware):"
+  echo "  TARGET_ENVS=\"production preview\" SKIP_STRIPE=$(( 1 - require_stripe )) bash scripts/provision-payment-live-secrets.sh"
+  echo "- Redeploy:"
+  echo "  bash scripts/deploy_cloudflare.sh"
 fi
-echo "4. Re-run non-strict gate:"
-echo "   BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
-echo "5. Re-run strict gate:"
-echo "   BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=1 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
+echo "- Re-run non-strict gate:"
+echo "  BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
+echo "- Re-run strict gate:"
+echo "  BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=1 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
 
 if [ "$verdict" = "RUNTIME_PHASE_GATE_PASS" ]; then
   echo

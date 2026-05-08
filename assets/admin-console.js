@@ -2154,8 +2154,8 @@
       if (list) {
         if (!items.length) {
           list.innerHTML = isEnglish
-            ? `<p class="note">No reflection evidence is available yet. Keep using this module as the triage contract until the queue moves to D1-backed persistence.</p>`
-            : `<p class="note">Chưa có reflection evidence nào. Tiếp tục dùng module này như khung triage cho tới khi hàng đợi chuyển sang persistence có D1.</p>`;
+            ? `<p class="note">No reflection evidence is available yet. Intake queue sync already runs on D1, but reflection notes and handoff evidence in this module are still local until admin API persistence is added.</p>`
+            : `<p class="note">Chưa có reflection evidence nào. Queue intake đã sync trên D1, nhưng ghi chú reflection và evidence handoff trong module này vẫn local cho tới khi có persistence qua admin API.</p>`;
         } else {
           list.innerHTML = `${renderImportedSubsetSummary(view, isEnglish, { priorityCodes: ["reflection_now", "avoiding", "missing_handoff", "routed"] })}<ul class="checkList">${items.map((item) => {
             const handoff = handoffs.find((entry) => reflectionHandoffMatchesSignal(entry, item));
@@ -2184,12 +2184,12 @@
         ? `<ul class="list">
             <li>Respond with one grounding line, one reflected pattern, and one next small step.</li>
             <li>Escalate outside the site if the note suggests medical, mental-health, legal, or safety crisis.</li>
-            <li>This queue is browser-local for now. Do not call it complete production ops until D1 or admin API persistence is added.</li>
+            <li>Intake queue sync is now D1-backed. Reflection notes and handoff evidence in this module are still browser-local until admin API persistence is added.</li>
           </ul>`
         : `<ul class="list">
             <li>Phản hồi bằng một dòng neo lại, một điều soi lại, và một bước nhỏ tiếp theo.</li>
             <li>Chuyển ra ngoài website nếu ghi chú cho thấy khủng hoảng y tế, tâm lý, pháp lý, hoặc an toàn.</li>
-            <li>Queue này hiện là local theo trình duyệt. Chưa được gọi là production ops hoàn chỉnh cho tới khi có D1 hoặc admin API persistence.</li>
+            <li>Queue intake hiện đã sync bằng D1. Ghi chú reflection và evidence handoff trong module này vẫn local theo trình duyệt cho tới khi có persistence qua admin API.</li>
           </ul>`;
     }
 
@@ -2592,8 +2592,8 @@
       if (list) {
         if (!participants.length) {
           list.innerHTML = isEnglish
-            ? `<p class="note">No participant evidence is available yet. Keep using this module as the pilot contract until D1-backed participant state is added.</p>`
-            : `<p class="note">Chưa có participant evidence nào. Tiếp tục dùng module này như khung pilot cho tới khi có participant state trên D1.</p>`;
+            ? `<p class="note">No participant evidence is available yet. Intake queue imports are D1-backed, but participant state in this module is still browser-local.</p>`
+            : `<p class="note">Chưa có participant evidence nào. Import queue intake đã có D1, nhưng participant state trong module này vẫn local theo trình duyệt.</p>`;
         } else {
           list.innerHTML = `<ul class="checkList">${participants.map((item) => {
             const trackLabel = item.practiceTrack === "deep"
@@ -2623,13 +2623,13 @@
             <li>Day 1: confirm track and reminder consent before counting someone inside the pilot.</li>
             <li>Day 3: look first at people who paused reminders, marked avoiding, or asked for human reflection.</li>
             <li>Day 7: keep the review short, practical, and tied to one next step.</li>
-            <li>This module is browser-local for now. Do not call it production participant ops until D1 or admin API persistence exists.</li>
+            <li>Participant state in this module is still browser-local. Intake queue import is D1-backed, and full production participant ops still needs admin API persistence.</li>
           </ul>`
         : `<ul class="list">
             <li>Day 1: chốt track và consent reminder trước khi tính một người là đã vào pilot.</li>
             <li>Day 3: nhìn trước vào người pause reminder, đánh dấu đang né, hoặc xin phản hồi người thật.</li>
             <li>Day 7: giữ phần review ngắn, thực tế, và gắn với một bước kế tiếp.</li>
-            <li>Module này hiện là local theo trình duyệt. Chưa gọi là participant ops production cho tới khi có D1 hoặc admin API persistence.</li>
+            <li>Participant state trong module này vẫn local theo trình duyệt. Import queue intake đã có D1, và participant ops production đầy đủ vẫn cần persistence qua admin API.</li>
           </ul>`;
     }
 

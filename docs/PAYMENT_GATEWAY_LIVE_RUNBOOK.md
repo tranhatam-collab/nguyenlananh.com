@@ -399,6 +399,19 @@ REPORT_JSON_PATH="docs/reports/TEAM2_RUNTIME_PHASE_GATE_manual.json" \
 bash scripts/team2-runtime-phase-gate.sh
 ```
 
+Generate short next-actions from the latest JSON report:
+
+```bash
+bash scripts/team2-runtime-next-actions.sh
+```
+
+Or with explicit report path:
+
+```bash
+REPORT_PATH="docs/reports/TEAM2_RUNTIME_PHASE_GATE_20260509_035306.json" \
+bash scripts/team2-runtime-next-actions.sh
+```
+
 Strict mode:
 
 ```bash

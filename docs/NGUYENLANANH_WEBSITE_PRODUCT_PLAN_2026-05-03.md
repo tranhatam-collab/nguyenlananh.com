@@ -72,6 +72,7 @@ This release implements the first safe layer inside the members area:
 - Admin home can now open a module on the same machine with the full intake queue preloaded, so batch triage does not require a manual paste step.
 - When reflection ops or pilot ops load an intake queue packet, the module now shows how many relevant entries were filtered out of the total queue, so the operator can see the import scope immediately.
 - Admin home now shows queue route counts for reflection, pilot, and already-routed items, so the operator can see queue shape before opening any module.
+- Admin home now sorts the intake queue by real ops priority and labels each item, so reflection-now cases surface first, pilot-ready cases stay visible, and already-routed items fall to the end.
 - Member practice pages now show whether a saved reflection handoff already exists for the current point, so the daily check-in loop can continue without guessing whether the handoff step is still pending.
 - Hidden noindex admin reflection route gives operations a quiet triage module before any D1 or API-backed queue is introduced.
 - Hidden noindex admin pilot route gives operations a readiness layer for Day 1, Day 3, Day 7, and reminder consent before any live pilot opens.

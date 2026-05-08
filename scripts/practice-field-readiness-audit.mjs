@@ -19,7 +19,8 @@ const checks = [
       /intake queue/i,
       /recommended route/i,
       /admin reflection and admin pilot can now import/i,
-      /open a module on the same machine with the full intake queue/i
+      /open a module on the same machine with the full intake queue/i,
+      /priority/i
     ]
   },
   {
@@ -312,7 +313,10 @@ const checks = [
       /pilot-evidence-output/,
       /imported_member_pilot_readiness/,
       /ready_profiles_with_checkin/,
-      /Copy evidence|Đã copy pilot evidence/
+      /Copy evidence|Đã copy pilot evidence/,
+      /Needs reflection now|Cần reflection ngay/,
+      /Ready for pilot review|Sẵn rà pilot/,
+      /Priority|Ưu tiên/
     ]
   },
   {

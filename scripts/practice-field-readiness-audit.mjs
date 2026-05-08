@@ -294,6 +294,8 @@ const checks = [
       /admin_home_filtered_queue/,
       /describeQueueFilters/,
       /Filter scope:|Phạm vi lọc:/,
+      /Open reflection ops with filtered queue|Mở reflection ops với phần đang lọc/,
+      /Open pilot ops with filtered queue|Mở pilot ops với phần đang lọc/,
       /queue_total/,
       /queue_relevant/,
       /Queue -> reflection|Sẵn cho reflection/,

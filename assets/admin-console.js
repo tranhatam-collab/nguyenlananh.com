@@ -1219,6 +1219,18 @@
         return routePass && handoffPass;
       });
       lastFilteredQueue = filteredQueue;
+      if (memberSnapshotQueueOpenReflection) {
+        memberSnapshotQueueOpenReflection.disabled = filteredQueue.length === 0;
+        memberSnapshotQueueOpenReflection.textContent = isEnglish
+          ? `Open reflection ops with filtered queue (${filteredQueue.length})`
+          : `Mở reflection ops với phần đang lọc (${filteredQueue.length})`;
+      }
+      if (memberSnapshotQueueOpenPilot) {
+        memberSnapshotQueueOpenPilot.disabled = filteredQueue.length === 0;
+        memberSnapshotQueueOpenPilot.textContent = isEnglish
+          ? `Open pilot ops with filtered queue (${filteredQueue.length})`
+          : `Mở pilot ops với phần đang lọc (${filteredQueue.length})`;
+      }
       if (memberSnapshotQueuePacket) {
         memberSnapshotQueuePacket.value = JSON.stringify(buildMemberSnapshotQueuePacket(), null, 2);
       }

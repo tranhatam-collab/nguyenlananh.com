@@ -436,7 +436,8 @@ node scripts/content-audit.mjs --fail
 node scripts/validate-bilingual-release.mjs
 node scripts/local-public-site-audit.mjs
 node scripts/practice-field-readiness-audit.mjs --fail
-BASE_URL=https://www.nguyenlananh.com ENFORCE_COMMERCE_LIVE=0 REQUIRE_STRIPE=0 bash scripts/team2-live-gate.sh
+BASE_URL=https://www.nguyenlananh.com REQUIRE_STRIPE=0 STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh
+bash scripts/team2-runtime-next-actions.sh
 ```
 
 18.4. **Practice-field product lock.** The site is a readiness filter and

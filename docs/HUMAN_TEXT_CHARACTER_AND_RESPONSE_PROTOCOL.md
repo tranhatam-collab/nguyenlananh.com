@@ -298,6 +298,11 @@ This repo (`nguyenlananh.com`) uses:
 - `node scripts/local-public-site-audit.mjs`
 - `wrangler pages functions build`
 
+For frequent local verification loops where you do not want report timestamp
+churn in git, use:
+
+- `node scripts/human-text-gate.mjs --fail --no-write`
+
 A release is not web-ready unless these gates pass or the remaining items are
 explicitly downgraded with owner, reason, and next action.
 

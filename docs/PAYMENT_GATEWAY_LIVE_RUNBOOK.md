@@ -375,11 +375,13 @@ bash scripts/team2-runtime-phase-gate.sh
 Default evidence output:
 
 - `docs/reports/TEAM2_RUNTIME_PHASE_GATE_<timestamp>.md`
+- `docs/reports/TEAM2_RUNTIME_PHASE_GATE_<timestamp>.json`
 
 Optional custom output path:
 
 ```bash
 REPORT_PATH="docs/reports/TEAM2_RUNTIME_PHASE_GATE_manual.md" \
+REPORT_JSON_PATH="docs/reports/TEAM2_RUNTIME_PHASE_GATE_manual.json" \
 bash scripts/team2-runtime-phase-gate.sh
 ```
 

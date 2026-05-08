@@ -14,6 +14,7 @@ D1_NAME="${D1_NAME:-nguyenlananh-payments-prod}"
 REPORT_DIR="${REPORT_DIR:-$ROOT_DIR/docs/reports}"
 REPORT_TS="$(date '+%Y%m%d_%H%M%S')"
 REPORT_PATH="${REPORT_PATH:-$REPORT_DIR/TEAM2_RUNTIME_PHASE_GATE_${REPORT_TS}.md}"
+REPORT_JSON_PATH="${REPORT_JSON_PATH:-${REPORT_PATH%.md}.json}"
 TMP_LOG_DIR="$(mktemp -d /tmp/team2-runtime-phase-gate.XXXXXX)"
 STAMP_UTC="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 STAMP_LOCAL="$(date '+%Y-%m-%d %H:%M:%S %z')"
@@ -30,6 +31,15 @@ cleanup() {
   rm -rf "$TMP_LOG_DIR"
 }
 trap cleanup EXIT
+
+json_escape() {
+  printf '%s' "$1" | jq -Rs .
+}
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "Missing required command: jq"
+  exit 1
+fi
 
 run_step() {
   local label="$1"
@@ -112,8 +122,58 @@ write_report() {
     fi
   } > "$REPORT_PATH"
 
+  {
+    echo "{"
+    echo "  \"generated_at_utc\": $(json_escape "$STAMP_UTC"),"
+    echo "  \"generated_at_local\": $(json_escape "$STAMP_LOCAL"),"
+    echo "  \"base_url\": $(json_escape "$BASE_URL"),"
+    echo "  \"project_name\": $(json_escape "$PROJECT_NAME"),"
+    echo "  \"target_envs\": $(json_escape "$TARGET_ENVS"),"
+    echo "  \"require_stripe\": $REQUIRE_STRIPE,"
+    echo "  \"strict_mode\": $STRICT_MODE,"
+    echo "  \"check_pages_secrets\": $CHECK_PAGES_SECRETS,"
+    echo "  \"intl_provider\": $(json_escape "$INTL_PROVIDER"),"
+    echo "  \"steps\": ["
+    local i
+    for ((i=0; i<${#STEP_LABELS[@]}; i++)); do
+      local step_idx=$((i + 1))
+      local code="${STEP_CODES[$i]}"
+      local status="PASS"
+      if [ "$code" -ne 0 ]; then
+        status="FAIL"
+      fi
+      local log_tail
+      log_tail="$(tail -n 40 "${STEP_LOGS[$i]}")"
+      if [ "$i" -gt 0 ]; then
+        echo "    ,{"
+      else
+        echo "    {"
+      fi
+      echo "      \"index\": $step_idx,"
+      echo "      \"label\": $(json_escape "${STEP_LABELS[$i]}"),"
+      echo "      \"status\": $(json_escape "$status"),"
+      echo "      \"exit_code\": $code,"
+      echo "      \"command\": $(json_escape "${STEP_COMMANDS[$i]}"),"
+      echo "      \"log_tail\": $(json_escape "$log_tail")"
+      echo "    }"
+    done
+    echo "  ],"
+    echo "  \"summary\": {"
+    echo "    \"total_steps\": $TOTAL,"
+    echo "    \"passed_steps\": $PASSED,"
+    echo "    \"failed_steps\": $FAILED,"
+    if [ "$FAILED" -gt 0 ]; then
+      echo "    \"verdict\": \"BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS\""
+    else
+      echo "    \"verdict\": \"RUNTIME_PHASE_GATE_PASS\""
+    fi
+    echo "  }"
+    echo "}"
+  } > "$REPORT_JSON_PATH"
+
   echo
   echo "Report: $REPORT_PATH"
+  echo "JSON Report: $REPORT_JSON_PATH"
 }
 
 echo "== Team 2 Runtime Phase Gate =="

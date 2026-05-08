@@ -360,6 +360,33 @@ Nen subscribe toi thieu:
 
 ### B8. Smoke proof sau cutover DNS
 
+Run all runtime checks in one command (recommended):
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+REQUIRE_STRIPE=0 \
+STRICT_MODE=0 \
+CHECK_PAGES_SECRETS=1 \
+bash scripts/team2-runtime-phase-gate.sh
+```
+
+Strict mode:
+
+```bash
+BASE_URL=https://www.nguyenlananh.com \
+PROJECT_NAME=nguyenlananh-com \
+TARGET_ENVS="production" \
+REQUIRE_STRIPE=0 \
+STRICT_MODE=1 \
+CHECK_PAGES_SECRETS=1 \
+PAYMENTS_ADMIN_KEY='<admin_key>' \
+bash scripts/team2-runtime-phase-gate.sh
+```
+
+If you need to run each gate separately, use the commands below.
+
 Gate tong hop runtime + secret-name readiness:
 
 ```bash
@@ -417,7 +444,10 @@ BASE_URL=https://www.nguyenlananh.com \
 D1_NAME=nguyenlananh-payments-prod \
 PAYMENTS_ADMIN_KEY='<admin_key>' \
 USD_PROVIDER=paypal \
-./scripts/payment-live-proof-smoke.sh
+REQUIRE_STRIPE=0 \
+CHECK_PAGES_SECRETS=1 \
+TARGET_ENVS="production" \
+bash scripts/payment-live-proof-smoke.sh
 ```
 
 Script se:

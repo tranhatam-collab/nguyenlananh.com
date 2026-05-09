@@ -11,6 +11,9 @@ RUN_LOCAL_PUBLIC_SITE_AUDIT="${RUN_LOCAL_PUBLIC_SITE_AUDIT:-1}"
 RUN_TEAM2_RUNTIME_GATE="${RUN_TEAM2_RUNTIME_GATE:-0}"
 SKIP_RELEASE_GATES="${SKIP_RELEASE_GATES:-0}"
 RUN_FUNCTIONS_BUILD="${RUN_FUNCTIONS_BUILD:-1}"
+RUN_HOMEPAGE_REFRESH_GATE="${RUN_HOMEPAGE_REFRESH_GATE:-1}"
+ENFORCE_HOMEPAGE_LIVE_SMOKE="${ENFORCE_HOMEPAGE_LIVE_SMOKE:-0}"
+HOMEPAGE_GATE_BASE_URL="${HOMEPAGE_GATE_BASE_URL:-https://www.nguyenlananh.com}"
 TEAM2_BASE_URL="${TEAM2_BASE_URL:-https://www.nguyenlananh.com}"
 TEAM2_REQUIRE_STRIPE="${TEAM2_REQUIRE_STRIPE:-0}"
 TEAM2_STRICT_MODE="${TEAM2_STRICT_MODE:-0}"
@@ -33,6 +36,16 @@ if [ "$SKIP_RELEASE_GATES" != "1" ]; then
 
   echo "Running strict content audit"
   node "$REPO_ROOT/scripts/content-audit.mjs" --fail
+
+  if [ "$RUN_HOMEPAGE_REFRESH_GATE" = "1" ]; then
+    echo "Running homepage refresh readiness gate (local contract)"
+    node "$REPO_ROOT/scripts/homepage-refresh-readiness-gate.mjs" --fail
+
+    if [ "$ENFORCE_HOMEPAGE_LIVE_SMOKE" = "1" ]; then
+      echo "Running homepage refresh readiness gate (live smoke)"
+      BASE_URL="$HOMEPAGE_GATE_BASE_URL" node "$REPO_ROOT/scripts/homepage-refresh-readiness-gate.mjs" --fail --require-live
+    fi
+  fi
 
   if [ "$RUN_LOCAL_PUBLIC_SITE_AUDIT" = "1" ]; then
     echo "Running local public site audit"

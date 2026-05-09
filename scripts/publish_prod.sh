@@ -7,6 +7,9 @@ cd "$REPO_ROOT"
 CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 RUN_LOCAL_PUBLIC_SITE_AUDIT="${RUN_LOCAL_PUBLIC_SITE_AUDIT:-1}"
 RUN_FUNCTIONS_BUILD="${RUN_FUNCTIONS_BUILD:-1}"
+RUN_HOMEPAGE_REFRESH_GATE="${RUN_HOMEPAGE_REFRESH_GATE:-1}"
+ENFORCE_HOMEPAGE_LIVE_SMOKE="${ENFORCE_HOMEPAGE_LIVE_SMOKE:-0}"
+HOMEPAGE_GATE_BASE_URL="${HOMEPAGE_GATE_BASE_URL:-https://www.nguyenlananh.com}"
 
 if [ "$CURRENT_BRANCH" != "main" ]; then
   echo "Publish is locked to branch 'main'. Current branch: $CURRENT_BRANCH"
@@ -34,6 +37,16 @@ node scripts/validate-bilingual-release.mjs
 
 echo "Running strict content audit"
 node scripts/content-audit.mjs --fail
+
+if [ "$RUN_HOMEPAGE_REFRESH_GATE" = "1" ]; then
+  echo "Running homepage refresh readiness gate (local contract)"
+  node scripts/homepage-refresh-readiness-gate.mjs --fail
+
+  if [ "$ENFORCE_HOMEPAGE_LIVE_SMOKE" = "1" ]; then
+    echo "Running homepage refresh readiness gate (live smoke)"
+    BASE_URL="$HOMEPAGE_GATE_BASE_URL" node scripts/homepage-refresh-readiness-gate.mjs --fail --require-live
+  fi
+fi
 
 if [ "$RUN_LOCAL_PUBLIC_SITE_AUDIT" = "1" ]; then
   echo "Running local public site audit"

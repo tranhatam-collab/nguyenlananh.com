@@ -67,6 +67,7 @@ Script này giờ sẽ:
    - `node scripts/human-text-gate.mjs --no-write --fail`
    - `node scripts/validate-bilingual-release.mjs`
    - `node scripts/content-audit.mjs --fail`
+   - `node scripts/homepage-refresh-readiness-gate.mjs --fail` (mặc định bật)
    - `node scripts/local-public-site-audit.mjs` (mặc định bật)
    - `wrangler pages functions build` (mặc định bật)
 3. deploy dist đó lên Cloudflare Pages
@@ -102,6 +103,8 @@ Script này sẽ:
    - `node scripts/human-text-gate.mjs --no-write --fail`
    - `node scripts/validate-bilingual-release.mjs`
    - `node scripts/content-audit.mjs --fail`
+   - `node scripts/homepage-refresh-readiness-gate.mjs --fail` (mặc định bật)
+   - optional live proof: `BASE_URL=... node scripts/homepage-refresh-readiness-gate.mjs --fail --require-live`
    - `node scripts/local-public-site-audit.mjs` (mặc định bật)
    - `wrangler pages functions build` (mặc định bật)
 5. nếu script sync làm thay đổi file, nó sẽ dừng để bạn commit trước
@@ -126,6 +129,9 @@ export RUN_LOCAL_PUBLIC_SITE_AUDIT=1
 export RUN_TEAM2_RUNTIME_GATE=0
 export SKIP_RELEASE_GATES=0
 export RUN_FUNCTIONS_BUILD=1
+export RUN_HOMEPAGE_REFRESH_GATE=1
+export ENFORCE_HOMEPAGE_LIVE_SMOKE=0
+export HOMEPAGE_GATE_BASE_URL=https://www.nguyenlananh.com
 ```
 
 Mặc định hiện tại:

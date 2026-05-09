@@ -5,34 +5,47 @@ Owner: Pay-Owner agent
 
 ---
 
-## REQ-N-001 — VietQR bank credentials + core env secrets [OPEN]
+## REQ-N-001 — VN rail via pay.iai.one + receiver packet [OPEN]
 
-**To:** Founder / Operations
+**To:** Founder / Team Pay / Operations
 **Priority:** BLOCKER for VN payment live
 
-VietQR is the only payment method for Vietnamese users. The worker reads
-these secrets at runtime; without them the provider is disabled.
+VN payment runs through `pay.iai.one` checkout for `provider=payos`.
+Worker runtime requires pay gateway key; receiver account is managed in Team Pay packet.
 
 Please provide:
 
 ```
-VIETQR_BANK_BIN=<6-digit bank BIN e.g. 970415 for Vietinbank>
-VIETQR_ACCOUNT_NO=<account number>
-VIETQR_ACCOUNT_NAME=<account holder name — shown on QR>
+PAY_IAI_ONE_API_KEY=<live key bound to tenant/site nguyenlananh>
+PAY_IAI_ONE_TENANT_CODE=nguyenlananh               # optional, default nguyenlananh
+PAY_IAI_ONE_SITE_CODE=nguyenlananh                 # optional, default nguyenlananh
+PAY_IAI_ONE_BASE_URL=https://pay.iai.one           # optional
+VIETQR_PROVIDER_MODE=pay_iai_one                   # optional, auto by key
+PAY_IAI_ONE_SITE_KEY=<optional if pay.iai.one enforces x-site-key>
+PAY_IAI_ONE_API_KEY_HEADER=x-api-key               # optional, default x-api-key
 PAYMENTS_ADMIN_KEY=<a strong random secret for admin panel access>
 API_BASE_URL=https://www.nguyenlananh.com/api
 ENV_DEPLOY_TARGET=cloudflare-pages
 REFUND_POLICY=manual_review
 ```
 
+Receiver packet for Team Pay mapping (founder-provided, keep private channel only):
+
+- Bank: `Techcombank`
+- Account name: `NGUYEN LAN ANH`
+- Account number: `***********0017` (full number shared via secure founder channel)
+- Source proof: QR image delivered on `2026-05-09` (founder channel)
+- Tracking packet: `docs/reports/PAY_TEAM_NGUYENLANANH_RECEIVER_PACKET_2026-05-09.md`
+
 Then run:
 ```bash
 cd /path/to/nguyenlananh.com
+VN_VIA_PAY_IAI_ONE=1 \
 REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0 \
 bash scripts/provision-payment-live-secrets.sh
 ```
 
-Once secrets are set, `vietqr` will appear as `enabled=true` in
+Once secrets are set, `vietqr` (routing mode `pay_iai_one`) will appear as `enabled=true` in
 `/api/payments/providers` and the admin panel becomes operational.
 
 ---

@@ -5,6 +5,7 @@ BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 EXPECT_EMAIL_PROVIDER="${EXPECT_EMAIL_PROVIDER:-mail_iai_one}"
 REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
+VN_VIA_PAY_IAI_ONE="${VN_VIA_PAY_IAI_ONE:-1}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
@@ -55,9 +56,13 @@ append_provider_missing() {
       queue_missing "STRIPE_WEBHOOK_SECRET"
       ;;
     vietqr)
-      queue_missing "VIETQR_BANK_BIN"
-      queue_missing "VIETQR_ACCOUNT_NO"
-      queue_missing "VIETQR_ACCOUNT_NAME"
+      if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+        queue_missing "PAY_IAI_ONE_API_KEY"
+      else
+        queue_missing "VIETQR_BANK_BIN"
+        queue_missing "VIETQR_ACCOUNT_NO"
+        queue_missing "VIETQR_ACCOUNT_NAME"
+      fi
       ;;
     *)
       ;;
@@ -81,10 +86,17 @@ check_pages_secret_names() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    VIETQR_BANK_BIN
-    VIETQR_ACCOUNT_NO
-    VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+    required+=(PAY_IAI_ONE_API_KEY)
+  else
+    required+=(
+      VIETQR_BANK_BIN
+      VIETQR_ACCOUNT_NO
+      VIETQR_ACCOUNT_NAME
+    )
+  fi
 
   if [ "$REQUIRE_PAYPAL" = "1" ]; then
     required+=(
@@ -136,6 +148,7 @@ echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Base URL: $BASE_URL"
 echo "Require PayPal in this phase: $REQUIRE_PAYPAL"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
+echo "VN rail via pay.iai.one: $VN_VIA_PAY_IAI_ONE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
 

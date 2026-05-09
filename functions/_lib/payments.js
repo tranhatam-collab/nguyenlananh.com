@@ -53,6 +53,8 @@ const PAYPAL_API_SANDBOX = "https://api-m.sandbox.paypal.com";
 const STRIPE_API = "https://api.stripe.com";
 const IMPLEMENTED_PROVIDER_CODES = ["paypal", "stripe", "vietqr"];
 const VIETQR_DEFAULT_TEMPLATE = "compact2";
+const PAY_IAI_ONE_BASE_URL = "https://pay.iai.one";
+const PAY_IAI_ONE_DEFAULT_PROVIDER = "payos";
 
 function normalizeIdentityCountry(value) {
   const normalized = String(value || "").trim().toUpperCase();
@@ -96,7 +98,53 @@ function planAmountForCurrency(plan, currency) {
   return Number(plan.priceUsd || 0);
 }
 
+function normalizeProviderMode(value) {
+  return String(value || "").trim().toLowerCase().replace(/[.\s-]+/g, "_");
+}
+
+function directVietQrSecretsReady(env) {
+  return Boolean(env.VIETQR_BANK_BIN) && Boolean(env.VIETQR_ACCOUNT_NO) && Boolean(env.VIETQR_ACCOUNT_NAME);
+}
+
+function vietQrViaPayIaiOne(env) {
+  const configuredMode = normalizeProviderMode(
+    env.VIETQR_PROVIDER_MODE || env.VN_VND_PROVIDER_MODE || env.PAY_VN_PROVIDER_MODE || ""
+  );
+
+  if (configuredMode === "direct" || configuredMode === "direct_vietqr" || configuredMode === "legacy_vietqr") {
+    return false;
+  }
+
+  if (configuredMode === "pay_iai_one" || configuredMode === "payiaione") {
+    return true;
+  }
+
+  return Boolean(env.PAY_IAI_ONE_API_KEY);
+}
+
+function payIaiOneBaseUrl(env) {
+  return String(env.PAY_IAI_ONE_BASE_URL || PAY_IAI_ONE_BASE_URL).replace(/\/+$/g, "");
+}
+
+function payIaiOneTenantCode(env) {
+  return String(env.PAY_IAI_ONE_TENANT_CODE || "nguyenlananh").trim();
+}
+
+function payIaiOneSiteCode(env) {
+  return String(env.PAY_IAI_ONE_SITE_CODE || "nguyenlananh").trim();
+}
+
+function providerApiKeyHeaderName(env) {
+  return String(env.PAY_IAI_ONE_API_KEY_HEADER || "x-api-key").trim().toLowerCase();
+}
+
 function providerSecretsReady(provider, env) {
+  if (provider.code === "vietqr") {
+    if (vietQrViaPayIaiOne(env)) {
+      return Boolean(env.PAY_IAI_ONE_API_KEY);
+    }
+    return directVietQrSecretsReady(env);
+  }
   return provider.requiredSecrets.every((secretName) => Boolean(env[secretName]));
 }
 
@@ -104,6 +152,7 @@ function providerStatus(provider, env) {
   const implemented = IMPLEMENTED_PROVIDER_CODES.includes(provider.code);
   const enabled = providerSecretsReady(provider, env) && Boolean(env.PAYMENTS_DB) && implemented;
   const manualFallback = provider.code === "paypal" && Boolean(env.PAYPAL_MERCHANT_EMAIL) && !enabled;
+  const routingMode = provider.code === "vietqr" ? (vietQrViaPayIaiOne(env) ? "pay_iai_one" : "direct_vietqr") : null;
   return {
     code: provider.code,
     label: provider.label,
@@ -113,6 +162,7 @@ function providerStatus(provider, env) {
     implemented,
     enabled,
     manual_fallback: manualFallback,
+    routing_mode: routingMode,
     mode:
       !implemented
         ? "planned"
@@ -375,6 +425,28 @@ async function createStripeCheckout(env, order, idempotencyKey) {
   };
 }
 
+function firstByKeys(input, keySet) {
+  if (!input || typeof input !== "object") return null;
+  const queue = [input];
+  while (queue.length > 0) {
+    const current = queue.shift();
+    if (!current || typeof current !== "object") continue;
+    if (Array.isArray(current)) {
+      current.forEach((item) => queue.push(item));
+      continue;
+    }
+    for (const [key, value] of Object.entries(current)) {
+      if (keySet.has(key) && value !== null && value !== undefined && String(value).trim() !== "") {
+        return value;
+      }
+      if (value && typeof value === "object") {
+        queue.push(value);
+      }
+    }
+  }
+  return null;
+}
+
 async function retrieveStripeSession(env, sessionId) {
   const body = await stripeRequest(env, "GET", `/v1/checkout/sessions/${sessionId}`, null, null);
   return {
@@ -414,7 +486,82 @@ function buildVietQrTransferNote(internalOrderId) {
   return `NLA${normalized.slice(-10)}`;
 }
 
-async function createVietQrCheckout(env, order) {
+async function createVietQrCheckout(env, order, idempotencyKey) {
+  if (vietQrViaPayIaiOne(env)) {
+    const payload = {
+      tenant_code: payIaiOneTenantCode(env),
+      site_code: payIaiOneSiteCode(env),
+      internal_order_id: order.internal_order_id,
+      provider: String(env.PAY_IAI_ONE_VN_PROVIDER || PAY_IAI_ONE_DEFAULT_PROVIDER).trim().toLowerCase(),
+      plan_code: order.plan.code,
+      amount: Math.max(0, Math.round(Number(order.amount || 0))),
+      currency: "VND",
+      billing_cycle: "one_time",
+      success_url: order.success_url,
+      cancel_url: order.cancel_url,
+      callback_url: String(env.PAY_IAI_ONE_CALLBACK_URL || order.success_url).trim() || order.success_url,
+      user_id: `nla_${order.internal_order_id}`,
+      email: order.email,
+      full_name: String(order.metadata_json?.full_name || "Nguyenlananh Member"),
+      locale: order.locale || "vi",
+      ref_code: "nla-vn-checkout"
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+      "x-idempotency-key": idempotencyKey || randomId("nla_pay")
+    };
+    headers[providerApiKeyHeaderName(env)] = String(env.PAY_IAI_ONE_API_KEY || "");
+
+    const optionalSiteKey = String(env.PAY_IAI_ONE_SITE_KEY || "").trim();
+    if (optionalSiteKey) {
+      headers["x-site-key"] = optionalSiteKey;
+    }
+
+    const response = await fetch(`${payIaiOneBaseUrl(env)}/internal/checkout-session`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload)
+    });
+
+    const body = await response.json().catch(() => ({}));
+    const checkoutUrl = firstByKeys(body, new Set(["checkout_url", "checkoutUrl", "redirect_url", "redirectUrl", "paymentLink", "payment_link", "url"]));
+    const providerOrderId =
+      firstByKeys(body, new Set(["provider_order_id", "providerOrderId", "orderCode", "order_id", "id"])) ||
+      payload.internal_order_id;
+    const providerSessionId =
+      firstByKeys(body, new Set(["provider_payment_id", "providerPaymentId", "payment_link_id", "paymentLinkId", "payment_session_id"])) || null;
+    const message = String(
+      firstByKeys(body, new Set(["message", "desc", "error", "detail"])) || "pay.iai.one checkout request failed."
+    );
+    const code = String(firstByKeys(body, new Set(["code", "status"])) || "");
+    const success = body.ok === true || body.success === true;
+
+    if (!response.ok || !success || !checkoutUrl) {
+      const error = new Error(message);
+      error.status = response.status >= 400 ? response.status : 502;
+      error.code = code === "214" ? "PAY_IAI_ONE_PROVIDER_214" : code || "PAY_IAI_ONE_CHECKOUT_FAILED";
+      throw error;
+    }
+
+    return {
+      provider_order_id: String(providerOrderId),
+      provider_session_id: providerSessionId ? String(providerSessionId) : null,
+      checkout_url: String(checkoutUrl),
+      raw: {
+        mode: "pay_iai_one",
+        transfer_note:
+          firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
+          String(providerOrderId),
+        qr_url: String(checkoutUrl),
+        bank_bin: firstByKeys(body, new Set(["bank_bin", "bankBin"])) || "",
+        account_no: firstByKeys(body, new Set(["account_no", "accountNo"])) || "",
+        account_name: firstByKeys(body, new Set(["account_name", "accountName"])) || "",
+        provider_payload: body
+      }
+    };
+  }
+
   const transferNote = buildVietQrTransferNote(order.internal_order_id);
   const qrUrl = buildVietQrQuickLink({
     bankBin: env.VIETQR_BANK_BIN,
@@ -518,7 +665,16 @@ function providerPublicConfig(providerCode, env) {
   }
 
   if (providerCode === "vietqr") {
+    if (vietQrViaPayIaiOne(env)) {
+      return {
+        mode: "pay_iai_one",
+        base_url: payIaiOneBaseUrl(env),
+        tenant_code: payIaiOneTenantCode(env),
+        site_code: payIaiOneSiteCode(env)
+      };
+    }
     return {
+      mode: "direct_vietqr",
       bank_bin: env.VIETQR_BANK_BIN || null,
       account_no: env.VIETQR_ACCOUNT_NO || null,
       account_name: env.VIETQR_ACCOUNT_NAME || null,
@@ -782,7 +938,7 @@ async function createCheckoutForProvider({ providerCode, env, order, idempotency
   }
 
   if (providerCode === "vietqr") {
-    return createVietQrCheckout(env, order);
+    return createVietQrCheckout(env, order, idempotencyKey);
   }
 
   const error = new Error(`${providerCode} has not been wired into runtime yet.`);

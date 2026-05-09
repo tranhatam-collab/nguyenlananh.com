@@ -11,6 +11,7 @@ REQUIRE_INTL_PROVIDER="${REQUIRE_INTL_PROVIDER:-0}"
 REQUIRE_RAIL_GUARD="${REQUIRE_RAIL_GUARD:-1}"
 REQUIRE_PROVIDER_READY="${REQUIRE_PROVIDER_READY:-0}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
+VN_VIA_PAY_IAI_ONE="${VN_VIA_PAY_IAI_ONE:-1}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
@@ -82,9 +83,13 @@ append_provider_secret_hints() {
       queue_secret_hint "STRIPE_WEBHOOK_SECRET"
       ;;
     vietqr)
-      queue_secret_hint "VIETQR_BANK_BIN"
-      queue_secret_hint "VIETQR_ACCOUNT_NO"
-      queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+        queue_secret_hint "PAY_IAI_ONE_API_KEY"
+      else
+        queue_secret_hint "VIETQR_BANK_BIN"
+        queue_secret_hint "VIETQR_ACCOUNT_NO"
+        queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      fi
       ;;
     *)
       ;;
@@ -137,10 +142,17 @@ check_pages_secret_names() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    VIETQR_BANK_BIN
-    VIETQR_ACCOUNT_NO
-    VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+    required+=(PAY_IAI_ONE_API_KEY)
+  else
+    required+=(
+      VIETQR_BANK_BIN
+      VIETQR_ACCOUNT_NO
+      VIETQR_ACCOUNT_NAME
+    )
+  fi
 
   if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
     case "$INTL_PROVIDER" in
@@ -209,6 +221,7 @@ echo "Require INTL provider: $REQUIRE_INTL_PROVIDER"
 echo "Require rail guard: $REQUIRE_RAIL_GUARD"
 echo "Require provider ready: $REQUIRE_PROVIDER_READY"
 echo "Require completed: $REQUIRE_COMPLETED"
+echo "VN rail via pay.iai.one: $VN_VIA_PAY_IAI_ONE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
 

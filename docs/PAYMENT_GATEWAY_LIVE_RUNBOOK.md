@@ -31,7 +31,7 @@ Thanh phan chinh:
 
 1. `PayPal`
 2. `Stripe`
-3. `VietQR (manual confirm phase)`
+3. `VietQR (manual confirm phase, uu tien tao checkout qua pay.iai.one)`
 
 ### Da co cho cam vao UI/API registry, chua viet adapter runtime
 
@@ -43,7 +43,7 @@ Nghia la:
 
 - trang join da cho chon nhieu cong
 - runtime live co 2 lane:
-  - `VN`: VietQR + admin manual confirm
+  - `VN`: VietQR + admin manual confirm (checkout uu tien qua `pay.iai.one`)
   - `International`: PayPal/Stripe checkout (USD)
 - rule bat buoc: ID VN -> VND; ID ngoai VN -> USD
 
@@ -196,11 +196,24 @@ STRIPE_WEBHOOK_SECRET=...
 ### VietQR live (VN rail)
 
 ```txt
+PAY_IAI_ONE_API_KEY=...
+PAY_IAI_ONE_TENANT_CODE=nguyenlananh            # optional, default nguyenlananh
+PAY_IAI_ONE_SITE_CODE=nguyenlananh              # optional, default nguyenlananh
+PAY_IAI_ONE_BASE_URL=https://pay.iai.one        # optional
+VIETQR_PROVIDER_MODE=pay_iai_one                # optional, auto when PAY_IAI_ONE_API_KEY exists
+PAY_IAI_ONE_SITE_KEY=...                        # optional, required only if pay.iai.one enforces x-site-key
+PAY_IAI_ONE_API_KEY_HEADER=x-api-key            # optional, default x-api-key
+VIETQR_TEMPLATE=compact2
+PAYMENTS_ADMIN_KEY=...
+```
+
+Fallback direct VietQR (chi dung khi founder yeu cau):
+
+```txt
+VIETQR_PROVIDER_MODE=direct_vietqr
 VIETQR_BANK_BIN=...
 VIETQR_ACCOUNT_NO=...
 VIETQR_ACCOUNT_NAME=...
-VIETQR_TEMPLATE=compact2
-PAYMENTS_ADMIN_KEY=...
 ```
 
 ### Email
@@ -209,7 +222,10 @@ Khuyen nghi don gian nhat:
 
 ```txt
 EMAIL_PROVIDER=mail_iai_one
+MAIL_API_BASE_URL=https://api.mail.iai.one/v1
 MAIL_API_KEY=...
+MAIL_API_WORKSPACE_ID=...
+MAIL_API_WEBHOOK_SECRET=...
 EMAIL_FROM_SYSTEM=noreply@nguyenlananh.com
 EMAIL_FROM_PAY=pay@nguyenlananh.com
 EMAIL_REPLY_TO_SUPPORT=support@nguyenlananh.com
@@ -277,7 +293,7 @@ Khi non-interactive mode thieu input, script se fail som va in danh sach bien ca
 
 Script tren se yeu cau nhap va set day du:
 
-- `VIETQR_*`
+- `PAY_IAI_ONE_API_KEY` (VN rail mac dinh)
 - `PAYMENTS_ADMIN_KEY`
 - `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_WEBHOOK_ID`, `PAYPAL_MERCHANT_EMAIL`
 - `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`

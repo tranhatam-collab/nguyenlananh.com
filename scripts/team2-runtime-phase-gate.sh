@@ -8,6 +8,7 @@ TARGET_ENVS="${TARGET_ENVS:-production}"
 REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
 REQUIRE_INTL_PROVIDER="${REQUIRE_INTL_PROVIDER:-0}"
+VN_VIA_PAY_IAI_ONE="${VN_VIA_PAY_IAI_ONE:-1}"
 STRICT_MODE="${STRICT_MODE:-0}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-1}"
 INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
@@ -117,10 +118,19 @@ build_expected_secret_contract() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    VIETQR_BANK_BIN
-    VIETQR_ACCOUNT_NO
-    VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+    EXPECTED_SECRET_CONTRACT+=(
+      PAY_IAI_ONE_API_KEY
+    )
+  else
+    EXPECTED_SECRET_CONTRACT+=(
+      VIETQR_BANK_BIN
+      VIETQR_ACCOUNT_NO
+      VIETQR_ACCOUNT_NAME
+    )
+  fi
 
   if [ "$REQUIRE_PAYPAL" = "1" ] || [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
     EXPECTED_SECRET_CONTRACT+=(
@@ -308,6 +318,7 @@ write_report() {
     echo "  \"require_paypal\": $REQUIRE_PAYPAL,"
     echo "  \"require_stripe\": $REQUIRE_STRIPE,"
     echo "  \"require_intl_provider\": $REQUIRE_INTL_PROVIDER,"
+    echo "  \"vn_via_pay_iai_one\": $VN_VIA_PAY_IAI_ONE,"
     echo "  \"strict_mode\": $STRICT_MODE,"
     echo "  \"check_pages_secrets\": $CHECK_PAGES_SECRETS,"
     echo "  \"connectivity_preflight\": $CONNECTIVITY_PREFLIGHT,"
@@ -413,6 +424,7 @@ echo "Target envs: $TARGET_ENVS"
 echo "Require PayPal: $REQUIRE_PAYPAL"
 echo "Require Stripe: $REQUIRE_STRIPE"
 echo "Require INTL provider: $REQUIRE_INTL_PROVIDER"
+echo "VN rail via pay.iai.one: $VN_VIA_PAY_IAI_ONE"
 echo "Strict mode: $STRICT_MODE"
 echo "Check Pages secrets: $CHECK_PAGES_SECRETS"
 echo "Connectivity preflight: $CONNECTIVITY_PREFLIGHT"
@@ -441,6 +453,7 @@ else
     TARGET_ENVS="$TARGET_ENVS" \
     REQUIRE_PAYPAL="$REQUIRE_PAYPAL" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    VN_VIA_PAY_IAI_ONE="$VN_VIA_PAY_IAI_ONE" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     bash "$ROOT_DIR/scripts/payment-live-secrets-preflight.sh" || true
 
@@ -451,6 +464,7 @@ else
     TARGET_ENVS="$TARGET_ENVS" \
     REQUIRE_PAYPAL="$REQUIRE_PAYPAL" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    VN_VIA_PAY_IAI_ONE="$VN_VIA_PAY_IAI_ONE" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     ENFORCE_COMMERCE_LIVE="$STRICT_MODE" \
     bash "$ROOT_DIR/scripts/team2-live-gate.sh" || true
@@ -462,6 +476,7 @@ else
     TARGET_ENVS="$TARGET_ENVS" \
     REPORT_DIR="$TMP_LOG_DIR" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    VN_VIA_PAY_IAI_ONE="$VN_VIA_PAY_IAI_ONE" \
     INTL_PROVIDER="$INTL_PROVIDER" \
     REQUIRE_INTL_PROVIDER="$REQUIRE_INTL_PROVIDER" \
     REQUIRE_PROVIDER_READY="$STRICT_MODE" \
@@ -474,6 +489,7 @@ else
     PROJECT_NAME="$PROJECT_NAME" \
     TARGET_ENVS="$TARGET_ENVS" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
+    VN_VIA_PAY_IAI_ONE="$VN_VIA_PAY_IAI_ONE" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
     REQUIRE_INTL_PROVIDER="$REQUIRE_INTL_PROVIDER" \
     REQUIRE_COMPLETED="$STRICT_MODE" \

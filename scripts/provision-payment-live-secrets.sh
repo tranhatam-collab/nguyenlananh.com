@@ -9,6 +9,7 @@ TARGET_ENVS="${TARGET_ENVS:-production preview}"
 REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
 SKIP_STRIPE="${SKIP_STRIPE:-0}"
+VN_VIA_PAY_IAI_ONE="${VN_VIA_PAY_IAI_ONE:-1}"
 NON_INTERACTIVE="${NON_INTERACTIVE:-0}"
 MISSING_REQUIRED_INPUT=0
 
@@ -84,13 +85,18 @@ echo "Target environments: $TARGET_ENVS"
 echo "Email provider mode: $EMAIL_PROVIDER"
 echo "Require PayPal in this phase: $REQUIRE_PAYPAL"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
+echo "VN rail via pay.iai.one: $VN_VIA_PAY_IAI_ONE"
 echo "Stripe deferred for current phase: $SKIP_STRIPE"
 echo "Non-interactive mode: $NON_INTERACTIVE"
 echo
 
-read_secret "VIETQR_BANK_BIN" VIETQR_BANK_BIN
-read_secret "VIETQR_ACCOUNT_NO" VIETQR_ACCOUNT_NO
-read_secret "VIETQR_ACCOUNT_NAME" VIETQR_ACCOUNT_NAME
+if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+  read_secret "PAY_IAI_ONE_API_KEY" PAY_IAI_ONE_API_KEY
+else
+  read_secret "VIETQR_BANK_BIN" VIETQR_BANK_BIN
+  read_secret "VIETQR_ACCOUNT_NO" VIETQR_ACCOUNT_NO
+  read_secret "VIETQR_ACCOUNT_NAME" VIETQR_ACCOUNT_NAME
+fi
 read_secret "PAYMENTS_ADMIN_KEY" PAYMENTS_ADMIN_KEY
 if [ "$REQUIRE_PAYPAL" = "1" ]; then
   read_secret "PAYPAL_CLIENT_ID" PAYPAL_CLIENT_ID
@@ -124,9 +130,13 @@ fi
 
 echo
 echo "Applying secrets..."
-put_secret "VIETQR_BANK_BIN" "$VIETQR_BANK_BIN"
-put_secret "VIETQR_ACCOUNT_NO" "$VIETQR_ACCOUNT_NO"
-put_secret "VIETQR_ACCOUNT_NAME" "$VIETQR_ACCOUNT_NAME"
+if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+  put_secret "PAY_IAI_ONE_API_KEY" "$PAY_IAI_ONE_API_KEY"
+else
+  put_secret "VIETQR_BANK_BIN" "$VIETQR_BANK_BIN"
+  put_secret "VIETQR_ACCOUNT_NO" "$VIETQR_ACCOUNT_NO"
+  put_secret "VIETQR_ACCOUNT_NAME" "$VIETQR_ACCOUNT_NAME"
+fi
 put_secret "PAYMENTS_ADMIN_KEY" "$PAYMENTS_ADMIN_KEY"
 if [ "$REQUIRE_PAYPAL" = "1" ]; then
   put_secret "PAYPAL_CLIENT_ID" "$PAYPAL_CLIENT_ID"
@@ -149,9 +159,6 @@ put_secret "EMAIL_FROM_PAY" "$EMAIL_FROM_PAY"
 put_secret "EMAIL_REPLY_TO_SUPPORT" "$EMAIL_REPLY_TO_SUPPORT"
 
 unset \
-  VIETQR_BANK_BIN \
-  VIETQR_ACCOUNT_NO \
-  VIETQR_ACCOUNT_NAME \
   PAYMENTS_ADMIN_KEY \
   MAIL_API_BASE_URL \
   MAIL_API_KEY \
@@ -160,6 +167,15 @@ unset \
   EMAIL_FROM_SYSTEM \
   EMAIL_FROM_PAY \
   EMAIL_REPLY_TO_SUPPORT
+
+if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+  unset PAY_IAI_ONE_API_KEY
+else
+  unset \
+    VIETQR_BANK_BIN \
+    VIETQR_ACCOUNT_NO \
+    VIETQR_ACCOUNT_NAME
+fi
 
 if [ "$REQUIRE_PAYPAL" = "1" ]; then
   unset \

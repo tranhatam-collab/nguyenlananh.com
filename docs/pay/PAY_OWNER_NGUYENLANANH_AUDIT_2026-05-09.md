@@ -18,7 +18,7 @@ D1 binding: `PAYMENTS_DB` bound in `wrangler.toml` for `[env.production]`.
 
 | Lane | Provider | Currency | Status |
 |---|---|---|---|
-| VN identity | VietQR (manual confirm) | VND | Code complete — awaiting live secrets |
+| VN identity | VietQR via pay.iai.one (manual confirm) | VND | Code complete — awaiting live secrets |
 | International identity | PayPal | USD | Code complete — awaiting PayPal merchant account |
 | International identity | Stripe | USD | Code complete — deferred this phase |
 
@@ -30,10 +30,10 @@ Rail guard enforced at `/api/payments/create-checkout`:
 
 ## 2. Findings
 
-### F-N-001 — SEVERITY: HIGH — VietQR bank credentials not provisioned
-- **Impact**: VietQR is the sole live payment method for Vietnamese users (all current customers). Without VIETQR_BANK_BIN, VIETQR_ACCOUNT_NO, VIETQR_ACCOUNT_NAME the provider returns `mode=setup_required` and `/api/payments/vietqr/create-order` fails.
-- **Fix**: Founder provides bank account details. Pay-Owner runs `scripts/provision-payment-live-secrets.sh` with `REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0`.
-- **Status**: Raised as REQ-N-001.
+### F-N-001 — SEVERITY: HIGH — pay.iai.one VN key not provisioned
+- **Impact**: VietQR is the sole live payment method for Vietnamese users (all current customers). Without `PAY_IAI_ONE_API_KEY` the provider returns `mode=setup_required` and `/api/payments/vietqr/create-order` fails.
+- **Fix**: Founder + Team Pay provide active key for `tenant/site = nguyenlananh`. Pay-Owner runs `scripts/provision-payment-live-secrets.sh` with `VN_VIA_PAY_IAI_ONE=1 REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0`.
+- **Status**: Raised as REQ-N-001 with receiver packet `docs/reports/PAY_TEAM_NGUYENLANANH_RECEIVER_PACKET_2026-05-09.md`.
 
 ### F-N-002 — SEVERITY: HIGH — Email secrets not provisioned
 - **Impact**: Magic links cannot be sent. Signup + auth are blocked.
@@ -106,7 +106,7 @@ Rail guard enforced at `/api/payments/create-checkout`:
 
 | # | Blocker | Owner | REQ |
 |---|---|---|---|
-| 1 | VIETQR_BANK_BIN, VIETQR_ACCOUNT_NO, VIETQR_ACCOUNT_NAME | Founder | REQ-N-001 |
+| 1 | PAY_IAI_ONE_API_KEY (+ optional PAY_IAI_ONE_TENANT_CODE/SITE_CODE) | Founder + Team Pay | REQ-N-001 |
 | 2 | PAYMENTS_ADMIN_KEY | Founder | REQ-N-001 |
 | 3 | Email secrets (MAIL_API_KEY etc.) | Founder | REQ-N-002 |
 | 4 | API_BASE_URL, ENV_DEPLOY_TARGET, REFUND_POLICY | Founder | REQ-N-001 |

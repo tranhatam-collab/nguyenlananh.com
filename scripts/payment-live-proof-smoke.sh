@@ -21,6 +21,7 @@ NEXT_PATH="${NEXT_PATH:-/members/dashboard/}"
 PAYMENTS_ADMIN_KEY="${PAYMENTS_ADMIN_KEY:-}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
+VN_VIA_PAY_IAI_ONE="${VN_VIA_PAY_IAI_ONE:-1}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
 
@@ -87,9 +88,13 @@ append_provider_secret_hints() {
       queue_secret_hint "STRIPE_WEBHOOK_SECRET"
       ;;
     vietqr)
-      queue_secret_hint "VIETQR_BANK_BIN"
-      queue_secret_hint "VIETQR_ACCOUNT_NO"
-      queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+        queue_secret_hint "PAY_IAI_ONE_API_KEY"
+      else
+        queue_secret_hint "VIETQR_BANK_BIN"
+        queue_secret_hint "VIETQR_ACCOUNT_NO"
+        queue_secret_hint "VIETQR_ACCOUNT_NAME"
+      fi
       ;;
     *)
       ;;
@@ -144,10 +149,17 @@ check_pages_secret_names() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    VIETQR_BANK_BIN
-    VIETQR_ACCOUNT_NO
-    VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$VN_VIA_PAY_IAI_ONE" = "1" ]; then
+    required+=(PAY_IAI_ONE_API_KEY)
+  else
+    required+=(
+      VIETQR_BANK_BIN
+      VIETQR_ACCOUNT_NO
+      VIETQR_ACCOUNT_NAME
+    )
+  fi
 
   # USD provider secrets for this proof run (optional in VietQR-first phase).
   if [ "$REQUIRE_INTL_PROVIDER" = "1" ] && [ "$USD_PROVIDER" = "paypal" ]; then
@@ -203,6 +215,7 @@ echo "== web cutover status =="
 echo "Require completed proof: $REQUIRE_COMPLETED"
 echo "Require INTL provider in this phase: $REQUIRE_INTL_PROVIDER"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
+echo "VN rail via pay.iai.one: $VN_VIA_PAY_IAI_ONE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 print_status "$VN_DOMAIN" "apex domain"
 print_status "$WWW_DOMAIN" "www domain"

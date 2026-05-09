@@ -44,6 +44,8 @@ skipped_steps="$(jq -r '.summary.skipped_steps // 0' "$REPORT_PATH")"
 connectivity_failed="$(jq -r '.connectivity_failed // 0' "$REPORT_PATH")"
 base_url="$(jq -r '.base_url // ""' "$REPORT_PATH")"
 require_stripe="$(jq -r '.require_stripe // 0' "$REPORT_PATH")"
+require_paypal="$(jq -r '.require_paypal // 0' "$REPORT_PATH")"
+require_intl_provider="$(jq -r '.require_intl_provider // 0' "$REPORT_PATH")"
 strict_mode="$(jq -r '.strict_mode // 0' "$REPORT_PATH")"
 
 echo "== Team 2 Runtime Next Actions =="
@@ -51,7 +53,7 @@ echo "Report: $REPORT_PATH"
 echo "Base URL: $base_url"
 echo "Verdict: $verdict"
 echo "Summary: total=$total_steps passed=$passed_steps failed=$failed_steps skipped=$skipped_steps"
-echo "Phase flags: strict_mode=$strict_mode require_stripe=$require_stripe connectivity_failed=$connectivity_failed"
+echo "Phase flags: strict_mode=$strict_mode require_paypal=$require_paypal require_stripe=$require_stripe require_intl_provider=$require_intl_provider connectivity_failed=$connectivity_failed"
 echo
 
 echo "== External blockers =="
@@ -92,14 +94,14 @@ if [ "$connectivity_failed" = "1" ]; then
 fi
 if [ -n "$missing" ] || [ -n "$expected" ]; then
   echo "- Provision secrets (phase-aware):"
-  echo "  TARGET_ENVS=\"production preview\" SKIP_STRIPE=$(( 1 - require_stripe )) bash scripts/provision-payment-live-secrets.sh"
+  echo "  TARGET_ENVS=\"production preview\" REQUIRE_PAYPAL=$require_paypal REQUIRE_STRIPE=$require_stripe bash scripts/provision-payment-live-secrets.sh"
   echo "- Redeploy:"
   echo "  bash scripts/deploy_cloudflare.sh"
 fi
 echo "- Re-run non-strict gate:"
-echo "  BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
+echo "  BASE_URL=$base_url REQUIRE_PAYPAL=$require_paypal REQUIRE_STRIPE=$require_stripe REQUIRE_INTL_PROVIDER=$require_intl_provider STRICT_MODE=0 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
 echo "- Re-run strict gate:"
-echo "  BASE_URL=$base_url REQUIRE_STRIPE=$require_stripe STRICT_MODE=1 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
+echo "  BASE_URL=$base_url REQUIRE_PAYPAL=$require_paypal REQUIRE_STRIPE=$require_stripe REQUIRE_INTL_PROVIDER=$require_intl_provider STRICT_MODE=1 CHECK_PAGES_SECRETS=1 bash scripts/team2-runtime-phase-gate.sh"
 
 if [ "$verdict" = "RUNTIME_PHASE_GATE_PASS" ]; then
   echo

@@ -11,6 +11,7 @@ VN_EMAIL="${VN_EMAIL:-ops-smoke+vn@nguyenlananh.com}"
 USD_EMAIL="${USD_EMAIL:-ops-smoke+intl@nguyenlananh.com}"
 PLAN_CODE="${PLAN_CODE:-year1}"
 USD_PROVIDER="${USD_PROVIDER:-paypal}"
+REQUIRE_INTL_PROVIDER="${REQUIRE_INTL_PROVIDER:-0}"
 VN_DOMAIN="${VN_DOMAIN:-https://nguyenlananh.com}"
 WWW_DOMAIN="${WWW_DOMAIN:-https://www.nguyenlananh.com}"
 ADMIN_DOMAIN="${ADMIN_DOMAIN:-https://admin.nguyenlananh.com}"
@@ -19,7 +20,7 @@ USD_LOCALE="${USD_LOCALE:-en}"
 NEXT_PATH="${NEXT_PATH:-/members/dashboard/}"
 PAYMENTS_ADMIN_KEY="${PAYMENTS_ADMIN_KEY:-}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
-REQUIRE_STRIPE="${REQUIRE_STRIPE:-1}"
+REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
 
@@ -148,11 +149,14 @@ check_pages_secret_names() {
     VIETQR_ACCOUNT_NAME
   )
 
-  # USD provider secrets for this proof run
-  if [ "$USD_PROVIDER" = "paypal" ] || [ "$REQUIRE_STRIPE" = "1" ]; then
+  # USD provider secrets for this proof run (optional in VietQR-first phase).
+  if [ "$REQUIRE_INTL_PROVIDER" = "1" ] && [ "$USD_PROVIDER" = "paypal" ]; then
     required+=(PAYPAL_CLIENT_ID PAYPAL_CLIENT_SECRET PAYPAL_WEBHOOK_ID PAYPAL_MERCHANT_EMAIL)
   fi
-  if [ "$USD_PROVIDER" = "stripe" ] || [ "$REQUIRE_STRIPE" = "1" ]; then
+  if [ "$REQUIRE_INTL_PROVIDER" = "1" ] && [ "$USD_PROVIDER" = "stripe" ]; then
+    required+=(STRIPE_SECRET_KEY STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET)
+  fi
+  if [ "$REQUIRE_STRIPE" = "1" ]; then
     required+=(STRIPE_SECRET_KEY STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET)
   fi
 
@@ -197,6 +201,7 @@ print_status() {
 
 echo "== web cutover status =="
 echo "Require completed proof: $REQUIRE_COMPLETED"
+echo "Require INTL provider in this phase: $REQUIRE_INTL_PROVIDER"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 print_status "$VN_DOMAIN" "apex domain"
@@ -208,9 +213,12 @@ echo "== providers =="
 PROVIDERS_RES="$(curl -sS "$BASE_URL/api/payments/providers" 2>/dev/null || true)"
 if printf "%s" "$PROVIDERS_RES" | jq empty >/dev/null 2>&1; then
   printf "%s" "$PROVIDERS_RES" | jq .
-  provider_codes=(paypal vietqr)
+  provider_codes=(vietqr)
+  if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+    provider_codes=("$USD_PROVIDER" "${provider_codes[@]}")
+  fi
   if [ "$REQUIRE_STRIPE" = "1" ]; then
-    provider_codes=(paypal stripe vietqr)
+    provider_codes=(stripe "${provider_codes[@]}")
   fi
   for code in "${provider_codes[@]}"; do
     enabled="$(printf "%s" "$PROVIDERS_RES" | jq -r --arg code "$code" '.providers[] | select(.code == $code) | (.enabled // false)')"
@@ -224,6 +232,9 @@ if printf "%s" "$PROVIDERS_RES" | jq empty >/dev/null 2>&1; then
       require_or_warn "$code not enabled (mode=$mode)"
     fi
   done
+  if [ "$REQUIRE_INTL_PROVIDER" != "1" ]; then
+    pass "INTL provider readiness deferred for this phase (REQUIRE_INTL_PROVIDER=0)"
+  fi
   if [ "$REQUIRE_STRIPE" != "1" ]; then
     pass "stripe readiness deferred for this phase (REQUIRE_STRIPE=0)"
   fi
@@ -321,30 +332,34 @@ if [ -n "$VN_ORDER_ID" ]; then
   fi
 fi
 
-echo "== USD rail create-checkout ($USD_PROVIDER) =="
-USD_RES="$(curl -sS -X POST "$BASE_URL/api/payments/create-checkout" \
-  -H "content-type: application/json" \
-  -H "x-idempotency-key: $USD_KEY" \
-  --data "{\"email\":\"$USD_EMAIL\",\"plan_code\":\"$PLAN_CODE\",\"identity_country\":\"INTL\",\"provider\":\"$USD_PROVIDER\",\"locale\":\"$USD_LOCALE\",\"next_path\":\"$NEXT_PATH\"}" 2>/dev/null || true)"
-echo "$USD_RES"
-echo
-
-USD_CHECKOUT_URL="$(printf "%s" "$USD_RES" | jq -r '.checkout_url // empty' 2>/dev/null || true)"
-USD_OK="$(printf "%s" "$USD_RES" | jq -r '.ok // false' 2>/dev/null || echo false)"
-USD_CODE="$(printf "%s" "$USD_RES" | jq -r '.code // empty' 2>/dev/null || true)"
-if [ -n "$USD_CHECKOUT_URL" ]; then
-  pass "USD checkout created"
-  echo "USD checkout URL:"
-  echo "$USD_CHECKOUT_URL"
+if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+  echo "== USD rail create-checkout ($USD_PROVIDER) =="
+  USD_RES="$(curl -sS -X POST "$BASE_URL/api/payments/create-checkout" \
+    -H "content-type: application/json" \
+    -H "x-idempotency-key: $USD_KEY" \
+    --data "{\"email\":\"$USD_EMAIL\",\"plan_code\":\"$PLAN_CODE\",\"identity_country\":\"INTL\",\"provider\":\"$USD_PROVIDER\",\"locale\":\"$USD_LOCALE\",\"next_path\":\"$NEXT_PATH\"}" 2>/dev/null || true)"
+  echo "$USD_RES"
   echo
-else
-  if [ "$USD_OK" = "true" ]; then
-    require_or_warn "USD checkout response ok=true but checkout_url was empty"
-  elif [ "$USD_CODE" = "PROVIDER_NOT_READY" ]; then
-    require_or_warn "USD rail not ready yet (PROVIDER_NOT_READY)"
+
+  USD_CHECKOUT_URL="$(printf "%s" "$USD_RES" | jq -r '.checkout_url // empty' 2>/dev/null || true)"
+  USD_OK="$(printf "%s" "$USD_RES" | jq -r '.ok // false' 2>/dev/null || echo false)"
+  USD_CODE="$(printf "%s" "$USD_RES" | jq -r '.code // empty' 2>/dev/null || true)"
+  if [ -n "$USD_CHECKOUT_URL" ]; then
+    pass "USD checkout created"
+    echo "USD checkout URL:"
+    echo "$USD_CHECKOUT_URL"
+    echo
   else
-    fail "USD create-checkout failed with code=${USD_CODE:-unknown}"
+    if [ "$USD_OK" = "true" ]; then
+      require_or_warn "USD checkout response ok=true but checkout_url was empty"
+    elif [ "$USD_CODE" = "PROVIDER_NOT_READY" ]; then
+      require_or_warn "USD rail not ready yet (PROVIDER_NOT_READY)"
+    else
+      fail "USD create-checkout failed with code=${USD_CODE:-unknown}"
+    fi
   fi
+else
+  pass "USD checkout proof deferred for this phase (REQUIRE_INTL_PROVIDER=0)"
 fi
 
 echo "== D1 evidence counters =="
@@ -386,10 +401,14 @@ if COUNTS_JSON="$(run_d1_query \
     require_or_warn "No VN completed orders in D1 yet"
   fi
 
-  if [ "$usd_completed_count" -gt 0 ]; then
-    pass "USD completed orders found in D1"
+  if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+    if [ "$usd_completed_count" -gt 0 ]; then
+      pass "USD completed orders found in D1"
+    else
+      require_or_warn "No USD completed orders in D1 yet"
+    fi
   else
-    require_or_warn "No USD completed orders in D1 yet"
+    pass "USD completion proof deferred for this phase (REQUIRE_INTL_PROVIDER=0)"
   fi
 
   if [ "$sent_email_with_id_count" -gt 0 ]; then

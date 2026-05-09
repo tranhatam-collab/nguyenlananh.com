@@ -7,6 +7,7 @@ PLAN_CODE="${PLAN_CODE:-year1}"
 VN_EMAIL="${VN_EMAIL:-ops-rail-vn@nguyenlananh.com}"
 INTL_EMAIL="${INTL_EMAIL:-ops-rail-intl@nguyenlananh.com}"
 INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
+REQUIRE_INTL_PROVIDER="${REQUIRE_INTL_PROVIDER:-0}"
 REQUIRE_RAIL_GUARD="${REQUIRE_RAIL_GUARD:-1}"
 REQUIRE_PROVIDER_READY="${REQUIRE_PROVIDER_READY:-0}"
 REQUIRE_COMPLETED="${REQUIRE_COMPLETED:-0}"
@@ -141,25 +142,27 @@ check_pages_secret_names() {
     VIETQR_ACCOUNT_NAME
   )
 
-  case "$INTL_PROVIDER" in
-    paypal)
-      required+=(
-        PAYPAL_CLIENT_ID
-        PAYPAL_CLIENT_SECRET
-        PAYPAL_WEBHOOK_ID
-        PAYPAL_MERCHANT_EMAIL
-      )
-      ;;
-    stripe)
-      required+=(
-        STRIPE_SECRET_KEY
-        STRIPE_PUBLISHABLE_KEY
-        STRIPE_WEBHOOK_SECRET
-      )
-      ;;
-    *)
-      ;;
-  esac
+  if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+    case "$INTL_PROVIDER" in
+      paypal)
+        required+=(
+          PAYPAL_CLIENT_ID
+          PAYPAL_CLIENT_SECRET
+          PAYPAL_WEBHOOK_ID
+          PAYPAL_MERCHANT_EMAIL
+        )
+        ;;
+      stripe)
+        required+=(
+          STRIPE_SECRET_KEY
+          STRIPE_PUBLISHABLE_KEY
+          STRIPE_WEBHOOK_SECRET
+        )
+        ;;
+      *)
+        ;;
+    esac
+  fi
 
   if ! list_output="$(wrangler pages secret list --project-name "$PROJECT_NAME" --env "$target_env" 2>/dev/null)"; then
     ready_fail_or_warn "unable to list Pages secrets for env=$target_env (check wrangler auth/project/env)"
@@ -202,6 +205,7 @@ echo "== payment rails independent gate =="
 echo "UTC: $STAMP_UTC"
 echo "Local: $STAMP_LOCAL"
 echo "Base URL: $BASE_URL"
+echo "Require INTL provider: $REQUIRE_INTL_PROVIDER"
 echo "Require rail guard: $REQUIRE_RAIL_GUARD"
 echo "Require provider ready: $REQUIRE_PROVIDER_READY"
 echo "Require completed: $REQUIRE_COMPLETED"
@@ -285,17 +289,22 @@ else
   fail "VN rail probe failed with code=${VN_VND_CODE:-unknown}"
 fi
 
-INTL_USD_JSON="$(checkout_probe "$INTL_PROVIDER" INTL "$INTL_EMAIL" en "$PROBE_INTL_USD_KEY")"
-INTL_USD_OK="$(printf "%s" "$INTL_USD_JSON" | jq -r '.ok // false' 2>/dev/null || echo false)"
-INTL_USD_CODE="$(printf "%s" "$INTL_USD_JSON" | jq -r '.code // ""' 2>/dev/null || true)"
-INTL_USD_URL="$(printf "%s" "$INTL_USD_JSON" | jq -r '.checkout_url // ""' 2>/dev/null || true)"
-if [ "$INTL_USD_OK" = "true" ] && [ -n "$INTL_USD_URL" ]; then
-  pass "INTL rail probe on $INTL_PROVIDER returned checkout_url"
-elif [ "$INTL_USD_CODE" = "PROVIDER_NOT_READY" ]; then
-  append_provider_secret_hints "$INTL_PROVIDER"
-  ready_fail_or_warn "INTL rail provider $INTL_PROVIDER is not ready yet (code=PROVIDER_NOT_READY)"
+INTL_USD_JSON='{"ok":false,"code":"DEFERRED_PHASE","message":"INTL provider readiness deferred in this phase."}'
+if [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+  INTL_USD_JSON="$(checkout_probe "$INTL_PROVIDER" INTL "$INTL_EMAIL" en "$PROBE_INTL_USD_KEY")"
+  INTL_USD_OK="$(printf "%s" "$INTL_USD_JSON" | jq -r '.ok // false' 2>/dev/null || echo false)"
+  INTL_USD_CODE="$(printf "%s" "$INTL_USD_JSON" | jq -r '.code // ""' 2>/dev/null || true)"
+  INTL_USD_URL="$(printf "%s" "$INTL_USD_JSON" | jq -r '.checkout_url // ""' 2>/dev/null || true)"
+  if [ "$INTL_USD_OK" = "true" ] && [ -n "$INTL_USD_URL" ]; then
+    pass "INTL rail probe on $INTL_PROVIDER returned checkout_url"
+  elif [ "$INTL_USD_CODE" = "PROVIDER_NOT_READY" ]; then
+    append_provider_secret_hints "$INTL_PROVIDER"
+    ready_fail_or_warn "INTL rail provider $INTL_PROVIDER is not ready yet (code=PROVIDER_NOT_READY)"
+  else
+    fail "INTL rail probe failed with code=${INTL_USD_CODE:-unknown}"
+  fi
 else
-  fail "INTL rail probe failed with code=${INTL_USD_CODE:-unknown}"
+  pass "INTL provider readiness deferred for this phase (REQUIRE_INTL_PROVIDER=0)"
 fi
 
 echo
@@ -315,6 +324,8 @@ fi
   echo "- generated_at_utc: $STAMP_UTC"
   echo "- generated_at_local: $STAMP_LOCAL"
   echo "- base_url: \`$BASE_URL\`"
+  echo "- require_intl_provider: \`$REQUIRE_INTL_PROVIDER\`"
+  echo "- intl_provider: \`$INTL_PROVIDER\`"
   echo "- require_rail_guard: \`$REQUIRE_RAIL_GUARD\`"
   echo "- require_provider_ready: \`$REQUIRE_PROVIDER_READY\`"
   echo "- require_completed: \`$REQUIRE_COMPLETED\`"

@@ -1377,7 +1377,7 @@
     }
   }
 
-  function initDashboard() {
+  async function initDashboard() {
     const container = $("#admin-dashboard-grid");
     if (!container) return;
     const memberSnapshotImport = $("#member-snapshot-import");
@@ -1408,7 +1408,15 @@
     const isEnglish = (document.documentElement.lang || "").toLowerCase().startsWith("en");
 
     const manifest = readJSON(STORAGE_KEYS.launchPack, null);
-    const launchItems = Array.isArray(manifest) ? manifest : (manifest?.items || []);
+    let launchItems = Array.isArray(manifest) ? manifest : (manifest?.items || []);
+    if (!Array.isArray(launchItems) || launchItems.length === 0) {
+      try {
+        const remote = await safeLoadJSON("/admin/content/articles-launch-collection.json");
+        launchItems = Array.isArray(remote) ? remote : (remote?.items || []);
+      } catch (_error) {
+        launchItems = [];
+      }
+    }
     const openItems = Array.isArray(launchItems)
       ? launchItems.filter((item) => item?.status === "draft" || item?.status === "in_review" || item?.status === "review").length
       : 0;

@@ -5,7 +5,8 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 TEST_EMAIL="${TEST_EMAIL:-qa+team2-livegate@nguyenlananh.com}"
 ENFORCE_COMMERCE_LIVE="${ENFORCE_COMMERCE_LIVE:-0}"
-REQUIRE_STRIPE="${REQUIRE_STRIPE:-1}"
+REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
+REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
@@ -103,14 +104,19 @@ check_pages_secret_names() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    PAYPAL_MERCHANT_EMAIL
-    PAYPAL_CLIENT_ID
-    PAYPAL_CLIENT_SECRET
-    PAYPAL_WEBHOOK_ID
     VIETQR_BANK_BIN
     VIETQR_ACCOUNT_NO
     VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$REQUIRE_PAYPAL" = "1" ]; then
+    required+=(
+      PAYPAL_MERCHANT_EMAIL
+      PAYPAL_CLIENT_ID
+      PAYPAL_CLIENT_SECRET
+      PAYPAL_WEBHOOK_ID
+    )
+  fi
 
   if [ "$REQUIRE_STRIPE" = "1" ]; then
     required+=(
@@ -169,6 +175,7 @@ echo "== Team 2 Live Gate =="
 echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Local: $(date '+%Y-%m-%d %H:%M:%S %z')"
 echo "Enforce commerce-live criteria: $ENFORCE_COMMERCE_LIVE"
+echo "Require PayPal in this phase: $REQUIRE_PAYPAL"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
@@ -216,9 +223,12 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
     queue_secret_hint "EMAIL_FROM_PAY"
     queue_secret_hint "EMAIL_REPLY_TO_SUPPORT"
   fi
-  provider_codes=(paypal vietqr)
+  provider_codes=(vietqr)
+  if [ "$REQUIRE_PAYPAL" = "1" ]; then
+    provider_codes=(paypal "${provider_codes[@]}")
+  fi
   if [ "$REQUIRE_STRIPE" = "1" ]; then
-    provider_codes=(paypal stripe vietqr)
+    provider_codes=(stripe "${provider_codes[@]}")
   fi
 
   for code in "${provider_codes[@]}"; do
@@ -237,6 +247,9 @@ if printf "%s" "$providers_json" | jq empty >/dev/null 2>&1; then
       fi
     fi
   done
+  if [ "$REQUIRE_PAYPAL" != "1" ]; then
+    pass "paypal readiness deferred for this phase (REQUIRE_PAYPAL=0)"
+  fi
   if [ "$REQUIRE_STRIPE" != "1" ]; then
     pass "stripe readiness deferred for this phase (REQUIRE_STRIPE=0)"
   fi

@@ -3,6 +3,7 @@ set -euo pipefail
 
 BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 EXPECT_EMAIL_PROVIDER="${EXPECT_EMAIL_PROVIDER:-mail_iai_one}"
+REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-0}"
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
@@ -80,14 +81,19 @@ check_pages_secret_names() {
     EMAIL_FROM_PAY
     EMAIL_REPLY_TO_SUPPORT
     PAYMENTS_ADMIN_KEY
-    PAYPAL_MERCHANT_EMAIL
-    PAYPAL_CLIENT_ID
-    PAYPAL_CLIENT_SECRET
-    PAYPAL_WEBHOOK_ID
     VIETQR_BANK_BIN
     VIETQR_ACCOUNT_NO
     VIETQR_ACCOUNT_NAME
   )
+
+  if [ "$REQUIRE_PAYPAL" = "1" ]; then
+    required+=(
+      PAYPAL_MERCHANT_EMAIL
+      PAYPAL_CLIENT_ID
+      PAYPAL_CLIENT_SECRET
+      PAYPAL_WEBHOOK_ID
+    )
+  fi
 
   if [ "$REQUIRE_STRIPE" = "1" ]; then
     required+=(
@@ -128,6 +134,7 @@ fi
 echo "== payment live secrets preflight =="
 echo "UTC: $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 echo "Base URL: $BASE_URL"
+echo "Require PayPal in this phase: $REQUIRE_PAYPAL"
 echo "Require Stripe in this phase: $REQUIRE_STRIPE"
 echo "Check Pages secret names: $CHECK_PAGES_SECRETS"
 echo
@@ -166,9 +173,12 @@ else
     queue_missing "EMAIL_REPLY_TO_SUPPORT"
   fi
 
-  provider_codes=(paypal vietqr)
+  provider_codes=(vietqr)
+  if [ "$REQUIRE_PAYPAL" = "1" ]; then
+    provider_codes=(paypal "${provider_codes[@]}")
+  fi
   if [ "$REQUIRE_STRIPE" = "1" ]; then
-    provider_codes=(paypal stripe vietqr)
+    provider_codes=(stripe "${provider_codes[@]}")
   fi
 
   for code in "${provider_codes[@]}"; do
@@ -186,6 +196,12 @@ else
       fail "$code enabled=false (mode=$mode)"
     fi
   done
+  if [ "$REQUIRE_PAYPAL" != "1" ]; then
+    pass "paypal readiness deferred for this phase (REQUIRE_PAYPAL=0)"
+  fi
+  if [ "$REQUIRE_STRIPE" != "1" ]; then
+    pass "stripe readiness deferred for this phase (REQUIRE_STRIPE=0)"
+  fi
 fi
 
 if [ "$CHECK_PAGES_SECRETS" = "1" ]; then

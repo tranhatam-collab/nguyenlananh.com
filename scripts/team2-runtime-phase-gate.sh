@@ -5,7 +5,9 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 PROJECT_NAME="${PROJECT_NAME:-nguyenlananh-com}"
 TARGET_ENVS="${TARGET_ENVS:-production}"
+REQUIRE_PAYPAL="${REQUIRE_PAYPAL:-0}"
 REQUIRE_STRIPE="${REQUIRE_STRIPE:-0}"
+REQUIRE_INTL_PROVIDER="${REQUIRE_INTL_PROVIDER:-0}"
 STRICT_MODE="${STRICT_MODE:-0}"
 CHECK_PAGES_SECRETS="${CHECK_PAGES_SECRETS:-1}"
 INTL_PROVIDER="${INTL_PROVIDER:-paypal}"
@@ -118,11 +120,16 @@ build_expected_secret_contract() {
     VIETQR_BANK_BIN
     VIETQR_ACCOUNT_NO
     VIETQR_ACCOUNT_NAME
-    PAYPAL_CLIENT_ID
-    PAYPAL_CLIENT_SECRET
-    PAYPAL_WEBHOOK_ID
-    PAYPAL_MERCHANT_EMAIL
   )
+
+  if [ "$REQUIRE_PAYPAL" = "1" ] || [ "$REQUIRE_INTL_PROVIDER" = "1" ]; then
+    EXPECTED_SECRET_CONTRACT+=(
+      PAYPAL_CLIENT_ID
+      PAYPAL_CLIENT_SECRET
+      PAYPAL_WEBHOOK_ID
+      PAYPAL_MERCHANT_EMAIL
+    )
+  fi
 
   if [ "$REQUIRE_STRIPE" = "1" ]; then
     EXPECTED_SECRET_CONTRACT+=(
@@ -207,7 +214,9 @@ write_report() {
     echo "- base_url: \`$BASE_URL\`"
     echo "- project_name: \`$PROJECT_NAME\`"
     echo "- target_envs: \`$TARGET_ENVS\`"
+    echo "- require_paypal: \`$REQUIRE_PAYPAL\`"
     echo "- require_stripe: \`$REQUIRE_STRIPE\`"
+    echo "- require_intl_provider: \`$REQUIRE_INTL_PROVIDER\`"
     echo "- strict_mode: \`$STRICT_MODE\`"
     echo "- check_pages_secrets: \`$CHECK_PAGES_SECRETS\`"
     echo "- intl_provider: \`$INTL_PROVIDER\`"
@@ -296,7 +305,9 @@ write_report() {
     echo "  \"base_url\": $(json_escape "$BASE_URL"),"
     echo "  \"project_name\": $(json_escape "$PROJECT_NAME"),"
     echo "  \"target_envs\": $(json_escape "$TARGET_ENVS"),"
+    echo "  \"require_paypal\": $REQUIRE_PAYPAL,"
     echo "  \"require_stripe\": $REQUIRE_STRIPE,"
+    echo "  \"require_intl_provider\": $REQUIRE_INTL_PROVIDER,"
     echo "  \"strict_mode\": $STRICT_MODE,"
     echo "  \"check_pages_secrets\": $CHECK_PAGES_SECRETS,"
     echo "  \"connectivity_preflight\": $CONNECTIVITY_PREFLIGHT,"
@@ -399,7 +410,9 @@ echo "Local: $STAMP_LOCAL"
 echo "Base URL: $BASE_URL"
 echo "Project: $PROJECT_NAME"
 echo "Target envs: $TARGET_ENVS"
+echo "Require PayPal: $REQUIRE_PAYPAL"
 echo "Require Stripe: $REQUIRE_STRIPE"
+echo "Require INTL provider: $REQUIRE_INTL_PROVIDER"
 echo "Strict mode: $STRICT_MODE"
 echo "Check Pages secrets: $CHECK_PAGES_SECRETS"
 echo "Connectivity preflight: $CONNECTIVITY_PREFLIGHT"
@@ -426,6 +439,7 @@ else
     BASE_URL="$BASE_URL" \
     PROJECT_NAME="$PROJECT_NAME" \
     TARGET_ENVS="$TARGET_ENVS" \
+    REQUIRE_PAYPAL="$REQUIRE_PAYPAL" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     bash "$ROOT_DIR/scripts/payment-live-secrets-preflight.sh"
@@ -435,6 +449,7 @@ else
     BASE_URL="$BASE_URL" \
     PROJECT_NAME="$PROJECT_NAME" \
     TARGET_ENVS="$TARGET_ENVS" \
+    REQUIRE_PAYPAL="$REQUIRE_PAYPAL" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     ENFORCE_COMMERCE_LIVE="$STRICT_MODE" \
@@ -448,6 +463,7 @@ else
     REPORT_DIR="$TMP_LOG_DIR" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     INTL_PROVIDER="$INTL_PROVIDER" \
+    REQUIRE_INTL_PROVIDER="$REQUIRE_INTL_PROVIDER" \
     REQUIRE_PROVIDER_READY="$STRICT_MODE" \
     REQUIRE_COMPLETED="$STRICT_MODE" \
     bash "$ROOT_DIR/scripts/payment-rails-independent-gate.sh"
@@ -459,6 +475,7 @@ else
     TARGET_ENVS="$TARGET_ENVS" \
     CHECK_PAGES_SECRETS="$CHECK_PAGES_SECRETS" \
     REQUIRE_STRIPE="$REQUIRE_STRIPE" \
+    REQUIRE_INTL_PROVIDER="$REQUIRE_INTL_PROVIDER" \
     REQUIRE_COMPLETED="$STRICT_MODE" \
     USD_PROVIDER="$INTL_PROVIDER" \
     D1_NAME="$D1_NAME" \

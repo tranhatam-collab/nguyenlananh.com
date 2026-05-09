@@ -504,7 +504,7 @@ async function createVietQrCheckout(env, order, idempotencyKey) {
       email: order.email,
       full_name: String(order.metadata_json?.full_name || "Nguyenlananh Member"),
       locale: order.locale || "vi",
-      ref_code: "nla-vn-checkout"
+      ref_code: `nguyenlananh:${order.plan.code || "unknown"}`
     };
 
     const headers = {

@@ -1,0 +1,104 @@
+{
+  "generated_at_utc": "2026-05-09T06:08:40Z",
+  "generated_at_local": "2026-05-09 13:08:40 +0700",
+  "base_url": "https://www.nguyenlananh.com",
+  "project_name": "nguyenlananh-com",
+  "target_envs": "production preview",
+  "require_paypal": 0,
+  "require_stripe": 0,
+  "require_intl_provider": 0,
+  "strict_mode": 1,
+  "check_pages_secrets": 1,
+  "connectivity_preflight": 1,
+  "skip_on_connectivity_fail": 1,
+  "connectivity_failed": 0,
+  "intl_provider": "paypal",
+  "steps": [
+    {
+      "index": 1,
+      "label": "Connectivity preflight",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "connectivity_preflight",
+      "log_tail": "Connectivity check: https://www.nguyenlananh.com -> 200\n[PASS] base URL reachable"
+    }
+    ,{
+      "index": 2,
+      "label": "Secrets preflight",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production preview REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0 CHECK_PAGES_SECRETS=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-live-secrets-preflight.sh",
+      "log_tail": "[FAIL] Pages env=production missing secret name: MAIL_API_WORKSPACE_ID\n[FAIL] Pages env=production missing secret name: MAIL_API_WEBHOOK_SECRET\n[FAIL] Pages env=production missing secret name: VIETQR_BANK_BIN\n[FAIL] Pages env=production missing secret name: VIETQR_ACCOUNT_NO\n[FAIL] Pages env=production missing secret name: VIETQR_ACCOUNT_NAME\n[PASS] read Pages secret names for env=preview (count=0)\n[FAIL] Pages env=preview missing secret name: API_BASE_URL\n[FAIL] Pages env=preview missing secret name: ENV_DEPLOY_TARGET\n[FAIL] Pages env=preview missing secret name: REFUND_POLICY\n[FAIL] Pages env=preview missing secret name: EMAIL_PROVIDER\n[FAIL] Pages env=preview missing secret name: MAIL_API_BASE_URL\n[FAIL] Pages env=preview missing secret name: MAIL_API_KEY\n[FAIL] Pages env=preview missing secret name: MAIL_API_WORKSPACE_ID\n[FAIL] Pages env=preview missing secret name: MAIL_API_WEBHOOK_SECRET\n[FAIL] Pages env=preview missing secret name: EMAIL_FROM_SYSTEM\n[FAIL] Pages env=preview missing secret name: EMAIL_FROM_PAY\n[FAIL] Pages env=preview missing secret name: EMAIL_REPLY_TO_SUPPORT\n[FAIL] Pages env=preview missing secret name: PAYMENTS_ADMIN_KEY\n[FAIL] Pages env=preview missing secret name: VIETQR_BANK_BIN\n[FAIL] Pages env=preview missing secret name: VIETQR_ACCOUNT_NO\n[FAIL] Pages env=preview missing secret name: VIETQR_ACCOUNT_NAME\n\n== Missing secret checklist ==\n  - VIETQR_BANK_BIN\n  - VIETQR_ACCOUNT_NO\n  - VIETQR_ACCOUNT_NAME\n  - MAIL_API_KEY\n  - MAIL_API_WORKSPACE_ID\n  - MAIL_API_WEBHOOK_SECRET\n  - API_BASE_URL\n  - ENV_DEPLOY_TARGET\n  - REFUND_POLICY\n  - EMAIL_PROVIDER\n  - MAIL_API_BASE_URL\n  - EMAIL_FROM_SYSTEM\n  - EMAIL_FROM_PAY\n  - EMAIL_REPLY_TO_SUPPORT\n  - PAYMENTS_ADMIN_KEY\n\nSummary: failures=22 missing=15"
+    }
+    ,{
+      "index": 3,
+      "label": "Team 2 live gate",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production preview REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0 CHECK_PAGES_SECRETS=1 ENFORCE_COMMERCE_LIVE=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/team2-live-gate.sh",
+      "log_tail": "    \"manual_fallback\": true\n  }\n}\n[2/5] providers\n{\n  \"ok\": true,\n  \"paypal\": {\n    \"enabled\": false,\n    \"mode\": \"setup_required\",\n    \"manual_fallback\": true,\n    \"public\": {\n      \"merchant_email\": \"pay@nguyenlananh.com\"\n    }\n  }\n}\n[3/5] create-checkout\ncreate-checkout did not create a PayPal order. This is expected until PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, and PAYPAL_WEBHOOK_ID are configured.\n{\n  \"ok\": false,\n  \"code\": \"PROVIDER_NOT_READY\",\n  \"message\": \"PayPal is not configured yet.\"\n}\n[5/5] webhook smoke\n{\n  \"ok\": false,\n  \"code\": \"PAYPAL_NOT_CONFIGURED\",\n  \"message\": \"PayPal webhook secrets are missing.\"\n}\n[extra] magic-link resend\n{\n  \"queued\": true,\n  \"template_id\": \"T02_MAGIC_LINK_RESEND\",\n  \"expires_in_minutes\": 15\n}\nSmoke run completed.\n[PASS] payment/auth smoke completed\n\n== Gate summary ==\nFAILURES=22 WARNINGS=1\nLive gate completed with failures."
+    }
+    ,{
+      "index": 4,
+      "label": "Rails independent gate",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production preview REPORT_DIR=/tmp/team2-runtime-phase-gate.PRfPyZ CHECK_PAGES_SECRETS=1 INTL_PROVIDER=paypal REQUIRE_INTL_PROVIDER=0 REQUIRE_PROVIDER_READY=1 REQUIRE_COMPLETED=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-rails-independent-gate.sh",
+      "log_tail": "[FAIL] Pages env=preview missing secret name: ENV_DEPLOY_TARGET\n[FAIL] Pages env=preview missing secret name: REFUND_POLICY\n[FAIL] Pages env=preview missing secret name: EMAIL_PROVIDER\n[FAIL] Pages env=preview missing secret name: MAIL_API_BASE_URL\n[FAIL] Pages env=preview missing secret name: MAIL_API_KEY\n[FAIL] Pages env=preview missing secret name: MAIL_API_WORKSPACE_ID\n[FAIL] Pages env=preview missing secret name: MAIL_API_WEBHOOK_SECRET\n[FAIL] Pages env=preview missing secret name: EMAIL_FROM_SYSTEM\n[FAIL] Pages env=preview missing secret name: EMAIL_FROM_PAY\n[FAIL] Pages env=preview missing secret name: EMAIL_REPLY_TO_SUPPORT\n[FAIL] Pages env=preview missing secret name: PAYMENTS_ADMIN_KEY\n[FAIL] Pages env=preview missing secret name: VIETQR_BANK_BIN\n[FAIL] Pages env=preview missing secret name: VIETQR_ACCOUNT_NO\n[FAIL] Pages env=preview missing secret name: VIETQR_ACCOUNT_NAME\n[PASS] rails endpoint returned rail catalog\n[PASS] rail guard blocks VN identity on USD provider (code=VN_ID_REQUIRES_VND)\n[PASS] rail guard blocks INTL identity on VND provider (code=INTERNATIONAL_ID_REQUIRES_USD)\n[FAIL] VN rail provider is not ready yet (code=PROVIDER_NOT_READY)\n[PASS] INTL provider readiness deferred for this phase (REQUIRE_INTL_PROVIDER=0)\n\n== Missing secret checklist (from rail/provider signals) ==\n[WARN] set these secrets before strict provider-ready proof:\n  - MAIL_API_KEY\n  - MAIL_API_WORKSPACE_ID\n  - MAIL_API_WEBHOOK_SECRET\n  - VIETQR_BANK_BIN\n  - VIETQR_ACCOUNT_NO\n  - VIETQR_ACCOUNT_NAME\n  - API_BASE_URL\n  - ENV_DEPLOY_TARGET\n  - REFUND_POLICY\n  - EMAIL_PROVIDER\n  - MAIL_API_BASE_URL\n  - EMAIL_FROM_SYSTEM\n  - EMAIL_FROM_PAY\n  - EMAIL_REPLY_TO_SUPPORT\n  - PAYMENTS_ADMIN_KEY\n\nReport: /tmp/team2-runtime-phase-gate.PRfPyZ/PAYMENT_RAILS_INDEPENDENT_GATE_20260509_130903.md\nFAILURES=22 WARNINGS=1"
+    }
+    ,{
+      "index": 5,
+      "label": "Payment proof smoke",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production preview CHECK_PAGES_SECRETS=1 REQUIRE_STRIPE=0 REQUIRE_INTL_PROVIDER=0 REQUIRE_COMPLETED=1 USD_PROVIDER=paypal D1_NAME=nguyenlananh-payments-prod PAYMENTS_ADMIN_KEY= bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-live-proof-smoke.sh",
+      "log_tail": "      \"changes\": 0,\n      \"last_row_id\": 22,\n      \"changed_db\": false,\n      \"size_after\": 163840,\n      \"rows_read\": 0,\n      \"rows_written\": 0,\n      \"total_attempts\": 1\n    }\n  }\n]\npayment_orders=0 email_jobs=0 vietqr_orders=0 webhook_events=22\nvn_completed=0 usd_completed=0 sent_email_with_provider_id=0 smoke_sent_email_with_provider_id=0\n\n== D1 latest order evidence for smoke emails ==\n[]\n[FAIL] No VN completed orders in D1 yet\n[PASS] USD completion proof deferred for this phase (REQUIRE_INTL_PROVIDER=0)\n[FAIL] No sent email rows with provider message IDs in D1 yet\n\n== Missing secret checklist (from proof signals) ==\n[WARN] set these secrets before strict proof run:\n  - VIETQR_BANK_BIN\n  - VIETQR_ACCOUNT_NO\n  - VIETQR_ACCOUNT_NAME\n  - MAIL_API_KEY\n  - MAIL_API_WORKSPACE_ID\n  - MAIL_API_WEBHOOK_SECRET\n  - API_BASE_URL\n  - ENV_DEPLOY_TARGET\n  - REFUND_POLICY\n  - EMAIL_PROVIDER\n  - MAIL_API_BASE_URL\n  - EMAIL_FROM_SYSTEM\n  - EMAIL_FROM_PAY\n  - EMAIL_REPLY_TO_SUPPORT\n  - PAYMENTS_ADMIN_KEY\n\n== Proof summary ==\nFAILURES=25 WARNINGS=1\nProof smoke completed with failures."
+    }
+  ],
+  "expected_secret_contract": [
+    "API_BASE_URL"
+    ,"ENV_DEPLOY_TARGET"
+    ,"REFUND_POLICY"
+    ,"EMAIL_PROVIDER=mail_iai_one"
+    ,"MAIL_API_BASE_URL"
+    ,"MAIL_API_KEY"
+    ,"MAIL_API_WORKSPACE_ID"
+    ,"MAIL_API_WEBHOOK_SECRET"
+    ,"EMAIL_FROM_SYSTEM"
+    ,"EMAIL_FROM_PAY"
+    ,"EMAIL_REPLY_TO_SUPPORT"
+    ,"PAYMENTS_ADMIN_KEY"
+    ,"VIETQR_BANK_BIN"
+    ,"VIETQR_ACCOUNT_NO"
+    ,"VIETQR_ACCOUNT_NAME"
+  ],
+  "aggregate_missing_hints": [
+    "MAIL_API_KEY"
+    ,"MAIL_API_WORKSPACE_ID"
+    ,"MAIL_API_WEBHOOK_SECRET"
+    ,"VIETQR_BANK_BIN"
+    ,"VIETQR_ACCOUNT_NO"
+    ,"VIETQR_ACCOUNT_NAME"
+    ,"API_BASE_URL"
+    ,"ENV_DEPLOY_TARGET"
+    ,"REFUND_POLICY"
+    ,"EMAIL_PROVIDER"
+    ,"MAIL_API_BASE_URL"
+    ,"EMAIL_FROM_SYSTEM"
+    ,"EMAIL_FROM_PAY"
+    ,"EMAIL_REPLY_TO_SUPPORT"
+    ,"PAYMENTS_ADMIN_KEY"
+  ],
+  "external_blockers": [
+  ],
+  "next_actions": [
+    "Set missing secrets using scripts/provision-payment-live-secrets.sh, redeploy, rerun strict mode."
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 1,
+    "failed_steps": 4,
+    "skipped_steps": 0,
+    "verdict": "BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS"
+  }
+}

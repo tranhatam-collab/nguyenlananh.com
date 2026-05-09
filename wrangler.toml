@@ -9,3 +9,13 @@ compatibility_date = "2026-02-09"
 binding = "PAYMENTS_DB"
 database_name = "nguyenlananh-payments-prod"
 database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"
+
+# Preview uses the same database until a dedicated preview D1 is created.
+# To create a dedicated preview DB: wrangler d1 create nguyenlananh-payments-preview
+# then update database_id below and apply the schema.
+[env.preview]
+
+[[env.preview.d1_databases]]
+binding = "PAYMENTS_DB"
+database_name = "nguyenlananh-payments-prod"
+database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"

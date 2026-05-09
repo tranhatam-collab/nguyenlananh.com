@@ -1,8 +1,10 @@
 import { TEMPLATE_IDS } from "./constants.js";
+import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markMagicLinkUsed, requireDb, upsertUserMembership } from "./db.js";
 import { sendTemplateEmailDirect } from "./email.js";
 import {
   assert,
   buildAbsoluteUrl,
+  daysFrom,
   errorResponse,
   getLocale,
   json,
@@ -10,8 +12,9 @@ import {
   normalizeNextPath,
   nowIso,
   randomId,
+  randomToken,
   readJson,
-  timingSafeEqualHex,
+  sha256Hex,
   withQuery
 } from "./utils.js";
 
@@ -23,63 +26,47 @@ function membershipLabel(locale = "vi") {
   return getLocale(locale) === "en-US" ? "Free Companion" : "Đồng hành miễn phí";
 }
 
-function magicSecret(env) {
-  return env.MAGIC_LINK_SECRET || env.MAIL_API_WEBHOOK_SECRET || env.MAIL_API_KEY || env.EMAIL_FROM_SYSTEM || env.PAYPAL_MERCHANT_EMAIL || "nla-magic-link";
-}
+const MAGIC_LINK_EXPIRE_MINUTES = 20;
+const FREE_MEMBERSHIP_DAYS = 365;
 
-function base64UrlEncode(value) {
-  const bytes = new TextEncoder().encode(String(value || ""));
-  let binary = "";
-  bytes.forEach((byte) => {
-    binary += String.fromCharCode(byte);
+async function ensureCompanionUser(db, email, locale) {
+  const existing = await getUserByEmail(db, email);
+  if (existing) return existing;
+
+  const now = nowIso();
+  return upsertUserMembership(db, {
+    email,
+    membership_type: "free",
+    membership_label: membershipLabel(locale),
+    preferred_language: getLocale(locale),
+    expires_at: daysFrom(now, FREE_MEMBERSHIP_DAYS),
+    created_at: now,
+    updated_at: now
   });
-  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
 }
 
-function base64UrlDecode(value) {
-  const normalized = String(value || "")
-    .replaceAll("-", "+")
-    .replaceAll("_", "/")
-    .padEnd(Math.ceil(String(value || "").length / 4) * 4, "=");
-  const binary = atob(normalized);
-  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
+async function issueMagicLinkToken({ db, user, email, nextPath, locale, request }) {
+  const rawToken = randomToken(24);
+  const tokenHash = await sha256Hex(rawToken);
+  const expiresAt = new Date(Date.now() + MAGIC_LINK_EXPIRE_MINUTES * 60 * 1000).toISOString();
 
-async function hmacSha256Hex(secret, payload) {
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(payload));
-  return Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
+  await createMagicLink(db, {
+    user_id: user?.id || null,
+    email,
+    token_hash: tokenHash,
+    redirect_path: nextPath,
+    expires_at: expiresAt,
+    created_at: nowIso()
+  });
 
-async function signMagicPayload(payload, env) {
-  const encoded = base64UrlEncode(JSON.stringify(payload));
-  const signature = await hmacSha256Hex(magicSecret(env), encoded);
-  return `${encoded}.${signature}`;
-}
-
-async function verifyMagicToken(token, env) {
-  const [encoded, signature] = String(token || "").split(".");
-  assert(encoded && signature, "TOKEN_INVALID", "Magic link is invalid.", 422);
-
-  const expected = await hmacSha256Hex(magicSecret(env), encoded);
-  assert(timingSafeEqualHex(signature, expected), "TOKEN_INVALID", "Magic link is invalid.", 422);
-
-  let payload = {};
-  try {
-    payload = JSON.parse(base64UrlDecode(encoded));
-  } catch (_error) {
-    assert(false, "TOKEN_INVALID", "Magic link is invalid.", 422);
-  }
-
-  assert(Number(payload.exp || 0) > Date.now(), "MAGIC_EXPIRED", "Magic link has expired.", 410);
-  return payload;
+  const origin = new URL(request.url).origin;
+  return {
+    url: withQuery(buildAbsoluteUrl(origin, membersStartPath(locale)), {
+      magic: rawToken,
+      next: nextPath
+    }),
+    expires_at: expiresAt
+  };
 }
 
 export async function signupMagicLinkResponse(context) {
@@ -92,23 +79,15 @@ export async function signupMagicLinkResponse(context) {
 
     const locale = getLocale(body.locale);
     const nextPath = normalizeNextPath(body.next_path || membersStartPath(locale), locale);
-    const issuedAt = Date.now();
-    const expiresInMinutes = 20;
-    const payload = {
+    const db = requireDb(context.env);
+    const user = await ensureCompanionUser(db, email, locale);
+    const magicLink = await issueMagicLinkToken({
+      db,
+      user,
       email,
+      nextPath,
       locale,
-      membership_type: "free",
-      membership_label: membershipLabel(locale),
-      next_path: nextPath,
-      iat: issuedAt,
-      exp: issuedAt + expiresInMinutes * 60 * 1000
-    };
-
-    const token = await signMagicPayload(payload, context.env);
-    const origin = new URL(context.request.url).origin;
-    const magicLink = withQuery(buildAbsoluteUrl(origin, membersStartPath(locale)), {
-      magic: token,
-      next: nextPath
+      request: context.request
     });
 
     const delivery = await sendTemplateEmailDirect({
@@ -117,17 +96,17 @@ export async function signupMagicLinkResponse(context) {
       recipientEmail: email,
       language: locale,
       payload: {
-        magic_link: magicLink,
-        magic_link_expire_minutes: expiresInMinutes
+        magic_link: magicLink.url,
+        magic_link_expire_minutes: MAGIC_LINK_EXPIRE_MINUTES
       }
     });
 
     return json({
       ok: true,
       email,
-      expires_in_minutes: expiresInMinutes,
+      expires_in_minutes: MAGIC_LINK_EXPIRE_MINUTES,
       delivery_status: delivery.status,
-      preview_magic_link: delivery.status === "sent" ? null : magicLink
+      preview_magic_link: delivery.status === "sent" ? null : magicLink.url
     });
   } catch (error) {
     return errorResponse(error.status || 500, error.code || "MAGIC_SIGNUP_FAILED", error.message || "Unable to send magic link.");
@@ -142,20 +121,30 @@ export async function consumeStatelessMagicLinkResponse(context) {
     const token = String(body.token || "").trim();
     assert(token, "TOKEN_REQUIRED", "Magic token is required.", 422);
 
-    const payload = await verifyMagicToken(token, context.env);
-    const locale = getLocale(body.locale || payload.locale);
-    const nextPath = normalizeNextPath(body.next_path || payload.next_path || membersStartPath(locale), locale);
-    const expiresAt = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
+    const db = requireDb(context.env);
+    const tokenHash = await sha256Hex(token);
+    const magicLink = await getMagicLinkByHash(db, tokenHash);
+    assert(magicLink, "MAGIC_NOT_FOUND", "Magic link was not found.", 404);
+    assert(!magicLink.used_at, "MAGIC_USED", "Magic link was already used.", 409);
+    assert(new Date(magicLink.expires_at).getTime() > Date.now(), "MAGIC_EXPIRED", "Magic link has expired.", 410);
+
+    const user = magicLink.user_id ? await getUserById(db, magicLink.user_id) : await getUserByEmail(db, magicLink.email);
+    assert(user && user.active, "MEMBERSHIP_INACTIVE", "Membership is inactive.", 403);
+
+    await markMagicLinkUsed(db, magicLink.id, nowIso());
+
+    const locale = getLocale(body.locale || user.preferred_language);
+    const nextPath = normalizeNextPath(body.next_path || magicLink.redirect_path || membersStartPath(locale), locale);
 
     return json({
       ok: true,
       session: {
         id: randomId("sess"),
-        email: payload.email,
-        membershipType: payload.membership_type || "free",
-        membershipLabel: payload.membership_label || membershipLabel(locale),
+        email: user.email,
+        membershipType: user.membership_type || "free",
+        membershipLabel: user.membership_label || membershipLabel(locale),
         startedAt: nowIso(),
-        expiresAt
+        expiresAt: user.expires_at
       },
       next_path: nextPath
     });

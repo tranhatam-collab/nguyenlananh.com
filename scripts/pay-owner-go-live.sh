@@ -110,21 +110,22 @@ ENFORCE_COMMERCE_LIVE=0 \
 bash scripts/team2-live-gate.sh
 
 echo
-echo "Step 4/4 — confirm vietqr enabled=true mode=pay_iai_one"
+echo "Step 4/4 — confirm vietqr enabled=true via pay-iai-one routing"
 PROVIDER_JSON="$(curl -sS https://www.nguyenlananh.com/api/payments/providers || true)"
 echo "$PROVIDER_JSON" | jq '.providers[] | select(.code=="vietqr")'
 
 ENABLED="$(echo "$PROVIDER_JSON" | jq -r '.providers[] | select(.code=="vietqr") | .enabled // false')"
-MODE="$(echo "$PROVIDER_JSON"    | jq -r '.providers[] | select(.code=="vietqr") | .mode    // "unknown"')"
+MODE="$(echo "$PROVIDER_JSON"    | jq -r '.providers[] | select(.code=="vietqr") | .mode // "unknown"')"
+ROUTING_MODE="$(echo "$PROVIDER_JSON" | jq -r '.providers[] | select(.code=="vietqr") | .routing_mode // "unknown"')"
 
 echo
-if [ "$ENABLED" = "true" ] && [ "$MODE" = "pay_iai_one" ]; then
+if [ "$ENABLED" = "true" ] && [ "$ROUTING_MODE" = "pay_iai_one" ] && [ "$MODE" = "live" ]; then
   echo "[PASS] nguyenlananh.com VN lane LIVE via pay.iai.one"
   echo
   echo "Reminder: store PAYMENTS_ADMIN_KEY printed above in 1Password / vault."
   exit 0
 else
-  echo "[WARN] vietqr not yet enabled (enabled=$ENABLED mode=$MODE)."
+  echo "[WARN] vietqr not yet active for pay.iai.one (enabled=$ENABLED mode=$MODE routing_mode=$ROUTING_MODE)."
   echo "       Re-check Cloudflare deployment + secrets. Script can be re-run safely."
   exit 1
 fi

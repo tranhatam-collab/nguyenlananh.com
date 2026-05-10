@@ -111,6 +111,12 @@ function vietQrViaPayIaiOne(env) {
     env.VIETQR_PROVIDER_MODE || env.VN_VND_PROVIDER_MODE || env.PAY_VN_PROVIDER_MODE || ""
   );
 
+  // Explicit key should drive pay-iai-one routing even if stale mode hints remain from
+  // previous deployments.
+  if (Boolean(env.PAY_IAI_ONE_API_KEY)) {
+    return configuredMode !== "legacy_vietqr";
+  }
+
   if (configuredMode === "direct" || configuredMode === "direct_vietqr" || configuredMode === "legacy_vietqr") {
     return false;
   }

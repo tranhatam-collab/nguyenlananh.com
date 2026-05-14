@@ -15,6 +15,7 @@ import {
   randomToken,
   readJson,
   sha256Hex,
+  timingSafeEqualHex,
   withQuery
 } from "./utils.js";
 
@@ -27,6 +28,7 @@ function membershipLabel(locale = "vi") {
 }
 
 const MAGIC_LINK_EXPIRE_MINUTES = 20;
+const GOOGLE_OAUTH_STATE_TTL_SECONDS = 10 * 60;
 const FREE_MEMBERSHIP_DAYS = 365;
 
 async function ensureCompanionUser(db, email, locale) {
@@ -67,6 +69,167 @@ async function issueMagicLinkToken({ db, user, email, nextPath, locale, request 
     }),
     expires_at: expiresAt
   };
+}
+
+function base64UrlEncodeJson(payload) {
+  const raw = btoa(JSON.stringify(payload));
+  return raw.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+function base64UrlDecodeJson(encoded) {
+  try {
+    const normalized = String(encoded || "").replace(/-/g, "+").replace(/_/g, "/");
+    const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
+    return JSON.parse(atob(`${normalized}${padding}`));
+  } catch (_error) {
+    return null;
+  }
+}
+
+async function createSignedOauthState(secret, payload) {
+  const encoded = base64UrlEncodeJson(payload);
+  const signature = await sha256Hex(`${encoded}.${secret}`);
+  return `${encoded}.${signature}`;
+}
+
+async function verifySignedOauthState(secret, stateToken) {
+  const [encoded, signature] = String(stateToken || "").split(".");
+  if (!encoded || !signature) return null;
+  const expected = await sha256Hex(`${encoded}.${secret}`);
+  if (!timingSafeEqualHex(expected, signature)) return null;
+  const payload = base64UrlDecodeJson(encoded);
+  if (!payload || typeof payload !== "object") return null;
+  const exp = Number(payload.exp || 0);
+  if (!Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return null;
+  return payload;
+}
+
+function googleOauthConfig(env, request) {
+  const missing = [];
+  const clientId = String(env.GOOGLE_CLIENT_ID || "").trim();
+  const clientSecret = String(env.GOOGLE_CLIENT_SECRET || "").trim();
+  const defaultRedirect = new URL("/api/auth/google/callback", request.url).toString();
+  const redirectUri = String(env.GOOGLE_REDIRECT_URI || defaultRedirect).trim();
+  const stateSecret = String(env.GOOGLE_OAUTH_STATE_SECRET || env.MAGIC_LINK_SECRET || "").trim();
+
+  if (!clientId) missing.push("GOOGLE_CLIENT_ID");
+  if (!clientSecret) missing.push("GOOGLE_CLIENT_SECRET");
+  if (!redirectUri) missing.push("GOOGLE_REDIRECT_URI");
+  if (!stateSecret) missing.push("GOOGLE_OAUTH_STATE_SECRET or MAGIC_LINK_SECRET");
+
+  return {
+    ready: missing.length === 0,
+    missing,
+    clientId,
+    clientSecret,
+    redirectUri,
+    stateSecret
+  };
+}
+
+export async function googleOAuthStartResponse(context) {
+  try {
+    const cfg = googleOauthConfig(context.env, context.request);
+    if (!cfg.ready) {
+      return errorResponse(501, "GOOGLE_NOT_CONFIGURED", "Google OAuth is not configured.", {
+        missing: cfg.missing
+      });
+    }
+
+    const url = new URL(context.request.url);
+    const locale = getLocale(url.searchParams.get("locale") || "vi");
+    const nextPath = normalizeNextPath(url.searchParams.get("next_path") || membersStartPath(locale), locale);
+    const state = await createSignedOauthState(cfg.stateSecret, {
+      nonce: randomId("gstate"),
+      locale,
+      next_path: nextPath,
+      exp: Math.floor(Date.now() / 1000) + GOOGLE_OAUTH_STATE_TTL_SECONDS
+    });
+
+    const googleUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+    googleUrl.searchParams.set("client_id", cfg.clientId);
+    googleUrl.searchParams.set("redirect_uri", cfg.redirectUri);
+    googleUrl.searchParams.set("response_type", "code");
+    googleUrl.searchParams.set("scope", "openid email profile");
+    googleUrl.searchParams.set("state", state);
+    googleUrl.searchParams.set("prompt", "select_account");
+
+    return Response.redirect(googleUrl.toString(), 302);
+  } catch (error) {
+    return errorResponse(error.status || 500, error.code || "GOOGLE_START_FAILED", error.message || "Unable to start Google OAuth.");
+  }
+}
+
+export async function googleOAuthCallbackResponse(context) {
+  try {
+    const cfg = googleOauthConfig(context.env, context.request);
+    if (!cfg.ready) {
+      return errorResponse(501, "GOOGLE_NOT_CONFIGURED", "Google OAuth is not configured.", {
+        missing: cfg.missing
+      });
+    }
+
+    const callbackUrl = new URL(context.request.url);
+    const oauthError = callbackUrl.searchParams.get("error");
+    if (oauthError) {
+      return errorResponse(401, "GOOGLE_PROVIDER_ERROR", "Google OAuth provider returned an error.", {
+        provider_error: oauthError
+      });
+    }
+
+    const code = String(callbackUrl.searchParams.get("code") || "").trim();
+    const stateToken = String(callbackUrl.searchParams.get("state") || "").trim();
+    assert(code, "GOOGLE_CODE_REQUIRED", "Google authorization code is required.", 422);
+    assert(stateToken, "GOOGLE_STATE_REQUIRED", "Google state is required.", 422);
+
+    const state = await verifySignedOauthState(cfg.stateSecret, stateToken);
+    assert(state, "GOOGLE_STATE_INVALID", "Google state is invalid or expired.", 401);
+
+    const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        code,
+        client_id: cfg.clientId,
+        client_secret: cfg.clientSecret,
+        redirect_uri: cfg.redirectUri,
+        grant_type: "authorization_code"
+      }).toString()
+    });
+    const tokenPayload = await tokenResponse.json().catch(() => ({}));
+    assert(tokenResponse.ok && tokenPayload.access_token, "GOOGLE_TOKEN_EXCHANGE_FAILED", "Unable to exchange Google authorization code.", 502);
+
+    const profileResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
+      headers: {
+        authorization: `Bearer ${tokenPayload.access_token}`
+      }
+    });
+    const profilePayload = await profileResponse.json().catch(() => ({}));
+    assert(profileResponse.ok, "GOOGLE_PROFILE_FAILED", "Unable to fetch Google profile.", 502);
+
+    const email = normalizeEmail(profilePayload.email);
+    assert(email && email.includes("@"), "GOOGLE_EMAIL_MISSING", "Google account email is missing.", 422);
+    assert(profilePayload.email_verified !== false, "GOOGLE_EMAIL_UNVERIFIED", "Google account email is not verified.", 403);
+
+    const locale = getLocale(state.locale || profilePayload.locale || "vi");
+    const db = requireDb(context.env);
+    const user = await ensureCompanionUser(db, email, locale);
+    const nextPath = normalizeNextPath(state.next_path || membersStartPath(locale), locale);
+    const magicLink = await issueMagicLinkToken({
+      db,
+      user,
+      email,
+      nextPath,
+      locale,
+      request: context.request
+    });
+
+    return Response.redirect(magicLink.url, 302);
+  } catch (error) {
+    return errorResponse(error.status || 500, error.code || "GOOGLE_CALLBACK_FAILED", error.message || "Unable to complete Google OAuth.");
+  }
 }
 
 export async function signupMagicLinkResponse(context) {

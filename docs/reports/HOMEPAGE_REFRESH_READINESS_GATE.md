@@ -2,7 +2,7 @@
 
 Verdict: HOMEPAGE_REFRESH_GATE_PASS
 
-Generated at: 2026-05-08T22:35:12.844Z
+Generated at: 2026-05-10T14:55:33.926Z
 Base URL: (not provided)
 Require live smoke: no
 

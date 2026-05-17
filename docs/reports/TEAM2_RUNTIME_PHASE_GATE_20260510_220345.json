@@ -1,0 +1,88 @@
+{
+  "generated_at_utc": "2026-05-10T15:03:45Z",
+  "generated_at_local": "2026-05-10 22:03:45 +0700",
+  "base_url": "https://www.nguyenlananh.com",
+  "project_name": "nguyenlananh-com",
+  "target_envs": "production",
+  "require_paypal": 0,
+  "require_stripe": 0,
+  "require_intl_provider": 0,
+  "vn_via_pay_iai_one": 1,
+  "strict_mode": 1,
+  "check_pages_secrets": 1,
+  "connectivity_preflight": 1,
+  "skip_on_connectivity_fail": 1,
+  "connectivity_failed": 0,
+  "intl_provider": "paypal",
+  "steps": [
+    {
+      "index": 1,
+      "label": "Connectivity preflight",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "connectivity_preflight",
+      "log_tail": "Connectivity check: https://www.nguyenlananh.com -> 200\n[PASS] base URL reachable"
+    }
+    ,{
+      "index": 2,
+      "label": "Secrets preflight",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0 VN_VIA_PAY_IAI_ONE=1 CHECK_PAGES_SECRETS=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-live-secrets-preflight.sh",
+      "log_tail": "== payment live secrets preflight ==\nUTC: 2026-05-10T15:03:46Z\nBase URL: https://www.nguyenlananh.com\nRequire PayPal in this phase: 0\nRequire Stripe in this phase: 0\nVN rail via pay.iai.one: 1\nCheck Pages secret names: 1\n\n[PASS] health ok=true and db_ready=true\n[PASS] providers endpoint returned valid JSON\n[PASS] email_provider is mail_iai_one\n[PASS] vietqr enabled=true\n[PASS] paypal readiness deferred for this phase (REQUIRE_PAYPAL=0)\n[PASS] stripe readiness deferred for this phase (REQUIRE_STRIPE=0)\n\n== Pages secret names check ==\n[PASS] read Pages secret names for env=production (count=15)\n\n== Missing secret checklist ==\n[PASS] no missing secrets detected for this phase\n\nSummary: failures=0 missing=0"
+    }
+    ,{
+      "index": 3,
+      "label": "Team 2 live gate",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production REQUIRE_PAYPAL=0 REQUIRE_STRIPE=0 VN_VIA_PAY_IAI_ONE=1 CHECK_PAGES_SECRETS=1 ENFORCE_COMMERCE_LIVE=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/team2-live-gate.sh",
+      "log_tail": "    \"manual_fallback\": true\n  }\n}\n[2/5] providers\n{\n  \"ok\": true,\n  \"paypal\": {\n    \"enabled\": false,\n    \"mode\": \"setup_required\",\n    \"manual_fallback\": true,\n    \"public\": {\n      \"merchant_email\": \"pay@nguyenlananh.com\"\n    }\n  }\n}\n[3/5] create-checkout\ncreate-checkout did not create a PayPal order. This is expected until PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, and PAYPAL_WEBHOOK_ID are configured.\n{\n  \"ok\": false,\n  \"code\": \"PROVIDER_NOT_READY\",\n  \"message\": \"PayPal is not configured yet.\"\n}\n[5/5] webhook smoke\n{\n  \"ok\": false,\n  \"code\": \"PAYPAL_NOT_CONFIGURED\",\n  \"message\": \"PayPal webhook secrets are missing.\"\n}\n[extra] magic-link resend\n{\n  \"queued\": true,\n  \"template_id\": \"T02_MAGIC_LINK_RESEND\",\n  \"expires_in_minutes\": 15\n}\nSmoke run completed.\n[PASS] payment/auth smoke completed\n\n== Gate summary ==\nFAILURES=0 WARNINGS=0\nLive gate completed."
+    }
+    ,{
+      "index": 4,
+      "label": "Rails independent gate",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production REPORT_DIR=/tmp/team2-runtime-phase-gate.D5UNsb CHECK_PAGES_SECRETS=1 VN_VIA_PAY_IAI_ONE=1 INTL_PROVIDER=paypal REQUIRE_INTL_PROVIDER=0 REQUIRE_PROVIDER_READY=1 REQUIRE_COMPLETED=1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-rails-independent-gate.sh",
+      "log_tail": "== payment rails independent gate ==\nUTC: 2026-05-10T15:04:21Z\nLocal: 2026-05-10 22:04:21 +0700\nBase URL: https://www.nguyenlananh.com\nRequire INTL provider: 0\nRequire rail guard: 1\nRequire provider ready: 1\nRequire completed: 1\nVN rail via pay.iai.one: 1\nCheck Pages secret names: 1\n\n[PASS] health ok=true and db_ready=true\n[PASS] providers endpoint returned valid JSON\n[PASS] email_provider is mail_iai_one\n\n== Pages secret names check ==\n[PASS] read Pages secret names for env=production (count=15)\n[PASS] rails endpoint returned rail catalog\n[PASS] rail guard blocks VN identity on USD provider (code=VN_ID_REQUIRES_VND)\n[PASS] rail guard blocks INTL identity on VND provider (code=INTERNATIONAL_ID_REQUIRES_USD)\n[FAIL] VN rail probe failed with code=API_KEY_INVALID\n[PASS] INTL provider readiness deferred for this phase (REQUIRE_INTL_PROVIDER=0)\n\n== Missing secret checklist (from rail/provider signals) ==\n[PASS] no missing secret hints detected from current rail checks\n\nReport: /tmp/team2-runtime-phase-gate.D5UNsb/PAYMENT_RAILS_INDEPENDENT_GATE_20260510_220421.md\nFAILURES=1 WARNINGS=0"
+    }
+    ,{
+      "index": 5,
+      "label": "Payment proof smoke",
+      "status": "FAIL",
+      "exit_code": 1,
+      "command": "env BASE_URL=https://www.nguyenlananh.com PROJECT_NAME=nguyenlananh-com TARGET_ENVS=production CHECK_PAGES_SECRETS=1 VN_VIA_PAY_IAI_ONE=1 REQUIRE_STRIPE=0 REQUIRE_INTL_PROVIDER=0 REQUIRE_COMPLETED=1 USD_PROVIDER=paypal D1_NAME=nguyenlananh-payments-prod PAYMENTS_ADMIN_KEY=004ce4ce962ed7d0dee82a43db7b3670614ee7b0869b197db7f34bee50a926d1 bash /Users/tranhatam/Documents/Devnewproject/nguyenlananh.com/scripts/payment-live-proof-smoke.sh",
+      "log_tail": "      \"code\": \"year1\",\n      \"price_usd\": 2,\n      \"price_vnd\": 49000,\n      \"duration_days\": 365\n    },\n    {\n      \"code\": \"year2\",\n      \"price_usd\": 60,\n      \"price_vnd\": 1490000,\n      \"duration_days\": 365\n    },\n    {\n      \"code\": \"year3\",\n      \"price_usd\": 99,\n      \"price_vnd\": 2490000,\n      \"duration_days\": 365\n    }\n  ]\n}\n[PASS] health ok + db_ready true\n\n\n== VN rail create-order (vietqr) ==\n{\n  \"ok\": false,\n  \"code\": \"API_KEY_INVALID\",\n  \"message\": \"The supplied API key is invalid for this tenant/site contract.\"\n}\n\n[FAIL] VN create-order failed with code=API_KEY_INVALID\n[PASS] USD checkout proof deferred for this phase (REQUIRE_INTL_PROVIDER=0)\n== D1 evidence counters ==\n[WARN] Skipping detailed D1 counters because query could not be executed.\n\n== Missing secret checklist (from proof signals) ==\n[PASS] no missing secret hints detected from proof checks\n\n== Proof summary ==\nFAILURES=1 WARNINGS=1\nProof smoke completed with failures."
+    }
+  ],
+  "expected_secret_contract": [
+    "API_BASE_URL"
+    ,"ENV_DEPLOY_TARGET"
+    ,"REFUND_POLICY"
+    ,"EMAIL_PROVIDER=mail_iai_one"
+    ,"MAIL_API_BASE_URL"
+    ,"MAIL_API_KEY"
+    ,"MAIL_API_WORKSPACE_ID"
+    ,"MAIL_API_WEBHOOK_SECRET"
+    ,"EMAIL_FROM_SYSTEM"
+    ,"EMAIL_FROM_PAY"
+    ,"EMAIL_REPLY_TO_SUPPORT"
+    ,"PAYMENTS_ADMIN_KEY"
+    ,"PAY_IAI_ONE_API_KEY"
+  ],
+  "aggregate_missing_hints": [
+  ],
+  "external_blockers": [
+  ],
+  "next_actions": [
+    "No blockers detected from aggregate parser."
+  ],
+  "summary": {
+    "total_steps": 5,
+    "passed_steps": 3,
+    "failed_steps": 2,
+    "skipped_steps": 0,
+    "verdict": "BLOCKED_PENDING_EXTERNAL_RUNTIME_READINESS"
+  }
+}

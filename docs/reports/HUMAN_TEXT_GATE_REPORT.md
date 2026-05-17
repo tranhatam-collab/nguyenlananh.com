@@ -4,7 +4,7 @@ Verdict:
 WEB_TEXT_GATE_PASS
 
 Evidence checked:
-- 251 HTML files in release scope.
+- 245 HTML files in release scope.
 - docs/HUMAN_TEXT_CHARACTER_AND_RESPONSE_PROTOCOL.md.
 - docs/DEV_TEAM_RELEASE_DISCIPLINE.md link to the protocol.
 - H1 count, empty headings, SEO metadata, canonical, Open Graph image, language, alt text, visible text symbols, and true state.
@@ -36,8 +36,8 @@ Notes:
 
 ## Summary
 
-- Generated at: 2026-05-07T18:10:50.612Z
-- Pages audited: 251
+- Generated at: 2026-05-08T18:42:46.635Z
+- Pages audited: 245
 - Total issues: 0
 - Total warnings: 55
 
@@ -60,8 +60,6 @@ Notes:
 | /admin/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/members/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/payments/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
-| /admin/pilot/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
-| /admin/reflection/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /admin/settings/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
 | /bai-viet/ban-khong-thieu-kien-thuc/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |
@@ -139,8 +137,6 @@ Notes:
 | /en/admin/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | EDITORIAL_REVIEW_OPTIONAL |
 | /en/admin/members/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/admin/payments/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | EDITORIAL_REVIEW_OPTIONAL |
-| /en/admin/pilot/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
-| /en/admin/reflection/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/admin/settings/ | admin | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/bai-viet/am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
 | /en/bai-viet/ban-khong-thieu-kien-thuc/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
@@ -254,7 +250,6 @@ Notes:
 | /en/members/pro/inner/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/pro/reset/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/pro/wealth/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
-| /en/members/reflection/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/members/start/ | members | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/mien-tru-trach-nhiem/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | NOINDEX | NONE |
 | /en/phuong-phap/ | public | PASS | PASS | PASS | PASS | PASS | PASS | en-US | INDEXABLE | NONE |
@@ -300,7 +295,6 @@ Notes:
 | /members/pro/inner/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/pro/reset/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/pro/wealth/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
-| /members/reflection/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /members/start/ | members | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /mien-tru-trach-nhiem/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | NOINDEX | NONE |
 | /phuong-phap/ | public | PASS | PASS | PASS | PASS | PASS | PASS | vi | INDEXABLE | NONE |

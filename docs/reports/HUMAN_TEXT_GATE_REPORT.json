@@ -1,7 +1,7 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T18:10:50.612Z",
-    "pagesAudited": 251,
+    "generatedAt": "2026-05-08T18:42:46.635Z",
+    "pagesAudited": 245,
     "totalIssues": 0,
     "totalWarnings": 55,
     "issueCounts": {},
@@ -553,38 +553,6 @@
     {
       "url": "/admin/payments/",
       "file": "admin/payments/index.html",
-      "page_role": "admin",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "vi",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
-    },
-    {
-      "url": "/admin/pilot/",
-      "file": "admin/pilot/index.html",
-      "page_role": "admin",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "vi",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
-    },
-    {
-      "url": "/admin/reflection/",
-      "file": "admin/reflection/index.html",
       "page_role": "admin",
       "h1_status": "PASS",
       "character_hygiene": "PASS",
@@ -2072,38 +2040,6 @@
           "chars": "—"
         }
       ]
-    },
-    {
-      "url": "/en/admin/pilot/",
-      "file": "en/admin/pilot/index.html",
-      "page_role": "admin",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "en-US",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
-    },
-    {
-      "url": "/en/admin/reflection/",
-      "file": "en/admin/reflection/index.html",
-      "page_role": "admin",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "en-US",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
     },
     {
       "url": "/en/admin/settings/",
@@ -4121,22 +4057,6 @@
       "warnings": []
     },
     {
-      "url": "/en/members/reflection/",
-      "file": "en/members/reflection/index.html",
-      "page_role": "members",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "en-US",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
-    },
-    {
       "url": "/en/members/start/",
       "file": "en/members/start/index.html",
       "page_role": "members",
@@ -4888,22 +4808,6 @@
     {
       "url": "/members/pro/wealth/",
       "file": "members/pro/wealth/index.html",
-      "page_role": "members",
-      "h1_status": "PASS",
-      "character_hygiene": "PASS",
-      "seo_metadata": "PASS",
-      "canonical": "PASS",
-      "og_image": "PASS",
-      "alt_text": "PASS",
-      "language": "vi",
-      "true_state": "NOINDEX",
-      "next_action": "NONE",
-      "issues": [],
-      "warnings": []
-    },
-    {
-      "url": "/members/reflection/",
-      "file": "members/reflection/index.html",
       "page_role": "members",
       "h1_status": "PASS",
       "character_hygiene": "PASS",

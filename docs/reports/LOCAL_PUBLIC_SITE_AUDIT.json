@@ -1,8 +1,8 @@
 {
   "summary": {
-    "generatedAt": "2026-05-07T18:10:50.616Z",
+    "generatedAt": "2026-05-10T14:55:34.066Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 253,
+    "pagesAudited": 257,
     "pagesWithIssues": 0,
     "totalIssues": 0,
     "brokenInternalRefs": 0,
@@ -5266,6 +5266,23 @@
       ]
     },
     {
+      "route": "/en/members/pro/children/",
+      "file": "en/members/pro/children/index.html",
+      "title": "Pro Children and Education Environment | Nguyenlananh.com",
+      "description": "Pro Children & Education Environment: design rhythm, learning space, and digital boundaries that support natural growth.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/members/pro/",
+        "/en/members/deep/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/pro/creation/",
       "file": "en/members/pro/creation/index.html",
       "title": "Pro Creation | Nguyenlananh.com",
@@ -5317,10 +5334,27 @@
       ]
     },
     {
+      "route": "/en/members/pro/family/",
+      "file": "en/members/pro/family/index.html",
+      "title": "Pro Family and Relationship Systems | Nguyenlananh.com",
+      "description": "Pro Family & Relationship Systems: redesign roles, boundaries, and dialogue so relationships mature without losing your core self.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/members/pro/",
+        "/en/members/deep/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/pro/",
       "file": "en/members/pro/index.html",
       "title": "Members Pro Layer | Nguyenlananh.com",
-      "description": "Pro layer includes six guided upgrade tracks: reset, inner work, discipline, environment, creation, and wealth.",
+      "description": "Pro layer includes eight guided upgrade tracks: reset, inner work, discipline, environment, creation, wealth, family, and children.",
       "issues": [],
       "refs": [
         "/assets/site.css",
@@ -5338,6 +5372,8 @@
         "/en/members/pro/environment/",
         "/en/members/pro/creation/",
         "/en/members/pro/wealth/",
+        "/en/members/pro/family/",
+        "/en/members/pro/children/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/members.js",
@@ -6375,6 +6411,23 @@
       ]
     },
     {
+      "route": "/members/pro/children/",
+      "file": "members/pro/children/index.html",
+      "title": "Pro trẻ em và giáo dục | Nguyenlananh.com",
+      "description": "Pro Children & Education Environment: thiết kế nhịp sống, môi trường học và cách đồng hành để trẻ lớn lên vững mà không gãy tự nhiên.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/members/pro/",
+        "/members/deep/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/members/pro/creation/",
       "file": "members/pro/creation/index.html",
       "title": "Pro sáng tạo | Nguyenlananh.com",
@@ -6426,10 +6479,27 @@
       ]
     },
     {
+      "route": "/members/pro/family/",
+      "file": "members/pro/family/index.html",
+      "title": "Pro gia đình và quan hệ | Nguyenlananh.com",
+      "description": "Pro Family & Relationship Systems: tái thiết vai trò, ranh giới và đối thoại để quan hệ trưởng thành mà không tự đánh mất mình.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/members/pro/",
+        "/members/deep/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/members/pro/",
       "file": "members/pro/index.html",
       "title": "Tầng Pro thành viên | Nguyenlananh.com",
-      "description": "Pro layer gồm 6 gói: reset, inner, discipline, environment, creation, wealth.",
+      "description": "Pro layer gồm 8 gói nâng cấp: reset, inner, discipline, environment, creation, wealth, family và children.",
       "issues": [],
       "refs": [
         "/assets/site.css",
@@ -6447,6 +6517,8 @@
         "/members/pro/environment/",
         "/members/pro/creation/",
         "/members/pro/wealth/",
+        "/members/pro/family/",
+        "/members/pro/children/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/members.js",

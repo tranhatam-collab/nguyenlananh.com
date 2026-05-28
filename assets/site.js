@@ -273,7 +273,7 @@
         <img
           src="${safeImage}"
           alt="${altText.replace(/"/g, "&quot;")}"
-          loading="lazy"
+          loading="eager"
           decoding="async"
           width="1400"
           height="788"
@@ -303,4 +303,17 @@
   }
 
   ensureArticleHero();
+
+  const loadedScripts = new Set();
+  function loadScript(src) {
+    if (loadedScripts.has(src)) return;
+    loadedScripts.add(src);
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    const s = document.createElement("script");
+    s.src = src;
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+  loadScript("/assets/lazy-load.js");
+  loadScript("/assets/cta-modules.js");
 })();

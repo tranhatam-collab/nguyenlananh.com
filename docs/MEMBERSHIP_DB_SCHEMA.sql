@@ -4,7 +4,11 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
   membership_type TEXT NOT NULL,
+  membership_label TEXT NOT NULL,
+  preferred_language TEXT NOT NULL DEFAULT 'vi',
+  role TEXT NOT NULL DEFAULT 'user',
   expires_at TEXT NOT NULL,
+  active INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );

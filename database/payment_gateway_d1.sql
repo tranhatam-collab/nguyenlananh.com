@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   membership_type TEXT NOT NULL,
   membership_label TEXT NOT NULL,
   preferred_language TEXT NOT NULL DEFAULT 'vi',
+  role TEXT NOT NULL DEFAULT 'user',
   expires_at TEXT NOT NULL,
   active INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL,
@@ -142,6 +143,19 @@ CREATE INDEX IF NOT EXISTS idx_vietqr_orders_status
 
 CREATE INDEX IF NOT EXISTS idx_vietqr_orders_email
   ON vietqr_orders(email, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS contact_submissions (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  contact TEXT NOT NULL,
+  message TEXT NOT NULL,
+  source_ip TEXT,
+  user_agent TEXT,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_contact_submissions_created
+  ON contact_submissions(created_at DESC);
 
 CREATE TABLE IF NOT EXISTS admin_member_snapshot_queue (
   email TEXT PRIMARY KEY,

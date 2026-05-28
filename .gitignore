@@ -1,4 +1,12 @@
 .DS_Store
+**/.DS_Store
 .wrangler/
 .claude/
 *index 2.html
+* 2.*
+* 3.*
+* 4.*
+_worker.bundle
+.env
+.env.secrets
+.env.local

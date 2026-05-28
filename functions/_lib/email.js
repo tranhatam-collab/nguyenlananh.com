@@ -97,6 +97,19 @@ function renderTemplate(templateId, locale, payload, env) {
     };
   }
 
+  if (templateId === TEMPLATE_IDS.contact) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: payload.contact_email || supportEmail,
+      subject: isEnglish
+        ? `[Contact] Message from ${payload.name}`
+        : `[Liên hệ] Tin nhắn từ ${payload.name}`,
+      text: isEnglish
+        ? `Name: ${payload.name}\nContact: ${payload.contact}\nMessage:\n${payload.message}\nSubmitted at: ${payload.submitted_at}`
+        : `Tên: ${payload.name}\nLiên hệ: ${payload.contact}\nLời nhắn:\n${payload.message}\nGửi lúc: ${payload.submitted_at}`
+    };
+  }
+
   return {
     from: systemFromAddress(env),
     reply_to: supportEmail,

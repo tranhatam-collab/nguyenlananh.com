@@ -62,6 +62,21 @@ export function toHex(buffer) {
   return Array.from(new Uint8Array(buffer), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+export function base64UrlEncodeJson(payload) {
+  const raw = btoa(JSON.stringify(payload));
+  return raw.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+export function base64UrlDecodeJson(encoded) {
+  try {
+    const normalized = String(encoded || "").replace(/-/g, "+").replace(/_/g, "/");
+    const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
+    return JSON.parse(atob(`${normalized}${padding}`));
+  } catch (_error) {
+    return null;
+  }
+}
+
 export function safeJsonParse(value, fallback = null) {
   if (!value || typeof value !== "string") return fallback;
   try {

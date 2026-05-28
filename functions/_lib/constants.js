@@ -79,7 +79,8 @@ export const TEMPLATE_IDS = {
   receipt: "T03_PAYMENT_RECEIPT",
   failed: "T04_PAYMENT_FAILED",
   refunded: "T11_REFUND_NOTICE",
-  security: "T14_INTERNAL_WEBHOOK_SECURITY"
+  security: "T14_INTERNAL_WEBHOOK_SECURITY",
+  contact: "T15_CONTACT_FORM"
 };
 
 export function planByCode(planCode) {

@@ -159,7 +159,8 @@ function parseUser(row) {
   if (!row) return null;
   return {
     ...row,
-    active: Boolean(row.active)
+    active: Boolean(row.active),
+    role: row.role || "user"
   };
 }
 

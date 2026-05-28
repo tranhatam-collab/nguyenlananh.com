@@ -326,6 +326,20 @@
     return session;
   }
 
+  async function refreshSessionFromServer() {
+    try {
+      const response = await fetch("/api/auth/session", { method: "GET", headers: { Accept: "application/json" } });
+      if (!response.ok) return getSession();
+      const data = await response.json().catch(() => ({}));
+      if (data.ok && data.session) {
+        return createSessionFromServer(data.session);
+      }
+    } catch (_error) {
+      // Fall back to localStorage
+    }
+    return getSession();
+  }
+
   function writeSession(session) {
     writeJSON(STORAGE.session, session);
     return session;
@@ -1481,9 +1495,14 @@
     draw();
   }
 
-  function attachLogout() {
+  async function attachLogout() {
     const logout = $("#logoutBtn");
-    logout?.addEventListener("click", () => {
+    logout?.addEventListener("click", async () => {
+      try {
+        await fetch("/api/auth/logout", { method: "POST" });
+      } catch (_error) {
+        // Proceed with local logout even if server fails
+      }
       clearSession();
       window.location.href = joinPathForPath(window.location.pathname);
     });
@@ -1502,8 +1521,8 @@
     return true;
   }
 
-  function initMembersArea() {
-    const session = getSession();
+  async function initMembersArea() {
+    const session = await refreshSessionFromServer();
     if (!session) {
       const next = encodeURIComponent(window.location.pathname);
       window.location.href = `${joinPathForPath(window.location.pathname)}?next=${next}`;
@@ -1538,7 +1557,7 @@
     }
 
     if (isMembersPath(window.location.pathname) && !isPublicMembersLanding(window.location.pathname)) {
-      initMembersArea();
+      await initMembersArea();
     }
   }
 

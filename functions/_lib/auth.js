@@ -1,8 +1,11 @@
 import { TEMPLATE_IDS } from "./constants.js";
 import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markMagicLinkUsed, requireDb, upsertUserMembership } from "./db.js";
+import { createSessionCookie, sessionCookieHeaders } from "./session.js";
 import { sendTemplateEmailDirect } from "./email.js";
 import {
   assert,
+  base64UrlDecodeJson,
+  base64UrlEncodeJson,
   buildAbsoluteUrl,
   daysFrom,
   errorResponse,
@@ -69,21 +72,6 @@ async function issueMagicLinkToken({ db, user, email, nextPath, locale, request 
     }),
     expires_at: expiresAt
   };
-}
-
-function base64UrlEncodeJson(payload) {
-  const raw = btoa(JSON.stringify(payload));
-  return raw.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-function base64UrlDecodeJson(encoded) {
-  try {
-    const normalized = String(encoded || "").replace(/-/g, "+").replace(/_/g, "/");
-    const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
-    return JSON.parse(atob(`${normalized}${padding}`));
-  } catch (_error) {
-    return null;
-  }
 }
 
 async function createSignedOauthState(secret, payload) {
@@ -299,6 +287,9 @@ export async function consumeStatelessMagicLinkResponse(context) {
     const locale = getLocale(body.locale || user.preferred_language);
     const nextPath = normalizeNextPath(body.next_path || magicLink.redirect_path || membersStartPath(locale), locale);
 
+    const cookieValue = await createSessionCookie(context.env, user);
+    const cookieHeaders = cookieValue ? sessionCookieHeaders(cookieValue) : {};
+
     return json({
       ok: true,
       session: {
@@ -310,7 +301,7 @@ export async function consumeStatelessMagicLinkResponse(context) {
         expiresAt: user.expires_at
       },
       next_path: nextPath
-    });
+    }, { headers: cookieHeaders });
   } catch (error) {
     return errorResponse(error.status || 500, error.code || "MAGIC_CONSUME_FAILED", error.message || "Unable to consume magic link.");
   }

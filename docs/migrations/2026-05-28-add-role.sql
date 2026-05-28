@@ -1,8 +1,7 @@
--- Migration: Add membership_label, preferred_language, role, active columns to users table (P1-3)
+-- Migration: Add role column to users table for admin role gate (P1-3)
 -- Applied: 2026-05-28
 -- Target: nguyenlananh-payments-prod (D1)
+-- Note: membership_label, preferred_language, active already existed on production
+-- Only role column was missing
 
-ALTER TABLE users ADD COLUMN membership_label TEXT NOT NULL DEFAULT '';
-ALTER TABLE users ADD COLUMN preferred_language TEXT NOT NULL DEFAULT 'vi';
 ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user';
-ALTER TABLE users ADD COLUMN active INTEGER NOT NULL DEFAULT 1;

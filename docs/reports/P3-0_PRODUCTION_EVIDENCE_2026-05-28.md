@@ -81,30 +81,61 @@ ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user';
 
 ## 6. Critical Issue: Custom Domain Functions Not Routing
 
-**Problem**: Custom domain (`nguyenlananh.com`) is serving static content but **NOT routing to Functions**. API endpoints return 404/405 instead of proper responses.
+**Problem**: Custom domain (`nguyenlananh.com`) is returning Cloudflare error 1014 for API endpoints.
 
-**Evidence**:
-- Deployment URL (`pages.dev`) → Functions work ✅
-- Custom domain → Functions fail ❌
+**Evidence (after re-deploy `fda878d3`)**:
 
-**Likely Cause**:
-1. Custom domain DNS pointing to older deployment
-2. Cloudflare Pages routing not updated for custom domain
-3. Functions bundle not deployed to custom domain edge
+| Endpoint | Custom Domain | Deployment URL |
+|----------|---------------|----------------|
+| `/api/auth/session` | Error 1014 | 401 ✅ |
+| `/admin/` | 403 | 200 (should be 302) ❌ |
+| `/api/auth/logout` | 403 | 200 ✅ |
+
+**Error 1014**: "Origin is unreachable" - Cloudflare infrastructure issue indicating the origin server cannot be reached.
+
+**Likely Causes**:
+1. Custom domain SSL/TLS configuration mismatch (Full vs Full Strict)
+2. DNS propagation issue
+3. Cloudflare Pages custom domain not properly activated
+4. Origin SSL certificate issue
 
 **Impact**:
-- `/admin/` middleware not protecting routes on custom domain
-- `/api/auth/*` endpoints not accessible on custom domain
+- All API endpoints blocked on custom domain
 - Member login/payment flows will fail on production domain
+- Admin middleware not accessible on custom domain
 
 **Required Action**:
-- Investigate Cloudflare Pages custom domain configuration
-- Verify Functions are deployed to custom domain edge
-- May need to re-deploy or force sync custom domain
+- Check Cloudflare Pages dashboard → Custom Domains → Verify SSL mode
+- Check DNS records for `nguyenlananh.com` and `www.nguyenlananh.com`
+- Verify custom domain is "Active" in Pages project settings
 
 ---
 
-## 7. Conclusion
+## 7. Secondary Issue: `/admin/` Middleware Not Redirecting
+
+**Problem**: On deployment URL (`pages.dev`), `/admin/` returns 200 instead of 302 redirect to `/members/`.
+
+**Evidence**:
+- `/admin/` → 200 (serves static `admin/index.html`)
+- Expected: 302 → `/members/` (middleware redirect)
+
+**Likely Cause**:
+- Static `admin/index.html` is being served directly without invoking `_middleware.js`
+- Cloudflare Pages may prioritize static files over Functions middleware
+- Middleware path matching issue
+
+**Impact**:
+- Admin console accessible without authentication on deployment URL
+- Security bypass on preview/deployment URLs (though custom domain is blocked by error 1014)
+
+**Required Action**:
+- Verify `_middleware.js` is in correct location (`functions/_middleware.js`)
+- Check if Pages Functions middleware is properly configured
+- May need to move admin console to Functions-only routing
+
+---
+
+## 8. Conclusion
 
 **Status**: ⚠️ **PARTIAL** — Custom domain reachable but Functions not routing
 

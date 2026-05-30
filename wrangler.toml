@@ -3,6 +3,12 @@ name = "nguyenlananh-com"
 pages_build_output_dir = ""
 compatibility_date = "2026-02-09"
 
+# OFFICIAL production account that holds the nguyenlananh.com DNS zone.
+# Pinning account_id forces every deploy to land here, preventing the
+# cross-account mismatch that caused Cloudflare error 1014 (CNAME Cross-User
+# Banned). Account: Anhhatam@gmail.com. Do NOT change without updating DNS.
+account_id = "62d57eaa548617aeecac766e5a1cb98e"
+
 [env.production]
 
 [[env.production.d1_databases]]

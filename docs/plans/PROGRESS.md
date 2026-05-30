@@ -38,7 +38,7 @@
 
 > Xem chi tiết quy trình trong `MASTER_PLAN_AUTONOMOUS.md` §3.1.
 
-- **HB1 — error 1014 (Cloudflare account/DNS):** `nguyenlananh.com` + `www` đang 403. Cần login Dashboard `Anhhatam@gmail.com` (`62d57eaa…`), attach custom domain đúng account, xoá project trùng ở 2 account kia, re-deploy `--branch=main`. Quy trình 7 bước §3.1.
+- **HB1 — error 1014 (Cloudflare account/DNS):** Account chính thức đã xác nhận = `62d57eaa548617aeecac766e5a1cb98e` (Anhhatam@gmail.com, giữ DNS zone). **ĐÃ chuẩn bị turnkey:** account_id pin trong `wrangler.toml`; script `scripts/deploy-prod-official.sh` tự create project + deploy `--branch=main` + smoke verify. **Chặn DUY NHẤT còn lại: AUTH** — token wrangler hiện hết hạn (`code 10000`) và đang trỏ sai account `f3f9e76…`. User phải: `wrangler login` (as Anhhatam@gmail.com) HOẶC `export CLOUDFLARE_API_TOKEN=<token>` rồi chạy `bash scripts/deploy-prod-official.sh`. Sau đó attach custom domain trong dashboard (script in hướng dẫn).
 - **HB3 — tạo admin user prod D1:** `UPDATE users SET role='admin' WHERE email='<ADMIN_EMAIL>';`
 - **HB4 — payment proof:** cần tiền thật + secrets.
 - **HB5 — secrets:** `GOOGLE_CLIENT_ID/SECRET/STATE_SECRET`, `RESEND_*`, `ADMIN_*_KEY`.

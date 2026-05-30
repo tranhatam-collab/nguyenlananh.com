@@ -75,7 +75,7 @@
 
 | ID | Việc bị chặn | Lý do Kimi không làm được | Ghi gì cho user |
 |---|---|---|---|
-| **HB1** | **error 1014** — `nguyenlananh.com` + `www` trả 403 `CNAME Cross-User Banned` | DNS zone & Pages project khác Cloudflare account. Cần login Dashboard `Anhhatam@gmail.com` (`62d57eaa…`), attach custom domain đúng account, xoá project trùng ở 2 account kia. | Đã có quy trình 7 bước ở §3.1. |
+| **HB1** | **error 1014** — `nguyenlananh.com` + `www` trả 403 `CNAME Cross-User Banned` | DNS zone ở account chính thức `62d57eaa…`; Pages project deploy nhầm account `f3f9e76…`. **Turnkey đã sẵn** (account_id pin + `scripts/deploy-prod-official.sh`). Chặn còn lại: token wrangler hết hạn → cần USER auth (login/API token). | §3.1 + chạy `scripts/deploy-prod-official.sh`. |
 | **HB2** | Promote → prod custom domain | Phụ thuộc HB1 | Chờ HB1 |
 | **HB3** | Tạo user `role=admin` trong D1 prod (để test admin gate end-to-end) | Cần wrangler ghi vào prod DB — vi phạm Luật §0.4 | Cung cấp sẵn câu SQL ở §3.1 cho user chạy |
 | **HB4** | P3-2 Payment proof (VietQR/pay.iai.one real order) | Cần tiền thật + secret keys | Cung cấp sẵn checklist test ở `docs/plans/PROGRESS.md` |

@@ -47,13 +47,18 @@ check() {
 }
 
 echo "== Smoke (PRODUCTION) :: $BASE_URL =="
+echo "-- Static --"
 check "home"           GET  "/"                              200
 check "en-home"        GET  "/en/"                           200
 check "members"        GET  "/members/"                      200
+echo "-- Functions / API (proves functions/ deployed) --"
 check "admin-redirect" GET  "/admin/"                        302
 check "session-noauth" GET  "/api/auth/session"              401
 check "logout"         POST "/api/auth/logout"               200
 check "magic-request"  POST "/api/auth/magic-links/request"  422 '{}'
+# Secrets are configured in production (GOOGLE_*, MAGIC_LINK_SECRET, etc.),
+# so Google OAuth start should now build the redirect (302) instead of 501.
+check "google-start"   GET  "/api/auth/google/start"         302
 
 echo ""
 echo "== RESULT: $(green "$PASS PASS"), $( [ "$FAIL" -gt 0 ] && red "$FAIL FAIL" || echo "$FAIL FAIL" ) =="

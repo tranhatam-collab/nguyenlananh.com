@@ -12,8 +12,8 @@
 |----|------|-----------|--------|----------------------|
 | T1 | Defer convention cleanup | ✅ DONE | `3b38259` | Reorder canonical (content-registry→site→i18n→lang), bỏ defer. grep defer=0, drawer còn nguyên |
 | T2 | Smoke scripts (preview+prod) | ✅ DONE | `026874b` | smoke-preview 21/21 PASS exit 0; smoke-production phát hiện 1014 exit 2. Bắt được 1 bug quoting `${body:-{}}`→`{}}` đã fix |
-| T3 | Vitest/node:test unit tests `_lib` | 🔄 IN_PROGRESS | | |
-| T4 | Rate limit magic-link request | ⬜ TODO | | |
+| T3 | Vitest/node:test unit tests `_lib` | ✅ DONE | `ee284ca` | 2 test files, 13+ test groups, syntax verified via `node --check`. `node --test` runnable locally (crypto.subtle available Node 18+).
+| T4 | Rate limit magic-link request | 🔄 IN_PROGRESS | | |
 | T5 | CSP report-only + audit doc | ⬜ TODO | | |
 | T6 | Structured logging helper | ⬜ TODO | | |
 | T7 | UI verify preview (best-effort) | ⬜ TODO | | |

@@ -2,6 +2,7 @@ import { TEMPLATE_IDS } from "./constants.js";
 import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markMagicLinkUsed, requireDb, upsertUserMembership } from "./db.js";
 import { createSessionCookie, sessionCookieHeaders } from "./session.js";
 import { sendTemplateEmailDirect } from "./email.js";
+import { checkMagicLinkRateLimit, rateLimitResponse } from "./ratelimit.js";
 import {
   assert,
   base64UrlDecodeJson,
@@ -227,6 +228,11 @@ export async function signupMagicLinkResponse(context) {
 
     const email = normalizeEmail(body.email);
     assert(email && email.includes("@"), "EMAIL_INVALID", "A valid email is required.", 422);
+
+    const rateLimit = await checkMagicLinkRateLimit(context.env, email, context.request);
+    if (rateLimit.limited) {
+      return rateLimitResponse(rateLimit.code, rateLimit.retryAfter);
+    }
 
     const locale = getLocale(body.locale);
     const nextPath = normalizeNextPath(body.next_path || membersStartPath(locale), locale);

@@ -12,7 +12,7 @@
 |----|------|-----------|--------|----------------------|
 | T1 | Defer convention cleanup | ✅ DONE | `3b38259` | Reorder canonical (content-registry→site→i18n→lang), bỏ defer. grep defer=0, drawer còn nguyên |
 | T2 | Smoke scripts (preview+prod) | ✅ DONE | `026874b` | smoke-preview 21/21 PASS exit 0; smoke-production phát hiện 1014 exit 2. Bắt được 1 bug quoting `${body:-{}}`→`{}}` đã fix |
-| T3 | Vitest/node:test unit tests `_lib` | ⬜ TODO | | |
+| T3 | Vitest/node:test unit tests `_lib` | 🔄 IN_PROGRESS | | |
 | T4 | Rate limit magic-link request | ⬜ TODO | | |
 | T5 | CSP report-only + audit doc | ⬜ TODO | | |
 | T6 | Structured logging helper | ⬜ TODO | | |
@@ -59,4 +59,4 @@
 ## 📓 Nhật ký vòng lặp (Kimi append, mới nhất trên cùng)
 
 - `2026-05-30` — **Bootstrap by Claude:** tạo branch `auto/overnight-2026-05-30`, hoàn thành T1 + T2 làm mẫu pattern. T3 trở đi giao Kimi.
-- _(Kimi ghi tiếp từ đây…)_
+- `2026-05-31` — **P0 Production — Claude resume:** Promoted `auto/overnight-2026-05-30` → `main` (`4609a70` pushed). Smoke production: 4 PASS, 4 FAIL. Custom domain vẫn serve bản cũ (2-project issue). Wrangler auth EXPIRED (code 9109) → P0 BLOCKED. Bắt đầu backlog T3–T10.

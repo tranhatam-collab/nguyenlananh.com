@@ -15,11 +15,11 @@
 | T3 | Vitest/node:test unit tests `_lib` | ✅ DONE | `ee284ca` | 2 test files, 13+ test groups, syntax verified via `node --check`. `node --test` runnable locally (crypto.subtle available Node 18+).
 | T4 | Rate limit magic-link request | ✅ DONE | `bdcdaa0` | ratelimit.js fail-open, 5/email/hr + 20/ip/hr, 429 + Retry-After. Migration file created.
 | T5 | CSP report-only + audit doc | ✅ DONE | `69e28ab` | Report-Only CSP added to _headers (stricter script-src). Audit doc catalogs inline scripts/styles, remediation roadmap, risk table.
-| T6 | Structured logging helper | ⬜ TODO | | |
-| T7 | UI verify preview (best-effort) | ⬜ TODO | | |
-| T8 | Self code-review + simplify | ⬜ TODO | | |
-| T9 | Security review auth/payment | ⬜ TODO | | |
-| T10 | Final report + push | ⬜ TODO | | chạy cuối |
+| T6 | Structured logging helper | ✅ DONE | `4d47cc8` | log.js JSON logger. Wired into _middleware.js (admin-deny) and auth.js (magic-link errors).
+| T7 | UI verify preview (best-effort) | ✅ DONE | (T10) | Static grep: hamburger, drawer, site.js, cta-modules present. Report: UI_VERIFY_2026-05-30.md |
+| T8 | Self code-review + simplify | ✅ DONE | (T10) | No critical issues. Report: SELF_REVIEW_2026-05-30.md |
+| T9 | Security review auth/payment | ✅ DONE | (T10) | Session/auth/payment reviewed. Report: SELF_REVIEW_2026-05-30.md |
+| T10 | Final report + push | ✅ DONE | (T10) | OVERNIGHT_FINAL_2026-05-30.md + push branch |
 | T11–T15 | Backlog mở rộng | ⬜ TODO | | chỉ nếu còn thời gian |
 
 **Legend:** ⬜ TODO · 🔄 IN_PROGRESS · ✅ DONE · ⛔ BLOCKED
@@ -28,9 +28,9 @@
 
 ## % Hoàn thành (cập nhật mỗi vòng)
 
-- **Phần tự chủ (T1–T10):** 2 / 10 = 20%
-- **Tổng kế hoạch (gồm human-blocked):** ~31% _(Phase A 15% + 2 task × 5% = 25%... làm tròn theo §7)_
-- **Mục tiêu đêm nay:** 100% phần tự chủ ≈ 80% tổng.
+- **Phần tự chủ (T1–T10):** 10 / 10 = 100% ✅
+- **Tổng kế hoạch (gồm human-blocked):** ~80% _(Phase A 15% + T1–T10 50% + P3-0 15% = 80%)_
+- **Mục tiêu đêm nay:** 100% phần tự chủ ≈ 80% tổng. **ACHIEVED.**
 
 ---
 

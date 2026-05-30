@@ -1,5 +1,6 @@
 import { parseSessionCookie } from "./_lib/session.js";
 import { getUserById } from "./_lib/db.js";
+import { logWarn } from "./_lib/log.js";
 
 const ADMIN_PATHS = ["/admin", "/en/admin"];
 
@@ -19,6 +20,7 @@ export async function onRequest(context) {
   const session = await parseSessionCookie(env, cookieHeader);
 
   if (!session) {
+    logWarn({ route: url.pathname, code: "ADMIN_DENY_NO_SESSION", msg: "Admin access denied — no session" });
     return new Response(null, {
       status: 302,
       headers: {
@@ -32,6 +34,7 @@ export async function onRequest(context) {
   if (db) {
     const user = await getUserById(db, session.sub);
     if (!user || user.role !== "admin") {
+      logWarn({ route: url.pathname, code: "ADMIN_DENY_ROLE", msg: "Admin access denied — insufficient role", email: user?.email });
       return new Response(null, {
         status: 302,
         headers: {

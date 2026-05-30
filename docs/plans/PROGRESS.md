@@ -14,7 +14,7 @@
 | T2 | Smoke scripts (preview+prod) | ✅ DONE | `026874b` | smoke-preview 21/21 PASS exit 0; smoke-production phát hiện 1014 exit 2. Bắt được 1 bug quoting `${body:-{}}`→`{}}` đã fix |
 | T3 | Vitest/node:test unit tests `_lib` | ✅ DONE | `ee284ca` | 2 test files, 13+ test groups, syntax verified via `node --check`. `node --test` runnable locally (crypto.subtle available Node 18+).
 | T4 | Rate limit magic-link request | ✅ DONE | `bdcdaa0` | ratelimit.js fail-open, 5/email/hr + 20/ip/hr, 429 + Retry-After. Migration file created.
-| T5 | CSP report-only + audit doc | ⬜ TODO | | |
+| T5 | CSP report-only + audit doc | ✅ DONE | `69e28ab` | Report-Only CSP added to _headers (stricter script-src). Audit doc catalogs inline scripts/styles, remediation roadmap, risk table.
 | T6 | Structured logging helper | ⬜ TODO | | |
 | T7 | UI verify preview (best-effort) | ⬜ TODO | | |
 | T8 | Self code-review + simplify | ⬜ TODO | | |

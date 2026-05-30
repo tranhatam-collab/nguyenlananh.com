@@ -3,6 +3,7 @@ import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markM
 import { createSessionCookie, sessionCookieHeaders } from "./session.js";
 import { sendTemplateEmailDirect } from "./email.js";
 import { checkMagicLinkRateLimit, rateLimitResponse } from "./ratelimit.js";
+import { logError } from "./log.js";
 import {
   assert,
   base64UrlDecodeJson,
@@ -266,6 +267,7 @@ export async function signupMagicLinkResponse(context) {
       preview_magic_link: delivery.status === "sent" ? null : magicLink.url
     });
   } catch (error) {
+    logError({ route: "/api/auth/magic-links/request", code: error.code || "MAGIC_SIGNUP_FAILED", msg: error.message || "Unable to send magic link.", error });
     return errorResponse(error.status || 500, error.code || "MAGIC_SIGNUP_FAILED", error.message || "Unable to send magic link.");
   }
 }

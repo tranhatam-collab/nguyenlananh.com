@@ -38,8 +38,12 @@
 
 - **HB1 — error 1014: ✅ RESOLVED.** User đã cập nhật DNS + attach domain đúng account `62d57eaa…`. `nguyenlananh.com`/`www`/`admin.` đều 200, SSL active, KHÔNG còn 1014.
 - **Secrets production: ✅ đã set đủ** (GOOGLE_*, MAGIC_LINK_SECRET, MAIL_API_*, PAYMENTS_ADMIN_KEY, PAY_IAI_ONE_API_KEY…).
-- **⚠️ PROD FUNCTIONS STALE (P0 còn lại):** production đứng ở commit trước P2 — `session`/`logout`/`magic-links/request`→404/405, `/admin/`→200 (admin gate `_middleware.js` chưa deploy). `google/*` + `consume` thì sống.
-- **FIX đã chứng minh:** Git preview build của branch `auto/overnight-2026-05-30` (`https://auto-overnight-2026-05-30.nguyenlananh-com.pages.dev`) cho TẤT CẢ route xanh (session 401, /admin/ 302, logout 200, magic-request 422). → **Promote branch → main là xong.** Chi tiết lệnh: `docs/plans/KIMI_PROD_FINISH.md`.
+- **⚠️ P0 CÒN LẠI — HAI PROJECT PAGES (đã xác minh 2026-05-31):** `git push origin main` đã chạy (`568da9c`) nhưng custom domain VẪN serve bản cũ. Lý do: tồn tại 2 project trong account `62d57eaa…`:
+  - `nguyenlananh-com` → nhận build mới (session 401) nhưng KHÔNG có domain/secret.
+  - `nguyenlananh-com-63s` → CÓ domain `nguyenlananh.com/www/admin` + secrets + D1, nhưng serve bản cũ (session 404), KHÔNG nhận build mới.
+  - Git auto-deploy nối nhầm vào project rỗng `nguyenlananh-com`.
+- **FIX:** deploy HEAD thẳng vào `nguyenlananh-com-63s` (Cách A direct-upload `bash scripts/deploy-prod-official.sh`, đã set đúng PROJECT) HOẶC nối Git vào project đó (Cách B). Chi tiết: `docs/plans/KIMI_PROD_FINISH.md` §B. **Chặn:** cần wrangler auth (token hết hạn) hoặc thao tác dashboard.
+- Branch Git preview `auto-overnight-2026-05-30.nguyenlananh-com.pages.dev` xanh toàn bộ → code HEAD đúng, chỉ là deploy nhầm project.
 
 ## ⛔ BLOCKED — Human Handover
 

@@ -20,36 +20,43 @@
 
 ---
 
-## B. P0 — PROMOTE FIX LÊN PRODUCTION (việc quan trọng nhất)
+## B. P0 — DEPLOY HEAD VÀO ĐÚNG PROJECT (việc quan trọng nhất)
 
-> Mục tiêu: production có đủ route P2 + admin gate. Đã chứng minh an toàn trên preview build.
-> Chỉ promote SAU KHI xác nhận branch preview xanh (đã xanh — xem §A).
+> ⚠️ CẬP NHẬT 2026-05-31 (sau khi push main thất bại): **`git push origin main` KHÔNG fix
+> được** vì tồn tại **HAI project Pages** trong account `62d57eaa…`:
+>
+> | Project | pages.dev | Build mới (main) | Secrets | Domains + D1 |
+> |---|---|---|---|---|
+> | `nguyenlananh-com` | nguyenlananh-com.pages.dev | ✅ session 401 | ❌ google 501 | ❌ không |
+> | `nguyenlananh-com-63s` | nguyenlananh-com-63s.pages.dev | ❌ session 404 (cũ) | ✅ google 302 | ✅ **nguyenlananh.com/www/admin + D1** |
+>
+> Git auto-deploy đẩy code mới vào `nguyenlananh-com` (rỗng), còn **domain thật + secrets +
+> D1 nằm ở `nguyenlananh-com-63s`** và project này KHÔNG nhận build mới. → Phải deploy HEAD
+> THẲNG vào `nguyenlananh-com-63s`.
 
-### Cách A — Git auto-deploy (KHÔNG cần wrangler token) ✅ ưu tiên
+### Cách A — Direct upload vào đúng project (cần wrangler auth) ✅ ưu tiên, chắc chắn
 ```bash
 cd <repo>
-git checkout main
-git merge --ff-only auto/overnight-2026-05-30
-git push origin main          # Cloudflare tự build production từ main HEAD
-# Chờ build ~2–3 phút, rồi verify:
-sleep 150
-BASE_URL=https://nguyenlananh.com bash scripts/smoke-production.sh
-```
-**Kỳ vọng:** smoke ALL PASS (home/en/members 200, /admin/ **302**, session **401**,
-logout **200**, magic-request **422**, google-start **302**).
-
-### Cách B — Direct upload (fallback nếu Cách A không promote, cần auth)
-```bash
 wrangler login            # đăng nhập Anhhatam@gmail.com (account 62d57eaa…)
-# hoặc: export CLOUDFLARE_API_TOKEN=<token có quyền Pages:Edit, D1:Edit, DNS:Edit>
-bash scripts/deploy-prod-official.sh
+# hoặc headless: export CLOUDFLARE_API_TOKEN=<token Pages:Edit + D1:Edit + DNS:Edit>
+bash scripts/deploy-prod-official.sh      # đã set PROJECT=nguyenlananh-com-63s
+# Script tự deploy --branch=main vào project có domain + chạy smoke-production.
 ```
+**Kỳ vọng:** smoke ALL PASS (/admin/ **302**, session **401**, logout **200**,
+magic-request **422**, google-start **302**).
 
-### Nếu vẫn FAIL sau cả 2 cách
-- Mở Cloudflare Dashboard → Workers & Pages → nguyenlananh-com → Deployments → xem
-  **build log** của lần build mới nhất từ `main`. Tìm lỗi build (nếu build fail thì
-  prod giữ bản cũ → đó là lý do stale).
-- Đánh dấu `BLOCKED` trong PROGRESS.md kèm trích log, chuyển sang §D.
+### Cách B — Nối Git vào đúng project (bền vững, dashboard) ✅ làm sau để auto-deploy
+1. Dashboard → Workers & Pages → **nguyenlananh-com-63s** → Settings → Builds & deployments.
+2. Connect to Git → repo `tranhatam-collab/nguyenlananh.com`, production branch `main`,
+   build command: (để trống), output dir: `.`.
+3. Trigger "Retry deployment" / hoặc push 1 commit vào main → build vào project có domain.
+4. (Tuỳ chọn) Ở project thừa `nguyenlananh-com`: ngắt Git để khỏi nhầm.
+
+### Nếu tên project khác trên dashboard
+`PROJECT=<tên-đúng> bash scripts/deploy-prod-official.sh` (override biến PROJECT).
+
+### Kết quả mong đợi
+Sau Cách A hoặc B: `BASE_URL=https://nguyenlananh.com bash scripts/smoke-production.sh` → ALL PASS.
 
 ---
 

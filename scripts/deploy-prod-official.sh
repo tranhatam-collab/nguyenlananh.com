@@ -23,7 +23,14 @@
 set -euo pipefail
 
 ACCOUNT_ID="62d57eaa548617aeecac766e5a1cb98e"
-PROJECT="nguyenlananh-com"
+# IMPORTANT: deploy to the project that OWNS the custom domains + secrets + D1.
+# Verified 2026-05-31: there are TWO projects in this account —
+#   - nguyenlananh-com       : Git-connected, gets new builds, but NO domains/secrets
+#   - nguyenlananh-com-63s    : HAS nguyenlananh.com/www/admin domains + secrets + D1,
+#                               but was serving a STALE pre-P2 build.
+# The live domains serve nguyenlananh-com-63s, so we MUST deploy HEAD there.
+# Override with PROJECT=... if the dashboard shows a different name.
+PROJECT="${PROJECT:-nguyenlananh-com-63s}"
 BRANCH="main"
 export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT_ID"
 

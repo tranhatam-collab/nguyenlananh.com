@@ -34,11 +34,18 @@
 
 ---
 
-## ⛔ BLOCKED — Human Handover (user xử lý buổi sáng)
+## 🟢 PRODUCTION STATUS (verified 2026-05-31)
 
-> Xem chi tiết quy trình trong `MASTER_PLAN_AUTONOMOUS.md` §3.1.
+- **HB1 — error 1014: ✅ RESOLVED.** User đã cập nhật DNS + attach domain đúng account `62d57eaa…`. `nguyenlananh.com`/`www`/`admin.` đều 200, SSL active, KHÔNG còn 1014.
+- **Secrets production: ✅ đã set đủ** (GOOGLE_*, MAGIC_LINK_SECRET, MAIL_API_*, PAYMENTS_ADMIN_KEY, PAY_IAI_ONE_API_KEY…).
+- **⚠️ PROD FUNCTIONS STALE (P0 còn lại):** production đứng ở commit trước P2 — `session`/`logout`/`magic-links/request`→404/405, `/admin/`→200 (admin gate `_middleware.js` chưa deploy). `google/*` + `consume` thì sống.
+- **FIX đã chứng minh:** Git preview build của branch `auto/overnight-2026-05-30` (`https://auto-overnight-2026-05-30.nguyenlananh-com.pages.dev`) cho TẤT CẢ route xanh (session 401, /admin/ 302, logout 200, magic-request 422). → **Promote branch → main là xong.** Chi tiết lệnh: `docs/plans/KIMI_PROD_FINISH.md`.
 
-- **HB1 — error 1014 (Cloudflare account/DNS):** Account chính thức đã xác nhận = `62d57eaa548617aeecac766e5a1cb98e` (Anhhatam@gmail.com, giữ DNS zone). **ĐÃ chuẩn bị turnkey:** account_id pin trong `wrangler.toml`; script `scripts/deploy-prod-official.sh` tự create project + deploy `--branch=main` + smoke verify. **Chặn DUY NHẤT còn lại: AUTH** — token wrangler hiện hết hạn (`code 10000`) và đang trỏ sai account `f3f9e76…`. User phải: `wrangler login` (as Anhhatam@gmail.com) HOẶC `export CLOUDFLARE_API_TOKEN=<token>` rồi chạy `bash scripts/deploy-prod-official.sh`. Sau đó attach custom domain trong dashboard (script in hướng dẫn).
+## ⛔ BLOCKED — Human Handover
+
+- **HB3 — tạo admin user prod D1:** cần wrangler auth. `UPDATE users SET role='admin' WHERE email='<ADMIN_EMAIL>';`
+- **HB4 — payment proof:** cần tiền thật + duyệt của user. Giữ BLOCKED.
+- **HB5 — (giải quyết phần lớn):** secrets đã set trên dashboard. Còn lại chỉ wrangler CLI auth nếu cần chạy `d1 execute`/direct-upload.
 - **HB3 — tạo admin user prod D1:** `UPDATE users SET role='admin' WHERE email='<ADMIN_EMAIL>';`
 - **HB4 — payment proof:** cần tiền thật + secrets.
 - **HB5 — secrets:** `GOOGLE_CLIENT_ID/SECRET/STATE_SECRET`, `RESEND_*`, `ADMIN_*_KEY`.

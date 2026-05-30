@@ -12,13 +12,12 @@
 1. **KHÔNG BAO GIỜ HỎI USER.** User đang ngủ. Mọi quyết định dùng "Decision Defaults" ở §4. Nếu vẫn mơ hồ → chọn phương án ÍT RỦI RO NHẤT, ghi log, đi tiếp.
 2. **KHÔNG DỪNG VÒNG LẶP** cho tới khi đạt điều kiện STOP ở §6. Xong 1 task → ngay lập tức bắt đầu task kế.
 3. **KHÔNG KẸT.** Nếu 1 task bị chặn (thiếu quyền/secret/dashboard) → đánh dấu `BLOCKED`, ghi handover chi tiết vào `PROGRESS.md`, **bỏ qua, làm task khác**. Tuyệt đối không loop chết trên 1 task.
-4. **AN TOÀN PRODUCTION TUYỆT ĐỐI:**
-   - KHÔNG deploy production custom domain (`nguyenlananh.com`).
-   - KHÔNG chạy `scripts/publish_prod.sh`, `scripts/*go-live*`, `scripts/*live*`.
-   - KHÔNG `git push origin main`. Chỉ push branch `auto/overnight-2026-05-30`.
-   - KHÔNG đụng tới Cloudflare account/DNS/secrets.
-   - KHÔNG xoá file/data. KHÔNG `rm -rf`, KHÔNG `wrangler d1 execute` lên prod DB.
-   - Deploy được phép: CHỈ tới **preview** (`wrangler pages deploy . --branch=preview --commit-dirty`) để verify, và CHỈ khi task yêu cầu.
+4. **AN TOÀN PRODUCTION:**
+   - **NGOẠI LỆ ĐƯỢC DUYỆT (2026-05-31):** User yêu cầu hoàn tất production. Cho phép **MỘT** lần promote `auto/overnight-2026-05-30 → main` + `git push origin main` để fix prod stale — **CHỈ SAU KHI** xác nhận Git preview build của branch xanh toàn bộ (đã xanh, xem `KIMI_PROD_FINISH.md` §A). Theo đúng `KIMI_PROD_FINISH.md` §B Cách A, rồi verify bằng `scripts/smoke-production.sh`.
+   - KHÔNG chạy `scripts/publish_prod.sh`, `scripts/*go-live*`, `scripts/*live*` (gate riêng, dễ hỏng).
+   - KHÔNG đụng Cloudflare account/DNS/secrets. KHÔNG xoá file/data, KHÔNG `rm -rf`.
+   - `wrangler d1 execute` lên prod: chỉ chạy lệnh đã ghi sẵn trong handover (vd HB3), KHÔNG tự ý ALTER/DELETE schema.
+   - Nếu promote xong mà hỏng → rollback Dashboard/`wrangler pages deployment`, ghi BLOCKED, đi tiếp.
 5. **COMMIT NHỎ, THƯỜNG XUYÊN.** Mỗi task xong = 1 commit. Message theo Conventional Commits. Cuối mỗi commit thêm:
    `Co-Authored-By: Kimi K2 <noreply@moonshot.ai>`
 6. **CẬP NHẬT `PROGRESS.md` SAU MỖI TASK** — đây là báo cáo sống cho user đọc buổi sáng.

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Deploy current HEAD to nguyenlananh-com-63s (the project that owns
-custom domains + D1 + secrets). Run after wrangler auth is restored.
+# Deploy current HEAD to nguyenlananh-com (the project that owns
+# custom domains + D1 + secrets). Run after wrangler auth is restored.
+# NOTE: nguyenlananh-com-63s is the pages.dev subdomain suffix, NOT a separate project.
 set -euo pipefail
 
-PROJECT="nguyenlananh-com-63s"
+PROJECT="nguyenlananh-com"
 BRANCH="main"
 ACCOUNT="62d57eaa548617aeecac766e5a1cb98e"
 REPO="/Users/tranhatam/Documents/Devnewproject/nguyenlananh.com"

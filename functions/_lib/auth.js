@@ -264,7 +264,8 @@ export async function signupMagicLinkResponse(context) {
       email,
       expires_in_minutes: MAGIC_LINK_EXPIRE_MINUTES,
       delivery_status: delivery.status,
-      preview_magic_link: delivery.status === "sent" ? null : magicLink.url
+      provider: delivery.provider || null,
+      preview_magic_link: delivery.status === "sent" || context.env.ENV_DEPLOY_TARGET === "production" ? null : magicLink.url
     });
   } catch (error) {
     logError({ route: "/api/auth/magic-links/request", code: error.code || "MAGIC_SIGNUP_FAILED", msg: error.message || "Unable to send magic link.", error });

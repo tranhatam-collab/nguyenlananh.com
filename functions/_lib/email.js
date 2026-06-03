@@ -237,6 +237,7 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
   if (!canSend) {
     return {
       status: "preview",
+      provider,
       provider_message_id: null,
       content
     };
@@ -247,12 +248,15 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
       provider === "mail_iai_one" ? await sendViaMailIaiOne(env, emailJob) : await sendViaResend(env, emailJob);
     return {
       status: "sent",
+      provider,
       provider_message_id: result.provider_message_id || null,
       content
     };
   } catch (error) {
+    console.error("[EMAIL_SEND_FAILED] provider=" + provider + " error=" + (error.message || "unknown") + " details=" + JSON.stringify(error.details || {}));
     return {
       status: "failed",
+      provider,
       provider_message_id: null,
       error_detail: error.message || "Unknown email failure",
       content

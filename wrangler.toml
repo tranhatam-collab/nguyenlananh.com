@@ -21,7 +21,7 @@ compatibility_date = "2026-02-09"
 [[env.production.d1_databases]]
 binding = "PAYMENTS_DB"
 database_name = "nguyenlananh-payments-prod"
-database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"
+database_id = "2f3a3331-546b-44f1-9992-57d18705afd5"
 
 [env.production.vars]
 MAIL_API_BASE_URL = "https://api.mail.iai.one/v1"

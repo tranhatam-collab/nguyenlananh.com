@@ -181,3 +181,9 @@ CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_route
 
 CREATE INDEX IF NOT EXISTS idx_admin_member_snapshot_queue_priority
   ON admin_member_snapshot_queue(queue_priority_code, updated_at DESC);
+
+CREATE TABLE IF NOT EXISTS member_progress (
+  user_id TEXT PRIMARY KEY,
+  progress_json TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);

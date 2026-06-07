@@ -23,6 +23,15 @@ binding = "PAYMENTS_DB"
 database_name = "nguyenlananh-payments-prod"
 database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"
 
+[env.production.vars]
+MAIL_API_BASE_URL = "https://api.mail.iai.one/v1"
+EMAIL_FROM = "Nguyen Lan Anh <hello@nguyenlananh.com>"
+EMAIL_FROM_NOREPLY = "Nguyen Lan Anh <noreply@nguyenlananh.com>"
+EMAIL_FROM_PAY = "pay@nguyenlananh.com"
+EMAIL_FROM_SYSTEM = "noreply@nguyenlananh.com"
+EMAIL_REPLY_TO_SUPPORT = "support@nguyenlananh.com"
+MAIL_API_WORKSPACE_ID = "nguyenlananh.com"
+
 # Preview env KHÔNG dùng D1 cho đến khi có preview DB riêng.
 # Tạo preview DB: wrangler d1 create nguyenlananh-payments-preview
 # Sau đó uncomment khối dưới và cập nhật database_id.

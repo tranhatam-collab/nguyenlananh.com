@@ -387,6 +387,45 @@
 
   function saveProgress(progress) {
     writeJSON(STORAGE.progress, progress);
+    scheduleSyncProgress();
+  }
+
+  let syncProgressTimeout = null;
+  function scheduleSyncProgress() {
+    if (syncProgressTimeout) clearTimeout(syncProgressTimeout);
+    syncProgressTimeout = setTimeout(() => {
+      syncProgressTimeout = null;
+      void syncProgressToServer();
+    }, 2000);
+  }
+
+  async function syncProgressToServer() {
+    const session = getSession();
+    if (!session) return;
+    try {
+      await fetch("/api/members/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(getProgress())
+      });
+    } catch (_e) {
+      // Silent fail; local storage is source of truth
+    }
+  }
+
+  async function loadProgressFromServer() {
+    const session = getSession();
+    if (!session) return;
+    try {
+      const res = await fetch("/api/members/progress");
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.ok && data.progress && Object.keys(data.progress).length > 0) {
+        writeJSON(STORAGE.progress, data.progress);
+      }
+    } catch (_e) {
+      // Silent fail
+    }
   }
 
   function completionPercent(progress) {
@@ -1318,6 +1357,7 @@
     const vietqrAccountNo = $("#vietqrAccountNo");
     const vietqrBankBin = $("#vietqrBankBin");
     const vietqrImage = $("#vietqrImage");
+    const planInput = $("#unlockPlan");
     const markTransferSent = $("#markTransferSent");
     const confirmUnlock = $("#confirmPaid");
     let currentVietQrOrderId = null;
@@ -1422,7 +1462,7 @@
         if (territory === "VN") {
           const checkout = await createVietQrOrder({
             email: session.email,
-            plan_code: "year1",
+            plan_code: String(planInput?.value || "year1"),
             locale,
             identity_country: "VN",
             identity_ref: identityRef || undefined,
@@ -1446,7 +1486,7 @@
         const checkout = await createCheckout({
           provider,
           email: session.email,
-          plan_code: "year1",
+          plan_code: String(planInput?.value || "year1"),
           locale,
           identity_country: "INTL",
           identity_ref: identityRef || undefined,
@@ -1531,6 +1571,7 @@
 
     if (redirectFreeMemberToStart(session)) return;
 
+    await loadProgressFromServer();
     renderSessionInfo(session);
     renderProfileInfo(session);
     renderProgress();

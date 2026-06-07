@@ -690,3 +690,21 @@ export async function summarizeAdminMemberSnapshots(db) {
     }
   };
 }
+
+export async function getMemberProgress(db, userId) {
+  const result = await db.prepare("SELECT progress_json FROM member_progress WHERE user_id = ?").bind(userId).first();
+  if (!result?.progress_json) return null;
+  try {
+    return JSON.parse(result.progress_json);
+  } catch {
+    return null;
+  }
+}
+
+export async function saveMemberProgress(db, userId, progress) {
+  const now = new Date().toISOString();
+  await db.prepare(
+    `INSERT INTO member_progress (user_id, progress_json, updated_at) VALUES (?, ?, ?)
+     ON CONFLICT(user_id) DO UPDATE SET progress_json = excluded.progress_json, updated_at = excluded.updated_at`
+  ).bind(userId, JSON.stringify(progress), now).run();
+}

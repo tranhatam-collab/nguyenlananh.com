@@ -20,11 +20,75 @@
   <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" /><meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />  </head>
 <body data-page="members-pro-inner">
-  <a class="skip" href="#main">Bỏ qua điều hướng</a><main id="main" class="container" role="main">
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a><nav class="navlinks" aria-label="Điều hướng thành viên"><a href="/members/dashboard/">Bảng điều khiển</a><a href="/members/journey/">Hành trình</a><a href="/members/practice/">Thực hành</a><a href="/members/deep/">Chuyên sâu</a><a href="/members/experience/">Trải nghiệm</a><a href="/members/pro/">Pro</a></nav><div class="actions"><button id="logoutBtn" class="btn" type="button">Đăng xuất</button><button class="hamburger" type="button" id="hamburger" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true"></span></button></div></div></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="false" aria-label="Điều hướng">
+    <div class="dhead">
+      <div>
+        <div style="font-weight:700; font-size:13px;">Điều hướng</div>
+        <div class="hint">Chọn một mục để đi tới.</div>
+      </div>
+      <button class="btn" type="button" id="closeDrawer" aria-label="Đóng menu">Đóng</button>
+    </div>
+    <nav aria-label="Điều hướng thành viên di động"><a href="/members/dashboard/" data-close>Bảng điều khiển</a><a href="/members/journey/" data-close>Hành trình</a><a href="/members/practice/" data-close>Thực hành</a><a href="/members/deep/" data-close>Chuyên sâu</a><a href="/members/experience/" data-close>Trải nghiệm</a><a href="/members/pro/" data-close>Pro</a><a href="/" data-close class="drawerCta">Về trang chủ</a></nav>
+    <div class="foot">Đi chậm để đi sâu. Đi thật để đi xa.</div>
+  </div>
+</header>
+
+  <main id="main" class="container" role="main">
     <section class="pageHead">
-      <h1>NỘI TÂM</h1>
-      <p class="sub">Gói chữa gốc: đi vào niềm tin lõi, phản xạ cảm xúc và cách tự vận hành.</p>
+      <span class="badge">Tầng Pro</span>
+      <h1 style="margin-top:8px;">NỘI TÂM</h1>
+      <p class="sub">Đi vào gốc niềm tin, cảm xúc và mô thức cũ — không phải để phán xét, mà để gọi đúng tên và chọn khác đi.</p>
       <div class="actionsRow"><a class="cta" href="/members/pro/">Về Tầng Pro</a><a class="ghost" href="/members/deep/">Về Chuyên sâu</a></div>
+    </section>
+
+    <section class="panel" style="margin-bottom:12px;">
+      <h2 style="margin-bottom:8px;">Module 1 — Gọi tên những gì đang vận hành bạn</h2>
+      <p>Bạn không phải một bảng tính cảm xúc ngẫu nhiên. Những gì bạn cảm, nghĩ và làm đều được vận hành bởi những niềm tin và mô thức được hình thành từ rất lâu. Vấn đề là bạn không biết chúng tồn tại.</p>
+      <p>Module này giúp bạn nhìn ra: tại sao bạn luôn phản ứng theo cùng một cách, tại sao những lời khuyên hợp lý không thay đổi được hành vi, và tại sao bạn cảm thấy mình không điều khiển được chính mình.</p>
+      <ul class="list">
+        <li>Viết lại 5 quyết định gần nhất — không phải để đánh giá, mà để thấy pattern</li>
+        <li>Tìm điểm chung: bạn luôn né, luôn siết, hay luôn đổ lỗi?</li>
+        <li>Nhận ra một niềm tin ngầm đang vận hành bạn — ví dụ: "nếu tôi không cố gắng gấp đôi, tôi sẽ bị bỏ lại"</li>
+      </ul>
+    </section>
+
+    <section class="panel" style="margin-bottom:12px;">
+      <h2 style="margin-bottom:8px;">Module 2 — Niềm tin gốc</h2>
+      <p>Niềm tin gốc không phải những gì bạn nghĩ mình tin. Nó là những gì bạn hành động như thể nó đúng. Bạn có thể nghĩ mình xứng đáng được yêu thương, nhưng nếu bạn luôn im lặng khi bị xâm phạm, niềm tin gốc có thể là: "yêu thương có điều kiện — nếu tôi không chiều ý, người ta sẽ đi."</p>
+      <p>Niềm tin gốc không sai. Nó từng giúp bạn sống sót. Nhưng bây giờ nó đã lỗi thời. Module này giúp bạn nhìn ra nó mà không cần ghét bản thân.</p>
+      <ul class="list">
+        <li>Liệt kê 3 niềm tin gốc về bản thân, về người khác, về thế giới</li>
+        <li>Tìm nguồn gốc: niềm tin này được hình thành từ đâu, từ ai, từ khi nào</li>
+        <li>Viết một câu mới — không phải để ép tin, mà để thử nghiệm: "Có thể tôi không cần... nữa"</li>
+      </ul>
+    </section>
+
+    <section class="panel" style="margin-bottom:12px;">
+      <h2 style="margin-bottom:8px;">Module 3 — Cảm xúc bị giam</h2>
+      <p>Có những cảm xúc bạn đã quen không cảm. Bởi vì cảm chúng quá đau, hoặc vì bạn được dạy rằng cảm xúc đó là yếu đuối, là thừa, là không được phép. Nên bạn tắt nó đi.</p>
+      <p>Nhưng cảm xúc không biến mất. Nó chỉ đi xuống tầng hầm. Và từ đó, nó vận hành bạn bằng những cách bạn không nhận ra: cáu gắt không rõ lý do, mệt mỏi không giải thích được, hoặc một sự trống rỗng không thể lấp đầy.</p>
+      <ul class="list">
+        <li>Nhận diện một cảm xúc bạn thường né: tức giận, buồn, sợ hãi, xấu hổ</li>
+        <li>Ghi lại lần cuối bạn cảm nó đầy đủ — không phải để sửa, mà để thấy</li>
+        <li>Thử một bước nhỏ: đặt tên cho cảm xúc đó trong một ngày bình thường</li>
+      </ul>
+    </section>
+
+    <section class="panel" style="margin-bottom:12px;">
+      <h2 style="margin-bottom:8px;">Module 4 — Mở lại tiếng nói bên trong</h2>
+      <p>Khi bạn đã gọi được tên niềm tin gốc và cảm xúc bị giam, bạn sẽ bắt đầu nghe lại được tiếng nói bên trong của mình. Không phải tiếng của cha mẹ, của xã hội, hay của nỗi sợ. Mà là tiếng của chính bạn, tiếng đã bị lấp bởi tiếng ồn bên ngoài quá lâu.</p>
+      <p>Module này không cho bạn câu trả lời. Nó cho bạn một câu hỏi để bạn tự trả lời. Và câu trả lời đó sẽ là nền tảng cho mọi bước tiếp theo.</p>
+      <ul class="list">
+        <li>Viết thư cho chính mình — không để gửi, mà để nghe</li>
+        <li>Tìm lại một khoảnh khắc mà bạn cảm thấy "đúng là mình" — kể lại chi tiết</li>
+        <li>Ghi một câu mà bạn muốn tin, và một hành động nhỏ để thử câu đó</li>
+      </ul>
+      <div class="actionsRow" style="margin-top:14px;">
+        <a class="ghost" href="/members/pro/">Về Tầng Pro</a>
+        <a class="cta" href="/members/practice/">Mở Thực hành hôm nay</a>
+      </div>
     </section>
   </main>
     <script src="/assets/content-registry.js"></script>

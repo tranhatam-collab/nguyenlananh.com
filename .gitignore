@@ -11,3 +11,4 @@ _worker.bundle
 .env.secrets
 .env.local
 "Hinh ảnh web/"
+scripts/fix_en_cat_*.py

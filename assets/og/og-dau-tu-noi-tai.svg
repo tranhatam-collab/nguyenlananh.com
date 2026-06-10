@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F4EFE6"/>
+  <rect x="820" y="180" width="60" height="260" rx="4" fill="#A16207" fill-opacity="0.2" stroke="#A16207" stroke-width="2"/>
+  <rect x="900" y="240" width="60" height="200" rx="4" fill="#A16207" fill-opacity="0.3" stroke="#A16207" stroke-width="2"/>
+  <rect x="980" y="140" width="60" height="300" rx="4" fill="#A16207" fill-opacity="0.15" stroke="#A16207" stroke-width="2"/>
+  <text x="90" y="130" fill="#2A1810" font-family="Georgia, serif" font-size="52" font-weight="bold">Đầu tư Nội tại — 90 ngày</text>
+  <text x="90" y="190" fill="#5C4033" font-family="Georgia, serif" font-size="28">5 vốn nội tại, bộ lọc quyết định, rõ ràng</text>
+  <text x="90" y="560" fill="#5C4033" font-family="Georgia, serif" font-size="22">nguyenlananh.com</text>
+</svg>

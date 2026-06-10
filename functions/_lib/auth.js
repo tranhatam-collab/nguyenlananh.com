@@ -1,4 +1,42 @@
 import { TEMPLATE_IDS } from "./constants.js";
+
+function productWelcomeTemplateFor(source) {
+  const map = {
+    loop: TEMPLATE_IDS.product_loop_welcome,
+    space: TEMPLATE_IDS.product_space_welcome,
+    capital: TEMPLATE_IDS.product_capital_welcome,
+    creative: TEMPLATE_IDS.product_creative_welcome,
+    family: TEMPLATE_IDS.product_family_welcome
+  };
+  return map[source] || null;
+}
+
+function productDeepUrlFor(source, locale) {
+  const isEn = getLocale(locale) === "en-US";
+  const prefix = isEn ? "https://www.nguyenlananh.com/en" : "https://www.nguyenlananh.com";
+  const map = {
+    loop: `${prefix}/members/deep/ban-do-vong-lap/`,
+    space: `${prefix}/members/deep/tai-thiet-khong-gian/`,
+    capital: `${prefix}/members/deep/dau-tu-noi-tai/`,
+    creative: `${prefix}/members/deep/xuong-sang-tao/`,
+    family: `${prefix}/members/deep/gia-dinh-va-goc-re/`
+  };
+  return map[source] || "";
+}
+
+function productArticleUrlFor(source, locale) {
+  const isEn = getLocale(locale) === "en-US";
+  const prefix = isEn ? "https://www.nguyenlananh.com/en" : "https://www.nguyenlananh.com";
+  const map = {
+    loop: `${prefix}/bai-viet/ban-do-vong-lap-ca-nhan/`,
+    space: `${prefix}/bai-viet/tai-thiet-khong-gian-song/`,
+    capital: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
+    creative: `${prefix}/bai-viet/lao-dong-sang-tao-he-van-hanh/`,
+    family: `${prefix}/bai-viet/he-gia-dinh-va-goc-re/`
+  };
+  return map[source] || "";
+}
+
 import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markMagicLinkUsed, requireDb, upsertUserMembership } from "./db.js";
 import { createSessionCookie, sessionCookieHeaders } from "./session.js";
 import { sendTemplateEmailDirect } from "./email.js";
@@ -36,7 +74,7 @@ const MAGIC_LINK_EXPIRE_MINUTES = 20;
 const GOOGLE_OAUTH_STATE_TTL_SECONDS = 10 * 60;
 const FREE_MEMBERSHIP_DAYS = 365;
 
-async function ensureCompanionUser(db, email, locale) {
+async function ensureCompanionUser(db, email, locale, productSource) {
   const existing = await getUserByEmail(db, email);
   if (existing) return existing;
 
@@ -46,13 +84,14 @@ async function ensureCompanionUser(db, email, locale) {
     membership_type: "free",
     membership_label: membershipLabel(locale),
     preferred_language: getLocale(locale),
+    product_source: productSource || null,
     expires_at: daysFrom(now, FREE_MEMBERSHIP_DAYS),
     created_at: now,
     updated_at: now
   });
 }
 
-async function issueMagicLinkToken({ db, user, email, nextPath, locale, request }) {
+async function issueMagicLinkToken({ db, user, email, nextPath, locale, request, productSource }) {
   const rawToken = randomToken(24);
   const tokenHash = await sha256Hex(rawToken);
   const expiresAt = new Date(Date.now() + MAGIC_LINK_EXPIRE_MINUTES * 60 * 1000).toISOString();
@@ -62,6 +101,7 @@ async function issueMagicLinkToken({ db, user, email, nextPath, locale, request 
     email,
     token_hash: tokenHash,
     redirect_path: nextPath,
+    product_source: productSource,
     expires_at: expiresAt,
     created_at: nowIso()
   });
@@ -133,6 +173,7 @@ export async function googleOAuthStartResponse(context) {
       nonce: randomId("gstate"),
       locale,
       next_path: nextPath,
+      product_source: url.searchParams.get("source") || null,
       exp: Math.floor(Date.now() / 1000) + GOOGLE_OAUTH_STATE_TTL_SECONDS
     });
 
@@ -205,7 +246,7 @@ export async function googleOAuthCallbackResponse(context) {
 
     const locale = getLocale(state.locale || profilePayload.locale || "vi");
     const db = requireDb(context.env);
-    const user = await ensureCompanionUser(db, email, locale);
+    const user = await ensureCompanionUser(db, email, locale, state.product_source || null);
     const nextPath = normalizeNextPath(state.next_path || membersStartPath(locale), locale);
     const magicLink = await issueMagicLinkToken({
       db,
@@ -213,7 +254,8 @@ export async function googleOAuthCallbackResponse(context) {
       email,
       nextPath,
       locale,
-      request: context.request
+      request: context.request,
+      productSource: state.product_source || null
     });
 
     return Response.redirect(magicLink.url, 302);
@@ -238,14 +280,15 @@ export async function signupMagicLinkResponse(context) {
     const locale = getLocale(body.locale);
     const nextPath = normalizeNextPath(body.next_path || membersStartPath(locale), locale);
     const db = requireDb(context.env);
-    const user = await ensureCompanionUser(db, email, locale);
+    const user = await ensureCompanionUser(db, email, locale, body.source || null);
     const magicLink = await issueMagicLinkToken({
       db,
       user,
       email,
       nextPath,
       locale,
-      request: context.request
+      request: context.request,
+      productSource: body.source || null
     });
 
     const delivery = await sendTemplateEmailDirect({
@@ -291,10 +334,35 @@ export async function consumeStatelessMagicLinkResponse(context) {
     const user = magicLink.user_id ? await getUserById(db, magicLink.user_id) : await getUserByEmail(db, magicLink.email);
     assert(user && user.active, "MEMBERSHIP_INACTIVE", "Membership is inactive.", 403);
 
+    if (magicLink.product_source && !user.product_source) {
+      await db.prepare("UPDATE users SET product_source = ?, updated_at = ? WHERE id = ?")
+        .bind(magicLink.product_source, nowIso(), user.id)
+        .run();
+      user.product_source = magicLink.product_source;
+    }
+
     await markMagicLinkUsed(db, magicLink.id, nowIso());
 
     const locale = getLocale(body.locale || user.preferred_language);
     const nextPath = normalizeNextPath(body.next_path || magicLink.redirect_path || membersStartPath(locale), locale);
+
+    const productWelcomeTemplate = productWelcomeTemplateFor(user.product_source);
+    if (productWelcomeTemplate) {
+      try {
+        await sendTemplateEmailDirect({
+          env: context.env,
+          templateId: productWelcomeTemplate,
+          recipientEmail: user.email,
+          language: locale,
+          payload: {
+            deep_url: productDeepUrlFor(user.product_source, locale),
+            article_url: productArticleUrlFor(user.product_source, locale)
+          }
+        });
+      } catch (_emailError) {
+        // Non-blocking: welcome email failure should not break login
+      }
+    }
 
     const cookieValue = await createSessionCookie(context.env, user);
     const cookieHeaders = cookieValue ? sessionCookieHeaders(cookieValue) : {};

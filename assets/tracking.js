@@ -1,6 +1,25 @@
 (() => {
   const STORAGE_KEY = "nla_events";
   const MAX_QUEUE = 100;
+  const OPT_OUT_KEY = "nla_tracking_opt_out";
+
+  function isOptedOut() {
+    try {
+      return localStorage.getItem(OPT_OUT_KEY) === "1" ||
+             navigator.doNotTrack === "1" ||
+             navigator.globalPrivacyControl === true;
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function setOptOut(value) {
+    try {
+      localStorage.setItem(OPT_OUT_KEY, value ? "1" : "0");
+    } catch (_e) {}
+  }
+
+  window.NLA_TRACK_PRIVACY = { isOptedOut, setOptOut, OPT_OUT_KEY };
 
   function getQueue() {
     try {
@@ -17,6 +36,7 @@
   }
 
   function push(event) {
+    if (isOptedOut()) return;
     const q = getQueue();
     q.push({ ...event, t: Date.now(), url: location.href });
     saveQueue(q);

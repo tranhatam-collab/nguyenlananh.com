@@ -1,4 +1,42 @@
 import { PLANS, PROVIDER_CATALOG, TEMPLATE_IDS, planByCode, providerByCode } from "./constants.js";
+
+function productWelcomeTemplateFor(source) {
+  const map = {
+    loop: TEMPLATE_IDS.product_loop_welcome,
+    space: TEMPLATE_IDS.product_space_welcome,
+    capital: TEMPLATE_IDS.product_capital_welcome,
+    creative: TEMPLATE_IDS.product_creative_welcome,
+    family: TEMPLATE_IDS.product_family_welcome
+  };
+  return map[source] || null;
+}
+
+function productDeepUrlFor(source, locale) {
+  const isEn = getLocale(locale) === "en-US";
+  const prefix = isEn ? "https://www.nguyenlananh.com/en" : "https://www.nguyenlananh.com";
+  const map = {
+    loop: `${prefix}/members/deep/ban-do-vong-lap/`,
+    space: `${prefix}/members/deep/tai-thiet-khong-gian/`,
+    capital: `${prefix}/members/deep/dau-tu-noi-tai/`,
+    creative: `${prefix}/members/deep/xuong-sang-tao/`,
+    family: `${prefix}/members/deep/gia-dinh-va-goc-re/`
+  };
+  return map[source] || "";
+}
+
+function productArticleUrlFor(source, locale) {
+  const isEn = getLocale(locale) === "en-US";
+  const prefix = isEn ? "https://www.nguyenlananh.com/en" : "https://www.nguyenlananh.com";
+  const map = {
+    loop: `${prefix}/bai-viet/ban-do-vong-lap-ca-nhan/`,
+    space: `${prefix}/bai-viet/tai-thiet-khong-gian-song/`,
+    capital: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
+    creative: `${prefix}/bai-viet/lao-dong-sang-tao-he-van-hanh/`,
+    family: `${prefix}/bai-viet/he-gia-dinh-va-goc-re/`
+  };
+  return map[source] || "";
+}
+
 import {
   createMagicLink,
   createOrder,
@@ -763,6 +801,23 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
     dedupeKey: `${TEMPLATE_IDS.receipt}:${user.email}:${order.internal_order_id}:${providerCaptureId || "na"}`,
     payload: commonPayload
   });
+
+  const productWelcomeTemplate = productWelcomeTemplateFor(user.product_source);
+  if (productWelcomeTemplate) {
+    await queueAndSendEmail({
+      db,
+      env,
+      templateId: productWelcomeTemplate,
+      recipientEmail: user.email,
+      language: locale,
+      dedupeKey: `${productWelcomeTemplate}:${user.email}:${order.internal_order_id}:${providerCaptureId || "na"}`,
+      payload: {
+        ...commonPayload,
+        deep_url: productDeepUrlFor(user.product_source, locale),
+        article_url: productArticleUrlFor(user.product_source, locale)
+      }
+    });
+  }
 
   await queueAndSendEmail({
     db,

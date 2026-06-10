@@ -1,31 +1,26 @@
 # Bilingual Language Rebuild Report
 
-- Generated at: 2026-06-07T13:28:31.456Z
-- Status: BLOCKED
-- Total URLs audited: 260
-- Pages with issues: 6
-- Total issues: 6
-- Blocking issues: 6
-- Images checked: 319
-- Alt text present: 75
-- Figures checked: 73
-- Figure captions present: 46
-- SVG descriptions present: 300
+- Generated at: 2026-06-07T14:21:24.764Z
+- Status: PASS
+- Total URLs audited: 286
+- Pages with issues: 0
+- Total issues: 0
+- Blocking issues: 0
+- Images checked: 355
+- Alt text present: 85
+- Figures checked: 83
+- Figure captions present: 56
+- SVG descriptions present: 332
 
 ## Summary
 
-- Locale split: {"vi":133,"en":127}
-- Severity split: {"high":6}
-- Category split: {"bilingual":6}
+- Locale split: {"vi":143,"en":143}
+- Severity split: {}
+- Category split: {}
 
 ## Blocking Pages
 
-- /bai-viet/chuyen-muc/dau-tu-ban-than/ [vi] -> missing_counterpart_page
-- /bai-viet/chuyen-muc/di-vao-ben-trong/ [vi] -> missing_counterpart_page
-- /bai-viet/chuyen-muc/du-an-nhat-ky/ [vi] -> missing_counterpart_page
-- /bai-viet/chuyen-muc/gia-tri-noi-tai/ [vi] -> missing_counterpart_page
-- /bai-viet/chuyen-muc/lao-dong-sang-tao/ [vi] -> missing_counterpart_page
-- /bai-viet/chuyen-muc/mon-hoc-don-dep/ [vi] -> missing_counterpart_page
+- None
 
 ## Locked Decisions
 

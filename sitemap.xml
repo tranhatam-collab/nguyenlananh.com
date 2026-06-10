@@ -8,6 +8,7 @@
   <url><loc>https://www.nguyenlananh.com/bai-viet/bon-truc-thay-doi/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/cai-choi/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/chi-can-dung/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bai-viet/chu-tam-sau/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/chua-tung-co-huong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/chuyen-muc/dau-tu-ban-than/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/chuyen-muc/di-vao-ben-trong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
@@ -62,15 +63,19 @@
   <url><loc>https://www.nguyenlananh.com/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/nhung-vong-lap-ban-chua-goi-ten/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bai-viet/quan-tri-nang-luong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/quet-la-va-viec-hoc/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bai-viet/ranh-gioi-lanh-manh/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/sai-moi-truong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/song-sai-nhip/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/song-theo-dong-chay/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/song-theo-thoi-quen/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bai-viet/su-du-va-tien-bac/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/tai-thiet-khong-gian-song/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/thieu-su-that/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/tu-55-trieu-den-tu-do/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/bai-viet/viet-phan-tu/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/vu-tru-vat-chat/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/bat-dau/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/bat-dau/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -78,8 +83,13 @@
   <url><loc>https://www.nguyenlananh.com/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/ban-do-vong-lap/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/chuong-trinh/bo-chu-tam-sau/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/chuong-trinh/bo-quan-tri-nang-luong/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/chuong-trinh/bo-ranh-gioi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/dau-tu-noi-tai/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/gia-dinh-goc-re/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/chuong-trinh/nhat-ky-phan-tu/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/chuong-trinh/so-tay-su-du/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/tai-thiet-khong-gian/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/chuong-trinh/xuong-sang-tao/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/du-an/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -93,6 +103,7 @@
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/bon-truc-thay-doi/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/cai-choi/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/chi-can-dung/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bai-viet/chu-tam-sau/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/chua-tung-co-huong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/dau-tu-ban-than/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/di-vao-ben-trong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
@@ -147,15 +158,19 @@
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/nhung-vong-lap-ban-chua-goi-ten/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/nuoi-day-tre-khong-lam-gay-tu-nhien/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bai-viet/quan-tri-nang-luong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/quet-la-va-viec-hoc/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bai-viet/ranh-gioi-lanh-manh/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/sai-moi-truong/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/song-sai-nhip/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/song-theo-dong-chay/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/song-theo-thoi-quen/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bai-viet/su-du-va-tien-bac/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/tai-thiet-khong-gian-song/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/thieu-su-that/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/truong-thanh-thong-qua-mon-hoc-don-dep/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/tu-55-trieu-den-tu-do/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/bai-viet/viet-phan-tu/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bai-viet/vu-tru-vat-chat/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bat-dau/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/bat-dau/7-ngay-thiet-lap-nhip-song-moi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
@@ -163,8 +178,13 @@
   <url><loc>https://www.nguyenlananh.com/en/bat-dau/vi-sao-day-la-mot-he-thuc-hanh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/ban-do-vong-lap/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/bo-chu-tam-sau/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/bo-quan-tri-nang-luong/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/bo-ranh-gioi/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/dau-tu-noi-tai/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/gia-dinh-goc-re/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/nhat-ky-phan-tu/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/so-tay-su-du/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/tai-thiet-khong-gian/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/chuong-trinh/xuong-sang-tao/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/en/du-an/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>

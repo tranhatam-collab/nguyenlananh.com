@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   membership_label TEXT NOT NULL,
   preferred_language TEXT NOT NULL DEFAULT 'vi',
   role TEXT NOT NULL DEFAULT 'user',
+  product_source TEXT,
   expires_at TEXT NOT NULL,
   active INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL,
@@ -76,6 +77,7 @@ CREATE TABLE IF NOT EXISTS magic_links (
   email TEXT NOT NULL,
   token_hash TEXT NOT NULL UNIQUE,
   redirect_path TEXT,
+  product_source TEXT,
   expires_at TEXT NOT NULL,
   used_at TEXT,
   created_at TEXT NOT NULL,
@@ -187,3 +189,23 @@ CREATE TABLE IF NOT EXISTS member_progress (
   progress_json TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS analytics_events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  event_type TEXT NOT NULL,
+  page_path TEXT NOT NULL,
+  referrer TEXT,
+  locale TEXT NOT NULL DEFAULT 'vi',
+  user_agent TEXT,
+  ip_hash TEXT,
+  country TEXT,
+  session_id TEXT,
+  metadata TEXT,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_analytics_events_type_path
+  ON analytics_events(event_type, page_path, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_analytics_events_session
+  ON analytics_events(session_id, created_at DESC);

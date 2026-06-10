@@ -1,26 +1,22 @@
 {
   "summary": {
-    "generatedAt": "2026-06-07T13:28:31.456Z",
-    "totalUrls": 260,
-    "totalPagesWithIssues": 6,
-    "totalIssues": 6,
-    "blockingIssues": 6,
-    "status": "blocked",
-    "totalImages": 319,
-    "totalAltText": 75,
-    "totalFigures": 73,
-    "totalFigcaptions": 46,
-    "totalSvgDescriptions": 300,
+    "generatedAt": "2026-06-07T14:21:24.764Z",
+    "totalUrls": 286,
+    "totalPagesWithIssues": 0,
+    "totalIssues": 0,
+    "blockingIssues": 0,
+    "status": "pass",
+    "totalImages": 355,
+    "totalAltText": 85,
+    "totalFigures": 83,
+    "totalFigcaptions": 56,
+    "totalSvgDescriptions": 332,
     "localeCounts": {
-      "vi": 133,
-      "en": 127
+      "vi": 143,
+      "en": 143
     },
-    "severityCounts": {
-      "high": 6
-    },
-    "categoryCounts": {
-      "bilingual": 6
-    }
+    "severityCounts": {},
+    "categoryCounts": {}
   },
   "audits": [
     {
@@ -224,6 +220,26 @@
       "issues": []
     },
     {
+      "file": "bai-viet/ban-do-vong-lap-ca-nhan/index.html",
+      "route": "/bai-viet/ban-do-vong-lap-ca-nhan/",
+      "url": "https://www.nguyenlananh.com/bai-viet/ban-do-vong-lap-ca-nhan/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Bản đồ vòng lặp cá nhân: 7 vòng lặp đang vận hành đời bạn",
+      "metaDescription": "Nhận diện 7 vòng lặp thường gặp, đọc cấu trúc kích hoạt – phản ứng – lợi ngầm – giá phải trả, và lộ trình 21 ngày để chọn lại.",
+      "h1": "Bản đồ vòng lặp cá nhân: nhìn rõ 7 vòng lặp đang vận hành đời bạn",
+      "h1Count": 1,
+      "textNodeCount": 138,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/ban-do-vong-lap-ca-nhan/index.html",
+      "issues": []
+    },
+    {
       "file": "bai-viet/ban-khong-thieu-kien-thuc/index.html",
       "route": "/bai-viet/ban-khong-thieu-kien-thuc/",
       "url": "https://www.nguyenlananh.com/bai-viet/ban-khong-thieu-kien-thuc/",
@@ -340,15 +356,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/dau-tu-ban-than/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/chuyen-muc/di-vao-ben-trong/index.html",
@@ -367,15 +376,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/di-vao-ben-trong/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/chuyen-muc/du-an-nhat-ky/index.html",
@@ -394,15 +396,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/du-an-nhat-ky/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/chuyen-muc/gia-tri-noi-tai/index.html",
@@ -421,15 +416,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/gia-tri-noi-tai/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/chuyen-muc/lao-dong-sang-tao/index.html",
@@ -448,15 +436,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/lao-dong-sang-tao/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/chuyen-muc/mon-hoc-don-dep/index.html",
@@ -475,15 +456,8 @@
       "figureCount": 0,
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
-      "counterpartFile": null,
-      "issues": [
-        {
-          "severity": "high",
-          "category": "bilingual",
-          "code": "missing_counterpart_page",
-          "message": "Page is missing its counterpart in the second live language."
-        }
-      ]
+      "counterpartFile": "en/bai-viet/chuyen-muc/mon-hoc-don-dep/index.html",
+      "issues": []
     },
     {
       "file": "bai-viet/co-don-khong-phai-vi-thieu-nguoi/index.html",
@@ -946,6 +920,26 @@
       "issues": []
     },
     {
+      "file": "bai-viet/he-gia-dinh-va-goc-re/index.html",
+      "route": "/bai-viet/he-gia-dinh-va-goc-re/",
+      "url": "https://www.nguyenlananh.com/bai-viet/he-gia-dinh-va-goc-re/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Hệ gia đình và gốc rễ: gỡ vòng lặp liên thế hệ",
+      "metaDescription": "Vẽ bản đồ hệ gia đình, gọi tên điều truyền qua nhau, lộ trình 8 tuần gỡ vòng lặp mà không đổ lỗi.",
+      "h1": "Hệ gia đình và gốc rễ: gỡ vòng lặp liên thế hệ bằng thực hành đời sống thật",
+      "h1Count": 1,
+      "textNodeCount": 106,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/bai-viet/he-gia-dinh-va-goc-re/index.html",
+      "issues": []
+    },
+    {
       "file": "bai-viet/hieu-cuoc-doi-minh/index.html",
       "route": "/bai-viet/hieu-cuoc-doi-minh/",
       "url": "https://www.nguyenlananh.com/bai-viet/hieu-cuoc-doi-minh/",
@@ -1143,6 +1137,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
       "counterpartFile": "en/bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/kinh-te-cua-su-ro-rang/index.html",
+      "route": "/bai-viet/kinh-te-cua-su-ro-rang/",
+      "url": "https://www.nguyenlananh.com/bai-viet/kinh-te-cua-su-ro-rang/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Kinh tế của sự rõ ràng: đầu tư theo hệ vốn nội tại",
+      "metaDescription": "Quản trị 5 loại vốn nội tại và tính lãi của sự rõ ràng. Bộ lọc quyết định + lộ trình đầu tư 90 ngày.",
+      "h1": "Kinh tế của sự rõ ràng: đầu tư bản thân theo hệ thống vốn nội tại",
+      "h1Count": 1,
+      "textNodeCount": 121,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "en/bai-viet/kinh-te-cua-su-ro-rang/index.html",
+      "issues": []
+    },
+    {
+      "file": "bai-viet/lao-dong-sang-tao-he-van-hanh/index.html",
+      "route": "/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+      "url": "https://www.nguyenlananh.com/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Lao động sáng tạo như hệ vận hành đời sống",
+      "metaDescription": "Sáng tạo là hệ vận hành có thể dựng và duy trì. Vòng tạo tác 5 nhịp, cách vượt nghẽn, lộ trình xưởng sáng tạo.",
+      "h1": "Lao động sáng tạo như một hệ vận hành đời sống: từ cảm hứng đến kỷ luật tạo tác",
+      "h1Count": 1,
+      "textNodeCount": 113,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "en/bai-viet/lao-dong-sang-tao-he-van-hanh/index.html",
       "issues": []
     },
     {
@@ -1486,6 +1520,26 @@
       "issues": []
     },
     {
+      "file": "bai-viet/tai-thiet-khong-gian-song/index.html",
+      "route": "/bai-viet/tai-thiet-khong-gian-song/",
+      "url": "https://www.nguyenlananh.com/bai-viet/tai-thiet-khong-gian-song/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "article",
+      "title": "Tái thiết không gian sống: môn học dọn dẹp chuyển hóa",
+      "metaDescription": "Dọn dẹp để đời sống rõ. Tái thiết không gian theo 7 tầng, đọc thông điệp đồ vật, lộ trình 30 ngày đổi nhịp sống.",
+      "h1": "Tái thiết không gian sống: môn học dọn dẹp ở cấp độ chuyển hóa",
+      "h1Count": 1,
+      "textNodeCount": 116,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "en/bai-viet/tai-thiet-khong-gian-song/index.html",
+      "issues": []
+    },
+    {
       "file": "bai-viet/thieu-su-that/index.html",
       "route": "/bai-viet/thieu-su-that/",
       "url": "https://www.nguyenlananh.com/bai-viet/thieu-su-that/",
@@ -1666,6 +1720,66 @@
       "issues": []
     },
     {
+      "file": "chuong-trinh/ban-do-vong-lap/index.html",
+      "route": "/chuong-trinh/ban-do-vong-lap/",
+      "url": "https://www.nguyenlananh.com/chuong-trinh/ban-do-vong-lap/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Bộ Bản đồ Vòng lặp — 21 ngày | Chương trình | Nguyenlananh.com",
+      "metaDescription": "Bộ công cụ 21 ngày để nhận diện và gỡ vòng lặp cá nhân: thẻ 7 vòng lặp, workbook bản đồ, nhật ký điểm chèn, và đồng hành trong tầng thành viên.",
+      "h1": "Bộ Bản đồ Vòng lặp — 21 ngày",
+      "h1Count": 1,
+      "textNodeCount": 70,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/chuong-trinh/ban-do-vong-lap/index.html",
+      "issues": []
+    },
+    {
+      "file": "chuong-trinh/dau-tu-noi-tai/index.html",
+      "route": "/chuong-trinh/dau-tu-noi-tai/",
+      "url": "https://www.nguyenlananh.com/chuong-trinh/dau-tu-noi-tai/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Đầu tư Nội tại — 90 ngày | Chương trình | Nguyenlananh.com",
+      "metaDescription": "Chương trình 90 ngày quản trị năm loại vốn nội tại: kiểm toán, phân bổ, lãi kép. Kèm bảng cân đối vốn, bộ lọc quyết định và đồng hành chuyên sâu.",
+      "h1": "Đầu tư Nội tại — 90 ngày",
+      "h1Count": 1,
+      "textNodeCount": 69,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/chuong-trinh/dau-tu-noi-tai/index.html",
+      "issues": []
+    },
+    {
+      "file": "chuong-trinh/gia-dinh-goc-re/index.html",
+      "route": "/chuong-trinh/gia-dinh-goc-re/",
+      "url": "https://www.nguyenlananh.com/chuong-trinh/gia-dinh-goc-re/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Gia đình & Gốc rễ — 8 tuần | Chương trình | Nguyenlananh.com",
+      "metaDescription": "Chương trình 8 tuần để nhìn rõ hệ gia đình, gọi tên điều đang truyền qua nhau và gỡ vòng lặp liên thế hệ một cách an toàn, không đổ lỗi.",
+      "h1": "Gia đình & Gốc rễ — 8 tuần",
+      "h1Count": 1,
+      "textNodeCount": 72,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/chuong-trinh/gia-dinh-goc-re/index.html",
+      "issues": []
+    },
+    {
       "file": "chuong-trinh/index.html",
       "route": "/chuong-trinh/",
       "url": "https://www.nguyenlananh.com/chuong-trinh/",
@@ -1683,6 +1797,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
       "counterpartFile": "en/chuong-trinh/index.html",
+      "issues": []
+    },
+    {
+      "file": "chuong-trinh/tai-thiet-khong-gian/index.html",
+      "route": "/chuong-trinh/tai-thiet-khong-gian/",
+      "url": "https://www.nguyenlananh.com/chuong-trinh/tai-thiet-khong-gian/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Tái thiết Không gian — 30 ngày | Chương trình | Nguyenlananh.com",
+      "metaDescription": "Chương trình 30 ngày tái thiết không gian sống theo 7 tầng: bản đồ tái thiết theo phòng, thẻ ba câu hỏi giữ/buông, lịch 30 ô việc nhỏ và nhịp duy trì.",
+      "h1": "Tái thiết Không gian — 30 ngày",
+      "h1Count": 1,
+      "textNodeCount": 71,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/chuong-trinh/tai-thiet-khong-gian/index.html",
+      "issues": []
+    },
+    {
+      "file": "chuong-trinh/xuong-sang-tao/index.html",
+      "route": "/chuong-trinh/xuong-sang-tao/",
+      "url": "https://www.nguyenlananh.com/chuong-trinh/xuong-sang-tao/",
+      "locale": "vi",
+      "htmlLang": "vi",
+      "pageType": "page",
+      "title": "Xưởng Lao động Sáng tạo | Chương trình | Nguyenlananh.com",
+      "metaDescription": "Tầng đồng hành để dựng và giữ nhịp tạo tác: khế ước tạo tác, vòng 5 nhịp, bốn trụ của một xưởng, và không gian chia sẻ tác phẩm có chứng kiến.",
+      "h1": "Xưởng Lao động Sáng tạo",
+      "h1Count": 1,
+      "textNodeCount": 71,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "en/chuong-trinh/xuong-sang-tao/index.html",
       "issues": []
     },
     {
@@ -1966,6 +2120,26 @@
       "issues": []
     },
     {
+      "file": "en/bai-viet/ban-do-vong-lap-ca-nhan/index.html",
+      "route": "/en/bai-viet/ban-do-vong-lap-ca-nhan/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/ban-do-vong-lap-ca-nhan/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Your Personal Loop Map: 7 Loops Running Your Life",
+      "metaDescription": "Name 7 common loops, read the trigger – reaction – payoff – cost structure, and a 21-day path to choose again.",
+      "h1": "Your Personal Loop Map: Seeing the 7 Loops Running Your Life",
+      "h1Count": 1,
+      "textNodeCount": 138,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/ban-do-vong-lap-ca-nhan/index.html",
+      "issues": []
+    },
+    {
       "file": "en/bai-viet/ban-khong-thieu-kien-thuc/index.html",
       "route": "/en/bai-viet/ban-khong-thieu-kien-thuc/",
       "url": "https://www.nguyenlananh.com/en/bai-viet/ban-khong-thieu-kien-thuc/",
@@ -2063,6 +2237,126 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/chua-tung-co-huong/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/dau-tu-ban-than/index.html",
+      "route": "/en/bai-viet/chuyen-muc/dau-tu-ban-than/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/dau-tu-ban-than/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Self-Investment | Articles | Nguyenlananh.com",
+      "metaDescription": "Invest in yourself — learning, awareness, financial freedom, and building a more meaningful life.",
+      "h1": "Self-Investment",
+      "h1Count": 1,
+      "textNodeCount": 61,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/dau-tu-ban-than/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/di-vao-ben-trong/index.html",
+      "route": "/en/bai-viet/chuyen-muc/di-vao-ben-trong/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/di-vao-ben-trong/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Inner Work | Articles | Nguyenlananh.com",
+      "metaDescription": "Look straight at stuck points, deadlocks, uncertainty, crisis, inner loops — to reclaim your own life.",
+      "h1": "Inner Work",
+      "h1Count": 1,
+      "textNodeCount": 68,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/di-vao-ben-trong/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/du-an-nhat-ky/index.html",
+      "route": "/en/bai-viet/chuyen-muc/du-an-nhat-ky/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/du-an-nhat-ky/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Project Journal | Articles | Nguyenlananh.com",
+      "metaDescription": "Practice projects — Step, 37 days, and journeys that record real life day by day.",
+      "h1": "Project Journal",
+      "h1Count": 1,
+      "textNodeCount": 54,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/du-an-nhat-ky/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/gia-tri-noi-tai/index.html",
+      "route": "/en/bai-viet/chuyen-muc/gia-tri-noi-tai/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/gia-tri-noi-tai/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Inner Value | Articles | Nguyenlananh.com",
+      "metaDescription": "Lasting value is not in surface assets but in character, inner wisdom, and the capacity to stand steady amid change.",
+      "h1": "Inner Value",
+      "h1Count": 1,
+      "textNodeCount": 58,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/gia-tri-noi-tai/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/lao-dong-sang-tao/index.html",
+      "route": "/en/bai-viet/chuyen-muc/lao-dong-sang-tao/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/lao-dong-sang-tao/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Labor and Creation | Articles | Nguyenlananh.com",
+      "metaDescription": "Creativity in everyday life — labor, flow, connecting soul and matter.",
+      "h1": "Labor and Creation",
+      "h1Count": 1,
+      "textNodeCount": 61,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/lao-dong-sang-tao/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/chuyen-muc/mon-hoc-don-dep/index.html",
+      "route": "/en/bai-viet/chuyen-muc/mon-hoc-don-dep/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/chuyen-muc/mon-hoc-don-dep/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Decluttering Practice | Articles | Nguyenlananh.com",
+      "metaDescription": "Learning through real life — decluttering, sweeping, living with objects, environment, and daily situations.",
+      "h1": "Decluttering Practice",
+      "h1Count": 1,
+      "textNodeCount": 65,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/chuyen-muc/mon-hoc-don-dep/index.html",
       "issues": []
     },
     {
@@ -2526,6 +2820,26 @@
       "issues": []
     },
     {
+      "file": "en/bai-viet/he-gia-dinh-va-goc-re/index.html",
+      "route": "/en/bai-viet/he-gia-dinh-va-goc-re/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/he-gia-dinh-va-goc-re/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Family System and Roots: Untangling Generational Loops",
+      "metaDescription": "Map your family system, name what gets transmitted, and an 8-week path to untangle loops without blame.",
+      "h1": "The Family System and Your Roots: Untangling Generational Loops Through Real-Life Practice",
+      "h1Count": 1,
+      "textNodeCount": 106,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "bai-viet/he-gia-dinh-va-goc-re/index.html",
+      "issues": []
+    },
+    {
       "file": "en/bai-viet/hieu-cuoc-doi-minh/index.html",
       "route": "/en/bai-viet/hieu-cuoc-doi-minh/",
       "url": "https://www.nguyenlananh.com/en/bai-viet/hieu-cuoc-doi-minh/",
@@ -2723,6 +3037,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
       "counterpartFile": "bai-viet/kien-tao-mot-doi-song-y-nghia/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/kinh-te-cua-su-ro-rang/index.html",
+      "route": "/en/bai-viet/kinh-te-cua-su-ro-rang/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/kinh-te-cua-su-ro-rang/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "The Economics of Clarity: Inner-Capital Investment",
+      "metaDescription": "Manage 5 forms of inner capital and earn the interest of clarity. A decision filter + 90-day inner-investment path.",
+      "h1": "The Economics of Clarity: Investing in Yourself as an Inner-Capital System",
+      "h1Count": 1,
+      "textNodeCount": 121,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "bai-viet/kinh-te-cua-su-ro-rang/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/bai-viet/lao-dong-sang-tao-he-van-hanh/index.html",
+      "route": "/en/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Creative Labor as an Operating System for Life",
+      "metaDescription": "Creativity is an operating system you can build. The 5-beat making cycle, clearing blocks, and your own studio.",
+      "h1": "Creative Labor as an Operating System for Life: From Inspiration to the Discipline of Making",
+      "h1Count": 1,
+      "textNodeCount": 113,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "bai-viet/lao-dong-sang-tao-he-van-hanh/index.html",
       "issues": []
     },
     {
@@ -3066,6 +3420,26 @@
       "issues": []
     },
     {
+      "file": "en/bai-viet/tai-thiet-khong-gian-song/index.html",
+      "route": "/en/bai-viet/tai-thiet-khong-gian-song/",
+      "url": "https://www.nguyenlananh.com/en/bai-viet/tai-thiet-khong-gian-song/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "article",
+      "title": "Rebuilding Your Living Space: Decluttering for Real Change",
+      "metaDescription": "Declutter for a clear life. Rebuild across 7 layers, read what your objects say, 30 days to change your rhythm.",
+      "h1": "Rebuilding Your Living Space: Decluttering at the Level of Transformation",
+      "h1Count": 1,
+      "textNodeCount": 116,
+      "imageCount": 2,
+      "altCount": 1,
+      "figureCount": 1,
+      "figcaptionCount": 1,
+      "svgDescriptionCount": 2,
+      "counterpartFile": "bai-viet/tai-thiet-khong-gian-song/index.html",
+      "issues": []
+    },
+    {
       "file": "en/bai-viet/thieu-su-that/index.html",
       "route": "/en/bai-viet/thieu-su-that/",
       "url": "https://www.nguyenlananh.com/en/bai-viet/thieu-su-that/",
@@ -3246,6 +3620,66 @@
       "issues": []
     },
     {
+      "file": "en/chuong-trinh/ban-do-vong-lap/index.html",
+      "route": "/en/chuong-trinh/ban-do-vong-lap/",
+      "url": "https://www.nguyenlananh.com/en/chuong-trinh/ban-do-vong-lap/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "The Loop Map Kit — 21 days | Programs | Nguyenlananh.com",
+      "metaDescription": "A 21-day toolkit to recognise and untangle your personal loops: 7 loop cards, a map workbook, an insertion-point journal, and accompaniment in the members layer.",
+      "h1": "The Loop Map Kit — 21 days",
+      "h1Count": 1,
+      "textNodeCount": 70,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "chuong-trinh/ban-do-vong-lap/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/chuong-trinh/dau-tu-noi-tai/index.html",
+      "route": "/en/chuong-trinh/dau-tu-noi-tai/",
+      "url": "https://www.nguyenlananh.com/en/chuong-trinh/dau-tu-noi-tai/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Inner Investment — 90 days | Programs | Nguyenlananh.com",
+      "metaDescription": "A 90-day program to manage five forms of inner capital: audit, allocate, compound. With a capital balance sheet, a decision filter, and deep accompaniment.",
+      "h1": "Inner Investment — 90 days",
+      "h1Count": 1,
+      "textNodeCount": 69,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "chuong-trinh/dau-tu-noi-tai/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/chuong-trinh/gia-dinh-goc-re/index.html",
+      "route": "/en/chuong-trinh/gia-dinh-goc-re/",
+      "url": "https://www.nguyenlananh.com/en/chuong-trinh/gia-dinh-goc-re/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Family & Roots — 8 weeks | Programs | Nguyenlananh.com",
+      "metaDescription": "An 8-week program to see your family system clearly, name what gets transmitted, and untangle generational loops safely, without blame.",
+      "h1": "Family & Roots — 8 weeks",
+      "h1Count": 1,
+      "textNodeCount": 72,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "chuong-trinh/gia-dinh-goc-re/index.html",
+      "issues": []
+    },
+    {
       "file": "en/chuong-trinh/index.html",
       "route": "/en/chuong-trinh/",
       "url": "https://www.nguyenlananh.com/en/chuong-trinh/",
@@ -3263,6 +3697,46 @@
       "figcaptionCount": 0,
       "svgDescriptionCount": 1,
       "counterpartFile": "chuong-trinh/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/chuong-trinh/tai-thiet-khong-gian/index.html",
+      "route": "/en/chuong-trinh/tai-thiet-khong-gian/",
+      "url": "https://www.nguyenlananh.com/en/chuong-trinh/tai-thiet-khong-gian/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "Space Rebuild — 30 days | Programs | Nguyenlananh.com",
+      "metaDescription": "A 30-day program to rebuild your living space across 7 layers: a room-by-room rebuild map, a three-question keep/release card, a 30-cell calendar and a maintenance rhythm.",
+      "h1": "Space Rebuild — 30 days",
+      "h1Count": 1,
+      "textNodeCount": 71,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "chuong-trinh/tai-thiet-khong-gian/index.html",
+      "issues": []
+    },
+    {
+      "file": "en/chuong-trinh/xuong-sang-tao/index.html",
+      "route": "/en/chuong-trinh/xuong-sang-tao/",
+      "url": "https://www.nguyenlananh.com/en/chuong-trinh/xuong-sang-tao/",
+      "locale": "en",
+      "htmlLang": "en-US",
+      "pageType": "page",
+      "title": "The Creative Labor Studio | Programs | Nguyenlananh.com",
+      "metaDescription": "An accompaniment track to build and keep your making rhythm: a making contract, the 5-beat cycle, the four pillars of a studio, and a witnessed space to share work.",
+      "h1": "The Creative Labor Studio",
+      "h1Count": 1,
+      "textNodeCount": 71,
+      "imageCount": 1,
+      "altCount": 0,
+      "figureCount": 0,
+      "figcaptionCount": 0,
+      "svgDescriptionCount": 1,
+      "counterpartFile": "chuong-trinh/xuong-sang-tao/index.html",
       "issues": []
     },
     {

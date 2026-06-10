@@ -187,6 +187,7 @@ export async function upsertUserMembership(db, input) {
       membership_type: input.membership_type,
       membership_label: membershipLabel,
       preferred_language: input.preferred_language || "vi",
+      product_source: input.product_source || null,
       expires_at: input.expires_at,
       active: 1,
       created_at: input.created_at || timestamp,
@@ -201,11 +202,12 @@ export async function upsertUserMembership(db, input) {
           membership_type,
           membership_label,
           preferred_language,
+          product_source,
           expires_at,
           active,
           created_at,
           updated_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         user.id,
@@ -213,6 +215,7 @@ export async function upsertUserMembership(db, input) {
         user.membership_type,
         user.membership_label,
         user.preferred_language,
+        user.product_source,
         user.expires_at,
         user.active,
         user.created_at,
@@ -228,16 +231,18 @@ export async function upsertUserMembership(db, input) {
   const expiresAt =
     currentExpiry && nextExpiry && currentExpiry.getTime() > nextExpiry.getTime() ? existing.expires_at : input.expires_at;
 
+  const productSource = input.product_source || existing.product_source || null;
   await db
     .prepare(
       `UPDATE users
-       SET membership_type = ?, membership_label = ?, preferred_language = ?, expires_at = ?, active = 1, updated_at = ?
+       SET membership_type = ?, membership_label = ?, preferred_language = ?, product_source = ?, expires_at = ?, active = 1, updated_at = ?
        WHERE id = ?`
     )
     .bind(
       input.membership_type,
       membershipLabel,
       input.preferred_language || existing.preferred_language || "vi",
+      productSource,
       expiresAt,
       timestamp,
       existing.id
@@ -249,6 +254,7 @@ export async function upsertUserMembership(db, input) {
     membership_type: input.membership_type,
     membership_label: membershipLabel,
     preferred_language: input.preferred_language || existing.preferred_language || "vi",
+    product_source: productSource,
     expires_at: expiresAt,
     active: true,
     updated_at: timestamp
@@ -338,10 +344,11 @@ export async function createMagicLink(db, record) {
         email,
         token_hash,
         redirect_path,
+        product_source,
         expires_at,
         used_at,
         created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       id,
@@ -349,6 +356,7 @@ export async function createMagicLink(db, record) {
       record.email,
       record.token_hash,
       record.redirect_path || null,
+      record.product_source || null,
       record.expires_at,
       record.used_at || null,
       record.created_at || nowIso()

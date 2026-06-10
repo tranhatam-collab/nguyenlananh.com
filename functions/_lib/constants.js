@@ -80,7 +80,22 @@ export const TEMPLATE_IDS = {
   failed: "T04_PAYMENT_FAILED",
   refunded: "T11_REFUND_NOTICE",
   security: "T14_INTERNAL_WEBHOOK_SECURITY",
-  contact: "T15_CONTACT_FORM"
+  contact: "T15_CONTACT_FORM",
+  product_loop_welcome: "T20_LOOP_WELCOME",
+  product_loop_day3: "T21_LOOP_DAY3",
+  product_loop_day7: "T22_LOOP_DAY7",
+  product_space_welcome: "T30_SPACE_WELCOME",
+  product_space_day3: "T31_SPACE_DAY3",
+  product_space_day7: "T32_SPACE_DAY7",
+  product_capital_welcome: "T40_CAPITAL_WELCOME",
+  product_capital_day3: "T41_CAPITAL_DAY3",
+  product_capital_day7: "T42_CAPITAL_DAY7",
+  product_creative_welcome: "T50_CREATIVE_WELCOME",
+  product_creative_day3: "T51_CREATIVE_DAY3",
+  product_creative_day7: "T52_CREATIVE_DAY7",
+  product_family_welcome: "T60_FAMILY_WELCOME",
+  product_family_day3: "T61_FAMILY_DAY3",
+  product_family_day7: "T62_FAMILY_DAY7"
 };
 
 export function planByCode(planCode) {

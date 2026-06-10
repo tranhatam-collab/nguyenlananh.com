@@ -316,4 +316,44 @@
   }
   loadScript("/assets/lazy-load.js");
   loadScript("/assets/cta-modules.js");
+
+  // Analytics tracking
+  const sessionId = localStorage.getItem("nla_session_id") || ("s_" + Math.random().toString(36).slice(2) + Date.now().toString(36));
+  localStorage.setItem("nla_session_id", sessionId);
+
+  function trackEvent(type, metadata) {
+    const payload = {
+      type: type,
+      path: location.pathname,
+      referrer: document.referrer,
+      locale: localeCode,
+      session_id: sessionId,
+      metadata: metadata || {}
+    };
+    try {
+      fetch("/api/track", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
+    } catch (e) {}
+  }
+
+  // Track page view
+  trackEvent("page_view", { title: document.title });
+
+  // Track CTA clicks on product and article pages
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("a[data-track]");
+    if (!btn) return;
+    trackEvent("cta_click", {
+      action: btn.dataset.track,
+      href: btn.getAttribute("href"),
+      text: btn.textContent.trim().slice(0, 60)
+    });
+  });
+
+  // Expose globally for manual tracking
+  window.nlaTrack = trackEvent;
 })();

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F4EFE6"/>
+  <path d="M850 420L850 210M850 420L910 360M850 420L790 360" stroke="#D9531D" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+  <circle cx="850" cy="190" r="30" fill="#D9531D" fill-opacity="0.25" stroke="#D9531D" stroke-width="3"/>
+  <circle cx="790" cy="360" r="20" fill="#D9531D" fill-opacity="0.2" stroke="#D9531D" stroke-width="2"/>
+  <circle cx="910" cy="360" r="20" fill="#D9531D" fill-opacity="0.2" stroke="#D9531D" stroke-width="2"/>
+  <circle cx="850" cy="420" r="20" fill="#D9531D" fill-opacity="0.2" stroke="#D9531D" stroke-width="2"/>
+  <text x="90" y="130" fill="#2A1810" font-family="Georgia, serif" font-size="52" font-weight="bold">Xưởng Sáng tạo — 5 nhịp</text>
+  <text x="90" y="190" fill="#5C4033" font-family="Georgia, serif" font-size="28">Thu thập, ủ, phác, chọn, hoàn thiện</text>
+  <text x="90" y="560" fill="#5C4033" font-family="Georgia, serif" font-size="22">nguyenlananh.com</text>
+</svg>

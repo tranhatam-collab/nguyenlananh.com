@@ -1252,6 +1252,17 @@
     const primaryLink = $("#alreadyMemberPrimary");
     const secondaryLink = $("#alreadyMemberSecondary");
 
+    const googleBtn = $("#googleLoginBtn");
+    if (googleBtn) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const source = urlParams.get("source");
+      if (source) {
+        const href = new URL(googleBtn.href, window.location.origin);
+        href.searchParams.set("source", source);
+        googleBtn.href = href.toString();
+      }
+    }
+
     if (session && activeBlock && joinBlock) {
       activeBlock.classList.remove("hidden");
       joinBlock.classList.add("hidden");
@@ -1288,10 +1299,12 @@
       previewBox?.classList.add("hidden");
 
       try {
+        const urlParams = new URLSearchParams(window.location.search);
         const result = await requestMagicLink({
           email,
           locale: document.documentElement.lang === "en-US" ? "en-US" : "vi",
-          next_path: startPathForPath(window.location.pathname)
+          next_path: startPathForPath(window.location.pathname),
+          source: urlParams.get("source") || undefined
         });
 
         setBanner(statusBox, strings.joinEmailSent, "success");

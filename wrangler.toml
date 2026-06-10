@@ -23,8 +23,8 @@ binding = "PAYMENTS_DB"
 database_name = "nguyenlananh-payments-prod"
 database_id = "2f3a3331-546b-44f1-9992-57d18705afd5"
 
-# [triggers]
-# crons = ["0 9 * * *"]
+[triggers]
+crons = ["0 9 * * *"]
 
 [env.production.vars]
 MAIL_API_BASE_URL = "https://api.mail.iai.one/v1"

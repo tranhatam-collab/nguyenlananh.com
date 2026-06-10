@@ -1359,10 +1359,7 @@
     const unlockStatus = $("#unlockStatus");
     const unlockPayNow = $("#unlockPayNow");
     const startCheckout = $("#startCheckout");
-    const territoryInput = $("#payerTerritory");
     const identityRefInput = $("#payerIdRef");
-    const providerInput = $("#unlockProvider");
-    const internationalProviderField = $("#internationalProviderField");
     const vietqrBox = $("#vietqrBox");
     const vietqrTransferNote = $("#vietqrTransferNote");
     const vietqrAmount = $("#vietqrAmount");
@@ -1395,15 +1392,6 @@
       };
     }
 
-    function updateTerritoryUI() {
-      const territory = String(territoryInput?.value || "VN").toUpperCase();
-      const isVn = territory === "VN";
-      internationalProviderField?.classList.toggle("hidden", isVn);
-      if (isVn) {
-        unlockPayNow?.classList.add("hidden");
-      }
-    }
-
     function draw() {
       const profile = profileSnapshot();
       const complete = profileIsComplete(profile);
@@ -1432,7 +1420,6 @@
 
       renderProfileInfo(session);
       renderSessionInfo(session);
-      updateTerritoryUI();
     }
 
     profileForm?.addEventListener("submit", (event) => {
@@ -1456,8 +1443,6 @@
       draw();
     });
 
-    territoryInput?.addEventListener("change", updateTerritoryUI);
-
     startCheckout?.addEventListener("click", async () => {
       const profile = profileSnapshot();
       if (!profileIsComplete(profile)) {
@@ -1465,53 +1450,30 @@
         return;
       }
 
-      const territory = String(territoryInput?.value || "VN").toUpperCase();
       const identityRef = String(identityRefInput?.value || "").trim();
       const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi";
       setBanner(unlockStatus, strings.checkoutCreating, "warning");
-      unlockPayNow?.classList.add("hidden");
 
       try {
-        if (territory === "VN") {
-          const checkout = await createVietQrOrder({
-            email: session.email,
-            plan_code: String(planInput?.value || "year1"),
-            locale,
-            identity_country: "VN",
-            identity_ref: identityRef || undefined,
-            next_path: startPathForPath(window.location.pathname)
-          });
-          currentVietQrOrderId = checkout.internal_order_id;
-          vietqrTransferNote.textContent = checkout.manual_transfer?.transfer_note || "-";
-          vietqrAmount.textContent = formatCurrency(checkout.amount, checkout.currency, locale);
-          vietqrAccountName.textContent = checkout.manual_transfer?.account_name || "-";
-          vietqrAccountNo.textContent = checkout.manual_transfer?.account_no || "-";
-          vietqrBankBin.textContent = checkout.manual_transfer?.bank_bin || "-";
-          if (checkout.manual_transfer?.qr_url) {
-            vietqrImage.src = checkout.manual_transfer.qr_url;
-          }
-          vietqrBox?.classList.remove("hidden");
-          setBanner(unlockStatus, strings.paymentReminder, "success");
-          return;
-        }
-
-        const provider = String(providerInput?.value || "stripe").toLowerCase();
-        const checkout = await createCheckout({
-          provider,
+        const checkout = await createVietQrOrder({
           email: session.email,
           plan_code: String(planInput?.value || "year1"),
           locale,
-          identity_country: "INTL",
+          identity_country: "VN",
           identity_ref: identityRef || undefined,
           next_path: startPathForPath(window.location.pathname)
         });
-        if (!checkout.checkout_url) {
-          throw new Error(strings.checkoutFailed);
+        currentVietQrOrderId = checkout.internal_order_id;
+        vietqrTransferNote.textContent = checkout.manual_transfer?.transfer_note || "-";
+        vietqrAmount.textContent = formatCurrency(checkout.amount, checkout.currency, locale);
+        vietqrAccountName.textContent = checkout.manual_transfer?.account_name || "-";
+        vietqrAccountNo.textContent = checkout.manual_transfer?.account_no || "-";
+        vietqrBankBin.textContent = checkout.manual_transfer?.bank_bin || "-";
+        if (checkout.manual_transfer?.qr_url) {
+          vietqrImage.src = checkout.manual_transfer.qr_url;
         }
-        unlockPayNow.href = checkout.checkout_url;
-        unlockPayNow.classList.remove("hidden");
-        setBanner(unlockStatus, strings.checkoutRedirecting, "success");
-        window.location.href = checkout.checkout_url;
+        vietqrBox?.classList.remove("hidden");
+        setBanner(unlockStatus, strings.paymentReminder, "success");
       } catch (error) {
         const message = String(error?.message || "");
         if (message.includes("requires")) {

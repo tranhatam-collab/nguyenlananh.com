@@ -119,7 +119,7 @@
 
     <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
       <h3>Mở khóa tầng thành viên đã trả phí</h3>
-      <p>Bạn có thể thanh toán nội địa Việt Nam bằng VietQR (VND) hoặc thanh toán quốc tế bằng USD. Membership chỉ mở khi thanh toán đã được xác nhận.</p>
+      <p>Thanh toán qua VietQR (VND). Membership chỉ mở khi thanh toán đã được xác nhận.</p>
       <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
       <div class="field">
         <label for="unlockPlan">Gói thành viên</label>
@@ -130,22 +130,8 @@
         </select>
       </div>
       <div class="field">
-        <label for="payerTerritory">Định danh thanh toán</label>
-        <select id="payerTerritory">
-          <option value="VN">ID tại Việt Nam (bắt buộc VND)</option>
-          <option value="INTL">ID ngoài Việt Nam (bắt buộc USD)</option>
-        </select>
-      </div>
-      <div class="field">
         <label for="payerIdRef">Mã tham chiếu định danh (CCCD/Hộ chiếu)</label>
         <input id="payerIdRef" type="text" maxlength="80" placeholder="VD: 0792xxxx hoặc passport code" />
-      </div>
-      <div class="field" id="internationalProviderField">
-        <label for="unlockProvider">Cổng thanh toán quốc tế</label>
-        <select id="unlockProvider">
-          <option value="stripe">Stripe (USD)</option>
-          <option value="paypal">PayPal (USD)</option>
-        </select>
       </div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="startCheckout" class="cta" type="button">Tạo checkout</button>

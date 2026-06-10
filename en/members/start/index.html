@@ -119,25 +119,11 @@
 
     <section id="unlockCore" class="panel hidden" style="margin-top:12px;">
       <h3>Unlock the full paid membership</h3>
-      <p>You can pay in Vietnam via VietQR (VND) or pay internationally in USD. Membership unlocks only after payment is confirmed.</p>
+      <p>Pay via VietQR (VND). Membership unlocks only after payment is confirmed.</p>
       <p id="unlockReminder" class="note" style="margin-top:10px;"></p>
-      <div class="field">
-        <label for="payerTerritory">Payment identity</label>
-        <select id="payerTerritory">
-          <option value="VN">Vietnam ID (VND required)</option>
-          <option value="INTL">International ID (USD required)</option>
-        </select>
-      </div>
       <div class="field">
         <label for="payerIdRef">Identity reference (National ID/Passport)</label>
         <input id="payerIdRef" type="text" maxlength="80" placeholder="Example: passport or local ID reference" />
-      </div>
-      <div class="field" id="internationalProviderField">
-        <label for="unlockProvider">International payment provider</label>
-        <select id="unlockProvider">
-          <option value="stripe">Stripe (USD)</option>
-          <option value="paypal">PayPal (USD)</option>
-        </select>
       </div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="startCheckout" class="cta" type="button">Create checkout</button>

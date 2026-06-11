@@ -21,7 +21,11 @@ compatibility_date = "2026-02-09"
 [[env.production.d1_databases]]
 binding = "PAYMENTS_DB"
 database_name = "nguyenlananh-payments-prod"
-database_id = "2f3a3331-546b-44f1-9992-57d18705afd5"
+# Pages project nguyenlananh-com lives on account 62d57eaa (Anhhatam); a Pages
+# deployment can only bind D1 databases in the SAME account. The previous id
+# (2f3a3331…) was the copy on the Tranhatam/f3f9e76 account and is unreachable
+# from this project → deploy failed. Corrected 2026-06-11 to the 62d57eaa copy.
+database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"
 
 # [triggers]
 # crons = ["0 9 * * *"]

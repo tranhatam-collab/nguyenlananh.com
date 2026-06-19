@@ -442,6 +442,8 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
     };
   }
 
+  // Try primary provider
+  let lastError = null;
   try {
     const result =
       provider === "mail_iai_one" ? await sendViaMailIaiOne(env, emailJob) : await sendViaResend(env, emailJob);
@@ -452,15 +454,33 @@ export async function sendTemplateEmailDirect({ env, templateId, recipientEmail,
       content
     };
   } catch (error) {
+    lastError = error;
     console.error("[EMAIL_SEND_FAILED] provider=" + provider + " error=" + (error.message || "unknown") + " details=" + JSON.stringify(error.details || {}));
-    return {
-      status: "failed",
-      provider,
-      provider_message_id: null,
-      error_detail: error.message || "Unknown email failure",
-      content
-    };
+
+    // Fallback to Resend if primary failed and Resend key is available
+    if (provider !== "resend" && env.RESEND_API_KEY) {
+      try {
+        const fallbackResult = await sendViaResend(env, emailJob);
+        console.warn("[EMAIL_SEND_FALLBACK] Fallback to Resend succeeded after " + provider + " failed.");
+        return {
+          status: "sent",
+          provider: "resend",
+          provider_message_id: fallbackResult.provider_message_id || null,
+          content
+        };
+      } catch (fallbackError) {
+        console.error("[EMAIL_SEND_FALLBACK] Fallback to Resend also failed:", fallbackError.message);
+      }
+    }
   }
+
+  return {
+    status: "failed",
+    provider,
+    provider_message_id: null,
+    error_detail: lastError?.message || "Unknown email failure",
+    content
+  };
 }
 
 function escapeHtml(value) {
@@ -495,8 +515,27 @@ export async function queueAndSendEmail({ db, env, templateId, recipientEmail, l
     return job;
   }
 
+  let result = null;
+  let lastError = null;
   try {
-    const result = provider === "mail_iai_one" ? await sendViaMailIaiOne(env, job) : await sendViaResend(env, job);
+    result = provider === "mail_iai_one" ? await sendViaMailIaiOne(env, job) : await sendViaResend(env, job);
+  } catch (error) {
+    lastError = error;
+    console.error("[EMAIL_QUEUE_SEND_FAILED] provider=" + provider + " error=" + (error.message || "unknown"));
+
+    // Fallback to Resend if primary failed and Resend key is available
+    if (provider !== "resend" && env.RESEND_API_KEY) {
+      try {
+        result = await sendViaResend(env, job);
+        console.warn("[EMAIL_QUEUE_SEND_FALLBACK] Fallback to Resend succeeded after " + provider + " failed.");
+      } catch (fallbackError) {
+        console.error("[EMAIL_QUEUE_SEND_FALLBACK] Fallback to Resend also failed:", fallbackError.message);
+        lastError = fallbackError;
+      }
+    }
+  }
+
+  if (result) {
     await updateEmailJob(db, job.id, {
       status: "sent",
       provider_message_id: result.provider_message_id,
@@ -508,17 +547,17 @@ export async function queueAndSendEmail({ db, env, templateId, recipientEmail, l
       status: "sent",
       provider_message_id: result.provider_message_id
     };
-  } catch (error) {
-    await updateEmailJob(db, job.id, {
-      status: "failed",
-      error_detail: error.message || "Unknown email failure",
-      failed_at: nowIso(),
-      updated_at: nowIso()
-    });
-    return {
-      ...job,
-      status: "failed",
-      error_detail: error.message || "Unknown email failure"
-    };
   }
+
+  await updateEmailJob(db, job.id, {
+    status: "failed",
+    error_detail: lastError?.message || "Unknown email failure",
+    failed_at: nowIso(),
+    updated_at: nowIso()
+  });
+  return {
+    ...job,
+    status: "failed",
+    error_detail: lastError?.message || "Unknown email failure"
+  };
 }

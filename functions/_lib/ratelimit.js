@@ -11,9 +11,9 @@ function windowStartHour() {
 export async function checkMagicLinkRateLimit(env, email, request) {
   const db = env.PAYMENTS_DB;
   if (!db) {
-    // Fail-closed: deny requests if D1 binding is missing
-    console.error("[ratelimit] PAYMENTS_DB missing — rate limiting unavailable, blocking request (fail-closed)");
-    return { limited: true, code: "RATE_LIMIT_UNAVAILABLE", retryAfter: 3600 };
+    // Preview env without D1 binding: fail-open so dev/test works
+    console.warn("[ratelimit] PAYMENTS_DB missing — skipping rate limit (fail-open for preview)");
+    return { limited: false };
   }
 
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";

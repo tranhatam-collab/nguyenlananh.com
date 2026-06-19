@@ -302,6 +302,11 @@ export async function signupMagicLinkResponse(context) {
       }
     });
 
+    if (delivery.status === "failed") {
+      logError({ route: "/api/auth/magic-links/request", code: "EMAIL_DELIVERY_FAILED", msg: delivery.error_detail || "Email provider failed", error: delivery.error_detail });
+      return errorResponse(502, "EMAIL_DELIVERY_FAILED", "Email delivery failed. Please try again later or use Google OAuth to sign in.");
+    }
+
     return json({
       ok: true,
       email,

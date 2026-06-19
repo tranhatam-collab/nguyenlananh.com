@@ -1,0 +1,9 @@
+{
+  "name": "nguyenlananh-com",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nguyễn Lan Anh — personal development platform",
+  "scripts": {
+    "test": "bash scripts/smoke-production.sh"
+  }
+}

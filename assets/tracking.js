@@ -47,9 +47,7 @@
         value: event.value,
       });
     }
-    if (typeof console !== "undefined" && console.log) {
-      console.log("[track]", event.category, event.action, event.label);
-    }
+
   }
 
   function track(category, action, label, value) {

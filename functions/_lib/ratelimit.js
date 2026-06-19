@@ -11,9 +11,9 @@ function windowStartHour() {
 export async function checkMagicLinkRateLimit(env, email, request) {
   const db = env.PAYMENTS_DB;
   if (!db) {
-    // Fail-open: preview env without D1 binding
-    console.warn("[ratelimit] PAYMENTS_DB missing — skipping rate limit (fail-open)");
-    return { limited: false };
+    // Fail-closed: deny requests if D1 binding is missing
+    console.error("[ratelimit] PAYMENTS_DB missing — rate limiting unavailable, blocking request (fail-closed)");
+    return { limited: true, code: "RATE_LIMIT_UNAVAILABLE", retryAfter: 3600 };
   }
 
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
@@ -71,8 +71,8 @@ export async function checkMagicLinkRateLimit(env, email, request) {
     };
   } catch (error) {
     console.error("[ratelimit] DB error:", error.message);
-    // Fail-open on DB errors
-    return { limited: false };
+    // Fail-closed on DB errors to prevent abuse during outages
+    return { limited: true, code: "RATE_LIMIT_ERROR", retryAfter: 3600 };
   }
 }
 

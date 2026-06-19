@@ -34,7 +34,7 @@
       username: "super.admin",
       displayName: "Super Admin",
       roleId: "super_admin",
-      password: "NLA-SUPER-ADMIN-TO-CHANGE@2026",
+      password: crypto.randomUUID().slice(0, 16),
       permissions: ["content_manage", "content_image", "members", "creators", "settings", "dashboard"],
       isSystem: true,
       mustChangePassword: true
@@ -43,7 +43,7 @@
       username: "content.editor",
       displayName: "Content Editor",
       roleId: "content_editor",
-      password: "NLA-CONTENT-EDITOR-TO-CHANGE@2026",
+      password: crypto.randomUUID().slice(0, 16),
       permissions: ["content_manage", "content_image", "content"],
       isSystem: true,
       mustChangePassword: true

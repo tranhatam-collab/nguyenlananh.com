@@ -50,47 +50,7 @@
           <div id="contactFeedback" style="margin:10px 0; display:none; padding:10px 12px; border-radius:10px; font-size:14px;"></div>
           <div class="actionsRow"><button type="submit" class="cta" id="contactSubmit">Gửi lời nhắn</button></div>
         </form>
-        <script>
-        (function(){
-          const form = document.getElementById('contactForm');
-          const feedback = document.getElementById('contactFeedback');
-          const btn = document.getElementById('contactSubmit');
-          if (!form) return;
-          form.addEventListener('submit', async function(e){
-            e.preventDefault();
-            feedback.style.display = 'none';
-            btn.disabled = true; btn.textContent = 'Đang gửi…';
-            try {
-              const r = await fetch('/api/contact/submit', {
-                method: 'POST',
-                headers: {'content-type':'application/json'},
-                body: JSON.stringify({
-                  name: form.name.value.trim(),
-                  contact: form.contact.value.trim(),
-                  message: form.message.value.trim()
-                })
-              });
-              const data = await r.json().catch(()=>({ok:false,message:'Phản hồi không hợp lệ.'}));
-              if (data.ok) {
-                feedback.style.background = 'rgba(34,197,94,.12)';
-                feedback.style.color = '#166534';
-                feedback.textContent = data.message;
-                form.reset();
-              } else {
-                feedback.style.background = 'rgba(239,68,68,.12)';
-                feedback.style.color = '#991b1b';
-                feedback.textContent = data.message || 'Không gửi được. Vui lòng thử lại.';
-              }
-            } catch(err) {
-              feedback.style.background = 'rgba(239,68,68,.12)';
-              feedback.style.color = '#991b1b';
-              feedback.textContent = 'Lỗi kết nối. Vui lòng thử lại.';
-            }
-            feedback.style.display = 'block';
-            btn.disabled = false; btn.textContent = 'Gửi lời nhắn';
-          });
-        })();
-        </script>
+        <script src="/assets/contact-form.js"></script>
       </article>
     </section>
   </main>

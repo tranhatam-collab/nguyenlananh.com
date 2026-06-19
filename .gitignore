@@ -1,14 +1,41 @@
+# OS
 .DS_Store
 **/.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Cloudflare
 .wrangler/
+_worker.bundle
+
+# IDE
 .claude/
+.vscode/
+.idea/
+*.sublime-project
+
+# Env
+.env
+.env.secrets
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temp / duplicate files
 *index 2.html
 * 2.*
 * 3.*
 * 4.*
-_worker.bundle
-.env
-.env.secrets
-.env.local
 "Hinh ảnh web/"
 scripts/fix_en_cat_*.py

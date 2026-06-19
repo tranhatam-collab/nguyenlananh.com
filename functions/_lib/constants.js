@@ -19,6 +19,41 @@ export const PLANS = {
     priceUsd: 99,
     priceVnd: 2490000,
     durationDays: 365
+  },
+  micro_life_reset: {
+    code: "micro_life_reset",
+    label: "Life Reset Mini",
+    priceUsd: 7,
+    priceVnd: 175000,
+    durationDays: 36500
+  },
+  micro_inner_listening: {
+    code: "micro_inner_listening",
+    label: "Inner Listening Kit",
+    priceUsd: 5,
+    priceVnd: 125000,
+    durationDays: 36500
+  },
+  micro_one_corner: {
+    code: "micro_one_corner",
+    label: "One Corner Reset",
+    priceUsd: 3,
+    priceVnd: 75000,
+    durationDays: 36500
+  },
+  micro_7day_rhythm: {
+    code: "micro_7day_rhythm",
+    label: "7-Day True Rhythm",
+    priceUsd: 9,
+    priceVnd: 225000,
+    durationDays: 36500
+  },
+  micro_companion: {
+    code: "micro_companion",
+    label: "Companion Circle",
+    priceUsd: 9,
+    priceVnd: 225000,
+    durationDays: 36500
   }
 };
 
@@ -95,7 +130,12 @@ export const TEMPLATE_IDS = {
   product_creative_day7: "T52_CREATIVE_DAY7",
   product_family_welcome: "T60_FAMILY_WELCOME",
   product_family_day3: "T61_FAMILY_DAY3",
-  product_family_day7: "T62_FAMILY_DAY7"
+  product_family_day7: "T62_FAMILY_DAY7",
+  product_micro_life_reset_welcome: "T70_LIFE_RESET_WELCOME",
+  product_micro_inner_listening_welcome: "T71_INNER_LISTENING_WELCOME",
+  product_micro_one_corner_welcome: "T72_ONE_CORNER_WELCOME",
+  product_micro_7day_rhythm_welcome: "T73_7DAY_RHYTHM_WELCOME",
+  product_micro_companion_welcome: "T74_COMPANION_WELCOME"
 };
 
 export function planByCode(planCode) {

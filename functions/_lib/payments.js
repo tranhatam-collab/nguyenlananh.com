@@ -6,7 +6,12 @@ function productWelcomeTemplateFor(source) {
     space: TEMPLATE_IDS.product_space_welcome,
     capital: TEMPLATE_IDS.product_capital_welcome,
     creative: TEMPLATE_IDS.product_creative_welcome,
-    family: TEMPLATE_IDS.product_family_welcome
+    family: TEMPLATE_IDS.product_family_welcome,
+    micro_life_reset: TEMPLATE_IDS.product_micro_life_reset_welcome,
+    micro_inner_listening: TEMPLATE_IDS.product_micro_inner_listening_welcome,
+    micro_one_corner: TEMPLATE_IDS.product_micro_one_corner_welcome,
+    micro_7day_rhythm: TEMPLATE_IDS.product_micro_7day_rhythm_welcome,
+    micro_companion: TEMPLATE_IDS.product_micro_companion_welcome
   };
   return map[source] || null;
 }
@@ -19,7 +24,12 @@ function productDeepUrlFor(source, locale) {
     space: `${prefix}/members/deep/tai-thiet-khong-gian/`,
     capital: `${prefix}/members/deep/dau-tu-noi-tai/`,
     creative: `${prefix}/members/deep/xuong-sang-tao/`,
-    family: `${prefix}/members/deep/gia-dinh-va-goc-re/`
+    family: `${prefix}/members/deep/gia-dinh-va-goc-re/`,
+    micro_life_reset: `${prefix}/products/life-reset-mini/`,
+    micro_inner_listening: `${prefix}/products/inner-listening-kit/`,
+    micro_one_corner: `${prefix}/products/one-corner-reset/`,
+    micro_7day_rhythm: `${prefix}/products/7-day-true-rhythm/`,
+    micro_companion: `${prefix}/products/companion-circle/`
   };
   return map[source] || "";
 }
@@ -32,7 +42,12 @@ function productArticleUrlFor(source, locale) {
     space: `${prefix}/bai-viet/tai-thiet-khong-gian-song/`,
     capital: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
     creative: `${prefix}/bai-viet/lao-dong-sang-tao-he-van-hanh/`,
-    family: `${prefix}/bai-viet/he-gia-dinh-va-goc-re/`
+    family: `${prefix}/bai-viet/he-gia-dinh-va-goc-re/`,
+    micro_life_reset: `${prefix}/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/`,
+    micro_inner_listening: `${prefix}/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/`,
+    micro_one_corner: `${prefix}/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/`,
+    micro_7day_rhythm: `${prefix}/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/`,
+    micro_companion: `${prefix}/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/`
   };
   return map[source] || "";
 }
@@ -802,7 +817,8 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
     payload: commonPayload
   });
 
-  const productWelcomeTemplate = productWelcomeTemplateFor(user.product_source);
+  const productSource = user?.product_source || order?.metadata_json?.product_source || null;
+  const productWelcomeTemplate = productWelcomeTemplateFor(productSource);
   if (productWelcomeTemplate) {
     await queueAndSendEmail({
       db,
@@ -813,8 +829,8 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
       dedupeKey: `${productWelcomeTemplate}:${user.email}:${order.internal_order_id}:${providerCaptureId || "na"}`,
       payload: {
         ...commonPayload,
-        deep_url: productDeepUrlFor(user.product_source, locale),
-        article_url: productArticleUrlFor(user.product_source, locale)
+        deep_url: productDeepUrlFor(productSource, locale),
+        article_url: productArticleUrlFor(productSource, locale)
       }
     });
   }
@@ -904,19 +920,34 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   const plan = planByCode(order.plan_code);
   assert(plan, "INVALID_PLAN", "Unknown membership plan.", 422);
 
-  const baseExpiry =
-    user && user.active && isFutureIso(user.expires_at)
-      ? user.expires_at
-      : nowIso();
-  const expiresAt = daysFrom(baseExpiry, plan.durationDays);
-  user = await upsertUserMembership(db, {
-    email: order.email,
-    membership_type: plan.code,
-    membership_label: plan.label,
-    preferred_language: getLocale(order.locale),
-    expires_at: expiresAt,
-    updated_at: nowIso()
-  });
+  const isMicro = String(plan.code).startsWith("micro_");
+
+  if (!isMicro) {
+    const baseExpiry =
+      user && user.active && isFutureIso(user.expires_at)
+        ? user.expires_at
+        : nowIso();
+    const expiresAt = daysFrom(baseExpiry, plan.durationDays);
+    user = await upsertUserMembership(db, {
+      email: order.email,
+      membership_type: plan.code,
+      membership_label: plan.label,
+      preferred_language: getLocale(order.locale),
+      expires_at: expiresAt,
+      updated_at: nowIso()
+    });
+  } else {
+    if (!user) {
+      user = await upsertUserMembership(db, {
+        email: order.email,
+        membership_type: "micro_purchase",
+        membership_label: plan.label,
+        preferred_language: getLocale(order.locale),
+        expires_at: daysFrom(nowIso(), plan.durationDays),
+        updated_at: nowIso()
+      });
+    }
+  }
 
   const paidAt = nowIso();
   await updateOrder(db, order.internal_order_id, {
@@ -1290,7 +1321,8 @@ export async function createCheckoutResponse(context) {
       retry_url: returnUrls.retry_url,
       metadata_json: {
         next_path: normalizeNextPath(body.next_path, locale),
-        source: "join",
+        source: body.product_source ? "product" : "join",
+        product_source: String(body.product_source || "").trim() || null,
         identity_country: rail.territory,
         identity_ref: String(body.identity_ref || "").trim().slice(0, 80) || null,
         raw_metadata: body.metadata || {}

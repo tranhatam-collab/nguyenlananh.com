@@ -2062,7 +2062,7 @@
     if (!memberList && !memberLog) return;
 
     const list = [
-      { name: "Nút CTA join/đăng ký đã gắn magic-link", state: "live", updated: "2026-04-19" },
+      { name: "Nút CTA join/đăng ký dùng Google OAuth", state: "live", updated: "2026-04-19" },
       { name: "Dashboard sau login tự mở theo luồng thành viên", state: "live", updated: "2026-04-19" },
       { name: "Day-1/Day-7 checklist", state: "in_progress", updated: "2026-04-19" }
     ];

@@ -31,7 +31,7 @@
         retry: "The previous payment attempt did not finish. Start again when ready.",
         copyDone: "Copied",
         copyFail: "Unable to copy",
-        copyAction: "Copy magic link",
+        copyAction: "Copy login link",
         missingOrder: "Missing payment context. Please start checkout again.",
         backToJoin: "Return to membership page",
         tryAgain: "Try payment again"
@@ -53,7 +53,7 @@
       retry: "Lần thanh toán trước chưa hoàn tất. Bắt đầu lại khi bạn sẵn sàng.",
       copyDone: "Đã sao chép",
       copyFail: "Không thể sao chép",
-      copyAction: "Sao chép magic link",
+      copyAction: "Sao chép link đăng nhập",
       missingOrder: "Không tìm thấy ngữ cảnh thanh toán. Hãy bắt đầu lại từ trang join.",
       backToJoin: "Quay lại trang thành viên",
       tryAgain: "Thử thanh toán lại"

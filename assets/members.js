@@ -51,14 +51,14 @@
     if (isEnglishPath(pathname)) {
       return {
         invalidEmail: "Please enter a valid email.",
-        joinSending: "Sending your magic link...",
-        joinEmailSent: "Check your inbox. Your confirmation link is on the way.",
-        joinPreview: "Email delivery is not ready, so the magic link is shown here as a fallback.",
-        joinError: "Unable to send the magic link right now.",
+        joinSending: "Redirecting to Google sign-in...",
+        joinEmailSent: "Please complete Google sign-in to enter.",
+        joinPreview: "",
+        joinError: "Unable to start Google sign-in right now.",
         copied: "Copied",
-        copyAction: "Copy magic link",
+        copyAction: "Copy login link",
         copyFailed: "Unable to copy",
-        magicFailed: "Unable to confirm this magic link.",
+        magicFailed: "Unable to confirm this login link.",
         journeyDone: "Completed",
         noJournal: "No journal entries yet. Write one honest line to begin.",
         profileSaved: "Your companion profile has been saved.",
@@ -109,14 +109,14 @@
 
     return {
       invalidEmail: "Vui lòng nhập email hợp lệ.",
-      joinSending: "Đang gửi magic link cho bạn...",
-      joinEmailSent: "Hãy kiểm tra email. Link xác nhận đang được gửi tới bạn.",
-      joinPreview: "Email chưa sẵn sàng nên link đang được hiện tạm ở đây để bạn tiếp tục.",
-      joinError: "Chưa thể gửi magic link lúc này.",
+      joinSending: "Đang chuyển sang đăng nhập Google...",
+      joinEmailSent: "Vui lòng hoàn tất đăng nhập Google để vào.",
+      joinPreview: "",
+      joinError: "Chưa thể khởi động đăng nhập Google lúc này.",
       copied: "Đã sao chép",
-      copyAction: "Sao chép magic link",
+      copyAction: "Sao chép link đăng nhập",
       copyFailed: "Không thể sao chép",
-      magicFailed: "Không thể xác nhận magic link này.",
+      magicFailed: "Không thể xác nhận link đăng nhập này.",
       journeyDone: "Đã hoàn thành",
       noJournal: "Chưa có nhật ký. Viết một dòng thật để bắt đầu.",
       profileSaved: "Hồ sơ đồng hành đã được lưu.",
@@ -1111,46 +1111,6 @@
     });
   }
 
-  async function requestMagicLink(payload) {
-    const response = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      const error = new Error(body.message || "Unable to send magic link.");
-      error.code = body.code || "MAGIC_REQUEST_FAILED";
-      throw error;
-    }
-    return body;
-  }
-
-  async function consumeServerMagicToken(token, nextPath) {
-    const response = await fetch("/api/auth/magic-links/consume", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        token,
-        next_path: nextPath || undefined
-      })
-    });
-
-    const body = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      const error = new Error(body.message || "Magic link was not found.");
-      error.code = body.code || "MAGIC_CONSUME_FAILED";
-      throw error;
-    }
-
-    return body;
-  }
-
   async function createCheckout(payload) {
     const response = await fetch("/api/payments/create-checkout", {
       method: "POST",
@@ -1277,74 +1237,6 @@
       return;
     }
 
-    const form = $("#joinForm");
-    const emailInput = $("#joinEmail");
-    const statusBox = $("#joinStatus");
-    const successBox = $("#joinSuccess");
-    const previewBox = $("#joinPreview");
-    const previewOutput = $("#magicOutput");
-
-    attachCopy($("#copyMagic"), () => previewOutput?.textContent?.trim());
-
-    form?.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const email = (emailInput?.value || "").trim().toLowerCase();
-      if (!email || !email.includes("@")) {
-        setBanner(statusBox, strings.invalidEmail, "danger");
-        return;
-      }
-
-      setBanner(statusBox, strings.joinSending, "warning");
-      successBox?.classList.add("hidden");
-      previewBox?.classList.add("hidden");
-
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const result = await requestMagicLink({
-          email,
-          locale: document.documentElement.lang === "en-US" ? "en-US" : "vi",
-          next_path: startPathForPath(window.location.pathname),
-          source: urlParams.get("source") || undefined
-        });
-
-        setBanner(statusBox, strings.joinEmailSent, "success");
-        successBox?.classList.remove("hidden");
-
-        if (result.preview_magic_link && previewOutput) {
-          previewOutput.textContent = result.preview_magic_link;
-          previewBox?.classList.remove("hidden");
-          const previewNote = $("#joinPreviewNote");
-          if (previewNote) previewNote.textContent = strings.joinPreview;
-        }
-      } catch (error) {
-        setBanner(statusBox, error.message || strings.joinError, "danger");
-      }
-    });
-  }
-
-  async function handleMagicLogin() {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("magic");
-    if (!token) return false;
-
-    const errorBox = $("#magicError");
-
-    try {
-      const serverResult = await consumeServerMagicToken(token, startPathForPath(window.location.pathname));
-      const session = createSessionFromServer(serverResult.session);
-      renderSessionInfo(session);
-      window.location.replace(isPaidMembership(session) ? safeMembersPath(serverResult.next_path, window.location.pathname) : startPathForPath(window.location.pathname));
-      return true;
-    } catch (error) {
-      if (errorBox) {
-        errorBox.textContent = error.message || memberStrings().magicFailed;
-        errorBox.classList.remove("hidden");
-      }
-      params.delete("magic");
-      const cleaned = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`;
-      window.history.replaceState({}, "", cleaned);
-      return false;
-    }
   }
 
   function initStartPage(session) {
@@ -1563,9 +1455,6 @@
   }
 
   async function init() {
-    const redirected = await handleMagicLogin();
-    if (redirected) return;
-
     const page = document.body.getAttribute("data-page");
     if (page === "join") {
       initJoinPage();

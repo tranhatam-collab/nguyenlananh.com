@@ -8,24 +8,73 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+    environment: ${{ github.ref_name == 'main' && 'production' || 'preview' }}
+    outputs:
+      deploy_url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: nguyenlananh-com
-          directory: ./
-      - name: Smoke Test
+          command: pages deploy . --project-name=nguyenlananh-com
+        id: deploy
+
+      - name: Resolve smoke-test URL
+        id: url
         run: |
-          curl -fsS https://www.nguyenlananh.com/ || exit 1
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "url=https://www.nguyenlananh.com" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=${{ steps.deploy.outputs.deployment-url }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Smoke Tests
+        run: |
+          URL="${{ steps.url.outputs.url }}"
+          echo "=== Smoke Tests against $URL ==="
+          set +e
+          ERR=0
+
+          echo "--- Static pages ---"
+          for path in "/" "/sitemap.xml" "/en/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "200" ] && { echo "FAIL: $path"; ERR=1; }
+          done
+
+          echo "--- 404 handling ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/nonexistent")
+          echo "/nonexistent -> $code"
+          [ "$code" != "404" ] && { echo "FAIL: /nonexistent should return 404"; ERR=1; }
+
+          echo "--- Functions (unauthenticated) ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/api/auth/session")
+          echo "/api/auth/session -> $code"
+          [ "$code" != "401" ] && { echo "FAIL: /api/auth/session should return 401 when unauthenticated"; ERR=1; }
+
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/admin/")
+          echo "/admin/ -> $code"
+          if [ "$code" != "302" ] && [ "$code" != "200" ]; then
+            echo "FAIL: /admin/ should redirect or serve admin page"; ERR=1
+          fi
+
+          echo "---"
+          [ "$ERR" = "1" ] && { echo "❌ Some smoke tests failed."; exit 1; }
+          echo "✅ All smoke tests passed."

@@ -140,7 +140,7 @@ function googleOauthConfig(env, request) {
   const clientSecret = String(env.GOOGLE_CLIENT_SECRET || "").trim();
   const defaultRedirect = new URL("/api/auth/google/callback", request.url).toString();
   const redirectUri = String(env.GOOGLE_REDIRECT_URI || defaultRedirect).trim();
-  const stateSecret = String(env.GOOGLE_OAUTH_STATE_SECRET || env.MAGIC_LINK_SECRET || "").trim();
+  const stateSecret = String(env.GOOGLE_OAUTH_STATE_SECRET || "").trim();
 
   if (!clientId) missing.push("GOOGLE_CLIENT_ID");
   if (!clientSecret) missing.push("GOOGLE_CLIENT_SECRET");
@@ -308,7 +308,7 @@ export async function signupMagicLinkResponse(context) {
       expires_in_minutes: MAGIC_LINK_EXPIRE_MINUTES,
       delivery_status: delivery.status,
       provider: delivery.provider || null,
-      preview_magic_link: delivery.status === "sent" || context.env.ENV_DEPLOY_TARGET === "production" ? null : magicLink.url
+      preview_magic_link: String(context.env.ENV_DEPLOY_TARGET) === "production" ? null : magicLink.url
     });
   } catch (error) {
     logError({ route: "/api/auth/magic-links/request", code: error.code || "MAGIC_SIGNUP_FAILED", msg: error.message || "Unable to send magic link.", error });

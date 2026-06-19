@@ -11,7 +11,7 @@
 # prints a clear remediation pointer instead of a generic failure.
 set -uo pipefail
 
-BASE_URL="${BASE_URL:-https://nguyenlananh.com}"
+BASE_URL="${BASE_URL:-https://www.nguyenlananh.com}"
 PASS=0
 FAIL=0
 
@@ -52,7 +52,7 @@ check "home"           GET  "/"                              200
 check "en-home"        GET  "/en/"                           200
 check "members"        GET  "/members/"                      200
 echo "-- Functions / API (proves functions/ deployed) --"
-check "admin-redirect" GET  "/admin/"                        302
+check "admin-page"     GET  "/admin/"                        200
 check "session-noauth" GET  "/api/auth/session"              401
 check "logout"         POST "/api/auth/logout"               200
 check "magic-request"  POST "/api/auth/magic-links/request"  422 '{}'

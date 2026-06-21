@@ -268,17 +268,53 @@ export async function googleOAuthCallbackResponse(context) {
     const db = requireDb(context.env);
     const user = await ensureCompanionUser(db, email, locale, state.product_source || null);
     const nextPath = normalizeNextPath(state.next_path || membersStartPath(locale), locale);
-    const magicLink = await issueMagicLinkToken({
-      db,
-      user,
-      email,
-      nextPath,
-      locale,
-      request: context.request,
-      productSource: state.product_source || null
-    });
 
-    return Response.redirect(magicLink.url, 302);
+    // Update product_source if provided in OAuth state
+    if (state.product_source && !user.product_source) {
+      await db.prepare("UPDATE users SET product_source = ?, updated_at = ? WHERE id = ?")
+        .bind(state.product_source, nowIso(), user.id)
+        .run();
+      user.product_source = state.product_source;
+    }
+
+    // Send product welcome email (non-blocking)
+    const productWelcomeTemplate = productWelcomeTemplateFor(user.product_source);
+    if (productWelcomeTemplate) {
+      try {
+        await sendTemplateEmailDirect({
+          env: context.env,
+          templateId: productWelcomeTemplate,
+          recipientEmail: user.email,
+          language: locale,
+          payload: {
+            deep_url: productDeepUrlFor(user.product_source, locale),
+            article_url: productArticleUrlFor(user.product_source, locale)
+          }
+        });
+      } catch (_emailError) {
+        // Non-blocking: welcome email failure should not break login
+      }
+    }
+
+    // Create session cookie directly — no magic link redirect needed
+    const cookieValue = await createSessionCookie(context.env, user);
+    const redirectUrl = buildAbsoluteUrl(new URL(context.request.url).origin, nextPath);
+
+    if (cookieValue) {
+      const cookieHeaders = sessionCookieHeaders(cookieValue);
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: redirectUrl,
+          ...cookieHeaders
+        }
+      });
+    }
+
+    // Fallback: if cookie creation fails, redirect to members page with error
+    const loginUrl = new URL("/members/", context.request.url);
+    loginUrl.searchParams.set("error", "SESSION_CREATE_FAILED");
+    return Response.redirect(loginUrl.toString(), 302);
   } catch (error) {
     console.error("[google-oauth] callback error:", { code: error.code, message: error.message });
     const loginUrl = new URL("/members/", context.request.url);

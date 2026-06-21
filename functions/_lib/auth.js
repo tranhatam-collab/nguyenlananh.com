@@ -230,7 +230,21 @@ export async function googleOAuthCallbackResponse(context) {
       }).toString()
     });
     const tokenPayload = await tokenResponse.json().catch(() => ({}));
-    assert(tokenResponse.ok && tokenPayload.access_token, "GOOGLE_TOKEN_EXCHANGE_FAILED", "Unable to exchange Google authorization code.", 502);
+    if (!tokenResponse.ok || !tokenPayload.access_token) {
+      const googleError = tokenPayload.error || "unknown";
+      const googleDesc = tokenPayload.error_description || "";
+      console.error("[google-oauth] token exchange failed:", {
+        status: tokenResponse.status,
+        googleError,
+        googleDesc,
+        redirectUri: cfg.redirectUri,
+        clientIdPrefix: cfg.clientId.slice(0, 8) + "..."
+      });
+      const err = new Error(googleDesc || "Token exchange failed.");
+      err.code = `GOOGLE_TOKEN_FAILED_${googleError}`;
+      err.status = 401;
+      throw err;
+    }
 
     const profileResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
       headers: {
@@ -238,7 +252,13 @@ export async function googleOAuthCallbackResponse(context) {
       }
     });
     const profilePayload = await profileResponse.json().catch(() => ({}));
-    assert(profileResponse.ok, "GOOGLE_PROFILE_FAILED", "Unable to fetch Google profile.", 502);
+    if (!profileResponse.ok) {
+      console.error("[google-oauth] profile fetch failed:", { status: profileResponse.status });
+      const err = new Error("Unable to fetch Google profile.");
+      err.code = "GOOGLE_PROFILE_FAILED";
+      err.status = 401;
+      throw err;
+    }
 
     const email = normalizeEmail(profilePayload.email);
     assert(email && email.includes("@"), "GOOGLE_EMAIL_MISSING", "Google account email is missing.", 422);
@@ -260,7 +280,10 @@ export async function googleOAuthCallbackResponse(context) {
 
     return Response.redirect(magicLink.url, 302);
   } catch (error) {
-    return errorResponse(error.status || 500, error.code || "GOOGLE_CALLBACK_FAILED", error.message || "Unable to complete Google OAuth.");
+    console.error("[google-oauth] callback error:", { code: error.code, message: error.message });
+    const loginUrl = new URL("/members/", context.request.url);
+    loginUrl.searchParams.set("error", error.code || "google_callback_failed");
+    return Response.redirect(loginUrl.toString(), 302);
   }
 }
 

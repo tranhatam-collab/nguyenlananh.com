@@ -1,5 +1,9 @@
 # Báo cáo QA Audit — nguyenlananh.com
 
+> **⚠️ SUPERSEDED — Báo cáo này không còn đại diện cho trạng thái HEAD sau commit 8c93caa (xóa auth magic link) và 2556b40 (cleanup residual UI).**
+> **Báo cáo thay thế: `QA_AUDIT_V2_POST_AUTH_CHANGE_2026-06-22.md`**
+> **Báo cáo này được giữ lại làm tài liệu lịch sử (snapshot trước thay đổi auth).**
+
 **Ngày audit**: 2026-06-22
 **Phiên**: Devin CLI full-site audit (Phases 0–20 + evidence pack = 21 hạng mục)
 **Repo**: `github.com:tranhatam-collab/nguyenlananh.com.git` (branch `main`)

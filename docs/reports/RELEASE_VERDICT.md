@@ -1,5 +1,9 @@
 # Release Verdict — nguyenlananh.com
 
+> **⚠️ SUPERSEDED — Verdict này không còn đại diện cho trạng thái HEAD sau commit 8c93caa (xóa auth magic link) và 2556b40 (cleanup residual UI).**
+> **Verdict thay thế: `QA_AUDIT_V2_POST_AUTH_CHANGE_2026-06-22.md`**
+> **Verdict này được giữ lại làm tài liệu lịch sử.**
+
 **Date**: 2026-06-22
 **Audit session**: Devin CLI full-site audit (Phases 0-20)
 **Production deployment**: `6339b10` → Cloudflare Pages `074d28b4`

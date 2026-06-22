@@ -1,10 +1,10 @@
 # QA Audit V2 — Post Auth Change — nguyenlananh.com
 
-**Ngày audit**: 2026-06-22 (post-change regression audit + live verification + P0 security fix)
-**Phiên**: Devin CLI strict QA audit (7 gates + 16 live tests + P0 security probe + fix)
+**Ngày audit**: 2026-06-22 (post-change regression audit + live verification + P0 security fix + Founder 12-Gate audit)
+**Phiên**: Devin CLI strict QA audit (7 gates + 16 live tests + P0 security probe + fix + Founder 12-Gate read-only audit)
 **Repo**: `github.com:tranhatam-collab/nguyenlananh.com.git` (branch `main`)
-**HEAD SHA**: `2899cf9de6dc4afa932a161e769c68a064f4a3b8`
-**Production deployment**: Cloudflare Pages `744a480f`
+**HEAD SHA**: `8383bf5058592e1eb7b27f352549c077c1fe256f`
+**Production deployment**: Cloudflare Pages `744a480f` (chạy commit `2899cf9`)
 **Deployment URL**: `https://744a480f.nguyenlananh-com-63s.pages.dev`
 **Production alias**: `https://www.nguyenlananh.com/`
 **Deployment timestamp**: 2026-06-22T13:21 UTC
@@ -361,34 +361,90 @@ Response 200:
 
 ---
 
-## 12. Full-launch gates (cần hoàn thành trước public full launch)
+## 12. Founder Audit 12-Gate (read-only verification, 2026-06-22)
 
-| # | Gate | Yêu cầu | Trạng thái |
-|---|---|---|---|
-| 1 | VietQR end-to-end | Tạo checkout → thanh toán thật → webhook → paid → entitlement → members page → idempotency | PENDING |
-| 2 | Email gate | Receipt, welcome, fulfillment email gửi được end-to-end | PENDING (mail API down) |
-| 3 | International payment gate | Stripe/PayPal enable hoặc ẩn khỏi UI | PENDING |
-| 4 | Backup/restore gate | D1 backup và restore drill | PENDING |
-| 5 | Error monitoring | Alert cho 5xx, payment và auth failure | PENDING |
-| 6 | Browser matrix | Safari, Chrome, Firefox, Edge, iOS, Android | PENDING |
-| 7 | Accessibility automation | Axe/Pa11y trên template chính | PENDING |
-| 8 | Performance evidence | Lighthouse + Core Web Vitals | PENDING |
-| 9 | Rollback drill | Có bằng chứng rollback deployment | PENDING |
-| 10 | Google OAuth E2E | Test với Google account thật (consent → callback → session cookie → members page) | PENDING |
-| 11 | D1 data cleanup | Xóa test data, đóng pending orders, backup trước traffic | PENDING |
-| 12 | Automated test suite | Tests cho payment, webhook, entitlement, Google OAuth callback | PENDING |
+### Đã verify xanh (độc lập)
+
+| Hạng mục | Bằng chứng |
+|---|---|
+| Security P0 (payment bypass) | **ĐÃ VÁ THẬT** — `finalizeCheckoutResponse` strip `manual_confirmed`/`_admin_confirmed` khỏi public body; VietQR phải qua `verifyVietQrPaymentWithProvider` → query thật `pay.iai.one/internal/order-status` với API key, chỉ COMPLETED khi provider trả paid. Probe order giả → 404 (không cấp gì). |
+| Public site VI/EN, 404, sitemap | 200/404 đúng |
+| Google OAuth start | 302 → `accounts.google.com` client_id thật |
+| Magic-link gỡ sạch | UI=0, `members.js` requestMagicLink=0, API=405 |
+| VietQR tạo checkout (8 SKU) | `ok:true`, URL payos thật, giá đúng |
+| Admin gate | `/admin/`=302, `/api/admin/*`=401/503 |
+| Git đồng bộ | local=origin=`8383bf5`, tree sạch |
+
+### 12 Gate — trạng thái + team dev cần làm gì
+
+#### 🔴 Gate 1 — VietQR End-to-End — MỞ (quan trọng nhất)
+Mới verify: tạo checkout + lớp verify-provider (P0 fix). **Chưa có bằng chứng:** giao dịch trả tiền thật → provider trả paid → entitlement cấp → replay/idempotency.
+**Cần:** chạy 1 đơn thật nhỏ (vài nghìn đ) → xác nhận `verifyVietQrPaymentWithProvider` trả paid → `fulfillOrder` cấp membership; test replay (gọi finalize 2 lần cùng idempotency-key → không double-grant); test order chưa-trả → finalize trả PENDING (không cấp).
+
+#### 🔴 Gate 2 — Email Delivery — DEGRADED
+Code: primary `mail_iai_one` (cần `MAIL_API_KEY`), fallback `resend` (cần `RESEND_API_KEY`). Trước đây prod `delivery_status: failed`. → Khách trả tiền có thể **không nhận biên nhận/hướng dẫn truy cập**.
+**Cần:** set & verify 1 provider (Resend: set key + verify domain; hoặc sửa MAIL_API endpoint/key); đọc log `[EMAIL_SEND_FAILED]` qua `wrangler pages deployment tail`; test gửi thật 1 email biên nhận.
+
+#### 🟡 Gate 3 — Stripe / PayPal — HOLD (đúng)
+`providers` API: cả 2 = `setup_required` (thiếu secret). MoMo/VNPay/ZaloPay = `planned` (chưa implement). Mở quốc tế giờ = FAIL ngay.
+**Cần (chỉ khi mở quốc tế):** cấp secret Stripe/PayPal + test sandbox→live + webhook signature.
+
+#### 🔴 Gate 4 — Backup / Restore — KHÔNG CÓ
+Không có `BACKUP_RESTORE.md`, không có script export D1 định kỳ.
+**Cần:** cron `wrangler d1 export nguyenlananh-payments-prod` → R2/offsite; tài liệu RTO/RPO; **drill restore** đo thời gian.
+
+#### 🔴 Gate 5 — Monitoring — KHÔNG CÓ
+`wrangler.toml` observability=0, không Sentry, crons bị comment (không healthcheck). → Lỗi xảy ra, founder không biết.
+**Cần:** bật `[observability] enabled=true`; uptime monitor (ngoài) cho `/`, `/api/payments/providers`; alert 5xx + payment-fail + OAuth-fail (Sentry/Logpush + pager).
+
+#### 🟡 Gate 6 — Browser Matrix — CHƯA TEST
+Không có bằng chứng Safari iOS/iPad, Firefox, Android Chrome, Samsung.
+**Cần:** test thật thiết bị (đặc biệt Safari iPhone — hay FAIL dù desktop PASS): drawer, lang switch, checkout, Google login.
+
+#### 🟡 Gate 7 — Accessibility Automation — CHƯA
+Không axe/pa11y/screen-reader trong repo/CI. Mới checklist thủ công.
+**Cần:** thêm `pa11y-ci`/`axe` vào CI cho các trang chính; test screen reader luồng join/checkout.
+
+#### 🟡 Gate 8 — Performance Evidence — CHƯA
+Không Lighthouse/LHCI/CWV.
+**Cần:** Lighthouse CI; đo LCP/CLS/INP trên mobile thật; đặt ngưỡng gate.
+
+#### 🟡 Gate 9 — Rollback Drill — DOC CÓ, DRILL CHƯA
+`NGUYENLANANH_DEPLOY_RUNBOOK.md §8 Rollback Plan` tồn tại, nhưng **chưa có bằng chứng drill** (deploy lỗi → rollback bao lâu).
+**Cần:** drill thật — `wrangler pages deployment list` + rollback về deployment trước, đo phút; ghi vào runbook.
+
+#### 🟡 Gate 10 — Google OAuth Real User — MỚI 302
+Chưa test: consent → callback → set session cookie → member access → logout.
+**Cần:** 1 user thật đăng nhập Google đầy đủ vòng; xác nhận cookie session + `/members/` gated mở đúng + logout xoá session.
+
+#### 🟡 Gate 11 — Data Cleanup — CÒN TEST DATA
+`payment_orders=60`, `analytics_events=29`, `magic_links=5` (cộng email `qa%`/`audit%`/`p0fix%`/`p0r2%`/`liveqa%` tạo khi audit).
+**Cần:** xoá toàn bộ row test trước khi nhận traffic thật:
+```sql
+DELETE FROM payment_orders WHERE email LIKE 'qa%' OR email LIKE 'audit%' OR email LIKE 'p0%' OR email LIKE 'liveqa%' OR email LIKE 'test%' OR email LIKE 'gate%';
+DELETE FROM vietqr_orders  WHERE email LIKE 'qa%' OR email LIKE 'audit%' OR email LIKE 'p0%' OR email LIKE 'liveqa%' OR email LIKE 'test%' OR email LIKE 'gate%';
+DELETE FROM users          WHERE email LIKE 'qa%' OR email LIKE 'audit%' OR email LIKE 'p0%' OR email LIKE 'liveqa%' OR email LIKE 'test%' OR email LIKE 'gate%';
+DELETE FROM magic_links    WHERE email LIKE 'qa%' OR email LIKE 'audit%' OR email LIKE 'p0%' OR email LIKE 'liveqa%' OR email LIKE 'test%' OR email LIKE 'gate%';
+DELETE FROM analytics_events WHERE session_id LIKE 'qa%' OR session_id LIKE 'audit%';
+```
+
+#### 🔴 Gate 12 — Automated Test Suite — KHÔNG CÓ
+0 file `*.test.js`/`*.spec.js` cho payment/auth, 0 bước test trong CI. CI chỉ có 6 lệnh `curl` smoke (không phải regression). → QA hiện là **manual**, không phải **regression**.
+**Cần:** Vitest cho `_lib` pure funcs (session/auth/payments/ratelimit) + Playwright e2e (join→Google→checkout); chạy trong CI chặn merge.
 
 ---
 
-## 13. Live verification (16/16 PASS)
+## 13. Live verification (16/16 PASS + 3 exploit BLOCKED)
 
-**Deployment**: `9993f4c0` (commit `eb58cb5`)
-**Time**: 2026-06-22T13:00:27Z
+**Deployment**: `744a480f` (commit `2899cf9`)
+**Time**: 2026-06-22T13:21:31Z
 **Domain**: `https://www.nguyenlananh.com/`
+
+### Smoke tests (16/16 PASS)
 
 | # | Test | Expected | Actual | PASS |
 |---|---|---|---|---|
-| 1 | Domain serving latest | `9993f4c0` | Cloudflare, DYNAMIC cache | ✓ |
+| 1 | Domain serving latest | `744a480f` | Cloudflare, DYNAMIC cache | ✓ |
 | 2 | No "500+ đang đồng hành" | 0 matches | 0 | ✓ |
 | 3 | Footer year VI | "© 2026" | "© 2026 · Không phải để trở thành ai đó..." | ✓ |
 | 4 | Footer year EN | "© 2026" | "© 2026 · Not to become someone else..." | ✓ |
@@ -413,33 +469,54 @@ Response 200:
 | 15 | 6 legal pages (VI+EN) | all 200 | all 200 | ✓ |
 | 16 | Brotli compression | br | br | ✓ |
 
+### P0 security exploit tests (3/3 BLOCKED)
+
+| Exploit | Body | Expected | Actual | PASS |
+|---|---|---|---|---|
+| 1 | `manual_confirmed:true` | PENDING | PENDING | ✓ |
+| 2 | `_admin_confirmed:true` | PENDING | PENDING | ✓ |
+| 3 | Both flags + `provider_ref` | PENDING | PENDING | ✓ |
+| 4 | Admin endpoint no key | 401 | 401 | ✓ |
+
 ---
 
-## 14. Phán quyết cuối
+## 14. Release Readiness (5 mục — sau khi 12 gate xanh)
 
-### **GO — VIETNAM CONTROLLED SOFT LAUNCH**
+| # | Mục | Trạng thái | Cần |
+|---|---|---|---|
+| 1 | Governance Lock | ⚠️ chưa khóa | Khóa scope/pricing/auth/payment/legal — không đổi tùy tiện |
+| 2 | Operations Pack | ⚠️ thiếu 6/7 | Có `DEPLOY_RUNBOOK` (deploy+rollback+RACI). **Thiếu:** INCIDENT_RESPONSE, BACKUP_RESTORE, PAYMENT_RECOVERY, USER_SUPPORT, ROLLBACK (drill), DISASTER_RECOVERY |
+| 3 | Monitoring Pack | ❌ | Sentry + uptime + webhook/payment/OAuth monitoring |
+| 4 | Disaster Recovery Drill | ❌ | Thử DB/webhook/OAuth/mail chết → đo phục hồi |
+| 5 | Founder Acceptance Test | ⚠️ | Founder tự test desktop+mobile: login/payment/members/content/SEO/legal PASS hết |
+
+---
+
+## 15. Phán quyết cuối
+
+### **SOFT LAUNCH VN: GO** · **FULL PRODUCTION: HOLD** · **INTERNATIONAL: HOLD**
+
+Đây là **Release Candidate đạt chuẩn Soft Launch**, không còn Dev Build. Nhưng chưa Production 100% — còn nhiều gate vận hành chưa có bằng chứng. Không cần sửa UI/content nữa; ưu tiên phải chuyển sang **operations/verification**.
 
 Bản production mới nhất đã được xác minh trên:
-- Git commit: `eb58cb5f39e4f97d372cfc46558696014295ca11`
-- Cloudflare deployment: `9993f4c0-f575-4c15-b61a-1e9260860834`
+- Git commit: `2899cf9de6dc4afa932a161e769c68a064f4a3b8`
+- Cloudflare deployment: `744a480f`
 - Production domain: `https://www.nguyenlananh.com/`
-- Thời điểm smoke test: 2026-06-22T13:00:27Z
+- Thời điểm smoke test: 2026-06-22T13:21:31Z
 
-Kết quả live verification: 16/16 nhóm kiểm tra đạt.
+Kết quả live verification: 16/16 smoke PASS + 3/3 exploit BLOCKED.
 
 ### Phạm vi GO
 
 - Website công khai Việt–Anh
 - Đăng nhập Google OAuth
 - Thành viên sử dụng Google OAuth
-- Thanh toán VietQR tại Việt Nam
+- Thanh toán VietQR tại Việt Nam (tạo checkout + provider-verified finalize)
 - Controlled soft launch với lượng người dùng có kiểm soát
 
 ### Phạm vi HOLD
 
-- PayPal
-- Stripe
-- Thanh toán quốc tế
+- PayPal / Stripe / Thanh toán quốc tế
 - Chiến dịch thu hút người dùng trả phí toàn cầu
 - Tuyên bố hệ thanh toán đa quốc gia đã hoàn thiện
 
@@ -452,18 +529,32 @@ Kết quả live verification: 16/16 nhóm kiểm tra đạt.
 5. Có phương án hỗ trợ thủ công nếu người dùng đã chuyển tiền nhưng chưa được cấp quyền
 6. D1 data cleanup trước khi mở traffic
 
-### Điều kiện để nâng lên FULL PRODUCTION GO
+---
 
-1. Hoàn tất một giao dịch VietQR end-to-end và xác minh webhook, trạng thái paid, entitlement và idempotency
-2. Bật ít nhất một phương thức thanh toán quốc tế
-3. Xác minh PayPal hoặc Stripe bằng giao dịch live hoặc production-mode test hợp lệ
-4. Bổ sung kiểm thử tự động cho payment, webhook, entitlement và Google OAuth callback
-5. Email delivery hoạt động (receipt, welcome, fulfillment)
+## 16. Team dev cần làm — thứ tự ưu tiên
 
-### **HOLD — INTERNATIONAL PAID LAUNCH**
+### Tầng 1 — chặn Full Production (làm trước)
 
-Cần hoàn thành 12 gates bổ sung (Section 12) trước khi chuyển từ soft launch sang public full launch.
+1. **Gate 1**: giao dịch VietQR thật end-to-end + replay/idempotency + order-chưa-trả→PENDING
+2. **Gate 2**: bật email thật (Resend domain-verified hoặc fix MAIL_API) + test biên nhận
+3. **Gate 5**: monitoring + alert (payment/5xx/OAuth) — founder phải biết khi lỗi
+4. **Gate 4**: backup D1 tự động + **drill restore**
+5. **Gate 12**: regression test (Vitest + Playwright) trong CI
+6. **Gate 9**: rollback drill thật, đo thời gian
+7. **Ops pack**: viết INCIDENT_RESPONSE + BACKUP_RESTORE + PAYMENT_RECOVERY + ROLLBACK + USER_SUPPORT
+
+### Tầng 2 — trước khi mở rộng
+
+8. Gate 10 (OAuth full vòng) · Gate 6 (browser matrix, ưu tiên Safari iOS) · Gate 11 (xóa data test)
+
+### Tầng 3 — chất lượng
+
+9. Gate 7 (a11y axe/pa11y) · Gate 8 (Lighthouse/CWV) · Gate 3 (Stripe/PayPal nếu mở quốc tế)
+
+### Cuối
+
+Governance Lock + Founder Acceptance Test → ký **FULL PRODUCTION GO**
 
 ---
 
-*Generated by Devin CLI — 2026-06-22 (V2.2, post-P0-security-fix)*
+*Generated by Devin CLI — 2026-06-22 (V2.3, Founder Audit 12-Gate + Release Readiness)*

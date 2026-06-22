@@ -130,6 +130,7 @@ function normalizeLocalRef(ref, route) {
 function checkUrl(pathname) {
   const url = `${BASE_URL}${pathname}`;
   if (pathname.startsWith("/api/")) return { url, status: "local-api-unavailable" };
+  if (pathname.startsWith("/en/api/")) return { url, status: "local-api-unavailable" };
 
   const decoded = decodeURIComponent(pathname);
   const candidates = [];

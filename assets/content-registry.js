@@ -58,7 +58,7 @@ window.NLA_CONTENT_REGISTRY = {
       "join": {
         "emailLabel": "Email",
         "emailPlaceholder": "ban@domain.com",
-        "submit": "Nhận magic link"
+        "submit": "Đăng ký bằng Google"
       }
     },
     "states": {
@@ -152,7 +152,7 @@ window.NLA_CONTENT_REGISTRY = {
       "join": {
         "emailLabel": "Email",
         "emailPlaceholder": "you@domain.com",
-        "submit": "Receive magic link"
+        "submit": "Sign up with Google"
       }
     },
     "states": {

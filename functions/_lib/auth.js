@@ -37,10 +37,9 @@ function productArticleUrlFor(source, locale) {
   return map[source] || "";
 }
 
-import { createMagicLink, getMagicLinkByHash, getUserByEmail, getUserById, markMagicLinkUsed, requireDb, upsertUserMembership } from "./db.js";
+import { getUserByEmail, getUserById, requireDb, upsertUserMembership } from "./db.js";
 import { createSessionCookie, sessionCookieHeaders } from "./session.js";
 import { sendTemplateEmailDirect } from "./email.js";
-import { checkMagicLinkRateLimit, rateLimitResponse } from "./ratelimit.js";
 import { logError } from "./log.js";
 import {
   assert,
@@ -70,7 +69,6 @@ function membershipLabel(locale = "vi") {
   return getLocale(locale) === "en-US" ? "Free Companion" : "Đồng hành miễn phí";
 }
 
-const MAGIC_LINK_EXPIRE_MINUTES = 20;
 const GOOGLE_OAUTH_STATE_TTL_SECONDS = 10 * 60;
 const FREE_MEMBERSHIP_DAYS = 365;
 
@@ -89,31 +87,6 @@ async function ensureCompanionUser(db, email, locale, productSource) {
     created_at: now,
     updated_at: now
   });
-}
-
-async function issueMagicLinkToken({ db, user, email, nextPath, locale, request, productSource }) {
-  const rawToken = randomToken(24);
-  const tokenHash = await sha256Hex(rawToken);
-  const expiresAt = new Date(Date.now() + MAGIC_LINK_EXPIRE_MINUTES * 60 * 1000).toISOString();
-
-  await createMagicLink(db, {
-    user_id: user?.id || null,
-    email,
-    token_hash: tokenHash,
-    redirect_path: nextPath,
-    product_source: productSource,
-    expires_at: expiresAt,
-    created_at: nowIso()
-  });
-
-  const origin = new URL(request.url).origin;
-  return {
-    url: withQuery(buildAbsoluteUrl(origin, membersStartPath(locale)), {
-      magic: rawToken,
-      next: nextPath
-    }),
-    expires_at: expiresAt
-  };
 }
 
 async function createSignedOauthState(secret, payload) {
@@ -323,127 +296,3 @@ export async function googleOAuthCallbackResponse(context) {
   }
 }
 
-export async function signupMagicLinkResponse(context) {
-  try {
-    const body = await readJson(context.request);
-    assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
-
-    const email = normalizeEmail(body.email);
-    assert(email && email.includes("@"), "EMAIL_INVALID", "A valid email is required.", 422);
-
-    const rateLimit = await checkMagicLinkRateLimit(context.env, email, context.request);
-    if (rateLimit.limited) {
-      return rateLimitResponse(rateLimit.code, rateLimit.retryAfter);
-    }
-
-    const locale = getLocale(body.locale);
-    const nextPath = normalizeNextPath(body.next_path || membersStartPath(locale), locale);
-    const db = requireDb(context.env);
-    const user = await ensureCompanionUser(db, email, locale, body.source || null);
-    const magicLink = await issueMagicLinkToken({
-      db,
-      user,
-      email,
-      nextPath,
-      locale,
-      request: context.request,
-      productSource: body.source || null
-    });
-
-    const delivery = await sendTemplateEmailDirect({
-      env: context.env,
-      templateId: TEMPLATE_IDS.resend,
-      recipientEmail: email,
-      language: locale,
-      payload: {
-        magic_link: magicLink.url,
-        magic_link_expire_minutes: MAGIC_LINK_EXPIRE_MINUTES
-      }
-    });
-
-    if (delivery.status === "failed") {
-      logError({ route: "/api/auth/magic-links/request", code: "EMAIL_DELIVERY_FAILED", msg: delivery.error_detail || "Email provider failed", error: delivery.error_detail });
-      return errorResponse(502, "EMAIL_DELIVERY_FAILED", "Email delivery failed. Please try again later or use Google OAuth to sign in.");
-    }
-
-    return json({
-      ok: true,
-      email,
-      expires_in_minutes: MAGIC_LINK_EXPIRE_MINUTES,
-      delivery_status: delivery.status,
-      provider: delivery.provider || null,
-      preview_magic_link: String(context.env.ENV_DEPLOY_TARGET) === "production" ? null : magicLink.url
-    });
-  } catch (error) {
-    logError({ route: "/api/auth/magic-links/request", code: error.code || "MAGIC_SIGNUP_FAILED", msg: error.message || "Unable to send magic link.", error });
-    return errorResponse(error.status || 500, error.code || "MAGIC_SIGNUP_FAILED", error.message || "Unable to send magic link.");
-  }
-}
-
-export async function consumeStatelessMagicLinkResponse(context) {
-  try {
-    const body = await readJson(context.request);
-    assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
-
-    const token = String(body.token || "").trim();
-    assert(token, "TOKEN_REQUIRED", "Magic token is required.", 422);
-
-    const db = requireDb(context.env);
-    const tokenHash = await sha256Hex(token);
-    const magicLink = await getMagicLinkByHash(db, tokenHash);
-    assert(magicLink, "MAGIC_NOT_FOUND", "Magic link was not found.", 404);
-    assert(!magicLink.used_at, "MAGIC_USED", "Magic link was already used.", 409);
-    assert(new Date(magicLink.expires_at).getTime() > Date.now(), "MAGIC_EXPIRED", "Magic link has expired.", 410);
-
-    const user = magicLink.user_id ? await getUserById(db, magicLink.user_id) : await getUserByEmail(db, magicLink.email);
-    assert(user && user.active, "MEMBERSHIP_INACTIVE", "Membership is inactive.", 403);
-
-    if (magicLink.product_source && !user.product_source) {
-      await db.prepare("UPDATE users SET product_source = ?, updated_at = ? WHERE id = ?")
-        .bind(magicLink.product_source, nowIso(), user.id)
-        .run();
-      user.product_source = magicLink.product_source;
-    }
-
-    await markMagicLinkUsed(db, magicLink.id, nowIso());
-
-    const locale = getLocale(body.locale || user.preferred_language);
-    const nextPath = normalizeNextPath(body.next_path || magicLink.redirect_path || membersStartPath(locale), locale);
-
-    const productWelcomeTemplate = productWelcomeTemplateFor(user.product_source);
-    if (productWelcomeTemplate) {
-      try {
-        await sendTemplateEmailDirect({
-          env: context.env,
-          templateId: productWelcomeTemplate,
-          recipientEmail: user.email,
-          language: locale,
-          payload: {
-            deep_url: productDeepUrlFor(user.product_source, locale),
-            article_url: productArticleUrlFor(user.product_source, locale)
-          }
-        });
-      } catch (_emailError) {
-        // Non-blocking: welcome email failure should not break login
-      }
-    }
-
-    const cookieValue = await createSessionCookie(context.env, user);
-    const cookieHeaders = cookieValue ? sessionCookieHeaders(cookieValue) : {};
-
-    return json({
-      ok: true,
-      session: {
-        id: randomId("sess"),
-        email: user.email,
-        membershipType: user.membership_type || "free",
-        membershipLabel: user.membership_label || membershipLabel(locale),
-        startedAt: nowIso(),
-        expiresAt: user.expires_at
-      },
-      next_path: nextPath
-    }, { headers: cookieHeaders });
-  } catch (error) {
-    return errorResponse(error.status || 500, error.code || "MAGIC_CONSUME_FAILED", error.message || "Unable to consume magic link.");
-  }
-}

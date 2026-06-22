@@ -103,6 +103,7 @@ function resolveInternalHref(href, sourceFile) {
   if (cleaned.startsWith("//")) return null;
   // Skip API + functions endpoints (server routes, not files on disk)
   if (cleaned.startsWith("/api/")) return null;
+  if (cleaned.startsWith("/en/api/")) return null;
   // Skip cdn / wrangler / cloudflare cgi
   if (cleaned.startsWith("/cdn-cgi/")) return null;
 

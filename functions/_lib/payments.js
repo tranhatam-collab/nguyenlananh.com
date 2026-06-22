@@ -1463,9 +1463,13 @@ export async function finalizeCheckoutResponse(context) {
     const order = await getOrderByInternalId(db, internalOrderId);
     assert(order, "ORDER_NOT_FOUND", "Order not found.", 404);
 
+    const publicBody = { ...body };
+    delete publicBody._admin_confirmed;
+    delete publicBody.manual_confirmed;
+
     const finalized = await finalizeProviderPayment({
       order,
-      body,
+      body: publicBody,
       env: context.env,
       idempotencyKey
     });

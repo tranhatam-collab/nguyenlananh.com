@@ -269,7 +269,7 @@ export async function googleOAuthCallbackResponse(context) {
       }
     }
 
-    // Create session cookie directly — no magic link redirect needed
+    // Create session cookie directly after Google OAuth callback
     const cookieValue = await createSessionCookie(context.env, user);
     const redirectUrl = buildAbsoluteUrl(new URL(context.request.url).origin, nextPath);
 

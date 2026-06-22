@@ -109,6 +109,33 @@ const VIETQR_DEFAULT_TEMPLATE = "compact2";
 const PAY_IAI_ONE_BASE_URL = "https://pay.iai.one";
 const PAY_IAI_ONE_DEFAULT_PROVIDER = "payos";
 
+async function verifyVietQrPaymentWithProvider(env, order) {
+  const baseUrl = payIaiOneBaseUrl(env);
+  const headers = { "Content-Type": "application/json" };
+  headers[providerApiKeyHeaderName(env)] = String(env.PAY_IAI_ONE_API_KEY || "");
+  const optionalSiteKey = String(env.PAY_IAI_ONE_SITE_KEY || "").trim();
+  if (optionalSiteKey) headers["x-site-key"] = optionalSiteKey;
+
+  const providerOrderId = order.provider_order_id || order.internal_order_id;
+  const statusUrl = `${baseUrl}/internal/order-status?tenant_code=${encodeURIComponent(payIaiOneTenantCode(env))}&site_code=${encodeURIComponent(payIaiOneSiteCode(env))}&internal_order_id=${encodeURIComponent(order.internal_order_id)}&provider_order_id=${encodeURIComponent(providerOrderId)}`;
+
+  try {
+    const response = await fetch(statusUrl, { method: "GET", headers });
+    const body = await response.json().catch(() => ({}));
+    const status = String(firstByKeys(body, new Set(["status", "payment_status", "order_status", "state"])) || "").toLowerCase();
+    const paid = body.ok === true || body.success === true ||
+      ["paid", "completed", "confirmed", "success", "fulfilled"].includes(status);
+    return {
+      verified: paid,
+      provider_status: status || (response.ok ? "unknown" : "error"),
+      provider_ref: firstByKeys(body, new Set(["provider_ref", "providerRef", "transaction_id", "transactionId", "reference", "ref"])) || null,
+      raw: body
+    };
+  } catch (error) {
+    return { verified: false, provider_status: "query_failed", provider_ref: null, error: error.message };
+  }
+}
+
 function normalizeIdentityCountry(value) {
   const normalized = String(value || "").trim().toUpperCase();
   if (!normalized) return "VN";
@@ -1061,12 +1088,31 @@ async function finalizeProviderPayment({ order, body, env, idempotencyKey }) {
   }
 
   if (order.provider === "vietqr") {
-    const confirmed = Boolean(body.manual_confirmed || body.provider_ref || body.provider_capture_id);
+    const isAdminConfirmed = Boolean(body._admin_confirmed);
+    if (isAdminConfirmed) {
+      return {
+        capture_status: "COMPLETED",
+        provider_capture_id: body.provider_capture_id || body.provider_ref || null,
+        provider_order_id: order.provider_order_id,
+        provider_session_id: null
+      };
+    }
+    const verification = await verifyVietQrPaymentWithProvider(env, order);
+    if (verification.verified) {
+      return {
+        capture_status: "COMPLETED",
+        provider_capture_id: verification.provider_ref || order.provider_order_id,
+        provider_order_id: order.provider_order_id,
+        provider_session_id: null,
+        provider_verified: true
+      };
+    }
     return {
-      capture_status: confirmed ? "COMPLETED" : "PENDING",
-      provider_capture_id: body.provider_capture_id || body.provider_ref || null,
+      capture_status: "PENDING",
+      provider_capture_id: null,
       provider_order_id: order.provider_order_id,
-      provider_session_id: null
+      provider_session_id: null,
+      provider_verify_status: verification.provider_status
     };
   }
 
@@ -1218,7 +1264,7 @@ export async function confirmVietQrOrderResponse(context) {
     const finalized = await finalizeProviderPayment({
       order,
       body: {
-        manual_confirmed: true,
+        _admin_confirmed: true,
         provider_ref: providerRef
       },
       env: context.env,

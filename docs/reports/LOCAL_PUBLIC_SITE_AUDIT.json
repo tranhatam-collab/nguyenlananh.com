@@ -1,23 +1,13 @@
 {
   "summary": {
-    "generatedAt": "2026-06-22T06:41:25.711Z",
+    "generatedAt": "2026-06-22T06:55:10.444Z",
     "baseUrl": "http://localhost:4173",
     "pagesAudited": 337,
-    "pagesWithIssues": 21,
-    "totalIssues": 51,
-    "brokenInternalRefs": 5,
+    "pagesWithIssues": 0,
+    "totalIssues": 0,
+    "brokenInternalRefs": 1,
     "localApiRefs": 1,
-    "issueCounts": {
-      "missing_meta_description": 5,
-      "missing_canonical": 5,
-      "missing_og_title": 5,
-      "missing_og_description": 5,
-      "missing_twitter_title": 5,
-      "missing_twitter_description": 5,
-      "long_title": 9,
-      "english_page_contains_vietnamese_diacritics": 11,
-      "meta_description_length": 1
-    }
+    "issueCounts": {}
   },
   "audits": [
     {
@@ -251,195 +241,40 @@
       "route": "/assets/pdf/creative-workshop-guide.html",
       "file": "assets/pdf/creative-workshop-guide.html",
       "title": "Hướng dẫn Xưởng Sáng tạo — 5 nhịp tạo tác — Nguyenlananh.com",
-      "description": "",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "missing_meta_description",
-          "message": "Missing meta description."
-        },
-        {
-          "severity": "high",
-          "code": "missing_canonical",
-          "message": "Missing canonical URL."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_title",
-          "message": "Missing og:title."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_description",
-          "message": "Missing og:description."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_title",
-          "message": "Missing twitter:title."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_description",
-          "message": "Missing twitter:description."
-        }
-      ],
+      "description": "Hướng dẫn Xưởng Sáng tạo — 5 nhịp tạo tác để thực hành lao động sáng tạo cùng Nguyễn Lan Anh",
+      "issues": [],
       "refs": []
     },
     {
       "route": "/assets/pdf/family-roots-map.html",
       "file": "assets/pdf/family-roots-map.html",
       "title": "Bản đồ Gốc rễ Gia đình — Nguyenlananh.com",
-      "description": "",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "missing_meta_description",
-          "message": "Missing meta description."
-        },
-        {
-          "severity": "high",
-          "code": "missing_canonical",
-          "message": "Missing canonical URL."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_title",
-          "message": "Missing og:title."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_description",
-          "message": "Missing og:description."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_title",
-          "message": "Missing twitter:title."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_description",
-          "message": "Missing twitter:description."
-        }
-      ],
+      "description": "Bản đồ Gốc rễ Gia đình — bài tập viết tay để nhìn lại gốc rễ và cấu trúc gia đình cùng Nguyễn Lan Anh",
+      "issues": [],
       "refs": []
     },
     {
       "route": "/assets/pdf/inner-capital-filter.html",
       "file": "assets/pdf/inner-capital-filter.html",
       "title": "Bộ lọc Quyết định &amp; Vốn Nội tại — Nguyenlananh.com",
-      "description": "",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "missing_meta_description",
-          "message": "Missing meta description."
-        },
-        {
-          "severity": "high",
-          "code": "missing_canonical",
-          "message": "Missing canonical URL."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_title",
-          "message": "Missing og:title."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_description",
-          "message": "Missing og:description."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_title",
-          "message": "Missing twitter:title."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_description",
-          "message": "Missing twitter:description."
-        }
-      ],
+      "description": "Bộ lọc Quyết định và Vốn Nội tại — bài tập xác định giá trị nội tại và quyết định thực tế cùng Nguyễn Lan Anh",
+      "issues": [],
       "refs": []
     },
     {
       "route": "/assets/pdf/loop-map-workbook.html",
       "file": "assets/pdf/loop-map-workbook.html",
       "title": "Workbook Bản đồ Vòng lặp — Nguyenlananh.com",
-      "description": "",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "missing_meta_description",
-          "message": "Missing meta description."
-        },
-        {
-          "severity": "high",
-          "code": "missing_canonical",
-          "message": "Missing canonical URL."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_title",
-          "message": "Missing og:title."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_description",
-          "message": "Missing og:description."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_title",
-          "message": "Missing twitter:title."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_description",
-          "message": "Missing twitter:description."
-        }
-      ],
+      "description": "Workbook Bản đồ Vòng lặp — bài tập viết tay để gỡ các vòng lặp đang chi phối cuộc đời bạn cùng Nguyễn Lan Anh",
+      "issues": [],
       "refs": []
     },
     {
       "route": "/assets/pdf/space-declutter-guide.html",
       "file": "assets/pdf/space-declutter-guide.html",
       "title": "Hướng dẫn 7 Tầng Dọn dẹp — Nguyenlananh.com",
-      "description": "",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "missing_meta_description",
-          "message": "Missing meta description."
-        },
-        {
-          "severity": "high",
-          "code": "missing_canonical",
-          "message": "Missing canonical URL."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_title",
-          "message": "Missing og:title."
-        },
-        {
-          "severity": "high",
-          "code": "missing_og_description",
-          "message": "Missing og:description."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_title",
-          "message": "Missing twitter:title."
-        },
-        {
-          "severity": "medium",
-          "code": "missing_twitter_description",
-          "message": "Missing twitter:description."
-        }
-      ],
+      "description": "Hướng dẫn 7 Tầng Dọn dẹp — thực hành dọn dẹp không gian sống từng tầng để đặt lại một phần đời sống",
+      "issues": [],
       "refs": []
     },
     {
@@ -641,7 +476,7 @@
         "/join/",
         "/bai-viet/chuyen-muc/lao-dong-sang-tao/",
         "/assets/images/illustration-tools.svg",
-        "/chuong-trinh/chu-tam-sau/",
+        "/chuong-trinh/bo-chu-tam-sau/",
         "/bai-viet/lao-dong-sang-tao-he-van-hanh/",
         "/bai-viet/quan-tri-nang-luong/",
         "/bai-viet/song-theo-dong-chay/",
@@ -1931,15 +1766,9 @@
     {
       "route": "/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
       "file": "bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/index.html",
-      "title": "Không Phải Bạn Thiếu Kỷ Luật — Bạn Thiếu Một Nhịp Sống Thật | Nguyễn Lan Anh",
+      "title": "Không Phải Thiếu Kỷ Luật — Thiếu Nhịp Sống Thật | Nguyễn Lan Anh",
       "description": "Thay vì ép buộc kỷ luật, bài viết đề xuất việc xây dựng một nhịp sống tự nhiên phù hợp với cơ thể và tâm trí của bạn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 76 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2215,15 +2044,9 @@
     {
       "route": "/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
       "file": "bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/index.html",
-      "title": "Một Người Đồng Hành Đúng Không Kéo Bạn Đi Nhanh Hơn — Họ Giữ Bạn Đủ Lâu Để Bạn Tự Đi | Nguyễn Lan Anh",
+      "title": "Đồng Hành Đúng Không Kéo Bạn Nhanh Hơn | Nguyễn Lan Anh",
       "description": "Bài viết về giá trị của một người đồng hành thật sự — người không cố thay đổi bạn, mà chỉ ở đó để bạn có thể tự mình thay đổi.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 101 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -2459,7 +2282,7 @@
         "/join/",
         "/bai-viet/chuyen-muc/mon-hoc-don-dep/",
         "/assets/images/illustration-environment.svg",
-        "/chuong-trinh/la-ban-nang-luong/",
+        "/chuong-trinh/bo-quan-tri-nang-luong/",
         "/bai-viet/song-sai-nhip/",
         "/bai-viet/tai-thiet-khong-gian-song/",
         "/bai-viet/song-theo-thoi-quen/",
@@ -3082,15 +2905,9 @@
     {
       "route": "/chuong-trinh/bo-quan-tri-nang-luong/",
       "file": "chuong-trinh/bo-quan-tri-nang-luong/index.html",
-      "title": "Bộ Quản trị năng lượng — 14 ngày | Chương trình | Nguyenlananh.com",
+      "title": "Bộ Quản trị năng lượng — 14 ngày | Nguyễn Lan Anh",
       "description": "Bộ công cụ 14 ngày để quản trị năng lượng theo nhịp: lập bản đồ pin ngày, chuyển sạc-tụ-thải, và một nhật ký năng lượng để bạn thực sự chọn lại.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 66 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/",
@@ -3870,7 +3687,7 @@
         "/en/join/",
         "/en/bai-viet/lao-dong-sang-tao/",
         "/assets/images/illustration-tools.svg",
-        "/en/chuong-trinh/chu-tam-sau/",
+        "/en/chuong-trinh/bo-chu-tam-sau/",
         "/en/bai-viet/lao-dong-sang-tao-he-van-hanh/",
         "/en/bai-viet/quan-tri-nang-luong/",
         "/en/bai-viet/song-theo-dong-chay/",
@@ -5030,15 +4847,9 @@
     {
       "route": "/en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
       "file": "en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/index.html",
-      "title": "Khi Đời Sống Bắt Đầu Rơi Khỏi Tay Mình | Nguyễn Lan Anh",
-      "description": "Một bài viết sâu về những dấu hiệu đời sống đang vận hành bằng phản xạ cũ, và cách bắt đầu lấy lại quyền chọn bằng những bước nhỏ có thật.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "When Life Starts Slipping From Your Hands | Lan Anh Nguyen",
+      "description": "A deep look at the signs that life is running on old reflexes, and how to begin reclaiming the power to choose through small, real steps.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5097,15 +4908,9 @@
     {
       "route": "/en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
       "file": "en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/index.html",
-      "title": "Khi Một Góc Nhà Được Đặt Lại Đúng Chỗ | Nguyễn Lan Anh",
-      "description": "Về sức mạnh của không gian sống phản chiếu tâm trạng — và cách dọn dẹp một góc nhỏ có thể thay đổi cả một hệ thống tư duy.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "When a Corner of Your Home Is Reset | Lan Anh Nguyen",
+      "description": "On the power of living space to reflect your inner state — and how tidying one small corner can shift an entire system of thinking.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5164,20 +4969,9 @@
     {
       "route": "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
       "file": "en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/index.html",
-      "title": "Không Phải Bạn Thiếu Kỷ Luật — Bạn Thiếu Một Nhịp Sống Thật | Nguyễn Lan Anh",
-      "description": "Thay vì ép buộc kỷ luật, bài viết đề xuất việc xây dựng một nhịp sống tự nhiên phù hợp với cơ thể và tâm trí của bạn.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 76 characters."
-        },
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Not Discipline You Lack — a True Rhythm | Lan Anh Nguyen",
+      "description": "Rather than forcing discipline, this article proposes building a natural rhythm that fits your body and mind.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5455,20 +5249,9 @@
     {
       "route": "/en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
       "file": "en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/index.html",
-      "title": "Một Người Đồng Hành Đúng Không Kéo Bạn Đi Nhanh Hơn — Họ Giữ Bạn Đủ Lâu Để Bạn Tự Đi | Nguyễn Lan Anh",
-      "description": "Bài viết về giá trị của một người đồng hành thật sự — người không cố thay đổi bạn, mà chỉ ở đó để bạn có thể tự mình thay đổi.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 101 characters."
-        },
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "The Right Companion Stays So You Can Walk Alone | Lan Anh Nguyen",
+      "description": "An article about the value of a true companion — someone who does not try to change you, but is simply there so you can change yourself.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5527,15 +5310,9 @@
     {
       "route": "/en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
       "file": "en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/index.html",
-      "title": "Nghe Lại: Thứ Mình Đã Im Lặng Quá Lâu | Nguyễn Lan Anh",
-      "description": "Bài viết về cách lắng nghe lại những âm thanh bên trong mà bạn đã tự tắt đi trong hành trình sống.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Listen Again: What You Silenced Too Long | Lan Anh Nguyen",
+      "description": "An article about listening again to the inner sounds you have muted on your journey through life.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -5710,7 +5487,7 @@
         "/en/join/",
         "/en/bai-viet/mon-hoc-don-dep/",
         "/assets/images/illustration-environment.svg",
-        "/en/chuong-trinh/la-ban-nang-luong/",
+        "/en/chuong-trinh/bo-quan-tri-nang-luong/",
         "/en/bai-viet/song-sai-nhip/",
         "/en/bai-viet/tai-thiet-khong-gian-song/",
         "/en/bai-viet/song-theo-thoi-quen/",
@@ -6549,14 +6326,8 @@
       "route": "/en/chuong-trinh/tai-thiet-khong-gian/",
       "file": "en/chuong-trinh/tai-thiet-khong-gian/index.html",
       "title": "Space Rebuild — 30 days | Programs | Nguyenlananh.com",
-      "description": "A 30-day program to rebuild your living space across 7 layers: a room-by-room rebuild map, a three-question keep/release card, a 30-cell calendar and a maintenance rhythm.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "meta_description_length",
-          "message": "Meta description is 171 characters."
-        }
-      ],
+      "description": "A 30-day program to rebuild your living space across 7 layers — room-by-room map, keep/release card, and maintenance rhythm.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -7161,15 +6932,9 @@
     {
       "route": "/en/members/deep/dau-tu-noi-tai/",
       "file": "en/members/deep/dau-tu-noi-tai/index.html",
-      "title": "Members Deep | Inner Capital Investment &amp; The Economy of Clarity",
+      "title": "Inner Capital Investment | Lan Anh Nguyen",
       "description": "Deep member track on 5 types of inner capital, a decision filter, and how to invest in yourself as a system rather than a fleeting impulse.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 68 characters."
-        }
-      ],
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -7951,15 +7716,9 @@
     {
       "route": "/en/products/7-day-true-rhythm/",
       "file": "en/products/7-day-true-rhythm/index.html",
-      "title": "7-Day True Rhythm — Tìm Lại Nhịp Sống Tự Nhiên | Nguyễn Lan Anh",
-      "description": "Sản phẩm thực hành nhỏ để tìm lại nhịp sống tự nhiên trong 7 ngày — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "7-Day True Rhythm — Find Your Natural Rhythm | Lan Anh Nguyen",
+      "description": "A small practice product to find your natural rhythm in 7 days — 1 reading, 1 workbook, 1 handwriting exercise.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -7986,20 +7745,9 @@
     {
       "route": "/en/products/companion-circle/",
       "file": "en/products/companion-circle/index.html",
-      "title": "Companion Circle — Đồng Hành 7 Ngày Để Tự Mình Đi Tiếp | Nguyễn Lan Anh",
-      "description": "Sản phẩm thực hành nhỏ để trải nghiệm sự đồng hành trong 7 ngày — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 71 characters."
-        },
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Companion Circle — 7 Days Together | Lan Anh Nguyen",
+      "description": "A small practice product to experience companionship in 7 days — 1 reading, 1 workbook, 1 handwriting exercise.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -8026,15 +7774,9 @@
     {
       "route": "/en/products/",
       "file": "en/products/index.html",
-      "title": "Sản phẩm thực hành — Micro-Products | Nguyễn Lan Anh",
-      "description": "Năm sản phẩm thực hành nhỏ để đi một bước cụ thể: Life Reset Mini, Inner Listening Kit, One Corner Reset, 7-Day True Rhythm, Companion Circle.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Practice Products — Micro-Products | Lan Anh Nguyen",
+      "description": "Five small practice products to take one concrete step: Life Reset Mini, Inner Listening Kit, One Corner Reset, 7-Day True Rhythm, Companion Circle.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -8069,20 +7811,9 @@
     {
       "route": "/en/products/inner-listening-kit/",
       "file": "en/products/inner-listening-kit/index.html",
-      "title": "Inner Listening Kit — Nghe Lại Tiếng Nói Bên Trong | Nguyễn Lan Anh",
-      "description": "Sản phẩm thực hành nhỏ để lắng nghe lại những âm thanh bên trong bạn đã tự tắt đi — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 67 characters."
-        },
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Inner Listening Kit — Hear the Voice Within | Lan Anh Nguyen",
+      "description": "A practice product to hear the inner sounds you turned off — 1 reading, 1 workbook, 1 writing exercise.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -8109,15 +7840,9 @@
     {
       "route": "/en/products/life-reset-mini/",
       "file": "en/products/life-reset-mini/index.html",
-      "title": "Life Reset Mini — Lấy Lại Một Mảnh Đời Sống | Nguyễn Lan Anh",
-      "description": "Sản phẩm thực hành nhỏ: 1 bài đọc, 1 workbook, 1 bài tập viết tay, 1 hướng dẫn thực hành.",
-      "issues": [
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "Life Reset Mini — Reclaim a Piece of Your Life | Lan Anh Nguyen",
+      "description": "A small practice product: 1 reading, 1 workbook, 1 handwriting exercise, 1 practice guide.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -8144,20 +7869,9 @@
     {
       "route": "/en/products/one-corner-reset/",
       "file": "en/products/one-corner-reset/index.html",
-      "title": "One Corner Reset — Dọn Một Góc, Đặt Lại Một Phần Đời Sống | Nguyễn Lan Anh",
-      "description": "Sản phẩm thực hành nhỏ để dọn dẹp một góc nhà và đặt lại một phần đời sống — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
-      "issues": [
-        {
-          "severity": "medium",
-          "code": "long_title",
-          "message": "<title> is 74 characters."
-        },
-        {
-          "severity": "high",
-          "code": "english_page_contains_vietnamese_diacritics",
-          "message": "English page still contains Vietnamese diacritics."
-        }
-      ],
+      "title": "One Corner Reset — Reset a Part of Life | Lan Anh Nguyen",
+      "description": "A small practice product to clear a corner of your home and reset a part of your life — 1 reading, 1 workbook, 1 handwriting exercise.",
+      "issues": [],
       "refs": [
         "/assets/site.css",
         "/en/",
@@ -9491,22 +9205,6 @@
     }
   ],
   "brokenRefs": [
-    {
-      "url": "http://localhost:4173/chuong-trinh/chu-tam-sau/",
-      "status": 404
-    },
-    {
-      "url": "http://localhost:4173/chuong-trinh/la-ban-nang-luong/",
-      "status": 404
-    },
-    {
-      "url": "http://localhost:4173/en/chuong-trinh/chu-tam-sau/",
-      "status": 404
-    },
-    {
-      "url": "http://localhost:4173/en/chuong-trinh/la-ban-nang-luong/",
-      "status": 404
-    },
     {
       "url": "http://localhost:4173/en/api/auth/google/start/",
       "status": 404

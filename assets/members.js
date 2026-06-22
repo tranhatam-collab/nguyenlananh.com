@@ -17,8 +17,8 @@
     year1: {
       code: "year1",
       label: "Mở khóa lõi bên trong",
-      priceUsd: 2,
-      priceVnd: 49000,
+      priceUsd: 3,
+      priceVnd: 75000,
       durationDays: 365,
       tier: "paid"
     },

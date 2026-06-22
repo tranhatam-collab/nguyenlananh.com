@@ -3,7 +3,7 @@
   const MANUAL_PAYPAL_BUSINESS = "pay@nguyenlananh.com";
 
   const PLANS = {
-    year1: { code: "year1", priceUsd: 2, label: "Core Access" },
+    year1: { code: "year1", priceUsd: 3, label: "Core Access" },
     year2: { code: "year2", priceUsd: 60, label: "Year 2 Continuity" },
     year3: { code: "year3", priceUsd: 99, label: "Year 3+ Mastery" }
   };

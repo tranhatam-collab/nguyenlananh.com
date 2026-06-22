@@ -2,8 +2,8 @@ export const PLANS = {
   year1: {
     code: "year1",
     label: "Core Access",
-    priceUsd: 2,
-    priceVnd: 49000,
+    priceUsd: 3,
+    priceVnd: 75000,
     durationDays: 365
   },
   year2: {

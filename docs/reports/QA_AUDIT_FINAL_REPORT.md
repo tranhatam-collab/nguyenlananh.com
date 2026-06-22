@@ -1,23 +1,39 @@
-# Báo cáo QA Audit cuối cùng — nguyenlananh.com
+# Báo cáo QA Audit — nguyenlananh.com
 
 **Ngày audit**: 2026-06-22
-**Phiên**: Devin CLI full-site audit (Phases 0–20)
+**Phiên**: Devin CLI full-site audit (Phases 0–20 + evidence pack = 21 hạng mục)
 **Repo**: `github.com:tranhatam-collab/nguyenlananh.com.git` (branch `main`)
-**Production deployment**: commit `6339b10` → Cloudflare Pages `074d28b4`
+**Production code commit**: `6339b10` (fix cuối cùng ảnh hưởng code production)
+**Production deployment**: Cloudflare Pages `074d28b4` (chạy commit `6339b10`)
+**Documentation commits**: `2072eb0` (release verdict), `d525d34` (báo cáo này)
 **Live URL**: https://www.nguyenlananh.com/
+
+> **Lưu ý quan trọng**: Production đang chạy commit `6339b10`. Các commit sau đó (`2072eb0`, `d525d34`) chỉ là tài liệu báo cáo, không thay đổi code production.
 
 ---
 
-## 1. Phán quyết cuối cùng
+## 1. Phán quyết
 
-### **CONDITIONAL PASS — sẵn sàng soft launch**
+### **SOFT LAUNCH: GO WITH RESTRICTIONS**
+### **PUBLIC FULL LAUNCH: HOLD**
+
+#### Soft launch (giới hạn, VN-only, Google OAuth only): GO
 
 - **P0 (block release)**: 4/4 đã sửa, xác minh live ✓
-- **P1 (follow-up, không block soft launch)**: 2 mục (mail API + PayPal/Stripe)
+- **P1 (cần xử lý trước public launch)**: 2 mục (mail API + PayPal/Stripe)
 - **P2 (editorial)**: 0 mục còn lại sau khi fix
-- **Release gates**: 6/6 PASS
+- **Release gates nội bộ**: 6/6 PASS
 - **Test suite**: 33/33 PASS
 - **Live verification**: toàn bộ P0 fixes xác minh trên production ✓
+
+#### Giới hạn soft launch (phải tuân thủ)
+
+1. **Chỉ Google OAuth** — magic link email đang 502, không hiển thị như flow bình thường
+2. **Chỉ VietQR (VN)** — PayPal/Stripe chưa enable, không quảng bá thanh toán quốc tế
+3. **EN site**: CTA thanh toán quốc tế cần chuyển thành waitlist hoặc contact
+4. **D1 data**: cần cleanup trước khi mở traffic (xem Phase 12 + Section 7)
+
+#### Public full launch: HOLD — cần hoàn thành 9 gates bổ sung (xem Section 8)
 
 ---
 
@@ -25,6 +41,7 @@
 
 | Hạng mục | Số lượng |
 |---|---|
+| Phases | 21 (Phase 0–20 + evidence pack) |
 | HTML files scanned | 341 |
 | URLs bilingual-validated | 334 |
 | Pages audited (human-text-gate) | 330 |
@@ -32,8 +49,10 @@
 | Sitemap URLs | 226 |
 | D1 tables | 16 |
 | D1 indexes | 15 |
-| Commits trong audit session | 13 |
-| Files changed | 335 (+1.338 / −8.372) |
+| Implementation commits | 13 (code thay đổi production) |
+| Documentation commits | 2 (release verdict + báo cáo này) |
+| Total commits | 15 (13 impl + 2 docs, tính cả commit hiệu chỉnh này) |
+| Files changed (impl) | 335 (+1.338 / −8.372) |
 
 ---
 
@@ -117,7 +136,7 @@
 - Escape key dismiss ✓
 - Click-outside dismiss ✓
 
-**Kết quả**: PASS — header/menu/language đạt WCAG 2.2 AA.
+**Kết quả**: PASS — header/menu/language vượt qua checklist accessibility nội bộ theo các tiêu chí WCAG 2.2 AA được kiểm tra. Chưa phải chứng nhận độc lập cho toàn bộ website.
 
 ---
 
@@ -201,7 +220,7 @@
 | 12 | content-audit.mjs: skip `/en/api/` routes | 1 script |
 | 13 | local-public-site-audit.mjs: skip `/en/api/` routes | 1 script |
 
-**Kết quả**: PASS — SEO đầy đủ, 0 issues trên tất cả gates.
+**Kết quả**: PASS — không còn lỗi SEO blocking theo các script hiện tại (0 issues trên tất cả gates). Còn 142 warnings nội dung (legacy editorial punctuation, không block) cần được phân loại và xử lý theo kế hoạch editorial.
 
 ---
 
@@ -245,7 +264,9 @@
 | state | Signed JWT (HMAC-SHA256) với nonce + locale + next_path + exp |
 | prompt | `select_account` |
 
-**Kết quả**: PASS — Google OAuth live, session security đạt chuẩn. Magic link email broken (P1 — infra, không phải code).
+**Kết quả**: PASS — Google OAuth live, session security đạt chuẩn. Magic link email broken (P1 — ảnh hưởng soft launch, xem Section 5).
+
+> **Ảnh hưởng soft launch**: Magic link và signup đều trả 502. Người không dùng Google không đăng nhập được. Receipt/welcome email có thể không gửi. Reset/recovery flow bị ảnh hưởng. Soft launch phải ghi rõ "Google OAuth only — Magic-link temporarily unavailable" và không hiển thị nút magic link như flow bình thường nếu backend vẫn 502.
 
 ---
 
@@ -302,6 +323,8 @@ Response 200:
 
 **Kết quả**: PASS — VietQR live, pricing locked, checkout flow hoạt động. PayPal/Stripe cần setup (P1).
 
+> **Ảnh hưởng soft launch**: PayPal/Stripe chưa enable. Không được quảng bá thanh toán quốc tế. EN site không được tạo cảm giác người nước ngoài có thể checkout bằng card. Mọi CTA quốc tế cần chuyển thành waitlist hoặc contact.
+
 ---
 
 ### Phase 9 — Email automation ⚠
@@ -321,7 +344,19 @@ Response 200:
 | Fallback | Resend (nếu RESEND_API_KEY set) ✓ |
 | **Live test** | **502 — mail API provider đang down** ⚠ |
 
-**Kết quả**: P1 — code đúng, secrets đúng, nhưng mail API provider (`api.mail.iai.one`) đang trả lỗi. Cần kiểm tra API key validity hoặc liên hệ provider. Google OAuth là alternative cho sign-in.
+**Kết quả**: P1 (ảnh hưởng soft launch) — code đúng, secrets đúng, nhưng mail API provider (`api.mail.iai.one`) đang trả lỗi.
+
+**Ảnh hưởng soft launch**:
+- Người không dùng Google không đăng nhập được (magic link 502)
+- Receipt email sau thanh toán có thể không gửi
+- Welcome email series không gửi
+- Reset/recovery flow bị ảnh hưởng
+- Một số người dùng tưởng site lỗi
+
+**Hành động bắt buộc trước soft launch**:
+1. Nếu không fix kịp: ẩn nút magic link khỏi UI, chỉ hiển thị Google OAuth
+2. Hoặc fix mail API: kiểm tra `MAIL_API_KEY`, liên hệ provider, cấu hình `RESEND_API_KEY` fallback
+3. Ghi rõ trên join page: "Google OAuth only — Magic-link temporarily unavailable"
 
 ---
 
@@ -392,11 +427,21 @@ Response 200:
 
 **Kết quả**: PASS — schema đúng, indexes đầy đủ, pre-launch state.
 
+> **Data cleanup gate (bắt buộc trước soft launch)**:
+> 1. Gắn cờ hoặc xóa dữ liệu test (1 user `test@example.com`, 29 analytics events)
+> 2. Xác minh 59 payment orders không phải đơn thật bị bỏ quên (58 created = abandoned checkout, 1 pending cần đóng/hết hạn)
+> 3. Đóng hoặc hết hạn order pending
+> 4. Kiểm tra webhook reconciliation (xem `webhook_events` table)
+> 5. Tạo dashboard phân biệt test/production
+> 6. Chạy backup D1 trước khi mở traffic (`wrangler d1 backup`)
+
 ---
 
-### Phase 13 — Security OWASP ✓
+### Phase 13 — Security baseline ✓
 
 **Mục tiêu**: Kiểm tra security headers, cookie security, input validation.
+
+> **Giới hạn bằng chứng**: Báo cáo kiểm tra headers, cookie, HMAC, middleware, và input validation cơ bản. Chưa phải OWASP ASVS audit hoặc penetration test toàn diện. Cần bổ sung: SAST, dependency vulnerability scan, authorization matrix, IDOR test, CSRF test, SSRF test, stored/reflected XSS test, SQL injection test, webhook replay test, privilege escalation test, secret rotation policy, penetration testing.
 
 #### Security headers (live):
 
@@ -423,7 +468,7 @@ Response 200:
 - HMAC-SHA256 cho JWT signing ✓
 - Google OAuth state signed ✓
 
-**Kết quả**: PASS — security headers đầy đủ, OWASP best practices.
+**Kết quả**: PASS (security baseline) — security baseline và các kiểm tra trọng yếu đã pass. Chưa phải OWASP ASVS audit hoặc penetration test toàn diện.
 
 ---
 
@@ -446,9 +491,11 @@ Response 200:
 
 ---
 
-### Phase 15 — Accessibility WCAG 2.2 AA ✓
+### Phase 15 — Accessibility (internal checklist theo WCAG 2.2 AA) ✓
 
-**Mục tiêu**: Kiểm tra WCAG 2.2 AA compliance.
+**Mục tiêu**: Kiểm tra accessibility theo checklist nội bộ dựa trên WCAG 2.2 AA.
+
+> **Giới hạn bằng chứng**: Đây là checklist nội bộ kiểm tra các tiêu chí trọng yếu trên template chính (homepage VI/EN). Chưa phải chứng nhận WCAG 2.2 AA độc lập cho toàn bộ 337 trang. Cần bổ sung: axe/Pa11y scan toàn diện, screen reader test, keyboard test trên từng template, contrast scan tất cả component/state, zoom 200–400%, reflow test, form error announcement, dynamic content accessibility.
 
 | Check | Kết quả | Chi tiết |
 |---|---|---|
@@ -471,13 +518,15 @@ Response 200:
 | Escape key dismiss | ✓ | Drawer đóng bằng Escape |
 | Click-outside dismiss | ✓ | Drawer đóng khi click ngoài |
 
-**Kết quả**: PASS — WCAG 2.2 AA đạt.
+**Kết quả**: PASS (internal checklist) — các template chính đã vượt qua checklist accessibility nội bộ theo các tiêu chí WCAG 2.2 AA được kiểm tra. Chưa phải chứng nhận độc lập cho toàn bộ website. Cần axe/Pa11y scan, screen reader test, và keyboard test trên tất cả template trước khi claim WCAG 2.2 AA full.
 
 ---
 
-### Phase 16 — Performance ✓
+### Phase 16 — Performance (static baseline) ✓
 
 **Mục tiêu**: Kiểm tra compression, caching, asset sizes, render performance.
+
+> **Giới hạn bằng chứng**: Báo cáo kiểm tra static delivery baseline (compression, asset size, caching, lazy loading). Core Web Vitals thực tế (LCP, INP, CLS, TTFB) chưa được xác minh. Cần bổ sung: Lighthouse scores, WebPageTest, Cloudflare Web Analytics/Core Web Vitals, test trên thiết bị thật.
 
 | Check | Kết quả |
 |---|---|
@@ -492,7 +541,7 @@ Response 200:
 | Eager loading | Logo mark `loading="eager"` ✓ |
 | `decoding="async"` | ✓ trên images |
 
-**Kết quả**: PASS — performance tối ưu cho static site.
+**Kết quả**: PASS (static baseline) — static delivery và asset baseline được tối ưu. Core Web Vitals thực tế (LCP, INP, CLS, TTFB) chưa được xác minh trong báo cáo.
 
 ---
 
@@ -543,7 +592,7 @@ Response 200:
 
 | Step | Kết quả |
 |---|---|
-| Commits pushed | `c694935..2072eb0` (13 commits) ✓ |
+| Commits pushed | `c694935..2072eb0` (13 implementation commits) ✓ |
 | sync-i18n | 168 default pages, 226 sitemap URLs ✓ |
 | human-text-gate | PASS (0 issues) ✓ |
 | bilingual-release | PASS (0 issues) ✓ |
@@ -580,10 +629,11 @@ Response 200:
 
 ---
 
-## 4. Commits trong audit session (13 commits)
+## 4. Commits trong audit session
+
+### Implementation commits (13 — thay đổi code production)
 
 ```
-2072eb0 docs: release verdict — conditional pass for soft launch
 6339b10 fix(a11y,responsive,content): safe-area, touch targets, remove "chữa lành" from public keywords
 ad09536 fix(a11y,header): focus trap + scroll lock in drawer, aria-modal=true, mobile lang selector
 9e1bf03 fix(audit): skip /en/api/ routes in local-public-site-audit (Functions routes)
@@ -598,29 +648,47 @@ c1110a5 fix(seo,content): shorten long titles, fix broken internal links, add PD
 90e7872 feat(i18n): add EN counterparts for 5 articles + 6 products, fix EN footer year & brand name
 ```
 
-**Stats**: 335 files changed, +1.338 insertions, −8.372 deletions
+> **Lưu ý**: `6339b10` là commit cuối cùng ảnh hưởng code production. Deploy `074d28b4` chạy commit này.
+
+### Documentation commits (2 — không thay đổi code production)
+
+```
+2072eb0 docs: release verdict — conditional pass for soft launch
+d525d34 docs(qa): final QA audit report — 21 phases, 13 impl commits, conditional pass
+```
+
+> `2072eb0` và `d525d34` chỉ thêm tài liệu báo cáo, không thay đổi code production.
+
+**Stats (implementation only)**: 335 files changed, +1.338 insertions, −8.372 deletions
 
 ---
 
-## 5. P1 Follow-up items (không block soft launch)
+## 5. P1 items (cần xử lý trước public full launch)
 
-### P1-1: Mail API provider down
+### P1-1: Mail API provider down (ảnh hưởng soft launch)
 
 - **Symptom**: `POST /api/auth/magic-links/request` → 502 `EMAIL_DELIVERY_FAILED`
 - **Root cause**: `api.mail.iai.one/v1/send` trả lỗi (API key expired hoặc service down)
-- **Impact**: User không thể sign-in bằng magic link (email)
-- **Workaround**: Google OAuth hoạt động bình thường (302 → Google)
-- **Action cần làm**:
-  1. Kiểm tra `MAIL_API_KEY` còn hợp lệ không (Cloudflare Pages secrets)
-  2. Liên hệ `api.mail.iai.one` provider để kiểm tra service status
-  3. Hoặc cấu hình `RESEND_API_KEY` để dùng Resend fallback
-  4. Test lại: `curl -X POST https://www.nguyenlananh.com/api/auth/magic-links/request -H "Content-Type: application/json" -d '{"email":"your@email.com"}'`
+- **Impact**:
+  - Người không dùng Google không đăng nhập được
+  - Receipt email sau thanh toán có thể không gửi
+  - Welcome email series không gửi
+  - Reset/recovery flow bị ảnh hưởng
+  - Một số người dùng tưởng site lỗi
+- **Hành động bắt buộc trước soft launch**:
+  - **Option A (nếu không fix kịp)**: ẩn nút magic link khỏi UI, chỉ hiển thị Google OAuth. Ghi rõ "Google OAuth only — Magic-link temporarily unavailable"
+  - **Option B (fix)**: kiểm tra `MAIL_API_KEY`, liên hệ provider, cấu hình `RESEND_API_KEY` fallback
+  - Test: `curl -X POST https://www.nguyenlananh.com/api/auth/magic-links/request -H "Content-Type: application/json" -d '{"email":"your@email.com"}'`
 
-### P1-2: PayPal/Stripe not enabled
+### P1-2: PayPal/Stripe not enabled (ảnh hưởng international launch)
 
 - **Symptom**: `payments/providers` → `enabled: false, mode: setup_required`
 - **Impact**: Chỉ VietQR (VN) hoạt động. User quốc tế không thể thanh toán bằng PayPal/card.
-- **Action cần làm**:
+- **Hành động bắt buộc trước soft launch**:
+  - Không quảng bá thanh toán quốc tế
+  - EN site: CTA thanh toán quốc tế chuyển thành waitlist hoặc contact
+  - Không tạo cảm giác người nước ngoài có thể checkout bằng card
+- **Action để enable**:
   1. Hoàn tất PayPal onboarding (merchant account, webhook verification)
   2. Hoàn tất Stripe onboarding (account activation, webhook setup)
   3. Set secrets: `PAYPAL_CLIENT_SECRET`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`
@@ -628,24 +696,72 @@ c1110a5 fix(seo,content): shorten long titles, fix broken internal links, add PD
 
 ---
 
-## 6. Tóm tắt cuối cùng
+## 6. D1 data cleanup (bắt buộc trước soft launch)
 
-| Hạng mục | Số | Trạng thái |
+| Hạng mục | Count | Hành động |
 |---|---|---|
-| Phases audit | 22 | 22/22 completed |
-| P0 issues | 4 | 4/4 fixed + verified live |
-| P1 issues | 2 | Documented, workaround available |
-| P2 issues | 0 | All resolved |
-| Release gates | 6 | 6/6 PASS |
-| Tests | 33 | 33/33 PASS |
-| Commits | 13 | All pushed to main |
-| Files changed | 335 | +1.338 / −8.372 |
-| Deployments | 2 | `a9fca507`, `074d28b4` |
+| users | 1 (`test@example.com`) | Gắn cờ test hoặc xóa |
+| payment_orders | 59 (58 created, 1 pending) | Xác minh không phải đơn thật; đóng/hết hạn pending |
+| entitlements | 0 | — |
+| analytics_events | 29 | Gắn cờ test hoặc xóa |
+| webhook_events | ? | Kiểm tra reconciliation |
 
-### **Phán quyết: CONDITIONAL PASS — sẵn sàng soft launch**
-
-Site đạt chất lượng cho soft launch với VietQR payments và Google OAuth. Tất cả P0 truth issues đã sửa và xác minh live. Tất cả release gates pass. Site đạt WCAG 2.2 AA, security headers đầy đủ, performance tối ưu. Hai P1 follow-up (mail API + PayPal/Stripe) không block soft launch và có workaround/alternative.
+**Steps**:
+1. Gắn cờ hoặc xóa dữ liệu test
+2. Xác minh 59 order không phải đơn thật bị bỏ quên
+3. Đóng hoặc hết hạn order pending
+4. Kiểm tra webhook reconciliation
+5. Tạo dashboard phân biệt test/production
+6. Chạy backup D1 trước khi mở traffic
 
 ---
 
-*Generated by Devin CLI — 2026-06-22*
+## 7. Tóm tắt
+
+| Hạng mục | Số | Trạng thái |
+|---|---|---|
+| Phases audit | 21 (0–20 + evidence pack) | 21/21 completed |
+| P0 issues | 4 | 4/4 fixed + verified live |
+| P1 issues | 2 | Cần xử lý trước public full launch |
+| P2 issues | 0 | All resolved |
+| Release gates nội bộ | 6 | 6/6 PASS |
+| Tests | 33 | 33/33 PASS |
+| Implementation commits | 13 | All pushed to main |
+| Documentation commits | 2 | `2072eb0`, `d525d34` |
+| Files changed (impl) | 335 | +1.338 / −8.372 |
+| Deployments | 2 | `a9fca507`, `074d28b4` |
+| Production commit | `6339b10` | Running on `074d28b4` |
+
+### **SOFT LAUNCH: GO WITH RESTRICTIONS**
+
+Website đã vượt qua toàn bộ release gate nội bộ hiện có và đủ điều kiện soft launch giới hạn. Bốn lỗi P0 đã được sửa và xác minh trên production. Google OAuth và VietQR đang hoạt động. Magic-link email và thanh toán quốc tế vẫn là các hạng mục cần hoàn thành trước khi mở public launch đầy đủ.
+
+**Giới hạn soft launch**:
+- Google OAuth only (magic link 502)
+- VietQR only (PayPal/Stripe setup_required)
+- EN site: CTA quốc tế = waitlist/contact
+- D1 data cleanup trước khi mở traffic
+
+### **PUBLIC FULL LAUNCH: HOLD**
+
+Cần hoàn thành 9 gates bổ sung (xem Section 8) trước khi chuyển từ soft launch sang public full launch.
+
+---
+
+## 8. Full-launch gates (cần hoàn thành trước public launch)
+
+| # | Gate | Yêu cầu | Trạng thái |
+|---|---|---|---|
+| 1 | Email gate | Magic link, receipt, welcome gửi được end-to-end | PENDING (mail API down) |
+| 2 | International payment gate | Stripe/PayPal enable hoặc chính thức ẩn khỏi UI | PENDING |
+| 3 | Backup/restore gate | D1 backup và restore drill | PENDING |
+| 4 | Payment reconciliation | Checkout → webhook → entitlement end-to-end | PENDING |
+| 5 | Error monitoring | Alert cho 5xx, payment và auth failure | PENDING |
+| 6 | Browser matrix | Safari, Chrome, Firefox, Edge, iOS, Android | PENDING |
+| 7 | Accessibility automation | Axe/Pa11y trên template chính | PENDING |
+| 8 | Performance evidence | Lighthouse + Core Web Vitals | PENDING |
+| 9 | Rollback drill | Có bằng chứng rollback deployment | PENDING |
+
+---
+
+*Generated by Devin CLI — 2026-06-22 (bản hiệu chỉnh sau meta-audit)*

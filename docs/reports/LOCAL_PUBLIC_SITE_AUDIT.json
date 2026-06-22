@@ -1,13 +1,21 @@
 {
   "summary": {
-    "generatedAt": "2026-06-07T14:00:16.194Z",
+    "generatedAt": "2026-06-22T06:41:25.711Z",
     "baseUrl": "http://localhost:4173",
-    "pagesAudited": 289,
-    "pagesWithIssues": 1,
-    "totalIssues": 1,
-    "brokenInternalRefs": 0,
+    "pagesAudited": 337,
+    "pagesWithIssues": 21,
+    "totalIssues": 51,
+    "brokenInternalRefs": 5,
     "localApiRefs": 1,
     "issueCounts": {
+      "missing_meta_description": 5,
+      "missing_canonical": 5,
+      "missing_og_title": 5,
+      "missing_og_description": 5,
+      "missing_twitter_title": 5,
+      "missing_twitter_description": 5,
+      "long_title": 9,
+      "english_page_contains_vietnamese_diacritics": 11,
       "meta_description_length": 1
     }
   },
@@ -160,6 +168,7 @@
         "/bai-viet/",
         "/members/",
         "/join/",
+        "/assets/admin-payments.js",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -237,6 +246,201 @@
         "/assets/i18n-config.js",
         "/assets/lang-routing.js"
       ]
+    },
+    {
+      "route": "/assets/pdf/creative-workshop-guide.html",
+      "file": "assets/pdf/creative-workshop-guide.html",
+      "title": "Hướng dẫn Xưởng Sáng tạo — 5 nhịp tạo tác — Nguyenlananh.com",
+      "description": "",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "missing_meta_description",
+          "message": "Missing meta description."
+        },
+        {
+          "severity": "high",
+          "code": "missing_canonical",
+          "message": "Missing canonical URL."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_title",
+          "message": "Missing og:title."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_description",
+          "message": "Missing og:description."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_title",
+          "message": "Missing twitter:title."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_description",
+          "message": "Missing twitter:description."
+        }
+      ],
+      "refs": []
+    },
+    {
+      "route": "/assets/pdf/family-roots-map.html",
+      "file": "assets/pdf/family-roots-map.html",
+      "title": "Bản đồ Gốc rễ Gia đình — Nguyenlananh.com",
+      "description": "",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "missing_meta_description",
+          "message": "Missing meta description."
+        },
+        {
+          "severity": "high",
+          "code": "missing_canonical",
+          "message": "Missing canonical URL."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_title",
+          "message": "Missing og:title."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_description",
+          "message": "Missing og:description."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_title",
+          "message": "Missing twitter:title."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_description",
+          "message": "Missing twitter:description."
+        }
+      ],
+      "refs": []
+    },
+    {
+      "route": "/assets/pdf/inner-capital-filter.html",
+      "file": "assets/pdf/inner-capital-filter.html",
+      "title": "Bộ lọc Quyết định &amp; Vốn Nội tại — Nguyenlananh.com",
+      "description": "",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "missing_meta_description",
+          "message": "Missing meta description."
+        },
+        {
+          "severity": "high",
+          "code": "missing_canonical",
+          "message": "Missing canonical URL."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_title",
+          "message": "Missing og:title."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_description",
+          "message": "Missing og:description."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_title",
+          "message": "Missing twitter:title."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_description",
+          "message": "Missing twitter:description."
+        }
+      ],
+      "refs": []
+    },
+    {
+      "route": "/assets/pdf/loop-map-workbook.html",
+      "file": "assets/pdf/loop-map-workbook.html",
+      "title": "Workbook Bản đồ Vòng lặp — Nguyenlananh.com",
+      "description": "",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "missing_meta_description",
+          "message": "Missing meta description."
+        },
+        {
+          "severity": "high",
+          "code": "missing_canonical",
+          "message": "Missing canonical URL."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_title",
+          "message": "Missing og:title."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_description",
+          "message": "Missing og:description."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_title",
+          "message": "Missing twitter:title."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_description",
+          "message": "Missing twitter:description."
+        }
+      ],
+      "refs": []
+    },
+    {
+      "route": "/assets/pdf/space-declutter-guide.html",
+      "file": "assets/pdf/space-declutter-guide.html",
+      "title": "Hướng dẫn 7 Tầng Dọn dẹp — Nguyenlananh.com",
+      "description": "",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "missing_meta_description",
+          "message": "Missing meta description."
+        },
+        {
+          "severity": "high",
+          "code": "missing_canonical",
+          "message": "Missing canonical URL."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_title",
+          "message": "Missing og:title."
+        },
+        {
+          "severity": "high",
+          "code": "missing_og_description",
+          "message": "Missing og:description."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_title",
+          "message": "Missing twitter:title."
+        },
+        {
+          "severity": "medium",
+          "code": "missing_twitter_description",
+          "message": "Missing twitter:description."
+        }
+      ],
+      "refs": []
     },
     {
       "route": "/bai-viet/[slug]/",
@@ -411,6 +615,39 @@
         "/lien-he/",
         "/gioi-thieu/",
         "/chuong-trinh/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/bai-viet/chu-tam-sau/",
+      "file": "bai-viet/chu-tam-sau/index.html",
+      "title": "Chú tâm sâu: phục hồi khả năng tập trung đã mất",
+      "description": "Sự phân mảnh không phải lỗi của bạn, mà của môi trường. Cơ chế phá tập trung, bốn lớp phục hồi, và lộ trình 21 ngày lấy lại sự chú tâm.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/chuyen-muc/lao-dong-sang-tao/",
+        "/assets/images/illustration-tools.svg",
+        "/chuong-trinh/chu-tam-sau/",
+        "/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+        "/bai-viet/quan-tri-nang-luong/",
+        "/bai-viet/song-theo-dong-chay/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
         "/chinh-sach-bao-mat/",
         "/dieu-khoan/",
         "/mien-tru-trach-nhiem/",
@@ -1470,6 +1707,17 @@
         "/bai-viet/lao-dong-sang-tao-he-van-hanh/",
         "/bai-viet/he-gia-dinh-va-goc-re/",
         "/chuong-trinh/",
+        "/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+        "/products/life-reset-mini/",
+        "/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+        "/products/inner-listening-kit/",
+        "/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
+        "/products/one-corner-reset/",
+        "/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/products/7-day-true-rhythm/",
+        "/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+        "/products/companion-circle/",
+        "/products/",
         "/bai-viet/chuyen-muc/di-vao-ben-trong/",
         "/bai-viet/chuyen-muc/gia-tri-noi-tai/",
         "/bai-viet/chuyen-muc/mon-hoc-don-dep/",
@@ -1559,6 +1807,37 @@
       ]
     },
     {
+      "route": "/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+      "file": "bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/index.html",
+      "title": "Khi Đời Sống Bắt Đầu Rơi Khỏi Tay Mình | Nguyễn Lan Anh",
+      "description": "Một bài viết sâu về những dấu hiệu đời sống đang vận hành bằng phản xạ cũ, và cách bắt đầu lấy lại quyền chọn bằng những bước nhỏ có thật.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/di-vao-ben-trong/",
+        "/products/life-reset-mini/",
+        "/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+        "/products/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/bai-viet/khi-moi-truong-khong-con-phu-hop/",
       "file": "bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
       "title": "Khi môi trường không còn phù hợp | Nguyenlananh.com",
@@ -1589,6 +1868,37 @@
       ]
     },
     {
+      "route": "/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
+      "file": "bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/index.html",
+      "title": "Khi Một Góc Nhà Được Đặt Lại Đúng Chỗ | Nguyễn Lan Anh",
+      "description": "Về sức mạnh của không gian sống phản chiếu tâm trạng — và cách dọn dẹp một góc nhỏ có thể thay đổi cả một hệ thống tư duy.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/di-vao-ben-trong/",
+        "/products/one-corner-reset/",
+        "/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/products/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/bai-viet/khoi-tu-tam/",
       "file": "bai-viet/khoi-tu-tam/index.html",
       "title": "Khởi từ tâm | Nguyenlananh.com",
@@ -1612,6 +1922,43 @@
         "/bai-viet/neu-minh-sai-thi-sao/",
         "/gioi-thieu/",
         "/chuong-trinh/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+      "file": "bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/index.html",
+      "title": "Không Phải Bạn Thiếu Kỷ Luật — Bạn Thiếu Một Nhịp Sống Thật | Nguyễn Lan Anh",
+      "description": "Thay vì ép buộc kỷ luật, bài viết đề xuất việc xây dựng một nhịp sống tự nhiên phù hợp với cơ thể và tâm trí của bạn.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 76 characters."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/di-vao-ben-trong/",
+        "/products/7-day-true-rhythm/",
+        "/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+        "/products/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -1866,6 +2213,43 @@
       ]
     },
     {
+      "route": "/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+      "file": "bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/index.html",
+      "title": "Một Người Đồng Hành Đúng Không Kéo Bạn Đi Nhanh Hơn — Họ Giữ Bạn Đủ Lâu Để Bạn Tự Đi | Nguyễn Lan Anh",
+      "description": "Bài viết về giá trị của một người đồng hành thật sự — người không cố thay đổi bạn, mà chỉ ở đó để bạn có thể tự mình thay đổi.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 101 characters."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/di-vao-ben-trong/",
+        "/products/companion-circle/",
+        "/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/products/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/bai-viet/neu-minh-sai-thi-sao/",
       "file": "bai-viet/neu-minh-sai-thi-sao/index.html",
       "title": "Nếu mình sai thì sao | Nguyenlananh.com",
@@ -1889,6 +2273,37 @@
         "/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/",
         "/gioi-thieu/",
         "/chuong-trinh/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+      "file": "bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/index.html",
+      "title": "Nghe Lại: Thứ Mình Đã Im Lặng Quá Lâu | Nguyễn Lan Anh",
+      "description": "Bài viết về cách lắng nghe lại những âm thanh bên trong mà bạn đã tự tắt đi trong hành trình sống.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/di-vao-ben-trong/",
+        "/products/inner-listening-kit/",
+        "/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+        "/products/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -2028,6 +2443,39 @@
       ]
     },
     {
+      "route": "/bai-viet/quan-tri-nang-luong/",
+      "file": "bai-viet/quan-tri-nang-luong/index.html",
+      "title": "Quản trị năng lượng: thiết kế ngày theo nhịp của bạn",
+      "description": "Bạn không thiếu thời gian, bạn thiếu năng lượng đúng chỗ. Bản đồ năng lượng ngày, bốn loại pin, và lộ trình 14 ngày sắp lại nhịp sống.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/chuyen-muc/mon-hoc-don-dep/",
+        "/assets/images/illustration-environment.svg",
+        "/chuong-trinh/la-ban-nang-luong/",
+        "/bai-viet/song-sai-nhip/",
+        "/bai-viet/tai-thiet-khong-gian-song/",
+        "/bai-viet/song-theo-thoi-quen/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/bai-viet/quet-la-va-viec-hoc/",
       "file": "bai-viet/quet-la-va-viec-hoc/index.html",
       "title": "Quét lá và việc học | Nguyenlananh.com",
@@ -2048,6 +2496,39 @@
         "/chuong-trinh/",
         "/gioi-thieu/",
         "/lien-he/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/bai-viet/ranh-gioi-lanh-manh/",
+      "file": "bai-viet/ranh-gioi-lanh-manh/index.html",
+      "title": "Ranh giới lành mạnh: nói không mà không thấy tội lỗi",
+      "description": "Vì sao bạn khó từ chối, ba tầng của một ranh giới, kịch bản nói không tử tế, và lộ trình 14 ngày dựng ranh giới mà vẫn giữ được quan hệ.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/chuyen-muc/di-vao-ben-trong/",
+        "/assets/images/illustration-inside.svg",
+        "/chuong-trinh/bo-ranh-gioi/",
+        "/bai-viet/ban-do-vong-lap-ca-nhan/",
+        "/bai-viet/he-gia-dinh-va-goc-re/",
+        "/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -2178,6 +2659,39 @@
       ]
     },
     {
+      "route": "/bai-viet/su-du-va-tien-bac/",
+      "file": "bai-viet/su-du-va-tien-bac/index.html",
+      "title": "Sự đủ: thoát vòng lặp thiếu thốn trong tâm lý tiền bạc",
+      "description": "Vì sao kiếm nhiều hơn vẫn thấy thiếu, đường nền của sự đủ, ba câu hỏi định nghĩa đủ, và lộ trình 30 ngày làm hòa với tiền.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/chuyen-muc/dau-tu-ban-than/",
+        "/assets/images/illustration-growth.svg",
+        "/chuong-trinh/so-tay-su-du/",
+        "/bai-viet/kinh-te-cua-su-ro-rang/",
+        "/bai-viet/tu-55-trieu-den-tu-do/",
+        "/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/bai-viet/tai-thiet-khong-gian-song/",
       "file": "bai-viet/tai-thiet-khong-gian-song/index.html",
       "title": "Tái thiết không gian sống: môn học dọn dẹp chuyển hóa",
@@ -2290,6 +2804,39 @@
         "/chuong-trinh/",
         "/gioi-thieu/",
         "/lien-he/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/bai-viet/viet-phan-tu/",
+      "file": "bai-viet/viet-phan-tu/index.html",
+      "title": "Viết phản tư: dùng trang giấy để hiểu chính mình",
+      "description": "Viết không phải để hay, mà để thấy. Bốn kiểu viết phản tư, cách vượt trang trắng, và lộ trình 30 ngày biến nhật ký thành tấm gương.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/bai-viet/chuyen-muc/du-an-nhat-ky/",
+        "/assets/images/illustration-journey.svg",
+        "/chuong-trinh/nhat-ky-phan-tu/",
+        "/bai-viet/du-an-nhat-ky/",
+        "/bai-viet/ban-do-vong-lap-ca-nhan/",
+        "/bai-viet/du-an-37-ngay/",
+        "/gioi-thieu/",
+        "/chuong-trinh/",
+        "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -2505,6 +3052,96 @@
       ]
     },
     {
+      "route": "/chuong-trinh/bo-chu-tam-sau/",
+      "file": "chuong-trinh/bo-chu-tam-sau/index.html",
+      "title": "Bộ Chú tâm Sâu — 21 ngày | Chương trình | Nguyenlananh.com",
+      "description": "Bộ công cụ 21 ngày để phục hồi sự chú tâm: thẻ thiết lập phiên, bản đồ điểm gián đoạn, và nhật ký theo dõi độ sâu mỗi phiên.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/chuong-trinh/",
+        "/bai-viet/chu-tam-sau/",
+        "/lien-he/",
+        "/gioi-thieu/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/chuong-trinh/bo-quan-tri-nang-luong/",
+      "file": "chuong-trinh/bo-quan-tri-nang-luong/index.html",
+      "title": "Bộ Quản trị năng lượng — 14 ngày | Chương trình | Nguyenlananh.com",
+      "description": "Bộ công cụ 14 ngày để quản trị năng lượng theo nhịp: lập bản đồ pin ngày, chuyển sạc-tụ-thải, và một nhật ký năng lượng để bạn thực sự chọn lại.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 66 characters."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/chuong-trinh/",
+        "/bai-viet/quan-tri-nang-luong/",
+        "/lien-he/",
+        "/gioi-thieu/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/chuong-trinh/bo-ranh-gioi/",
+      "file": "chuong-trinh/bo-ranh-gioi/index.html",
+      "title": "Bộ Ranh giới — 14 ngày | Chương trình | Nguyenlananh.com",
+      "description": "Bộ công cụ 14 ngày để dựng ranh giới lành mạnh: bản đồ vùng dễ bị lấn, thẻ kịch bản nói không tử tế, và nhật ký thực hành từng ngày.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/chuong-trinh/",
+        "/bai-viet/ranh-gioi-lanh-manh/",
+        "/lien-he/",
+        "/gioi-thieu/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/chuong-trinh/dau-tu-noi-tai/",
       "file": "chuong-trinh/dau-tu-noi-tai/index.html",
       "title": "Đầu tư Nội tại — 90 ngày | Chương trình | Nguyenlananh.com",
@@ -2586,9 +3223,75 @@
         "/bai-viet/lao-dong-sang-tao-he-van-hanh/",
         "/chuong-trinh/gia-dinh-goc-re/",
         "/bai-viet/he-gia-dinh-va-goc-re/",
+        "/chuong-trinh/bo-ranh-gioi/",
+        "/bai-viet/ranh-gioi-lanh-manh/",
+        "/chuong-trinh/bo-quan-tri-nang-luong/",
+        "/bai-viet/quan-tri-nang-luong/",
+        "/chuong-trinh/so-tay-su-du/",
+        "/bai-viet/su-du-va-tien-bac/",
+        "/chuong-trinh/bo-chu-tam-sau/",
+        "/bai-viet/chu-tam-sau/",
+        "/chuong-trinh/nhat-ky-phan-tu/",
+        "/bai-viet/viet-phan-tu/",
         "/gioi-thieu/",
         "/chuong-trinh/",
         "/lien-he/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/chuong-trinh/nhat-ky-phan-tu/",
+      "file": "chuong-trinh/nhat-ky-phan-tu/index.html",
+      "title": "Nhật ký Phản tư — 30 ngày | Chương trình | Nguyenlananh.com",
+      "description": "Bộ nhật ký 30 ngày để dùng trang viết như tấm gương: bộ câu mở, thẻ bốn kiểu viết, và trang đọc lại cuối tháng để tìm mẫu lặp.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/chuong-trinh/",
+        "/bai-viet/viet-phan-tu/",
+        "/lien-he/",
+        "/gioi-thieu/",
+        "/chinh-sach-bao-mat/",
+        "/dieu-khoan/",
+        "/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/chuong-trinh/so-tay-su-du/",
+      "file": "chuong-trinh/so-tay-su-du/index.html",
+      "title": "Sổ tay Sự đủ — 30 ngày | Chương trình | Nguyenlananh.com",
+      "description": "Sổ tay 30 ngày để làm hòa với tiền: mẫu tính đường nền, bộ ba câu hỏi lọc mong muốn, và nhật ký quan hệ với tiền theo tuần.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/chuong-trinh/",
+        "/bai-viet/su-du-va-tien-bac/",
+        "/lien-he/",
+        "/gioi-thieu/",
         "/chinh-sach-bao-mat/",
         "/dieu-khoan/",
         "/mien-tru-trach-nhiem/",
@@ -3141,6 +3844,39 @@
         "/en/lien-he/",
         "/en/gioi-thieu/",
         "/en/chuong-trinh/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/bai-viet/chu-tam-sau/",
+      "file": "en/bai-viet/chu-tam-sau/index.html",
+      "title": "Deep Focus: Recovering the Attention You Lost",
+      "description": "Fragmentation is not your fault, it is the environment. How focus breaks, four layers of recovery, and a 21-day path to win attention back.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/lao-dong-sang-tao/",
+        "/assets/images/illustration-tools.svg",
+        "/en/chuong-trinh/chu-tam-sau/",
+        "/en/bai-viet/lao-dong-sang-tao-he-van-hanh/",
+        "/en/bai-viet/quan-tri-nang-luong/",
+        "/en/bai-viet/song-theo-dong-chay/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
         "/en/chinh-sach-bao-mat/",
         "/en/dieu-khoan/",
         "/en/mien-tru-trach-nhiem/",
@@ -4292,6 +5028,43 @@
       ]
     },
     {
+      "route": "/en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+      "file": "en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/index.html",
+      "title": "Khi Đời Sống Bắt Đầu Rơi Khỏi Tay Mình | Nguyễn Lan Anh",
+      "description": "Một bài viết sâu về những dấu hiệu đời sống đang vận hành bằng phản xạ cũ, và cách bắt đầu lấy lại quyền chọn bằng những bước nhỏ có thật.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/en/products/life-reset-mini/",
+        "/en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+        "/en/products/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/bai-viet/khi-moi-truong-khong-con-phu-hop/",
       "file": "en/bai-viet/khi-moi-truong-khong-con-phu-hop/index.html",
       "title": "When the Environment No Longer Fits | Nguyenlananh.com",
@@ -4322,6 +5095,43 @@
       ]
     },
     {
+      "route": "/en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
+      "file": "en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/index.html",
+      "title": "Khi Một Góc Nhà Được Đặt Lại Đúng Chỗ | Nguyễn Lan Anh",
+      "description": "Về sức mạnh của không gian sống phản chiếu tâm trạng — và cách dọn dẹp một góc nhỏ có thể thay đổi cả một hệ thống tư duy.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/en/products/one-corner-reset/",
+        "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/en/products/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/bai-viet/khoi-tu-tam/",
       "file": "en/bai-viet/khoi-tu-tam/index.html",
       "title": "Beginning from the Core | Nguyenlananh.com",
@@ -4345,6 +5155,48 @@
         "/en/bai-viet/neu-minh-sai-thi-sao/",
         "/en/gioi-thieu/",
         "/en/chuong-trinh/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+      "file": "en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/index.html",
+      "title": "Không Phải Bạn Thiếu Kỷ Luật — Bạn Thiếu Một Nhịp Sống Thật | Nguyễn Lan Anh",
+      "description": "Thay vì ép buộc kỷ luật, bài viết đề xuất việc xây dựng một nhịp sống tự nhiên phù hợp với cơ thể và tâm trí của bạn.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 76 characters."
+        },
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/en/products/7-day-true-rhythm/",
+        "/en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+        "/en/products/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -4601,6 +5453,48 @@
       ]
     },
     {
+      "route": "/en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+      "file": "en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/index.html",
+      "title": "Một Người Đồng Hành Đúng Không Kéo Bạn Đi Nhanh Hơn — Họ Giữ Bạn Đủ Lâu Để Bạn Tự Đi | Nguyễn Lan Anh",
+      "description": "Bài viết về giá trị của một người đồng hành thật sự — người không cố thay đổi bạn, mà chỉ ở đó để bạn có thể tự mình thay đổi.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 101 characters."
+        },
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/en/products/companion-circle/",
+        "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/en/products/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/bai-viet/neu-minh-sai-thi-sao/",
       "file": "en/bai-viet/neu-minh-sai-thi-sao/index.html",
       "title": "If You Are Wrong, So What? | Nguyenlananh.com",
@@ -4624,6 +5518,43 @@
         "/en/bai-viet/nhat-ky-37-ngay-lam-chu-ngay-1/",
         "/en/gioi-thieu/",
         "/en/chuong-trinh/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+      "file": "en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/index.html",
+      "title": "Nghe Lại: Thứ Mình Đã Im Lặng Quá Lâu | Nguyễn Lan Anh",
+      "description": "Bài viết về cách lắng nghe lại những âm thanh bên trong mà bạn đã tự tắt đi trong hành trình sống.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/en/products/inner-listening-kit/",
+        "/en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+        "/en/products/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -4763,6 +5694,39 @@
       ]
     },
     {
+      "route": "/en/bai-viet/quan-tri-nang-luong/",
+      "file": "en/bai-viet/quan-tri-nang-luong/index.html",
+      "title": "Energy Management: Design Your Day Around Your Rhythm",
+      "description": "You are not short on time, you are short on energy in the right place. An energy map, four kinds of battery, and a 14-day path to reset your rhythm.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/mon-hoc-don-dep/",
+        "/assets/images/illustration-environment.svg",
+        "/en/chuong-trinh/la-ban-nang-luong/",
+        "/en/bai-viet/song-sai-nhip/",
+        "/en/bai-viet/tai-thiet-khong-gian-song/",
+        "/en/bai-viet/song-theo-thoi-quen/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/bai-viet/quet-la-va-viec-hoc/",
       "file": "en/bai-viet/quet-la-va-viec-hoc/index.html",
       "title": "Sweeping Leaves and the Way We Learn | Nguyenlananh.com",
@@ -4783,6 +5747,39 @@
         "/en/chuong-trinh/",
         "/en/gioi-thieu/",
         "/en/lien-he/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/bai-viet/ranh-gioi-lanh-manh/",
+      "file": "en/bai-viet/ranh-gioi-lanh-manh/index.html",
+      "title": "Healthy Boundaries: Saying No Without the Guilt",
+      "description": "Why no feels hard, the three layers of a boundary, kind scripts for saying no, and a 14-day path to set boundaries without losing the relationship.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/di-vao-ben-trong/",
+        "/assets/images/illustration-inside.svg",
+        "/en/chuong-trinh/bo-ranh-gioi/",
+        "/en/bai-viet/ban-do-vong-lap-ca-nhan/",
+        "/en/bai-viet/he-gia-dinh-va-goc-re/",
+        "/en/bai-viet/co-don-khong-phai-vi-thieu-nguoi/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -4913,6 +5910,39 @@
       ]
     },
     {
+      "route": "/en/bai-viet/su-du-va-tien-bac/",
+      "file": "en/bai-viet/su-du-va-tien-bac/index.html",
+      "title": "Enough: Escaping the Scarcity Loop in Money Psychology",
+      "description": "Why earning more still feels like not enough, the baseline of enough, three questions to define it, and a 30-day path to make peace with money.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/dau-tu-ban-than/",
+        "/assets/images/illustration-growth.svg",
+        "/en/chuong-trinh/so-tay-su-du/",
+        "/en/bai-viet/kinh-te-cua-su-ro-rang/",
+        "/en/bai-viet/tu-55-trieu-den-tu-do/",
+        "/en/bai-viet/dau-tu-hien-tai-tu-do-tuong-lai/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/bai-viet/tai-thiet-khong-gian-song/",
       "file": "en/bai-viet/tai-thiet-khong-gian-song/index.html",
       "title": "Rebuilding Your Living Space: Decluttering for Real Change",
@@ -5025,6 +6055,38 @@
         "/en/chuong-trinh/",
         "/en/gioi-thieu/",
         "/en/lien-he/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/bai-viet/viet-phan-tu/",
+      "file": "en/bai-viet/viet-phan-tu/index.html",
+      "title": "Reflective Writing: Using the Page to Understand Yourself",
+      "description": "Writing is not about sounding good, it is about seeing. Four kinds of reflective writing, how to beat the blank page, and a 30-day journaling path.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/du-an-nhat-ky/",
+        "/assets/images/illustration-journey.svg",
+        "/en/chuong-trinh/nhat-ky-phan-tu/",
+        "/en/bai-viet/ban-do-vong-lap-ca-nhan/",
+        "/en/bai-viet/du-an-37-ngay/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -5240,6 +6302,90 @@
       ]
     },
     {
+      "route": "/en/chuong-trinh/bo-chu-tam-sau/",
+      "file": "en/chuong-trinh/bo-chu-tam-sau/index.html",
+      "title": "The Deep Focus Kit — 21 days | Programs | Nguyenlananh.com",
+      "description": "A 21-day kit to recover attention: a session-setup card, an interruption-point map, and a journal to track the depth of each session.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/chuong-trinh/",
+        "/en/bai-viet/chu-tam-sau/",
+        "/en/lien-he/",
+        "/en/gioi-thieu/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/chuong-trinh/bo-quan-tri-nang-luong/",
+      "file": "en/chuong-trinh/bo-quan-tri-nang-luong/index.html",
+      "title": "The Energy Management Kit — 14 days | Programs | Nguyenlananh.com",
+      "description": "A 14-day toolkit to manage energy by rhythm: a daily battery map, charge-drain-release transitions, and an energy journal to truly choose again.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/chuong-trinh/",
+        "/en/bai-viet/quan-tri-nang-luong/",
+        "/en/lien-he/",
+        "/en/gioi-thieu/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/chuong-trinh/bo-ranh-gioi/",
+      "file": "en/chuong-trinh/bo-ranh-gioi/index.html",
+      "title": "The Boundaries Kit — 14 days | Programs | Nguyenlananh.com",
+      "description": "A 14-day toolkit to set healthy boundaries: a map of vulnerable zones, a deck of kind no-scripts, and a journal to practise each day.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/chuong-trinh/",
+        "/en/bai-viet/ranh-gioi-lanh-manh/",
+        "/en/lien-he/",
+        "/en/gioi-thieu/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/chuong-trinh/dau-tu-noi-tai/",
       "file": "en/chuong-trinh/dau-tu-noi-tai/index.html",
       "title": "Inner Investment — 90 days | Programs | Nguyenlananh.com",
@@ -5321,9 +6467,75 @@
         "/en/bai-viet/lao-dong-sang-tao-he-van-hanh/",
         "/en/chuong-trinh/gia-dinh-goc-re/",
         "/en/bai-viet/he-gia-dinh-va-goc-re/",
+        "/en/chuong-trinh/bo-ranh-gioi/",
+        "/en/bai-viet/ranh-gioi-lanh-manh/",
+        "/en/chuong-trinh/bo-quan-tri-nang-luong/",
+        "/en/bai-viet/quan-tri-nang-luong/",
+        "/en/chuong-trinh/so-tay-su-du/",
+        "/en/bai-viet/su-du-va-tien-bac/",
+        "/en/chuong-trinh/bo-chu-tam-sau/",
+        "/en/bai-viet/chu-tam-sau/",
+        "/en/chuong-trinh/nhat-ky-phan-tu/",
+        "/en/bai-viet/viet-phan-tu/",
         "/en/gioi-thieu/",
         "/en/chuong-trinh/",
         "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/chuong-trinh/nhat-ky-phan-tu/",
+      "file": "en/chuong-trinh/nhat-ky-phan-tu/index.html",
+      "title": "The Reflective Journal — 30 days | Programs | Nguyenlananh.com",
+      "description": "A 30-day journal to use the page as a mirror: a set of daily openers, a card of the four writing kinds, and an end-of-month reread page to find repeating patterns.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/chuong-trinh/",
+        "/en/bai-viet/viet-phan-tu/",
+        "/en/lien-he/",
+        "/en/gioi-thieu/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/chuong-trinh/so-tay-su-du/",
+      "file": "en/chuong-trinh/so-tay-su-du/index.html",
+      "title": "The Enough Workbook — 30 days | Programs | Nguyenlananh.com",
+      "description": "A 30-day workbook to make peace with money: a baseline template, a three-question filter for wants, and a weekly money-relationship journal.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/chuong-trinh/",
+        "/en/bai-viet/su-du-va-tien-bac/",
+        "/en/lien-he/",
+        "/en/gioi-thieu/",
         "/en/chinh-sach-bao-mat/",
         "/en/dieu-khoan/",
         "/en/mien-tru-trach-nhiem/",
@@ -5602,6 +6814,7 @@
         "/en/chinh-sach-bao-mat/",
         "/en/dieu-khoan/",
         "/en/mien-tru-trach-nhiem/",
+        "/assets/home.js",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -5641,7 +6854,7 @@
       "route": "/en/join/",
       "file": "en/join/index.html",
       "title": "Register Membership | Nguyenlananh.com",
-      "description": "Register with one email only. Confirm through a magic link, complete a basic companion profile, then unlock the paid member path only when you are ready.",
+      "description": "Register for free with Google. Complete a basic companion profile, then unlock the paid member path only when you are ready.",
       "issues": [],
       "refs": [
         "/assets/site.css",
@@ -5653,6 +6866,7 @@
         "/en/members/",
         "/en/join/",
         "/en/members/start/",
+        "/en/api/auth/google/start/",
         "/en/lien-he/",
         "/assets/content-registry.js",
         "/assets/site.js",
@@ -5935,7 +7149,40 @@
         "/en/members/pro/",
         "/assets/images/illustration-loop-map.svg",
         "/en/members/deep/am-thanh-tu-than/",
+        "/assets/pdf/loop-map-workbook.html",
         "/en/members/deep/gia-dinh-va-goc-re/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/members/deep/dau-tu-noi-tai/",
+      "file": "en/members/deep/dau-tu-noi-tai/index.html",
+      "title": "Members Deep | Inner Capital Investment &amp; The Economy of Clarity",
+      "description": "Deep member track on 5 types of inner capital, a decision filter, and how to invest in yourself as a system rather than a fleeting impulse.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 68 characters."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/members/dashboard/",
+        "/en/members/journey/",
+        "/en/members/practice/",
+        "/en/members/deep/",
+        "/en/members/experience/",
+        "/en/members/pro/",
+        "/en/members/deep/tai-thiet-khong-gian/",
+        "/assets/pdf/inner-capital-filter.html",
+        "/en/members/deep/ban-do-vong-lap/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/members.js",
@@ -5987,6 +7234,7 @@
         "/en/members/experience/",
         "/en/members/pro/",
         "/assets/images/illustration-family-roots.svg",
+        "/assets/pdf/family-roots-map.html",
         "/en/members/deep/ban-do-vong-lap/",
         "/en/members/deep/ranh-gioi-mem-trong-gia-dinh/",
         "/en/members/deep/tre-em-va-khong-gian-lon-len/",
@@ -6017,6 +7265,9 @@
         "/en/members/deep/am-thanh-tu-than/",
         "/en/members/deep/gia-dinh-va-goc-re/",
         "/en/members/deep/tre-em-va-khong-gian-lon-len/",
+        "/en/members/deep/dau-tu-noi-tai/",
+        "/en/members/deep/tai-thiet-khong-gian/",
+        "/en/members/deep/xuong-sang-tao/",
         "/en/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/",
         "/en/members/deep/ky-luat-nhe-va-nhip-song-moi/",
         "/en/members/deep/lao-dong-vat-the-va-su-truong-thanh/",
@@ -6133,6 +7384,32 @@
       ]
     },
     {
+      "route": "/en/members/deep/tai-thiet-khong-gian/",
+      "file": "en/members/deep/tai-thiet-khong-gian/index.html",
+      "title": "Members Deep | Space Reconstruction",
+      "description": "Deep member track on living space as a second body, 7 layers of transformative decluttering, and a 30-day path to change your space to change your rhythm.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/members/dashboard/",
+        "/en/members/journey/",
+        "/en/members/practice/",
+        "/en/members/deep/",
+        "/en/members/experience/",
+        "/en/members/pro/",
+        "/en/members/deep/xuong-sang-tao/",
+        "/assets/pdf/space-declutter-guide.html",
+        "/en/members/deep/dau-tu-noi-tai/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/deep/tre-em-va-khong-gian-lon-len/",
       "file": "en/members/deep/tre-em-va-khong-gian-lon-len/index.html",
       "title": "Accompanying Children Without Breaking What Is Natural",
@@ -6186,6 +7463,33 @@
       ]
     },
     {
+      "route": "/en/members/deep/xuong-sang-tao/",
+      "file": "en/members/deep/xuong-sang-tao/index.html",
+      "title": "Members Deep | Creative Workshop &amp; Transformative Labor",
+      "description": "Deep member track on creative labor as a life system, the 5-beat creation cycle, and how to build your own creative workshop in everyday life.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/members/dashboard/",
+        "/en/members/journey/",
+        "/en/members/practice/",
+        "/en/members/deep/",
+        "/en/members/experience/",
+        "/en/members/pro/",
+        "/en/members/deep/ban-do-vong-lap/",
+        "/assets/pdf/creative-workshop-guide.html",
+        "/en/members/deep/tai-thiet-khong-gian/",
+        "/en/members/deep/dau-tu-noi-tai/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/en/members/experience/",
       "file": "en/members/experience/index.html",
       "title": "Members Experience | Nguyenlananh.com",
@@ -6212,7 +7516,7 @@
       "route": "/en/members/",
       "file": "en/members/index.html",
       "title": "Membership | Nguyenlananh.com",
-      "description": "The membership flow now starts with free registration, email confirmation, a basic companion profile, and only then the paid layer when the timing is right.",
+      "description": "The membership flow now starts with free Google registration, a basic companion profile, and only then the paid layer when the timing is right.",
       "issues": [],
       "refs": [
         "/assets/site.css",
@@ -6645,6 +7949,239 @@
       ]
     },
     {
+      "route": "/en/products/7-day-true-rhythm/",
+      "file": "en/products/7-day-true-rhythm/index.html",
+      "title": "7-Day True Rhythm — Tìm Lại Nhịp Sống Tự Nhiên | Nguyễn Lan Anh",
+      "description": "Sản phẩm thực hành nhỏ để tìm lại nhịp sống tự nhiên trong 7 ngày — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js",
+        "/assets/products-checkout.js"
+      ]
+    },
+    {
+      "route": "/en/products/companion-circle/",
+      "file": "en/products/companion-circle/index.html",
+      "title": "Companion Circle — Đồng Hành 7 Ngày Để Tự Mình Đi Tiếp | Nguyễn Lan Anh",
+      "description": "Sản phẩm thực hành nhỏ để trải nghiệm sự đồng hành trong 7 ngày — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 71 characters."
+        },
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js",
+        "/assets/products-checkout.js"
+      ]
+    },
+    {
+      "route": "/en/products/",
+      "file": "en/products/index.html",
+      "title": "Sản phẩm thực hành — Micro-Products | Nguyễn Lan Anh",
+      "description": "Năm sản phẩm thực hành nhỏ để đi một bước cụ thể: Life Reset Mini, Inner Listening Kit, One Corner Reset, 7-Day True Rhythm, Companion Circle.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/products/life-reset-mini/",
+        "/en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+        "/en/products/inner-listening-kit/",
+        "/en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+        "/en/products/one-corner-reset/",
+        "/en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
+        "/en/products/7-day-true-rhythm/",
+        "/en/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/",
+        "/en/products/companion-circle/",
+        "/en/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/en/products/inner-listening-kit/",
+      "file": "en/products/inner-listening-kit/index.html",
+      "title": "Inner Listening Kit — Nghe Lại Tiếng Nói Bên Trong | Nguyễn Lan Anh",
+      "description": "Sản phẩm thực hành nhỏ để lắng nghe lại những âm thanh bên trong bạn đã tự tắt đi — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 67 characters."
+        },
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js",
+        "/assets/products-checkout.js"
+      ]
+    },
+    {
+      "route": "/en/products/life-reset-mini/",
+      "file": "en/products/life-reset-mini/index.html",
+      "title": "Life Reset Mini — Lấy Lại Một Mảnh Đời Sống | Nguyễn Lan Anh",
+      "description": "Sản phẩm thực hành nhỏ: 1 bài đọc, 1 workbook, 1 bài tập viết tay, 1 hướng dẫn thực hành.",
+      "issues": [
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/khi-doi-song-bat-dau-roi-khoi-tay-minh/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js",
+        "/assets/products-checkout.js"
+      ]
+    },
+    {
+      "route": "/en/products/one-corner-reset/",
+      "file": "en/products/one-corner-reset/index.html",
+      "title": "One Corner Reset — Dọn Một Góc, Đặt Lại Một Phần Đời Sống | Nguyễn Lan Anh",
+      "description": "Sản phẩm thực hành nhỏ để dọn dẹp một góc nhà và đặt lại một phần đời sống — 1 bài đọc, 1 workbook, 1 bài tập viết tay.",
+      "issues": [
+        {
+          "severity": "medium",
+          "code": "long_title",
+          "message": "<title> is 74 characters."
+        },
+        {
+          "severity": "high",
+          "code": "english_page_contains_vietnamese_diacritics",
+          "message": "English page still contains Vietnamese diacritics."
+        }
+      ],
+      "refs": [
+        "/assets/site.css",
+        "/en/",
+        "/assets/brand/logo-mark.svg",
+        "/en/hanh-trinh/",
+        "/en/phuong-phap/",
+        "/en/bai-viet/",
+        "/en/members/",
+        "/en/join/",
+        "/en/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/",
+        "/en/gioi-thieu/",
+        "/en/chuong-trinh/",
+        "/en/lien-he/",
+        "/en/chinh-sach-bao-mat/",
+        "/en/dieu-khoan/",
+        "/en/mien-tru-trach-nhiem/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js",
+        "/assets/products-checkout.js"
+      ]
+    },
+    {
       "route": "/faq/",
       "file": "faq/index.html",
       "title": "Câu hỏi thường gặp | Nguyenlananh.com",
@@ -6729,6 +8266,7 @@
       "description": "Nơi bắt đầu hành trình nhìn lại chính mình, gỡ những vòng lặp đang chi phối cuộc đời, tái thiết đời sống từ nội tâm, hành vi, môi trường sống và hành động thực tế.",
       "issues": [],
       "refs": [
+        "/assets/site.css",
         "/assets/home.css",
         "/assets/tracking.js",
         "/",
@@ -6749,6 +8287,7 @@
         "/chinh-sach-bao-mat/",
         "/dieu-khoan/",
         "/mien-tru-trach-nhiem/",
+        "/assets/home.js",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -6788,7 +8327,7 @@
       "route": "/join/",
       "file": "join/index.html",
       "title": "Đăng ký thành viên | Nguyenlananh.com",
-      "description": "Đăng ký đồng hành miễn phí bằng email duy nhất. Xác nhận qua magic link, hoàn thiện profile cơ bản, rồi mới mở khóa hành trình trả phí bên trong.",
+      "description": "Đăng ký đồng hành miễn phí bằng Google. Hoàn thiện profile cơ bản, rồi mới mở khóa hành trình trả phí bên trong.",
       "issues": [],
       "refs": [
         "/assets/site.css",
@@ -6882,6 +8421,7 @@
         "/bai-viet/",
         "/members/",
         "/join/",
+        "/assets/contact-form.js",
         "/gioi-thieu/",
         "/chuong-trinh/",
         "/lien-he/",
@@ -7083,7 +8623,34 @@
         "/members/pro/",
         "/assets/images/illustration-loop-map.svg",
         "/members/deep/am-thanh-tu-than/",
+        "/assets/pdf/loop-map-workbook.html",
         "/members/deep/gia-dinh-va-goc-re/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
+      "route": "/members/deep/dau-tu-noi-tai/",
+      "file": "members/deep/dau-tu-noi-tai/index.html",
+      "title": "Members Chuyên sâu | Đầu tư nội tại và kinh tế của sự rõ ràng",
+      "description": "Chuyên đề thành viên về 5 loại vốn nội tại, bộ lọc quyết định, và cách đầu tư bản thân như một hệ thống thay vì cảm hứng nhất thời.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/members/dashboard/",
+        "/members/journey/",
+        "/members/practice/",
+        "/members/deep/",
+        "/members/experience/",
+        "/members/pro/",
+        "/members/deep/tai-thiet-khong-gian/",
+        "/assets/pdf/inner-capital-filter.html",
+        "/members/deep/ban-do-vong-lap/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/members.js",
@@ -7135,6 +8702,7 @@
         "/members/experience/",
         "/members/pro/",
         "/assets/images/illustration-family-roots.svg",
+        "/assets/pdf/family-roots-map.html",
         "/members/deep/ban-do-vong-lap/",
         "/members/deep/ranh-gioi-mem-trong-gia-dinh/",
         "/members/deep/tre-em-va-khong-gian-lon-len/",
@@ -7165,6 +8733,9 @@
         "/members/deep/am-thanh-tu-than/",
         "/members/deep/gia-dinh-va-goc-re/",
         "/members/deep/tre-em-va-khong-gian-lon-len/",
+        "/members/deep/dau-tu-noi-tai/",
+        "/members/deep/tai-thiet-khong-gian/",
+        "/members/deep/xuong-sang-tao/",
         "/members/deep/moi-truong-song-nhu-mot-than-the-thu-hai/",
         "/members/deep/ky-luat-nhe-va-nhip-song-moi/",
         "/members/deep/lao-dong-vat-the-va-su-truong-thanh/",
@@ -7282,6 +8853,32 @@
       ]
     },
     {
+      "route": "/members/deep/tai-thiet-khong-gian/",
+      "file": "members/deep/tai-thiet-khong-gian/index.html",
+      "title": "Members Chuyên sâu | Tái thiết không gian sống",
+      "description": "Chuyên đề thành viên về không gian sống như thân thể thứ hai, 7 tầng dọn dẹp chuyển hóa, và lộ trình 30 ngày đổi không gian để đổi nhịp sống.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/members/dashboard/",
+        "/members/journey/",
+        "/members/practice/",
+        "/members/deep/",
+        "/members/experience/",
+        "/members/pro/",
+        "/members/deep/xuong-sang-tao/",
+        "/assets/pdf/space-declutter-guide.html",
+        "/members/deep/dau-tu-noi-tai/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/members/deep/tre-em-va-khong-gian-lon-len/",
       "file": "members/deep/tre-em-va-khong-gian-lon-len/index.html",
       "title": "Đồng hành cùng trẻ em mà không làm gãy tự nhiên",
@@ -7335,6 +8932,33 @@
       ]
     },
     {
+      "route": "/members/deep/xuong-sang-tao/",
+      "file": "members/deep/xuong-sang-tao/index.html",
+      "title": "Members Chuyên sâu | Xưởng sáng tạo và lao động chuyển hóa",
+      "description": "Chuyên đề thành viên về lao động sáng tạo như một hệ vận hành, vòng tạo tác 5 nhịp, và cách dựng xưởng sáng tạo riêng trong đời sống thường ngày.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/members/dashboard/",
+        "/members/journey/",
+        "/members/practice/",
+        "/members/deep/",
+        "/members/experience/",
+        "/members/pro/",
+        "/members/deep/ban-do-vong-lap/",
+        "/assets/pdf/creative-workshop-guide.html",
+        "/members/deep/tai-thiet-khong-gian/",
+        "/members/deep/dau-tu-noi-tai/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/members.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/members/experience/",
       "file": "members/experience/index.html",
       "title": "Trải nghiệm thành viên | Nguyenlananh.com",
@@ -7358,6 +8982,29 @@
       ]
     },
     {
+      "route": "/members/index 2.html",
+      "file": "members/index 2.html",
+      "title": "Thành viên | Nguyenlananh.com",
+      "description": "Hệ thành viên bắt đầu bằng đăng ký miễn phí qua Google, profile đồng hành cơ bản, rồi mới mở khóa tầng đã trả phí khi bạn sẵn sàng.",
+      "issues": [],
+      "refs": [
+        "/assets/site.css",
+        "/",
+        "/assets/brand/logo-mark.svg",
+        "/hanh-trinh/",
+        "/phuong-phap/",
+        "/bai-viet/",
+        "/members/",
+        "/join/",
+        "/members/start/",
+        "/api/auth/google/start/",
+        "/assets/content-registry.js",
+        "/assets/site.js",
+        "/assets/i18n-config.js",
+        "/assets/lang-routing.js"
+      ]
+    },
+    {
       "route": "/members/",
       "file": "members/index.html",
       "title": "Thành viên | Nguyenlananh.com",
@@ -7372,8 +9019,8 @@
         "/bai-viet/",
         "/members/",
         "/join/",
-        "/members/start/",
         "/api/auth/google/start/",
+        "/members/start/",
         "/assets/content-registry.js",
         "/assets/site.js",
         "/assets/i18n-config.js",
@@ -7843,7 +9490,28 @@
       ]
     }
   ],
-  "brokenRefs": [],
+  "brokenRefs": [
+    {
+      "url": "http://localhost:4173/chuong-trinh/chu-tam-sau/",
+      "status": 404
+    },
+    {
+      "url": "http://localhost:4173/chuong-trinh/la-ban-nang-luong/",
+      "status": 404
+    },
+    {
+      "url": "http://localhost:4173/en/chuong-trinh/chu-tam-sau/",
+      "status": 404
+    },
+    {
+      "url": "http://localhost:4173/en/chuong-trinh/la-ban-nang-luong/",
+      "status": 404
+    },
+    {
+      "url": "http://localhost:4173/en/api/auth/google/start/",
+      "status": 404
+    }
+  ],
   "localApiRefs": [
     {
       "url": "http://localhost:4173/api/auth/google/start/",

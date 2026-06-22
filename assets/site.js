@@ -121,16 +121,43 @@
   const closeDrawer = $("#closeDrawer");
 
   if (drawer && hamburger) {
+    let lastFocused = null;
+
+    // Clone language selector into drawer for mobile access (hidden inline on <=480px)
+    const langWrap = $(".lang");
+    if (langWrap && !$(".drawerLang", drawer)) {
+      const langClone = langWrap.cloneNode(true);
+      langClone.classList.add("drawerLang");
+      langClone.style.cssText = "padding:10px 14px; border-bottom:1px solid var(--line);";
+      const dhead = $(".dhead", drawer);
+      if (dhead && dhead.nextSibling) {
+        drawer.insertBefore(langClone, dhead.nextSibling);
+      } else {
+        drawer.appendChild(langClone);
+      }
+    }
+
+    function getFocusable() {
+      return $$('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])', drawer)
+        .filter((el) => el.offsetParent !== null || el === closeDrawer);
+    }
+
     function openDrawer() {
+      lastFocused = document.activeElement;
       drawer.classList.add("open");
       hamburger.setAttribute("aria-expanded", "true");
       hamburger.setAttribute("aria-label", chromeCopy.menuClose || "Close menu");
+      document.body.style.overflow = "hidden";
+      const focusable = getFocusable();
+      if (focusable.length) focusable[0].focus();
     }
 
     function shutDrawer() {
       drawer.classList.remove("open");
       hamburger.setAttribute("aria-expanded", "false");
       hamburger.setAttribute("aria-label", chromeCopy.menuOpen || "Open menu");
+      document.body.style.overflow = "";
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
     }
 
     hamburger.addEventListener("click", () => {
@@ -142,7 +169,19 @@
     $$("[data-close]", drawer).forEach((a) => a.addEventListener("click", shutDrawer));
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") shutDrawer();
+      if (!drawer.classList.contains("open")) return;
+      if (e.key === "Escape") { shutDrawer(); return; }
+      if (e.key === "Tab") {
+        const focusable = getFocusable();
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
     });
 
     document.addEventListener("click", (e) => {

@@ -58,6 +58,12 @@ a:focus, button:focus{ outline: 3px solid rgba(217,83,29,.25); outline-offset:2p
   .actions > a.cta { display: none; }
 }
 
+/* On very small phones, hide the inline language chips to prevent overflow.
+   The language selector remains accessible from the drawer. */
+@media (max-width: 480px){
+  .actions > .lang{ display: none; }
+}
+
 /* Hero */
 .hero{
   padding: 34px 0 14px;

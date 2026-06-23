@@ -12,6 +12,27 @@ export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
 
+  // docs.nguyenlananh.com → serve /tai-lieu/ (rewrite, giữ URL subdomain)
+  // _redirects 200/301 cho root path trên custom domain bị static index.html
+  // override, nên dùng middleware để rewrite trước khi static serving.
+  const host = request.headers.get("Host") || "";
+  if (host === "docs.nguyenlananh.com") {
+    let targetPath = url.pathname;
+    if (targetPath === "/" || targetPath === "") {
+      targetPath = "/tai-lieu/";
+    } else if (targetPath === "/en" || targetPath === "/en/") {
+      targetPath = "/en/tai-lieu/";
+    } else if (targetPath.startsWith("/en/")) {
+      targetPath = "/en/tai-lieu" + targetPath;
+    } else {
+      targetPath = "/tai-lieu" + targetPath;
+    }
+    // Rewrite internal path — Pages sẽ serve file tại targetPath
+    const newUrl = new URL(targetPath, url.origin);
+    const newReq = new Request(newUrl, request);
+    return context.next(newReq);
+  }
+
   if (!isAdminPath(url.pathname)) {
     return context.next();
   }

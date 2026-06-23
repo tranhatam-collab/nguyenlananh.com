@@ -171,3 +171,51 @@ Khi bạn gửi 20 bài, team xử lý theo intake này (không hỏi lại):
 - **Chặn cứng:** không bật bán sản phẩm nào khi A.IX chưa đủ + Gate 1/2 chưa xanh.
 
 > **Trạng thái:** Kế hoạch HOÀN CHỈNH, sẵn sàng nhận 20 bài. Team bắt đầu GĐ1 (3 sản phẩm) + intake bài khi bản thảo về.
+
+---
+
+# PHẦN E — ROUTE & NAMING CONTRACT (LOCKED — chống mâu thuẫn)
+
+> Mọi bài viết/sản phẩm hiện tại và tương lai PHẢI tuân contract này. Đây là nguồn duy nhất quyết định route/CTA. Mâu thuẫn = chặn deploy.
+
+## E.1 Bốn lớp route — DUY NHẤT
+| Lớp | Route canonical | Trạng thái repo | Ghi chú |
+|---|---|---|---|
+| Bài viết public (VI) | `/bai-viet/<slug>/` | ✅ có | EN `/en/bai-viet/<slug>/` **chỉ khi có bản EN thật** |
+| Landing bán — micro | `/products/<slug>/` | ✅ có (5) | giữ cho 5 micro |
+| Landing bán — premium | `/assessments/<slug>/` · `/programs/<slug>/` · `/certification/<slug>/` | ❌ phải tạo | theo A.VI |
+| Học gated (sau mua) | `/members/deep/<slug>/` | ✅ có (14 page, live 200) | **canonical** |
+
+## E.2 Tên BỊ CẤM (deprecated — đang gây mâu thuẫn)
+- ❌ `/members/academy/...` — **KHÔNG tồn tại (live 404)**. Bộ 10 bài mới đang trỏ vào đây → **link gãy**. Cấm dùng.
+- ❌ `/members/learn/...` — bản nháp cũ của plan; thay bằng `/members/deep/`.
+- ❌ Bất kỳ route học nào ngoài `/members/deep/`.
+
+## E.3 CTA trong bài viết public — QUY TẮC CỨNG
+- CTA cuối bài → **landing BÁN** (`/products|assessments|programs|certification/<slug>/`) nếu đã tồn tại; **nếu chưa → `/join/`**.
+- ❌ TUYỆT ĐỐI không trỏ CTA tới route gated `/members/...` (người chưa mua sẽ vào ngõ cụt/404) hoặc route chưa tồn tại.
+- Convention hiện hành: 9 bài deep cũ đều CTA → `/join/`. Giữ nhất quán.
+
+## E.4 Gating PHẢI thực thi trước khi bán
+- ⚠️ Hiện `_middleware.js` **chỉ gác `/admin`** → `/members/deep/*` trả **200 cho mọi người** (không gated thật). Mâu thuẫn với "nội dung thành viên trả phí".
+- Trước GĐ go-sell: `_middleware` gác `/members/deep/*` + học theo `content_access`/membership; chưa quyền → 302 landing bán.
+
+## E.5 Slug & EN
+- Slug kebab-case, **không trùng** 76 bài hiện có + slug A.III đã đặt. Bài gateway dùng đúng slug A.VI.
+- 10 bài mới = **VI canonical, KHÔNG thêm hreflang EN** cho tới khi có bản EN biên tập riêng + route EN thật (ngoại lệ có chủ đích so với 76/76 parity — team không auto-sinh EN gãy).
+
+---
+
+# PHẦN F — CONSISTENCY AUDIT: BỘ 10 BÀI MỚI (2026-06)
+
+> Bộ 10 bài (~2.200–2.500 từ) nằm ở sandbox ngoài repo — chưa nhập. Trước khi nhập/deploy phải sửa 5 điểm sau cho khớp Contract §E.
+
+| # | Mâu thuẫn | Bằng chứng | Hành động bắt buộc |
+|---|---|---|---|
+| F1 | CTA trỏ `/members/academy/.../` | live 404 | Đổi CTA → landing bán hoặc `/join/` (§E.3). KHÔNG tạo `/members/academy/`. |
+| F2 | Route học không khớp repo | repo dùng `/members/deep/` (live 200) | Mọi nội dung học gated nhập vào `/members/deep/<slug>/`; bỏ academy/learn. |
+| F3 | Slug 10 bài mới ≠ slug A.III | title chủ đề khác (hệ thống chưa vẽ, kỷ luật cưỡng ép, ngôi nhà…) | Gán mỗi bài: là **gateway** (map 1 sản phẩm A.IV + slug A.VI) HAY **pillar bổ trợ** (CTA→/join/). Ghi vào bảng C.4. |
+| F4 | "Member content" chưa gated | `_middleware` chỉ gác /admin | Gác `/members/deep/*` trước khi bán (§E.4). |
+| F5 | EN hreflang | 76 bài cũ có EN parity | 10 bài mới VI-only, KHÔNG sinh hreflang EN (§E.5). |
+
+**Kết luận F:** Bộ 10 bài về nội dung tốt, nhưng **không được deploy nguyên trạng** — phải khớp Contract §E (đặc biệt F1 link gãy + F3 mapping slug/sản phẩm) để không mâu thuẫn với 76 bài + kế hoạch + hạ tầng.

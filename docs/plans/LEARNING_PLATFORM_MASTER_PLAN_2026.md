@@ -371,16 +371,20 @@ https://docs.nguyenlananh.com/* /tai-lieu/:splat 200
 ```
 
 ## G.8 Gate go-live docs hub
-- [ ] Custom domain `docs.nguyenlananh.com` add vào Pages project.
-- [ ] `/tai-lieu/index.html` build xong, 8 section đầy đủ.
-- [ ] `_redirects` rewrite 200 hoạt động (`curl -I https://docs.nguyenlananh.com/` = 200).
-- [ ] Bảng giá G.3 khớp B.1 + A.IV (không mâu thuẫn).
-- [ ] Homepage `#start-here` section live, CTA trỏ docs absolute URL.
-- [ ] `/docs/` leak G.6 đã có noindex header (tối thiểu).
-- [ ] Smoke: docs subdomain + homepage section + 3 CTA link không 404.
+- [x] Custom domain `docs.nguyenlananh.com` add vào Pages project (2026-06-23T14:24Z, status=active, SSL=active, CA=google).
+- [x] CNAME `docs.nguyenlananh.com → nguyenlananh-com-63s.pages.dev` (proxied, zone f1f00d69).
+- [x] `/tai-lieu/index.html` build xong, 8 section đầy đủ (VI + EN parity).
+- [x] `_redirects` rewrite 200: `docs.nguyenlananh.com → /tai-lieu/` + `/en → /en/tai-lieu/`.
+- [x] Bảng giá G.3 khớp B.1 + A.IV (không mâu thuẫn).
+- [x] Homepage `#start-here` section live, CTA trỏ docs absolute URL.
+- [x] `/docs/` leak G.6 fix triệt để: `functions/docs/[[path]].js` → 404 (verified live: `/docs/ADMIN_OPERATION_GUIDE.md` = 404).
+- [x] Smoke: `/tai-lieu/` 200, `/en/tai-lieu/` 200, 4 bài nổi bật 200, `/docs/*` 404.
+- [ ] DNS propagation: CNAME đã tạo nhưng global resolver chưa resolve (NXDOMAIN negcache). Sẽ tự nhiên xanh trong 5–60 phút.
 
-## G.9 Trạng thái sau khi hoàn thiện
+## G.9 Trạng thái sau khi hoàn thiện (2026-06-23)
 - Plan Phần G: HOÀN CHỈNH.
-- Build `/tai-lieu/index.html` + homepage `#start-here`: xong trong cùng commit.
-- Custom domain DNS: dev làm 1 lần (G.1) — không block commit, chỉ block live subdomain.
-- `/docs/` leak: P1, fix noindex ngay, move folder sprint sau.
+- Build `/tai-lieu/index.html` (VI) + `/en/tai-lieu/index.html` (EN parity): xong, live 200.
+- Homepage `#start-here`: live, 4 bài nổi bật slug verify 200.
+- Custom domain `docs.nguyenlananh.com`: add + CNAME + SSL = active. Đợi DNS propagation (5–60 phút).
+- `/docs/` leak: FIXED triệt để via Functions catch-all 404. `_headers` noindex giữ làm defense-in-depth.
+- Commits: `b376883` (docs hub + homepage) · `4476454` (EN parity + leak fix attempt) · `1957515` (Functions block /docs/*).

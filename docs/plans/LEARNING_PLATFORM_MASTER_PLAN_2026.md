@@ -219,3 +219,168 @@ Khi bạn gửi 20 bài, team xử lý theo intake này (không hỏi lại):
 | F5 | EN hreflang | 76 bài cũ có EN parity | 10 bài mới VI-only, KHÔNG sinh hreflang EN (§E.5). |
 
 **Kết luận F:** Bộ 10 bài về nội dung tốt, nhưng **không được deploy nguyên trạng** — phải khớp Contract §E (đặc biệt F1 link gãy + F3 mapping slug/sản phẩm) để không mâu thuẫn với 76 bài + kế hoạch + hạ tầng.
+
+---
+
+# PHẦN G — DOCS HUB (docs.nguyenlananh.com) + HOMEPAGE REFRESH (2026-06-23)
+
+> Mục tiêu: công bố **toàn bộ sự thật về Nguyenlananh.com** — giá, sản phẩm, hướng dẫn, câu hỏi thường gặp, lộ trình — tại **1 trang tài liệu chính thức** `docs.nguyenlananh.com`. Trang chủ không còn giấu thông tin: có section **"Bắt đầu cùng Nguyenlananh.com"** tóm tắt + trỏ tới docs, kèm **bài viết nổi bật** và **hướng dẫn đồng hành**.
+> Nguyên tắc: **minh bạch tối đa**. Khách đọc 1 trang docs là biết toàn bộ hệ, toàn bộ giá, toàn bộ lộ trình, không bị bất ngờ.
+
+## G.1 Kiến trúc docs.nguyenlananh.com
+
+### Quyết định: Cùng Pages project + rewrite 200 (KHÔNG project riêng)
+- Thêm custom domain `docs.nguyenlananh.com` vào Pages project `nguyenlananh-com` hiện tại (cùng account 62d57eaa, đã owns `nguyenlananh.com`/`www`/`admin`).
+- `_redirects` rule: `https://docs.nguyenlananh.com/* /tai-lieu/:splat 200` — **rewrite giữ URL** (không 301 đổi URL như admin).
+- Repo path: **`/tai-lieu/`** (KHÔNG dùng `/docs/` — xem G.6 leak).
+- 1 deploy, 1 repo, `/tai-lieu/` trong repo = `docs.nguyenlananh.com` live.
+- Lý do không project riêng: tránh phân tán DNS/build/secrets; docs chia cùng CSS (`/assets/site.css`), cùng nav, cùng footer — chỉ khác subdomain.
+
+### DNS + custom domain setup (dev làm 1 lần)
+1. Cloudflare Dashboard → Pages → `nguyenlananh-com` → Custom domains → Add `docs.nguyenlananh.com`.
+2. CF auto tạo CNAME `docs` → `nguyenlananh-com.pages.dev` (zone đã trên CF → auto).
+3. `_redirects` thêm 2 dòng (G.7).
+4. Deploy → smoke `curl -I https://docs.nguyenlananh.com/` = 200 serving `/tai-lieu/index.html`.
+
+## G.2 Cấu trúc nội dung docs hub
+
+`/tai-lieu/` = 1 trang đơn (single-page docs) với 8 section anchor, KHÔNG tách nhiều file (giữ đơn giản, 1 deploy, dễ Founder edit):
+
+| Anchor | Section | Nội dung | Nguồn dữ liệu |
+|---|---|---|---|
+| `#gioi-thieu` | Giới thiệu | Nguyenlananh.com là gì, không phải gì, cho ai, không cho ai | repo `/gioi-thieu/` + homepage FAQ |
+| `#phuong-phap` | Phương pháp | Bốn bước: Quan sát → Cảm nhận → Hành động → Chuyển hóa; bốn trục | `/phuong-phap/` |
+| `#san-pham` | Sản phẩm & giá | **Toàn bộ 15 sản phẩm** (5 micro + 10 premium) — bảng giá đầy đủ, tier, đầu vào/đầu ra | B.1 + A.IV |
+| `#lo-trinh` | Lộ trình | Free → member → assessment → program → certification; 7/30/90 ngày | A.II + `/hanh-trinh/` |
+| `#huong-dan` | Hướng dẫn bắt đầu | 15 phút → 7 ngày → member → mua đầu tiên | `/bat-dau/` 3 bài |
+| `#hinh-thuc-thanh-toan` | Thanh toán | VietQR (VN), PayPal/Stripe (quốc tế — HOLD), tiền VND/USD, hoàn tiền | payment system + Gate 1/2 status |
+| `#cau-hoi` | FAQ | 12–15 câu: có trị liệu không? cho ai? bao lâu? chứng nhận giá trị? | homepage FAQ + mới |
+| `#lien-he` | Liên hệ & hỗ trợ | email, hỗ trợ thành viên, giờ phản hồi | `/lien-he/` |
+
+### Quy tắc nội dung docs
+- **Không giấu giá**: toàn bộ giá hiện diện trong `#san-pham`, kèm tier + đầu ra + điều kiện.
+- **Không oversell**: mỗi sản phẩm ghi rõ **giới hạn** (đặc biệt #3 Emotional, #5 Family — "không phải trị liệu").
+- **Trạng thái sống**: mỗi sản phẩm ghi `SỐNG` / `SẴN SÀNG` / `SẮP RA` / `HOLD`. Không bán sản phẩm HOLD.
+- **Bilingual**: VI canonical; EN parity giai đoạn 2 (không auto-sinh EN gãy — §E.5).
+
+## G.3 Bảng giá công bố (lock — khớp B.1 + A.IV)
+
+### 5 sản phẩm micro (đã live `/products/`)
+| # | Tên | Slug | Giá | Trạng thái |
+|---|---|---|---|---|
+| 1 | Life Reset Mini | `life-reset-mini` | $9–19 | SỐNG |
+| 2 | Inner Listening Kit | `inner-listening-kit` | $12–25 | SỐNG |
+| 3 | One Corner Reset | `one-corner-reset` | $15–29 | SỐNG |
+| 4 | 7-Day True Rhythm | `7-day-true-rhythm` | $19–39 | SỐNG |
+| 5 | Companion Circle | `companion-circle` | $29–59 | SỐNG |
+
+### 10 sản phẩm premium (A.IV — landing `/assessments|programs|certification/`)
+| # | Tên | Plan code | Giá (USD) | Trạng thái |
+|---|---|---|---|---|
+| 1 | Avoidance Map Assessment | `asmt_avoidance_self`/`asmt_avoidance_review` | 19–39 / 79–149 | SẴN SÀNG (sau Gate 1/2) |
+| 2 | Rhythm Design Lab 21 ngày | `prog_rhythm_lab` | 99–199 | SẴN SÀNG |
+| 3 | Emotional Block Intensive | `prog_emo_block` | 249–499 | HOLD (cần ethics/escalation) |
+| 4 | Boundary Foundation Cert | `cert_boundary_found` | 299–599 | SẴN SÀNG |
+| 5 | Family Pattern Program | `prog_family_pattern` | 399–899 | HOLD (cần ethics) |
+| 6 | Space Reset Practitioner | `prog_space_reset` | 499–1200 | SẴN SÀNG |
+| 7 | Creative Practice Studio | `prog_creative_studio` | 399–999 | SẴN SÀNG |
+| 8 | Personal Capital Diagnostic | `diag_capital_self`/`diag_capital_expert`/`diag_capital_biz` | 49–99 / 299–699 / 1500–3000 | SẴN SÀNG |
+| 9 | Practice Companion L1 | `cert_companion_l1` | 1200–2500 | SẮP RA |
+| 10 | Practice Method Designer | `cert_method_designer` | 3000–7500 | SẮP RA |
+
+> Quy đổi VND: USD × 25.500 (làm tròn 1.000). Hiển thị cả 2 (VD: $99 ≈ 2.525.000 VND).
+
+## G.4 Homepage refresh — section "Bắt đầu cùng Nguyenlananh.com"
+
+Chèn **section mới** vào homepage, vị trí: **sau INVITE (`#invite`), trước CONTENT (`#content`)**. ID: `#start-here`.
+
+### Cấu trúc section `#start-here`
+```
+<section id="start-here">
+  <h2>Bắt đầu cùng Nguyenlananh.com</h2>
+  <p class="sub">Tóm tắt toàn bộ hệ trong 1 phút. Chi tiết đầy đủ tại docs.nguyenlananh.com.</p>
+
+  <!-- 3 cột: 3 bước đầu -->
+  <div class="grid3">
+    <div class="panel">
+      <h3>1 · Hiểu hệ</h3>
+      <p>Đọc 3 bài nền (15 phút). Biết đây là hệ thực hành, không phải blog.</p>
+      <a href="/bat-dau/">Đọc hướng dẫn</a>
+    </div>
+    <div class="panel">
+      <h3>2 · Vào hệ miễn phí</h3>
+      <p>Đăng ký member free. Lộ trình 7 ngày. Check-in. Chưa trả tiền.</p>
+      <a href="/join/">Đăng ký miễn phí</a>
+    </div>
+    <div class="panel">
+      <h3>3 · Mở sâu khi sẵn sàng</h3>
+      <p>Assessment/program/certification khi đã vào đúng hệ. Giá công bố minh bạch.</p>
+      <a href="https://docs.nguyenlananh.com/#san-pham">Xem toàn bộ giá</a>
+    </div>
+  </div>
+
+  <!-- Bài viết nổi bật (3-4 bài ngắn, chọn từ 76 bài) -->
+  <h3>Bài viết nổi bật</h3>
+  <div class="wGrid">
+    <article class="post">...</article>  <!-- 3-4 bài pick -->
+  </div>
+
+  <!-- Hướng dẫn đồng hành -->
+  <div class="panel">
+    <h3>Hướng dẫn đồng hành</h3>
+    <p>Toàn bộ hướng dẫn, giá, FAQ, lộ trình nằm tại docs.nguyenlananh.com.</p>
+    <a class="cta" href="https://docs.nguyenlananh.com/">Mở trang tài liệu</a>
+    <a class="ghost" href="/bat-dau/">Hướng dẫn 15 phút</a>
+  </div>
+</section>
+```
+
+### Bài viết nổi bật — tiêu chí chọn
+- 3–4 bài từ 76 bài hiện có, **ngắn + đánh thức** (không phải bài dài 2000w).
+- Mỗi bài: 1 câu hook + 1 CTA → đọc tiếp (`/bai-viet/<slug>/`).
+- Đề xuất pick (team confirm): bài "Điều đáng tiếc nhất" · bài "Môn học dọn dẹp" · bài "Tôi đang đi con đường gì" · 1 bài về vòng lặp.
+
+## G.5 Route contract bổ sung (lock vào §E)
+
+| Lớp | Route canonical | Repo path | Subdomain |
+|---|---|---|---|
+| Docs hub (public) | `https://docs.nguyenlananh.com/` | `/tai-lieu/index.html` | `docs.nguyenlananh.com` (rewrite 200) |
+| Docs anchor | `docs.nguyenlananh.com/#san-pham` | — | cùng trang, anchor scroll |
+
+- ❌ KHÔNG dùng `/docs/` cho public docs (collision với dev docs — G.6).
+- ❌ KHÔNG tạo project Pages riêng cho docs.
+- CTA homepage → docs dùng **absolute URL** `https://docs.nguyenlananh.com/` (không relative `/tai-lieu/` — để subdomain nhất quán).
+
+## G.6 🔴 P1 — /docs/ leak (phát hiện khi audit docs hub)
+
+**Vấn đề:** repo có `/docs/` chứa **97 file dev nội bộ** (ADMIN_OPERATION_GUIDE.md, DB schema, audit reports, secrets templates…). Vì `pages_build_output_dir="."`, toàn bộ `/docs/*` **đang live 200 công khai**.
+**Bằng chứng:** `curl -I https://www.nguyenlananh.com/docs/ADMIN_OPERATION_GUIDE.md` → `200 text/markdown`.
+**Rủi ro:** lộ cấu trúc admin, DB schema, audit findings, deploy runbook → attack surface.
+**Fix (theo ưu tiên):**
+1. **Nhanh (giờ):** `_headers` thêm `/docs/* X-Robots-Tag: noindex` (chặn index, không chặn access).
+2. **Đúng (sprint sau):** di chuyển `/docs/` → `.devdocs/` (dotfolder, Pages không deploy dotfolder) HOẶC move ra ngoài build output. Cập nhật references.
+3. **Tốt nhất:** `_routes.json` exclude `/docs/*` khỏi static serving (cần verify Pages hỗ trợ).
+- **Không block** việc build `/tai-lieu/` — path khác, không dính.
+
+## G.7 _redirects bổ sung (deploy cùng lúc)
+
+```
+# docs.nguyenlananh.com → /tai-lieu/ (rewrite giữ URL, KHÔNG 301)
+https://docs.nguyenlananh.com/ /tai-lieu/ 200
+https://docs.nguyenlananh.com/* /tai-lieu/:splat 200
+```
+
+## G.8 Gate go-live docs hub
+- [ ] Custom domain `docs.nguyenlananh.com` add vào Pages project.
+- [ ] `/tai-lieu/index.html` build xong, 8 section đầy đủ.
+- [ ] `_redirects` rewrite 200 hoạt động (`curl -I https://docs.nguyenlananh.com/` = 200).
+- [ ] Bảng giá G.3 khớp B.1 + A.IV (không mâu thuẫn).
+- [ ] Homepage `#start-here` section live, CTA trỏ docs absolute URL.
+- [ ] `/docs/` leak G.6 đã có noindex header (tối thiểu).
+- [ ] Smoke: docs subdomain + homepage section + 3 CTA link không 404.
+
+## G.9 Trạng thái sau khi hoàn thiện
+- Plan Phần G: HOÀN CHỈNH.
+- Build `/tai-lieu/index.html` + homepage `#start-here`: xong trong cùng commit.
+- Custom domain DNS: dev làm 1 lần (G.1) — không block commit, chỉ block live subdomain.
+- `/docs/` leak: P1, fix noindex ngay, move folder sprint sau.

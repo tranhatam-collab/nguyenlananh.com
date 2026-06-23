@@ -30,3 +30,8 @@ https://nguyenlananh.com/* https://www.nguyenlananh.com/:splat 301
 https://admin.nguyenlananh.com/ /admin/ 301
 https://admin.nguyenlananh.com/en /en/admin/ 301
 https://admin.nguyenlananh.com/en/ /en/admin/ 301
+
+# docs.nguyenlananh.com → /tai-lieu/ (rewrite 200, giữ URL subdomain)
+# Custom domain phải được add vào Pages project trước khi rule này có hiệu lực.
+https://docs.nguyenlananh.com/ /tai-lieu/ 200
+https://docs.nguyenlananh.com/* /tai-lieu/:splat 200

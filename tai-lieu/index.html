@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Tài liệu chính thức — Nguyenlananh.com | Toàn bộ sự thật về hệ, sản phẩm, giá, lộ trình</title>
+  <meta name="description" content="Trang tài liệu chính thức của Nguyenlananh.com: giới thiệu, phương pháp, toàn bộ sản phẩm & giá, lộ trình, hướng dẫn bắt đầu, thanh toán, FAQ, liên hệ. Minh bạch tối đa — không giấu giá." />
+  <link rel="canonical" href="https://docs.nguyenlananh.com/" />
+  <link rel="alternate" hreflang="vi" href="https://docs.nguyenlananh.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.nguyenlananh.com/" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nguyễn Lan Anh" />
+  <meta property="og:title" content="Tài liệu chính thức — Nguyenlananh.com" />
+  <meta property="og:description" content="Toàn bộ sự thật về hệ, sản phẩm, giá, lộ trình, hướng dẫn. Minh bạch tối đa." />
+  <meta property="og:url" content="https://docs.nguyenlananh.com/" />
+  <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tài liệu chính thức — Nguyenlananh.com" />
+  <meta name="twitter:description" content="Toàn bộ sự thật về hệ, sản phẩm, giá, lộ trình, hướng dẫn. Minh bạch tối đa." />
+  <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+  <meta name="theme-color" content="#2a1810" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Tài liệu chính thức — Nguyenlananh.com",
+    "url":"https://docs.nguyenlananh.com/",
+    "inLanguage":"vi",
+    "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"},
+    "publisher":{"@id":"https://www.nguyenlananh.com/#organization"}
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://www.nguyenlananh.com/assets/site.css" />
+  <style>
+    /* Docs-specific layout */
+    .docsNav{position:sticky;top:0;z-index:5;background:rgba(255,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:18px;}
+    .docsNav .container{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+    .docsNav a{font-size:13px;color:rgba(42,24,16,.72);padding:6px 10px;border-radius:999px;text-decoration:none;}
+    .docsNav a:hover{background:rgba(42,24,16,.06);color:rgba(42,24,16,.95);}
+    .docsNav .brand{font-weight:700;color:rgba(42,24,16,.9);}
+    .docsSection{scroll-margin-top:80px;padding:28px 0 8px;border-top:1px solid rgba(42,24,16,.08);}
+    .docsSection:first-of-type{border-top:none;padding-top:8px;}
+    .docsSection h2{font-size:26px;margin:0 0 6px;}
+    .docsSection h3{font-size:18px;margin:18px 0 6px;}
+    .docsSection p{line-height:1.75;color:rgba(42,24,16,.82);max-width:72ch;}
+    .docsSection ul{line-height:1.8;color:rgba(42,24,16,.82);max-width:72ch;}
+    .priceTable{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+    .priceTable th,.priceTable td{padding:10px 12px;border-bottom:1px solid rgba(42,24,16,.10);text-align:left;vertical-align:top;}
+    .priceTable th{background:rgba(42,24,16,.04);font-weight:600;font-size:13px;color:rgba(42,24,16,.7);}
+    .priceTable tr:hover td{background:rgba(42,24,16,.02);}
+    .status{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em;}
+    .status-live{background:#e6f4ea;color:#1e6e3a;}
+    .status-ready{background:#e8f0fe;color:#1a56c4;}
+    .status-soon{background:#fef7e0;color:#8a6d00;}
+    .status-hold{background:#fce8e6;color:#c5221f;}
+    .callout{background:rgba(42,24,16,.04);border-left:3px solid rgba(42,24,16,.3);padding:12px 16px;border-radius:8px;margin:14px 0;font-size:14px;line-height:1.7;color:rgba(42,24,16,.82);}
+    .callout.warn{background:#fef7e0;border-left-color:#f9ab00;}
+    .callout.danger{background:#fce8e6;border-left-color:#c5221f;}
+    .faqItem{margin:14px 0;padding:14px 16px;background:rgba(255,255,255,.6);border:1px solid rgba(42,24,16,.08);border-radius:12px;}
+    .faqItem h3{font-size:15px;margin:0 0 6px;color:rgba(42,24,16,.9);}
+    .faqItem p{font-size:14px;margin:0;line-height:1.7;color:rgba(42,24,16,.78);}
+    .stepGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0;}
+    .stepCard{background:rgba(255,255,255,.6);border:1px solid rgba(42,24,16,.08);border-radius:14px;padding:16px;}
+    .stepCard h3{font-size:15px;margin:0 0 6px;}
+    .stepCard p{font-size:13px;margin:0 0 10px;line-height:1.65;color:rgba(42,24,16,.78);}
+    .stepCard a{font-size:13px;}
+    .docsFooter{margin-top:30px;padding:20px 0;border-top:1px solid rgba(42,24,16,.10);font-size:13px;color:rgba(42,24,16,.6);line-height:1.7;}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+
+  <nav class="docsNav" aria-label="Mục lục tài liệu">
+    <div class="container">
+      <a class="brand" href="#top">📄 Tài liệu</a>
+      <a href="#gioi-thieu">Giới thiệu</a>
+      <a href="#phuong-phap">Phương pháp</a>
+      <a href="#san-pham">Sản phẩm &amp; giá</a>
+      <a href="#lo-trinh">Lộ trình</a>
+      <a href="#huong-dan">Hướng dẫn bắt đầu</a>
+      <a href="#thanh-toan">Thanh toán</a>
+      <a href="#cau-hoi">FAQ</a>
+      <a href="#lien-he">Liên hệ</a>
+      <a href="https://www.nguyenlananh.com/" style="margin-left:auto;">← Về trang chủ</a>
+    </div>
+  </nav>
+
+  <main id="main" class="container" role="main">
+    <section id="top" class="pageHead">
+      <h1>Tài liệu chính thức — Nguyenlananh.com</h1>
+      <p class="sub">Toàn bộ sự thật về hệ: đây là gì, cho ai, không cho ai, sản phẩm nào, giá bao nhiêu, lộ trình ra sao, bắt đầu thế nào, trả tiền bằng gì. Minh bạch tối đa — không giấu giá, không oversell.</p>
+      <p class="sub" style="margin-top:6px;color:rgba(42,24,16,.55);font-size:13px;">Cập nhật 2026-06-23 · Phiên bản docs v1 · <a href="https://www.nguyenlananh.com/">nguyenlananh.com</a></p>
+    </section>
+
+    <!-- ============ GIOI THIEU ============ -->
+    <section id="gioi-thieu" class="docsSection">
+      <h2>1 · Giới thiệu</h2>
+      <p><strong>Nguyenlananh.com</strong> là một nền tảng nội dung và đồng hành để <strong>đi vào bên trong, gỡ những vòng lặp đang chi phối cuộc đời, và tái thiết đời sống từ nhận thức đến hành động thực tế</strong>. Đây không phải blog. Đây là một hệ thực hành có phương pháp, có lộ trình, có check-in, có đánh giá và có đầu ra đo được.</p>
+
+      <h3>Cho ai</h3>
+      <ul>
+        <li>Người cảm thấy mình đang lặp lại một vòng cũ mà không thoát được — trong công việc, quan hệ, thói quen, hay cảm xúc.</li>
+        <li>Người đã đọc nhiều, hiểu nhiều, nhưng chưa biến được nhận thức thành hành động thật, đều đặn, đo được.</li>
+        <li>Người sẵn sàng nhìn lại chính mình thật, không né, không trang điểm, không đổ lỗi.</li>
+      </ul>
+
+      <h3>Không cho ai</h3>
+      <ul>
+        <li>Người tìm giải pháp nhanh, một buổi coach là đời đổi. Ở đây không có thứ đó.</li>
+        <li>Người đang trong khủng hoảng tâm thần cấp (trầm cảm nặng, rối loạn lo âu lâm sàng, ý tự sát). Hệ này <strong>không phải trị liệu tâm lý</strong> — cần chuyên gia y tế.</li>
+        <li>Người muốn bị chẩn đoán, được bảo "bạn bị thế này, uống thuốc này". Ở đây không chẩn đoán, không kê đơn, không trị liệu.</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Trung thực:</strong> Hệ này giúp bạn <em>nhìn đúng vấn đề</em> và <em>làm hành động nhỏ thật</em>. Nó không thay trị liệu tâm lý, không thay y khoa, không thay tư vấn pháp lý/tài chính. Nếu bạn đang trong tình trạng cấp, hãy liên hệ chuyên gia y tế hoặc đường dây nóng hỗ trợ tâm thần tại Việt Nam (111).
+      </div>
+    </section>
+
+    <!-- ============ PHUONG PHAP ============ -->
+    <section id="phuong-phap" class="docsSection">
+      <h2>2 · Phương pháp</h2>
+      <p>Hệ vận hành trên <strong>bốn bước</strong> và <strong>bốn trục</strong>. Mọi bài viết, sản phẩm, chương trình đều nằm trong khung này — không có nội dung nào rời ra ngoài.</p>
+
+      <h3>Bốn bước</h3>
+      <div class="stepGrid">
+        <div class="stepCard"><h3>1 · Quan sát</h3><p>Nhìn lại tâm, phản ứng, môi trường sống, mối quan hệ với vật thể mỗi ngày. Không phán xét, chỉ thấy.</p></div>
+        <div class="stepCard"><h3>2 · Cảm nhận</h3><p>Chạm đồ vật, cảm nhận không gian, cảm nhận trạng thái thân tâm để biết mình đang sống ra sao.</p></div>
+        <div class="stepCard"><h3>3 · Hành động</h3><p>Dọn dẹp, quét lá, làm việc bằng tay, sắp xếp môi trường. Hành động nhỏ, đều đặn, đo được.</p></div>
+        <div class="stepCard"><h3>4 · Chuyển hóa</h3><p>Từ mắc kẹt sang dòng chảy mới, từ phản xạ cũ sang lựa chọn có ý thức và sáng tạo giá trị mới.</p></div>
+      </div>
+
+      <h3>Bốn trục nội dung</h3>
+      <ul>
+        <li><strong>Nội tâm</strong> — vòng lặp, nhận thức, cảm xúc, im lặng, sự thật với mình.</li>
+        <li><strong>Vật thể</strong> — dọn dẹp, không gian, môi trường sống, đồ vật và hành vi.</li>
+        <li><strong>Hệ gia đình</strong> — vai trò, luật ngầm, liên thế hệ, tiền bạc, xung đột.</li>
+        <li><strong>Hành động &amp; lao động</strong> — sáng tạo, đầu tư bản thân, nhịp sống, năng lực tạo đầu ra.</li>
+      </div>
+      <p style="margin-top:10px;"><a href="https://www.nguyenlananh.com/phuong-phap/">Xem chi tiết phương pháp →</a></p>
+    </section>
+
+    <!-- ============ SAN PHAM & GIA ============ -->
+    <section id="san-pham" class="docsSection">
+      <h2>3 · Sản phẩm &amp; giá</h2>
+      <p>Toàn bộ sản phẩm hiện có và sắp ra. <strong>Không giấu giá</strong>. Mỗi sản phẩm ghi rõ đầu vào, đầu ra, giới hạn, trạng thái sống. Quy đổi USD → VND theo tỷ giá ~25.500 (làm tròn 1.000).</p>
+
+      <h3>3.1 · Sản phẩm nhỏ (micro) — đã sống</h3>
+      <p>Nhập môn nhẹ, 1–7 ngày, giá thấp. Dùng để bắt đầu thật, không phải để "thử xem".</p>
+      <table class="priceTable">
+        <thead><tr><th>#</th><th>Tên</th><th>Đầu ra</th><th>Giá (USD)</th><th>≈ VND</th><th>Trạng thái</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><a href="https://www.nguyenlananh.com/products/life-reset-mini/">Life Reset Mini</a></td><td>1 bước reset đời sống trong 24h</td><td>9–19</td><td>230.000–485.000</td><td><span class="status status-live">SỐNG</span></td></tr>
+          <tr><td>2</td><td><a href="https://www.nguyenlananh.com/products/inner-listening-kit/">Inner Listening Kit</a></td><td>Bộ công cụ lắng nghe bên trong</td><td>12–25</td><td>305.000–638.000</td><td><span class="status status-live">SỐNG</span></td></tr>
+          <tr><td>3</td><td><a href="https://www.nguyenlananh.com/products/one-corner-reset/">One Corner Reset</a></td><td>Tái thiết 1 góc không gian trong 10 phút/ngày × 7 ngày</td><td>15–29</td><td>383.000–740.000</td><td><span class="status status-live">SỐNG</span></td></tr>
+          <tr><td>4</td><td><a href="https://www.nguyenlananh.com/products/7-day-true-rhythm/">7-Day True Rhythm</a></td><td>Thiết lập 1 nhịp sống mới trong 7 ngày</td><td>19–39</td><td>485.000–995.000</td><td><span class="status status-live">SỐNG</span></td></tr>
+          <tr><td>5</td><td><a href="https://www.nguyenlananh.com/products/companion-circle/">Companion Circle</a></td><td>Vòng đồng hành nhỏ, có hướng dẫn</td><td>29–59</td><td>740.000–1.505.000</td><td><span class="status status-live">SỐNG</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 · Sản phẩm chuyên môn (premium) — 10 sản phẩm</h3>
+      <p>Mỗi sản phẩm = một con đường thực hành có cấu trúc: test đầu vào → bài học → thực hành → nộp bằng chứng → chấm rubric → báo cáo cá nhân → thi cuối → chứng nhận (nếu là certification). Giá cao hơn vì có đánh giá thật, bằng chứng, báo cáo, và đầu ra đo được.</p>
+
+      <table class="priceTable">
+        <thead><tr><th>#</th><th>Tên</th><th>Loại</th><th>Đầu ra cốt lõi</th><th>Giá (USD)</th><th>Trạng thái</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Avoidance Map Professional Assessment</td><td>Assessment</td><td>Bản đồ né tránh + điểm 5 nhóm + kế hoạch 14 ngày</td><td>19–39 (tự làm) · 79–149 (có review)</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>2</td><td>Rhythm Design Lab — 21 ngày</td><td>Program</td><td>Hồ sơ nhịp + nhịp ổn định + báo cáo ngày 7/14/21</td><td>99–199</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>3</td><td>Emotional Block Mapping Intensive</td><td>Program 30 ngày</td><td>Hồ sơ điểm nghẽn + protocol tự điều chỉnh an toàn</td><td>249–499</td><td><span class="status status-hold">HOLD</span></td></tr>
+          <tr><td>4</td><td>Boundary Practice Certification — Foundation</td><td>Certification</td><td>Chứng nhận nền + rubric + kế hoạch 30 ngày</td><td>299–599</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>5</td><td>Family Pattern Mapping Program</td><td>Program 6 tuần</td><td>Sơ đồ liên thế hệ + 3 vòng lặp + kế hoạch ngắt 1 vòng</td><td>399–899</td><td><span class="status status-hold">HOLD</span></td></tr>
+          <tr><td>6</td><td>Space Reset Practitioner Program</td><td>Practitioner</td><td>Case report + before/after + panel review</td><td>499–1.200</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>7</td><td>Creative Practice Studio</td><td>Studio 8 tuần</td><td>1 sản phẩm hoàn thiện + portfolio + báo cáo năng lực</td><td>399–999</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>8</td><td>Personal Capital Diagnostic &amp; Strategy</td><td>Diagnostic</td><td>Báo cáo vốn 8 loại + ma trận mạnh-yếu + kế hoạch 90 ngày</td><td>49–99 (self) · 299–699 (expert) · 1.500–3.000 (biz)</td><td><span class="status status-ready">SẴN SÀNG</span></td></tr>
+          <tr><td>9</td><td>Certified Practice Companion — Level 1</td><td>Certification</td><td>Chứng nhận đồng hành L1 + điều kiện lên guide</td><td>1.200–2.500</td><td><span class="status status-soon">SẮP RA</span></td></tr>
+          <tr><td>10</td><td>Practice Method Designer Certification</td><td>Certification cao</td><td>Chương trình 7 ngày + workbook + bài bảo vệ + chứng nhận</td><td>3.000–7.500</td><td><span class="status status-soon">SẮP RA</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout danger">
+        <strong>Sản phẩm HOLD (#3 Emotional Block, #5 Family Pattern):</strong> Chưa mở bán vì cần hoàn thiện <em>ethics policy</em>, <em>escalation protocol</em> (khi nào chuyển chuyên gia y tế), và <em>disclaimer pháp lý</em>. Đây là sản phẩm chạm vùng nhạy cảm — không bán khi chưa có hàng rào an toàn đủ.
+      </div>
+
+      <div class="callout">
+        <strong>Trạng thái giải thích:</strong>
+        <span class="status status-live">SỐNG</span> = đã live, mua được ngay ·
+        <span class="status status-ready">SẴN SÀNG</span> = hạ tầng xong, chờ Gate 1/2 xanh để mở bán ·
+        <span class="status status-soon">SẮP RA</span> = đang xây ·
+        <span class="status status-hold">HOLD</span> = tạm khóa vì lý do an toàn/ethics.
+      </div>
+    </section>
+
+    <!-- ============ LO TRINH ============ -->
+    <section id="lo-trinh" class="docsSection">
+      <h2>4 · Lộ trình</h2>
+      <p>Hệ vận hành theo <strong>4 tầng</strong>, mở dần. Bạn không bị đẩy vào thanh toán ngay. Mỗi tầng có đầu ra đo được, không phải "cảm thấy".</p>
+
+      <div class="stepGrid">
+        <div class="stepCard"><h3>T1 · Nhận diện</h3><p>Đọc bài nền, vào member free, làm test đầu vào. Biết mình đang ở đâu, vòng lặp gì, điểm nghẽn gì.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">Miễn phí</p></div>
+        <div class="stepCard"><h3>T2 · Thực hành</h3><p>Mua sản phẩm nhỏ hoặc assessment. Làm hành động thật 7–21 ngày. Check-in. Đo lại.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$9–149</p></div>
+        <div class="stepCard"><h3>T3 · Kiểm chứng</h3><p>Program 21–42 ngày. Nộp bằng chứng. Chấm rubric. Báo cáo cá nhân. Thi giữa.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$99–1.200</p></div>
+        <div class="stepCard"><h3>T4 · Chuyên môn hóa</h3><p>Certification. Áp dụng cho người khác/nhóm. Thi cuối. Bảo vệ. Chứng nhận có bằng chứng.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$299–7.500</p></div>
+      </div>
+
+      <h3>Hành trình 7 / 30 / 90 ngày</h3>
+      <ul>
+        <li><strong>7 ngày</strong> — thiết lập 1 nhịp sống mới (7-Day True Rhythm hoặc One Corner Reset).</li>
+        <li><strong>30 ngày</strong> — 1 program ngắn (Rhythm Design Lab hoặc Boundary Foundation).</li>
+        <li><strong>90 ngày</strong> — 1 program sâu + báo cáo năng lực (Personal Capital, Creative Studio, Space Reset).</li>
+      </ul>
+      <p><a href="https://www.nguyenlananh.com/hanh-trinh/">Xem chi tiết hành trình →</a></p>
+    </section>
+
+    <!-- ============ HUONG DAN ============ -->
+    <section id="huong-dan" class="docsSection">
+      <h2>5 · Hướng dẫn bắt đầu</h2>
+      <p>Ba bước, theo thứ tự. Đừng bỏ bước. Đừng mua sản phẩm premium khi chưa làm xong bước 1.</p>
+
+      <div class="stepGrid">
+        <div class="stepCard">
+          <h3>Bước 1 · Đọc 3 bài nền (15 phút)</h3>
+          <p>Hiểu đây là hệ gì, không phải blog. Biết mình đang ở đâu.</p>
+          <a href="https://www.nguyenlananh.com/bat-dau/bat-dau-trong-15-phut/">Đọc bài 1 →</a>
+        </div>
+        <div class="stepCard">
+          <h3>Bước 2 · Vào member free</h3>
+          <p>Đăng ký, xác nhận email, làm Ngày 1, check-in. Chưa trả tiền.</p>
+          <a href="https://www.nguyenlananh.com/join/">Đăng ký miễn phí →</a>
+        </div>
+        <div class="stepCard">
+          <h3>Bước 3 · Mở sâu khi sẵn sàng</h3>
+          <p>Sau 7 ngày nhịp ổn, chọn 1 assessment hoặc program. Giá công bố minh bạch ở trên.</p>
+          <a href="#san-pham">Xem sản phẩm →</a>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Nếu bạn chỉ có 15 phút hôm nay:</strong> đọc <a href="https://www.nguyenlananh.com/bat-dau/bat-dau-trong-15-phut/">Bắt đầu trong 15 phút</a>, viết ra 3 vòng lặp bạn đang lặp lại gần nhất, rồi quay lại hôm sau. Đó đã là bước đầu thật.
+      </div>
+    </section>
+
+    <!-- ============ THANH TOAN ============ -->
+    <section id="thanh-toan" class="docsSection">
+      <h2>6 · Hình thức thanh toán</h2>
+
+      <h3>Việt Nam (đang sống)</h3>
+      <ul>
+        <li><strong>VietQR</strong> — quét mã QR chuyển khoản ngân hàng VND. Tự động xác nhận qua provider <code>pay.iai.one</code>. Miễn phí phí giao dịch cho bạn.</li>
+        <li>Nhận biên nhận + hướng dẫn truy cập qua email sau khi giao dịch xác nhận.</li>
+        <li>Đơn vị tiền: VND (quy đổi từ USD theo tỷ giá ~25.500).</li>
+      </ul>
+
+      <h3>Quốc tế (HOLD)</h3>
+      <div class="callout warn">
+        <strong>PayPal / Stripe:</strong> chưa mở. Đang chờ hoàn thiện Gate 1 (giao dịch thật end-to-end) + Gate 2 (email biên nhận) trước khi thu tiền quốc tế. Khi nào 2 gate xanh, sẽ mở. Hiện chỉ phục vụ Việt Nam.
+      </div>
+
+      <h3>Hoàn tiền</h3>
+      <ul>
+        <li><strong>Assessment/Diagnostic (tự làm):</strong> hoàn 100% trong 7 ngày nếu chưa nộp bài / chưa xem đáp án.</li>
+        <li><strong>Program:</strong> hoàn 80% trong 7 ngày đầu nếu chưa qua ngày 3 của program.</li>
+        <li><strong>Certification:</strong> hoàn 70% trong 7 ngày nếu chưa qua module 1.</li>
+        <li>Sau các mốc trên: không hoàn, vì đã cấp quyền truy cập nội dung + chấm rubric.</li>
+      </ul>
+      <p>Chi tiết đầy đủ: <a href="https://www.nguyenlananh.com/dieu-khoan/">Điều khoản sử dụng</a> · <a href="https://www.nguyenlananh.com/mien-tru-trach-nhiem/">Miễn trừ trách nhiệm</a>.</p>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="cau-hoi" class="docsSection">
+      <h2>7 · Câu hỏi thường gặp</h2>
+
+      <div class="faqItem"><h3>Nguyenlananh.com có phải trị liệu tâm lý không?</h3><p>Không. Đây là hệ thực hành đời sống có phương pháp. Không chẩn đoán, không kê đơn, không trị liệu. Nếu bạn đang trong khủng hoảng tâm thần cấp, hãy liên hệ chuyên gia y tế hoặc đường dây nóng 111.</p></div>
+
+      <div class="faqItem"><h3>Tôi phải trả tiền ngay từ đầu không?</h3><p>Không. Bước 1 và 2 miễn phí (đọc bài + member free). Bạn chỉ trả tiền khi tự chọn mở sâu — và chỉ sau khi đã vào đúng hệ, hiểu rõ mình mua gì.</p></div>
+
+      <div class="faqItem"><h3>Chứng nhận có giá trị gì?</h3><p>Chứng nhận (certification) ghi nhận bạn đã hoàn thành program, nộp bằng chứng, qua thi cuối, và đạt rubric. Nó là bằng chứng năng lực trong hệ của Nguyenlananh.com — không phải bằng cấp quốc gia, không phải giấy phép hành nghề. Giá trị phụ thuộc vào ai nhận và bối cảnh sử dụng.</p></div>
+
+      <div class="faqItem"><h3>Mất bao lâu để thấy kết quả?</h3><p>Nhận diện: 7–15 ngày. Thực hành thật: 21–90 ngày. Chuyên môn hóa: 6–12 tháng. Không có "1 buổi là đổi đời". Hệ này đo bằng hành động thật, không bằng cảm xúc tạm thời.</p></div>
+
+      <div class="faqItem"><h3>Tôi có thể tự làm không cần mua không?</h3><p>Có. Toàn bộ bài viết public (76 bài) miễn phí. Bạn có thể tự thực hành theo phương pháp bốn bước mà không mua gì. Sản phẩm trả phí dành cho người cần cấu trúc, đánh giá, bằng chứng, và đồng hành — không phải người cần "nội dung bí mật".</p></div>
+
+      <div class="faqItem"><h3>Sản phẩm #3 (Emotional Block) và #5 (Family Pattern) vì sao HOLD?</h3><p>Vì hai sản phẩm chạm vùng nhạy cảm (cảm xúc nặng, hệ gia đình). Chưa mở bán cho đến khi hoàn thiện ethics policy, escalation protocol (khi nào chuyển chuyên gia y tế), và disclaimer pháp lý đủ. An toàn người tham gia ưu tiên hơn doanh thu.</p></div>
+
+      <div class="faqItem"><h3>Tôi ở ngoài Việt Nam, mua thế nào?</h3><p>Hiện chỉ phục vụ Việt Nam (VietQR). PayPal/Stripe đang HOLD, chờ Gate 1/2 xanh. Khi mở, sẽ cập nhật tại trang này.</p></div>
+
+      <div class="faqItem"><h3>Dữ liệu cá nhân của tôi có an toàn không?</h3><p>Có. Xem <a href="https://www.nguyenlananh.com/chinh-sach-bao-mat/">Chính sách bảo mật</a>. Dữ liệu bằng chứng (thực hành, rubric, báo cáo) được mã hóa, không chia sẻ với bên thứ ba, không bán.</p></div>
+
+      <div class="faqItem"><h3>Tôi có thể dừng giữa chừng không?</h3><p>Có. Bạn dừng bất cứ lúc nào. Không có hợp đồng ràng buộc thời gian. Hoàn tiền theo chính sách ở mục 6.</p></div>
+
+      <div class="faqItem"><h3>Nguyễn Lan Anh có trực tiếp đồng hành không?</h3><p>Ở tầng cao (certification, program có review) có. Ở tầng thấp (assessment tự làm, micro) không — tự làm theo hướng dẫn. Tier "có review" trong bảng giá ghi rõ có người thật.</p></div>
+
+      <div class="faqItem"><h3>Nếu tôi không phù hợp, có ai nói cho tôi biết không?</h3><p>Có. Test đầu vào của mỗi sản phẩm có screening. Nếu kết quả cho thấy bạn phù hợp hơn với trị liệu y khoa, hệ sẽ đề xuất bạn tìm chuyên gia, không bán tiếp.</p></div>
+
+      <div class="faqItem"><h3>Tôi có thể trở thành companion/guide không?</h3><p>Có, qua lộ trình T4: Certified Practice Companion L1 → Practice Method Designer. Đây là con đường chuyên môn hóa, có thi, có bảo vệ, có chứng nhận. Không phải "đăng ký là được".</p></div>
+
+      <div class="faqItem"><h3>Trang này có cập nhật không?</h3><p>Có. Mỗi lần thêm sản phẩm, đổi giá, đổi trạng thái, trang này cập nhật. Phiên bản ghi ở đầu trang. Đây là nguồn duy nhất về giá &amp; sản phẩm — nếu nghe giá ở đâu khác, kiểm tra lại tại đây.</p></div>
+    </section>
+
+    <!-- ============ LIEN HE ============ -->
+    <section id="lien-he" class="docsSection">
+      <h2>8 · Liên hệ &amp; hỗ trợ</h2>
+      <div class="stepGrid">
+        <div class="stepCard">
+          <h3>Email chung</h3>
+          <p><a href="mailto:lienhe@nguyenlananh.com">lienhe@nguyenlananh.com</a><br>Liên hệ, đăng ký, trao đổi chương trình.</p>
+        </div>
+        <div class="stepCard">
+          <h3>Hỗ trợ thành viên</h3>
+          <p><a href="mailto:support@nguyenlananh.com">support@nguyenlananh.com</a><br>Vấn đề tài khoản, truy cập, thanh toán. Phản hồi trong 24h làm việc.</p>
+        </div>
+        <div class="stepCard">
+          <h3>Thanh toán</h3>
+          <p><a href="mailto:pay@nguyenlananh.com">pay@nguyenlananh.com</a><br>Vấn đề giao dịch, biên nhận, hoàn tiền.</p>
+        </div>
+      </div>
+      <p><a href="https://www.nguyenlananh.com/lien-he/">Trang liên hệ đầy đủ →</a></p>
+    </section>
+
+    <div class="docsFooter">
+      <p>© <span id="year"></span> Nguyễn Lan Anh · Tài liệu chính thức docs.nguyenlananh.com · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</p>
+      <p>Trang này là nguồn duy nhất về giá, sản phẩm, lộ trình. Nếu có mâu thuẫn với bất kỳ trang/nguồn nào khác, nội dung tại đây là chuẩn.</p>
+    </div>
+  </main>
+
+  <script>
+    // Smooth scroll cho docs nav
+    document.querySelectorAll('.docsNav a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
+    });
+    // Year
+    const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

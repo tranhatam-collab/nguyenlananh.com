@@ -38,3 +38,12 @@
 
 /404.html
   Cache-Control: public, max-age=86400
+
+# /docs/ leak fix (P1) — internal dev docs must not be indexed.
+# Long-term: move /docs/ out of build output. Short-term: noindex.
+/docs/*
+  X-Robots-Tag: noindex, nofollow
+
+# /tai-lieu/ = public docs hub (docs.nguyenlananh.com)
+/tai-lieu/*
+  Cache-Control: public, max-age=0, must-revalidate

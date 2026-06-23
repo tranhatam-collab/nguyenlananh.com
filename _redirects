@@ -35,3 +35,10 @@ https://admin.nguyenlananh.com/en/ /en/admin/ 301
 # Custom domain phải được add vào Pages project trước khi rule này có hiệu lực.
 https://docs.nguyenlananh.com/ /tai-lieu/ 200
 https://docs.nguyenlananh.com/* /tai-lieu/:splat 200
+https://docs.nguyenlananh.com/en /en/tai-lieu/ 200
+https://docs.nguyenlananh.com/en/ /en/tai-lieu/ 200
+
+# /docs/ leak fix (triệt để) — internal dev docs phải KHÔNG public.
+# Pages ưu tiên _redirects trước static serving → /docs/* trả 404 thay vì serve file.
+# Scripts đọc /docs/ từ filesystem local (không qua HTTP) → không bị ảnh hưởng.
+/docs/* /404.html 404

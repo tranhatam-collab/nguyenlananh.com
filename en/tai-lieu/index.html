@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Official Documentation — Nguyenlananh.com | The full truth about the system, products, pricing, roadmap</title>
+  <meta name="description" content="Official documentation for Nguyenlananh.com: introduction, method, all products & pricing, roadmap, getting started guide, payment, FAQ, contact. Maximum transparency — no hidden prices." />
+  <link rel="canonical" href="https://docs.nguyenlananh.com/en/" />
+  <link rel="alternate" hreflang="vi" href="https://docs.nguyenlananh.com/" />
+  <link rel="alternate" hreflang="en" href="https://docs.nguyenlananh.com/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://docs.nguyenlananh.com/" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nguyễn Lan Anh" />
+  <meta property="og:title" content="Official Documentation — Nguyenlananh.com" />
+  <meta property="og:description" content="The full truth about the system, products, pricing, roadmap, guides. Maximum transparency." />
+  <meta property="og:url" content="https://docs.nguyenlananh.com/en/" />
+  <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Official Documentation — Nguyenlananh.com" />
+  <meta name="twitter:description" content="The full truth about the system, products, pricing, roadmap, guides. Maximum transparency." />
+  <meta name="twitter:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
+  <meta name="theme-color" content="#2a1810" />
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Official Documentation — Nguyenlananh.com",
+    "url":"https://docs.nguyenlananh.com/en/",
+    "inLanguage":"en",
+    "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"},
+    "publisher":{"@id":"https://www.nguyenlananh.com/#organization"}
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://www.nguyenlananh.com/assets/site.css" />
+  <style>
+    .docsNav{position:sticky;top:0;z-index:5;background:rgba(255,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:18px;}
+    .docsNav .container{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+    .docsNav a{font-size:13px;color:rgba(42,24,16,.72);padding:6px 10px;border-radius:999px;text-decoration:none;}
+    .docsNav a:hover{background:rgba(42,24,16,.06);color:rgba(42,24,16,.95);}
+    .docsNav .brand{font-weight:700;color:rgba(42,24,16,.9);}
+    .docsSection{scroll-margin-top:80px;padding:28px 0 8px;border-top:1px solid rgba(42,24,16,.08);}
+    .docsSection:first-of-type{border-top:none;padding-top:8px;}
+    .docsSection h2{font-size:26px;margin:0 0 6px;}
+    .docsSection h3{font-size:18px;margin:18px 0 6px;}
+    .docsSection p{line-height:1.75;color:rgba(42,24,16,.82);max-width:72ch;}
+    .docsSection ul{line-height:1.8;color:rgba(42,24,16,.82);max-width:72ch;}
+    .priceTable{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+    .priceTable th,.priceTable td{padding:10px 12px;border-bottom:1px solid rgba(42,24,16,.10);text-align:left;vertical-align:top;}
+    .priceTable th{background:rgba(42,24,16,.04);font-weight:600;font-size:13px;color:rgba(42,24,16,.7);}
+    .priceTable tr:hover td{background:rgba(42,24,16,.02);}
+    .status{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em;}
+    .status-live{background:#e6f4ea;color:#1e6e3a;}
+    .status-ready{background:#e8f0fe;color:#1a56c4;}
+    .status-soon{background:#fef7e0;color:#8a6d00;}
+    .status-hold{background:#fce8e6;color:#c5221f;}
+    .callout{background:rgba(42,24,16,.04);border-left:3px solid rgba(42,24,16,.3);padding:12px 16px;border-radius:8px;margin:14px 0;font-size:14px;line-height:1.7;color:rgba(42,24,16,.82);}
+    .callout.warn{background:#fef7e0;border-left-color:#f9ab00;}
+    .callout.danger{background:#fce8e6;border-left-color:#c5221f;}
+    .faqItem{margin:14px 0;padding:14px 16px;background:rgba(255,255,255,.6);border:1px solid rgba(42,24,16,.08);border-radius:12px;}
+    .faqItem h3{font-size:15px;margin:0 0 6px;color:rgba(42,24,16,.9);}
+    .faqItem p{font-size:14px;margin:0;line-height:1.7;color:rgba(42,24,16,.78);}
+    .stepGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0;}
+    .stepCard{background:rgba(255,255,255,.6);border:1px solid rgba(42,24,16,.08);border-radius:14px;padding:16px;}
+    .stepCard h3{font-size:15px;margin:0 0 6px;}
+    .stepCard p{font-size:13px;margin:0 0 10px;line-height:1.65;color:rgba(42,24,16,.78);}
+    .stepCard a{font-size:13px;}
+    .docsFooter{margin-top:30px;padding:20px 0;border-top:1px solid rgba(42,24,16,.10);font-size:13px;color:rgba(42,24,16,.6);line-height:1.7;}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip navigation</a>
+
+  <nav class="docsNav" aria-label="Documentation table of contents">
+    <div class="container">
+      <a class="brand" href="#top">📄 Docs</a>
+      <a href="#intro">Introduction</a>
+      <a href="#method">Method</a>
+      <a href="#products">Products &amp; pricing</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#getting-started">Getting started</a>
+      <a href="#payment">Payment</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="https://docs.nguyenlananh.com/" style="margin-left:auto;">🇻🇳 Tiếng Việt</a>
+      <a href="https://www.nguyenlananh.com/en/">← Home</a>
+    </div>
+  </nav>
+
+  <main id="main" class="container" role="main">
+    <section id="top" class="pageHead">
+      <h1>Official Documentation — Nguyenlananh.com</h1>
+      <p class="sub">The full truth about the system: what it is, who it's for, who it's not for, what products exist, what they cost, what the roadmap looks like, how to start, how to pay. Maximum transparency — no hidden prices, no overselling.</p>
+      <p class="sub" style="margin-top:6px;color:rgba(42,24,16,.55);font-size:13px;">Updated 2026-06-23 · Docs v1 · <a href="https://www.nguyenlananh.com/en/">nguyenlananh.com</a></p>
+    </section>
+
+    <!-- ============ INTRO ============ -->
+    <section id="intro" class="docsSection">
+      <h2>1 · Introduction</h2>
+      <p><strong>Nguyenlananh.com</strong> is a content and companionship platform for <strong>going inward, untangling the loops that run your life, and rebuilding your life from awareness to real action</strong>. This is not a blog. It is a practice system with a method, a roadmap, check-ins, assessment, and measurable outputs.</p>
+
+      <h3>Who it's for</h3>
+      <ul>
+        <li>People who feel stuck repeating the same loop — in work, relationships, habits, or emotions — and can't break free.</li>
+        <li>People who have read a lot, understood a lot, but haven't turned awareness into real, consistent, measurable action.</li>
+        <li>People ready to look at themselves honestly — no avoidance, no cosmetic fixes, no blame-shifting.</li>
+      </ul>
+
+      <h3>Who it's not for</h3>
+      <ul>
+        <li>People seeking a quick fix, a single coaching session that changes their life. That doesn't exist here.</li>
+        <li>People in acute mental health crisis (severe depression, clinical anxiety, suicidal ideation). This system is <strong>not therapy</strong> — you need a medical professional.</li>
+        <li>People who want to be diagnosed, told "you have this, take this." No diagnosis, no prescriptions, no therapy here.</li>
+      </ul>
+
+      <div class="callout warn">
+        <strong>Honesty:</strong> This system helps you <em>see the real problem</em> and <em>take small real action</em>. It does not replace psychotherapy, medical care, or legal/financial advice. If you are in acute crisis, contact a medical professional or a mental health hotline in your country.
+      </div>
+    </section>
+
+    <!-- ============ METHOD ============ -->
+    <section id="method" class="docsSection">
+      <h2>2 · Method</h2>
+      <p>The system runs on <strong>four steps</strong> and <strong>four axes</strong>. Every article, product, and program fits within this frame — nothing exists outside it.</p>
+
+      <h3>Four steps</h3>
+      <div class="stepGrid">
+        <div class="stepCard"><h3>1 · Observe</h3><p>Look at your mind, reactions, living environment, and relationship with objects each day. No judgment — just seeing.</p></div>
+        <div class="stepCard"><h3>2 · Feel</h3><p>Touch objects, feel the space, sense your body-mind state to know how you're actually living.</p></div>
+        <div class="stepCard"><h3>3 · Act</h3><p>Clean, sweep, do manual work, arrange your environment. Small, consistent, measurable actions.</p></div>
+        <div class="stepCard"><h3>4 · Transform</h3><p>From stuck to a new flow, from old reflex to conscious choice and creating new value.</p></div>
+      </div>
+
+      <h3>Four content axes</h3>
+      <ul>
+        <li><strong>Inner</strong> — loops, awareness, emotions, silence, truth with self.</li>
+        <li><strong>Material</strong> — cleaning, space, living environment, objects and behavior.</li>
+        <li><strong>Family system</strong> — roles, unspoken rules, intergenerational patterns, money, conflict.</li>
+        <li><strong>Action &amp; labor</strong> — creative work, self-investment, life rhythm, capacity to produce output.</li>
+      </ul>
+      <p style="margin-top:10px;"><a href="https://www.nguyenlananh.com/en/phuong-phap/">See method details →</a></p>
+    </section>
+
+    <!-- ============ PRODUCTS ============ -->
+    <section id="products" class="docsSection">
+      <h2>3 · Products &amp; pricing</h2>
+      <p>All current and upcoming products. <strong>No hidden prices</strong>. Each product lists its input, output, limitations, and live status. USD → VND conversion at ~25,500 (rounded to 1,000).</p>
+
+      <h3>3.1 · Micro products — live now</h3>
+      <p>Light entry, 1–7 days, low price. For starting real, not for "trying out."</p>
+      <table class="priceTable">
+        <thead><tr><th>#</th><th>Name</th><th>Output</th><th>Price (USD)</th><th>≈ VND</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><a href="https://www.nguyenlananh.com/products/life-reset-mini/">Life Reset Mini</a></td><td>1 life-reset step in 24h</td><td>9–19</td><td>230,000–485,000</td><td><span class="status status-live">LIVE</span></td></tr>
+          <tr><td>2</td><td><a href="https://www.nguyenlananh.com/products/inner-listening-kit/">Inner Listening Kit</a></td><td>Toolkit for listening inward</td><td>12–25</td><td>305,000–638,000</td><td><span class="status status-live">LIVE</span></td></tr>
+          <tr><td>3</td><td><a href="https://www.nguyenlananh.com/products/one-corner-reset/">One Corner Reset</a></td><td>Reset 1 corner of space, 10 min/day × 7 days</td><td>15–29</td><td>383,000–740,000</td><td><span class="status status-live">LIVE</span></td></tr>
+          <tr><td>4</td><td><a href="https://www.nguyenlananh.com/products/7-day-true-rhythm/">7-Day True Rhythm</a></td><td>Establish 1 new life rhythm in 7 days</td><td>19–39</td><td>485,000–995,000</td><td><span class="status status-live">LIVE</span></td></tr>
+          <tr><td>5</td><td><a href="https://www.nguyenlananh.com/products/companion-circle/">Companion Circle</a></td><td>Small companion group with guidance</td><td>29–59</td><td>740,000–1,505,000</td><td><span class="status status-live">LIVE</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 · Professional products — 10 products</h3>
+      <p>Each product = a structured practice path: entry test → lessons → practice → submit evidence → rubric scoring → personal report → final exam → certification (if applicable). Higher prices because there's real assessment, evidence, reporting, and measurable output.</p>
+
+      <table class="priceTable">
+        <thead><tr><th>#</th><th>Name</th><th>Type</th><th>Core output</th><th>Price (USD)</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Avoidance Map Professional Assessment</td><td>Assessment</td><td>Avoidance map + 5-dimension score + 14-day plan</td><td>19–39 (self) · 79–149 (reviewed)</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>2</td><td>Rhythm Design Lab — 21 days</td><td>Program</td><td>Rhythm profile + stable rhythm + day 7/14/21 report</td><td>99–199</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>3</td><td>Emotional Block Mapping Intensive</td><td>Program 30 days</td><td>Block profile + safe self-regulation protocol</td><td>249–499</td><td><span class="status status-hold">HOLD</span></td></tr>
+          <tr><td>4</td><td>Boundary Practice Certification — Foundation</td><td>Certification</td><td>Foundation cert + rubric + 30-day plan</td><td>299–599</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>5</td><td>Family Pattern Mapping Program</td><td>Program 6 weeks</td><td>Intergenerational map + 3 loops + plan to break 1</td><td>399–899</td><td><span class="status status-hold">HOLD</span></td></tr>
+          <tr><td>6</td><td>Space Reset Practitioner Program</td><td>Practitioner</td><td>Case report + before/after + panel review</td><td>499–1,200</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>7</td><td>Creative Practice Studio</td><td>Studio 8 weeks</td><td>1 finished product + portfolio + capacity report</td><td>399–999</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>8</td><td>Personal Capital Diagnostic &amp; Strategy</td><td>Diagnostic</td><td>8-capital report + strength-weakness matrix + 90-day plan</td><td>49–99 (self) · 299–699 (expert) · 1,500–3,000 (biz)</td><td><span class="status status-ready">READY</span></td></tr>
+          <tr><td>9</td><td>Certified Practice Companion — Level 1</td><td>Certification</td><td>Companion L1 cert + guide advancement criteria</td><td>1,200–2,500</td><td><span class="status status-soon">COMING</span></td></tr>
+          <tr><td>10</td><td>Practice Method Designer Certification</td><td>Advanced cert</td><td>7-day program + workbook + defense + certification</td><td>3,000–7,500</td><td><span class="status status-soon">COMING</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout danger">
+        <strong>HOLD products (#3 Emotional Block, #5 Family Pattern):</strong> Not yet available because they need completed <em>ethics policy</em>, <em>escalation protocol</em> (when to refer to a medical professional), and <em>legal disclaimer</em>. These products touch sensitive territory — no sales until safety guardrails are sufficient.
+      </div>
+
+      <div class="callout">
+        <strong>Status key:</strong>
+        <span class="status status-live">LIVE</span> = available now ·
+        <span class="status status-ready">READY</span> = infrastructure done, waiting for Gate 1/2 to go green ·
+        <span class="status status-soon">COMING</span> = in development ·
+        <span class="status status-hold">HOLD</span> = temporarily locked for safety/ethics reasons.
+      </div>
+    </section>
+
+    <!-- ============ ROADMAP ============ -->
+    <section id="roadmap" class="docsSection">
+      <h2>4 · Roadmap</h2>
+      <p>The system runs in <strong>4 tiers</strong>, opening progressively. You're not pushed to pay immediately. Each tier has measurable output — not "feeling different."</p>
+
+      <div class="stepGrid">
+        <div class="stepCard"><h3>T1 · Identify</h3><p>Read foundation articles, join free member, take entry test. Know where you are, what loop, what block.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">Free</p></div>
+        <div class="stepCard"><h3>T2 · Practice</h3><p>Buy a micro product or assessment. Take real action 7–21 days. Check in. Measure again.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$9–149</p></div>
+        <div class="stepCard"><h3>T3 · Verify</h3><p>21–42 day program. Submit evidence. Rubric scoring. Personal report. Mid-term exam.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$99–1,200</p></div>
+        <div class="stepCard"><h3>T4 · Specialize</h3><p>Certification. Apply to others/groups. Final exam. Defense. Evidence-based certification.</p><p style="font-size:12px;color:rgba(42,24,16,.55);">$299–7,500</p></div>
+      </div>
+
+      <h3>7 / 30 / 90 day journeys</h3>
+      <ul>
+        <li><strong>7 days</strong> — establish 1 new life rhythm (7-Day True Rhythm or One Corner Reset).</li>
+        <li><strong>30 days</strong> — 1 short program (Rhythm Design Lab or Boundary Foundation).</li>
+        <li><strong>90 days</strong> — 1 deep program + capacity report (Personal Capital, Creative Studio, Space Reset).</li>
+      </ul>
+      <p><a href="https://www.nguyenlananh.com/en/hanh-trinh/">See journey details →</a></p>
+    </section>
+
+    <!-- ============ GETTING STARTED ============ -->
+    <section id="getting-started" class="docsSection">
+      <h2>5 · Getting started</h2>
+      <p>Three steps, in order. Don't skip. Don't buy a premium product before completing step 1.</p>
+
+      <div class="stepGrid">
+        <div class="stepCard">
+          <h3>Step 1 · Read 3 foundation articles (15 min)</h3>
+          <p>Understand what this system is — not a blog. Know where you are.</p>
+          <a href="https://www.nguyenlananh.com/en/bat-dau/bat-dau-trong-15-phut/">Read article 1 →</a>
+        </div>
+        <div class="stepCard">
+          <h3>Step 2 · Join free member</h3>
+          <p>Sign up, confirm email, do Day 1, check in. No payment yet.</p>
+          <a href="https://www.nguyenlananh.com/en/join/">Join free →</a>
+        </div>
+        <div class="stepCard">
+          <h3>Step 3 · Go deep when ready</h3>
+          <p>After 7 days of stable rhythm, choose 1 assessment or program. Prices are transparent above.</p>
+          <a href="#products">See products →</a>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>If you only have 15 minutes today:</strong> read <a href="https://www.nguyenlananh.com/en/bat-dau/bat-dau-trong-15-phut/">Start in 15 minutes</a>, write down 3 loops you've been repeating lately, then come back tomorrow. That's already a real first step.
+      </div>
+    </section>
+
+    <!-- ============ PAYMENT ============ -->
+    <section id="payment" class="docsSection">
+      <h2>6 · Payment</h2>
+
+      <h3>Vietnam (live now)</h3>
+      <ul>
+        <li><strong>VietQR</strong> — scan QR code for bank transfer in VND. Auto-confirmed via provider <code>pay.iai.one</code>. No transaction fee for you.</li>
+        <li>Receive receipt + access instructions via email after transaction confirms.</li>
+        <li>Currency: VND (converted from USD at ~25,500).</li>
+      </ul>
+
+      <h3>International (HOLD)</h3>
+      <div class="callout warn">
+        <strong>PayPal / Stripe:</strong> not yet available. Waiting for Gate 1 (real end-to-end transaction) + Gate 2 (email receipt) to go green before accepting international payments. When both gates are green, it will open. Currently Vietnam only.
+      </div>
+
+      <h3>Refunds</h3>
+      <ul>
+        <li><strong>Assessment/Diagnostic (self):</strong> 100% refund within 7 days if not yet submitted / not yet viewed answers.</li>
+        <li><strong>Program:</strong> 80% refund within first 7 days if not past day 3.</li>
+        <li><strong>Certification:</strong> 70% refund within 7 days if not past module 1.</li>
+        <li>After these thresholds: no refund, because content access + rubric scoring has been provided.</li>
+      </ul>
+      <p>Full details: <a href="https://www.nguyenlananh.com/en/dieu-khoan/">Terms of use</a> · <a href="https://www.nguyenlananh.com/en/mien-tru-trach-nhiem/">Disclaimer</a>.</p>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="docsSection">
+      <h2>7 · FAQ</h2>
+
+      <div class="faqItem"><h3>Is Nguyenlananh.com psychotherapy?</h3><p>No. This is a life-practice system with a method. No diagnosis, no prescriptions, no therapy. If you're in acute mental health crisis, contact a medical professional or a hotline.</p></div>
+
+      <div class="faqItem"><h3>Do I have to pay from the start?</h3><p>No. Steps 1 and 2 are free (read articles + free member). You only pay when you choose to go deeper — and only after you're in the right system, understanding what you're buying.</p></div>
+
+      <div class="faqItem"><h3>What is a certification worth?</h3><p>Certification acknowledges you completed a program, submitted evidence, passed the final exam, and met the rubric. It's evidence of capacity within the Nguyenlananh.com system — not a national degree, not a professional license. Its value depends on who accepts it and the context of use.</p></div>
+
+      <div class="faqItem"><h3>How long until I see results?</h3><p>Identification: 7–15 days. Real practice: 21–90 days. Specialization: 6–12 months. There's no "one session changes your life." This system measures by real action, not temporary emotion.</p></div>
+
+      <div class="faqItem"><h3>Can I do it without buying anything?</h3><p>Yes. All public articles (76) are free. You can practice the four-step method on your own without buying anything. Paid products are for people who need structure, assessment, evidence, and companionship — not "secret content."</p></div>
+
+      <div class="faqItem"><h3>Why are products #3 (Emotional Block) and #5 (Family Pattern) on HOLD?</h3><p>Because they touch sensitive territory (heavy emotions, family systems). Not available until ethics policy, escalation protocol (when to refer to medical professional), and legal disclaimer are complete. Participant safety over revenue.</p></div>
+
+      <div class="faqItem"><h3>I'm outside Vietnam, how do I buy?</h3><p>Currently Vietnam only (VietQR). PayPal/Stripe on HOLD, waiting for Gate 1/2. When it opens, this page will be updated.</p></div>
+
+      <div class="faqItem"><h3>Is my personal data safe?</h3><p>Yes. See <a href="https://www.nguyenlananh.com/en/chinh-sach-bao-mat/">Privacy Policy</a>. Evidence data (practice, rubric, reports) is encrypted, not shared with third parties, never sold.</p></div>
+
+      <div class="faqItem"><h3>Can I stop midway?</h3><p>Yes. You can stop at any time. No time-binding contract. Refunds per the policy in section 6.</p></div>
+
+      <div class="faqItem"><h3>Does Nguyễn Lan Anh personally companion me?</h3><p>At the high tier (certification, programs with review) yes. At the low tier (self-assessment, micro) no — you follow guidance yourself. "Reviewed" tiers in the price table clearly indicate a real person is involved.</p></div>
+
+      <div class="faqItem"><h3>If I'm not a fit, will someone tell me?</h3><p>Yes. Each product's entry test includes screening. If results show you're better suited for medical/therapeutic care, the system will recommend you seek a professional — it won't keep selling to you.</p></div>
+
+      <div class="faqItem"><h3>Can I become a companion/guide?</h3><p>Yes, through the T4 path: Certified Practice Companion L1 → Practice Method Designer. This is a specialization path with exams, defense, and certification. Not "sign up and you're in."</p></div>
+
+      <div class="faqItem"><h3>Is this page updated?</h3><p>Yes. Every time a product is added, price changes, status changes, this page updates. Version is noted at the top. This is the single source of truth for pricing &amp; products — if you hear a price elsewhere, verify here.</p></div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="docsSection">
+      <h2>8 · Contact &amp; support</h2>
+      <div class="stepGrid">
+        <div class="stepCard">
+          <h3>General email</h3>
+          <p><a href="mailto:lienhe@nguyenlananh.com">lienhe@nguyenlananh.com</a><br>Contact, registration, program inquiries.</p>
+        </div>
+        <div class="stepCard">
+          <h3>Member support</h3>
+          <p><a href="mailto:support@nguyenlananh.com">support@nguyenlananh.com</a><br>Account, access, payment issues. Response within 24h business hours.</p>
+        </div>
+        <div class="stepCard">
+          <h3>Payments</h3>
+          <p><a href="mailto:pay@nguyenlananh.com">pay@nguyenlananh.com</a><br>Transaction, receipt, refund issues.</p>
+        </div>
+      </div>
+      <p><a href="https://www.nguyenlananh.com/en/lien-he/">Full contact page →</a></p>
+    </section>
+
+    <div class="docsFooter">
+      <p>© <span id="year"></span> Nguyễn Lan Anh · Official documentation docs.nguyenlananh.com · Not to become someone else. But to return to who you truly are.</p>
+      <p>This page is the single source of truth for pricing, products, and roadmap. If there's a conflict with any other page/source, content here is authoritative.</p>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll('.docsNav a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+      });
+    });
+    const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>

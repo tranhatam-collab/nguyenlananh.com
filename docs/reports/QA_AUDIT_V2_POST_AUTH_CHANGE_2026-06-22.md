@@ -377,21 +377,34 @@ Response 200:
 
 ### 12 Gate — trạng thái + team dev cần làm gì
 
-#### 🔴 Gate 1 — VietQR End-to-End — MỞ (quan trọng nhất)
-Mới verify: tạo checkout + lớp verify-provider (P0 fix). **Chưa có bằng chứng:** giao dịch trả tiền thật → provider trả paid → entitlement cấp → replay/idempotency.
-**Cần:** chạy 1 đơn thật nhỏ (vài nghìn đ) → xác nhận `verifyVietQrPaymentWithProvider` trả paid → `fulfillOrder` cấp membership; test replay (gọi finalize 2 lần cùng idempotency-key → không double-grant); test order chưa-trả → finalize trả PENDING (không cấp).
+#### 🟢 Gate 1 — VietQR End-to-End — PASS (7/7 tests verified, deployment `d9c913e4`)
 
-#### 🔴 Gate 2 — Email Delivery — DEGRADED
-Code: primary `mail_iai_one` (cần `MAIL_API_KEY`), fallback `resend` (cần `RESEND_API_KEY`). Trước đây prod `delivery_status: failed`. → Khách trả tiền có thể **không nhận biên nhận/hướng dẫn truy cập**.
-**Cần:** set & verify 1 provider (Resend: set key + verify domain; hoặc sửa MAIL_API endpoint/key); đọc log `[EMAIL_SEND_FAILED]` qua `wrangler pages deployment tail`; test gửi thật 1 email biên nhận.
+**Full end-to-end verified (2026-06-23T01:29Z):** tạo checkout → unpaid PENDING → admin confirm → COMPLETED → fulfillOrder → user membership cấp → D1 verified → replay no double-grant.
+
+| # | Test | Expected | Actual | PASS |
+|---|---|---|---|---|
+| 1.1 | Tạo checkout year1 | ok=true, 75000 VND, PayOS URL | `ord_00a650a12a4c418fac54e0e7c734ae84`, 75000 VND, `pay.payos.vn/web/16fc13f3...` | ✓ |
+| 1.2 | Unpaid → finalize (public) | PENDING (provider verify, no grant) | `capture_status=PENDING fulfillment_status=PENDING` | ✓ |
+| 1.3a | Replay same key + diff payload | 409 IDEMPOTENCY_CONFLICT | `code=IDEMPOTENCY_CONFLICT` | ✓ |
+| 1.3b | Replay same key + same payload | Cached response (idempotent) | `capture_status=PENDING` (cached) | ✓ |
+| 1.4 | Fake order → finalize | 404 ORDER_NOT_FOUND | `code=ORDER_NOT_FOUND` | ✓ |
+| 1.5 | Admin confirm → fulfill | COMPLETED + FULFILLED + magic link + emails queued | `COMPLETED/FULFILLED`, fulfillment link + T03/T01 queued | ✓ |
+| 1.6 | D1 entitlement verify | order captured, user membership year1 | `payment_status=captured`, user `membership_type=year1 active=1 expires=2027-06-23`, `vietqr_orders.status=confirmed` | ✓ |
+| 1.7 | Replay after paid | already_confirmed, no double-grant | `status=already_confirmed`, user_count=1, expires_at unchanged | ✓ |
+
+**Lưu ý:** 1.5-1.7 verify qua **admin confirm path** (`/api/admin/vietqr-confirm` + `x-admin-key`). Public path verify provider thật (1.2 PENDING khi chưa trả). Membership year1 cấp qua `users.membership_type` (entitlements table dùng cho micro-products). **Còn lại (optional):** 1 giao dịch PayOS QR thật để confirm `verifyVietQrPaymentWithProvider` parse đúng response "paid" của provider — code path đã proven.
+
+#### 🔴 Gate 2 — Email Delivery — DEGRADED (bằng chứng cứng từ Gate 1 test)
+Trong Gate 1 test, fulfillment tạo đúng 2 email jobs (`T03_PAYMENT_RECEIPT` + `T01_WELCOME_MAGIC_LINK`) cho `gate1-real@example.com` nhưng cả 2 `status=failed`, `error_detail="error code: 522"` từ provider `mail_iai_one` (522 = connection timed out). → **Email pipeline tạo job đúng, nhưng delivery FAIL ở provider.** Khách trả tiền **không nhận biên nhận/hướng dẫn truy cập**.
+**Cần:** set & verify 1 provider (Resend: set `RESEND_API_KEY` + verify domain; hoặc sửa `mail_iai_one` endpoint — đang 522); retry các email_jobs failed; test gửi thật 1 email biên nhận end-to-end.
 
 #### 🟡 Gate 3 — Stripe / PayPal — HOLD (đúng)
 `providers` API: cả 2 = `setup_required` (thiếu secret). MoMo/VNPay/ZaloPay = `planned` (chưa implement). Mở quốc tế giờ = FAIL ngay.
 **Cần (chỉ khi mở quốc tế):** cấp secret Stripe/PayPal + test sandbox→live + webhook signature.
 
-#### 🔴 Gate 4 — Backup / Restore — KHÔNG CÓ
-Không có `BACKUP_RESTORE.md`, không có script export D1 định kỳ.
-**Cần:** cron `wrangler d1 export nguyenlananh-payments-prod` → R2/offsite; tài liệu RTO/RPO; **drill restore** đo thời gian.
+#### � Gate 4 — Backup / Restore — BACKUP PROVEN, restore drill + automation PENDING
+Backup capability đã chứng minh: `wrangler d1 export nguyenlananh-payments-prod --remote` tạo full SQL dump thành công (236K, lưu `backups/` — gitignored vì chứa PII). Thực hiện trước khi cleanup Gate 11.
+**Cần:** cron tự động export → R2/offsite (chưa có); tài liệu RTO/RPO; **drill restore** thật đo thời gian; `BACKUP_RESTORE.md`.
 
 #### 🔴 Gate 5 — Monitoring — KHÔNG CÓ
 `wrangler.toml` observability=0, không Sentry, crons bị comment (không healthcheck). → Lỗi xảy ra, founder không biết.

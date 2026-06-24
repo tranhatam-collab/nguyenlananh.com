@@ -1152,7 +1152,19 @@ export async function listPaymentRailsResponse(context) {
   });
 }
 
-function requireAdminPaymentAccess(context) {
+async function requireAdminPaymentAccess(context, permission = "payments.view") {
+  // Try admin session (RBAC) first
+  try {
+    const { requireAdminPermission } = await import("./admin_auth.js");
+    await requireAdminPermission(context, permission);
+    return;
+  } catch (sessionError) {
+    // If user has a valid session but lacks permission → deny immediately (403)
+    if (sessionError && sessionError.code === "ADMIN_PERMISSION_DENIED") {
+      throw sessionError;
+    }
+    // If no session, fall back to shared key for automated scripts
+  }
   const secret = String(context.env.PAYMENTS_ADMIN_KEY || context.env.ADMIN_PAYMENT_CONFIRM_KEY || "");
   assert(secret, "ADMIN_KEY_NOT_CONFIGURED", "Admin payment confirmation key is missing.", 503);
   const provided = String(context.request.headers.get("x-admin-key") || "");
@@ -1217,7 +1229,7 @@ export async function markVietQrPendingResponse(context) {
 
 export async function listVietQrOrdersResponse(context) {
   try {
-    requireAdminPaymentAccess(context);
+    await requireAdminPaymentAccess(context, "payments.view");
     const db = requireDb(context.env);
     const url = new URL(context.request.url);
     const status = String(url.searchParams.get("status") || "awaiting_confirmation").trim();
@@ -1238,7 +1250,7 @@ export async function listVietQrOrdersResponse(context) {
 
 export async function confirmVietQrOrderResponse(context) {
   try {
-    requireAdminPaymentAccess(context);
+    await requireAdminPaymentAccess(context, "payments.confirm");
     const body = await readJson(context.request);
     assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
 

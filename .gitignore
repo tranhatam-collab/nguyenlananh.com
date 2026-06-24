@@ -45,3 +45,6 @@ docs/reports/HOMEPAGE_REFRESH_READINESS_GATE.json
 docs/reports/HOMEPAGE_REFRESH_READINESS_GATE.md
 docs/reports/LOCAL_PUBLIC_SITE_AUDIT.json
 docs/reports/LOCAL_PUBLIC_SITE_AUDIT.md
+
+# D1 database backups (contain PII — never commit)
+backups/

@@ -51,82 +51,109 @@
       <h1>Admin route vận hành độc lập</h1>
       <p class="sub">Console này là khu vực vận hành nội bộ cho toàn bộ luồng membership, member journey và creator workflow.</p>
       <p id="admin-host-banner" class="statusBanner hidden" role="status"></p>
-      <p id="session-status" class="meta">Chưa có phiên nội bộ.</p>
+      <p id="session-status" class="meta">Đang kiểm tra phiên...</p>
       <p id="admin-role-text" class="note"></p>
       <p id="admin-time-left" class="note"></p>
     </section>
 
-    <section id="admin-auth" class="panel" data-page="auth">
-      <h3>Mở khóa phiên nội bộ</h3>
-      <div class="field">
-        <label for="admin-key">Khóa nội bộ</label>
-        <input id="admin-key" type="password" autocomplete="off" placeholder="Nhập khóa theo team vận hành..." />
-      </div>
-      <div class="field">
-        <label for="admin-role">Vai trò</label>
-        <select id="admin-role">
-          <option value="super_admin">Toàn quyền</option>
-          <option value="ops">Điều hành</option>
-          <option value="content_editor">Biên tập nội dung</option>
-          <option value="content">Nội dung</option>
-          <option value="viewer">Chỉ xem</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="admin-ttl">Thời lượng phiên (phút)</label>
-        <input id="admin-ttl" type="number" min="15" max="720" value="480" />
-      </div>
+    <section id="admin-auth" class="panel" data-page="auth" style="display:none;">
+      <h3>Phiên đã hết hạn</h3>
+      <p class="note">Phiên đăng nhập admin của bạn đã kết thúc hoặc chưa được khởi tạo.</p>
       <div class="actionsRow">
-        <button id="admin-enter" class="cta" type="button">Mở khóa phiên</button>
+        <a class="cta" href="/admin/login/">Đăng nhập lại</a>
       </div>
-      <p id="admin-host-warning" class="note"></p>
+    </section>
+
+    <section id="admin-user-panel" class="panel" style="display:none;">
+      <h3>Quản lý người dùng Admin</h3>
+      <p class="note">Tạo, sửa, xóa tài khoản admin và phân quyền.</p>
+      <div class="actionsRow">
+        <button id="admin-users-refresh" class="ghost" type="button">Tải danh sách</button>
+        <button id="admin-user-create-toggle" class="ghost" type="button">+ Tạo admin mới</button>
+      </div>
+      <div id="admin-user-create-form" style="display:none; margin-top:12px;">
+        <div class="grid2">
+          <div class="field">
+            <label for="new-admin-email">Email</label>
+            <input id="new-admin-email" type="email" placeholder="email@nguyenlananh.com" />
+          </div>
+          <div class="field">
+            <label for="new-admin-name">Tên hiển thị</label>
+            <input id="new-admin-name" type="text" placeholder="Nguyễn A" />
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="field">
+            <label for="new-admin-role">Vai trò</label>
+            <select id="new-admin-role">
+              <option value="super_admin">Toàn quyền</option>
+              <option value="ops_manager">Điều hành</option>
+              <option value="finance">Tài chính</option>
+              <option value="content_editor" selected>Biên tập nội dung</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="new-admin-password">Mật khẩu tạm</label>
+            <input id="new-admin-password" type="password" placeholder="Ít nhất 8 ký tự" />
+          </div>
+        </div>
+        <div class="actionsRow" style="margin-top:8px;">
+          <label style="font-size:13px;"><input type="checkbox" id="new-admin-must-change" checked /> Yêu cầu đổi mật khẩu khi đăng nhập đầu</label>
+        </div>
+        <div class="actionsRow" style="margin-top:8px;">
+          <button id="admin-user-create-submit" class="cta" type="button">Tạo tài khoản</button>
+          <button id="admin-user-create-cancel" class="ghost" type="button">Hủy</button>
+        </div>
+        <p id="admin-user-create-status" class="note"></p>
+      </div>
+      <div id="admin-users-list" style="margin-top:12px;"></div>
     </section>
 
     <section class="grid2">
-      <article class="panel admin-only" data-requires="dashboard">
+      <article class="panel admin-only" data-requires-perm="dashboard.view">
         <h3>Bảng điều khiển</h3>
         <p>Queue vận hành, funnel activation và cảnh báo blocker.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/dashboard/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="content">
+      <article class="panel admin-only" data-requires-perm="content.view">
         <h3>Content</h3>
         <p>Lifecycle nội dung: draft / review / approved / published / archived.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/content/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="members">
+      <article class="panel admin-only" data-requires-perm="members.view">
         <h3>Members</h3>
         <p>Theo dõi activation sau join và checkpoint day-1/day-7.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/members/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="members">
+      <article class="panel admin-only" data-requires-perm="members.view">
         <h3>Reflection</h3>
         <p>Nhận tín hiệu <strong>đang né</strong> và <strong>cần người thật phản hồi</strong> theo khung triage kín.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/reflection/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="members">
+      <article class="panel admin-only" data-requires-perm="members.view">
         <h3>Pilot</h3>
         <p>Rà readiness 14 ngày: track, reminder consent, pause, và điểm chạm Day 1 / Day 3 / Day 7.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/pilot/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="members">
+      <article class="panel admin-only" data-requires-perm="members.view">
         <h3>Payments</h3>
         <p>VietQR pending queue, manual confirm, và bằng chứng payment realtime.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/payments/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="creators">
+      <article class="panel admin-only" data-requires-perm="members.view">
         <h3>Creators</h3>
         <p>Submission queue, review decision và lịch publish nội bộ.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/creators/">Mở module</a></div>
       </article>
-      <article class="panel admin-only" data-requires="settings">
+      <article class="panel admin-only" data-requires-perm="settings.view">
         <h3>Settings</h3>
         <p>Role matrix, chính sách vận hành và cờ an toàn nội bộ.</p>
         <div class="actionsRow"><a class="ghost" href="/admin/settings/">Mở module</a></div>
       </article>
     </section>
 
-    <section id="health-panel" class="admin-only" data-requires="dashboard" aria-live="polite"></section>
-    <section id="admin-quick-note" class="panel admin-only" data-requires="dashboard">
+    <section id="health-panel" class="admin-only" data-requires-perm="dashboard.view" aria-live="polite"></section>
+    <section id="admin-quick-note" class="panel admin-only" data-requires-perm="dashboard.view">
       <h3>Checklist nhanh</h3>
       <ul class="list">
         <li>Giá và paywall không được hiển thị công khai.</li>
@@ -134,7 +161,7 @@
         <li>Không commit thay đổi admin nếu chưa chốt nội dung vận hành.</li>
       </ul>
     </section>
-    <section id="admin-member-snapshot-import" class="panel admin-only" data-requires="dashboard">
+    <section id="admin-member-snapshot-import" class="panel admin-only" data-requires-perm="dashboard.view">
       <h3>Import member snapshot</h3>
       <p class="note">Dán packet từ member dashboard khi cần xem nhanh trạng thái hiện tại của một người trên máy khác, trước khi mở reflection hoặc pilot ops.</p>
       <div class="field">

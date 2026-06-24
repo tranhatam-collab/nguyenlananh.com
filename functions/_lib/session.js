@@ -71,9 +71,10 @@ export function sessionCookieHeaders(value, options = {}) {
   const secure = options.secure !== false ? "; Secure" : "";
   const sameSite = options.sameSite || "Lax";
   const httpOnly = options.httpOnly !== false ? "; HttpOnly" : "";
+  const domain = options.domain !== false ? `; Domain=${options.domain || ".nguyenlananh.com"}` : "";
   const maxAge = SESSION_TTL_DAYS * 24 * 60 * 60;
   return {
-    "Set-Cookie": `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}${httpOnly}${secure}; Path=/; Max-Age=${maxAge}; SameSite=${sameSite}`
+    "Set-Cookie": `${SESSION_COOKIE_NAME}=${encodeURIComponent(value)}${httpOnly}${secure}${domain}; Path=/; Max-Age=${maxAge}; SameSite=${sameSite}`
   };
 }
 

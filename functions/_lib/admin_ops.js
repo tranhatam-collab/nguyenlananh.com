@@ -20,7 +20,19 @@ const ROUTE_CODES = new Set(["all", "reflection", "pilot"]);
 const HANDOFF_CODES = new Set(["all", "routed", "unrouted"]);
 const PRIORITY_CODES = new Set(["all", "reflection_now", "avoiding", "missing_handoff", "pilot_ready", "paused", "pilot_later", "routed"]);
 
-function requireAdminOpsAccess(context) {
+async function requireAdminOpsAccess(context) {
+  // Try admin session (RBAC) first
+  try {
+    const { requireAdminPermission } = await import("./admin_auth.js");
+    await requireAdminPermission(context, "ops.queue");
+    return;
+  } catch (sessionError) {
+    // If user has a valid session but lacks permission → deny immediately (403)
+    if (sessionError && sessionError.code === "ADMIN_PERMISSION_DENIED") {
+      throw sessionError;
+    }
+    // If no session, fall back to shared key for automated scripts
+  }
   const secret = String(context.env.ADMIN_OPS_KEY || context.env.PAYMENTS_ADMIN_KEY || context.env.ADMIN_PAYMENT_CONFIRM_KEY || "");
   assert(secret, "ADMIN_KEY_NOT_CONFIGURED", "Admin ops key is missing.", 503);
   const provided = String(context.request.headers.get("x-admin-key") || "");
@@ -121,7 +133,7 @@ function limitFromParams(url) {
 
 export async function listAdminOpsQueueResponse(context) {
   try {
-    requireAdminOpsAccess(context);
+    await requireAdminOpsAccess(context);
     const db = requireDb(context.env);
     const url = new URL(context.request.url);
     const route = routeFilterFromParams(url);
@@ -146,7 +158,7 @@ export async function listAdminOpsQueueResponse(context) {
 
 export async function upsertAdminOpsQueueResponse(context) {
   try {
-    requireAdminOpsAccess(context);
+    await requireAdminOpsAccess(context);
     const body = await readJson(context.request);
     assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
     const packetType = String(body.packet_type || "").trim();
@@ -184,7 +196,7 @@ export async function upsertAdminOpsQueueResponse(context) {
 
 export async function clearAdminOpsQueueResponse(context) {
   try {
-    requireAdminOpsAccess(context);
+    await requireAdminOpsAccess(context);
     const db = requireDb(context.env);
     await clearAdminMemberSnapshots(db);
     return json({

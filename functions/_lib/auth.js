@@ -111,8 +111,20 @@ function googleOauthConfig(env, request) {
   const missing = [];
   const clientId = String(env.GOOGLE_CLIENT_ID || "").trim();
   const clientSecret = String(env.GOOGLE_CLIENT_SECRET || "").trim();
-  const defaultRedirect = new URL("/api/auth/google/callback", request.url).toString();
-  const redirectUri = String(env.GOOGLE_REDIRECT_URI || defaultRedirect).trim();
+  // Force www canonical host for redirect_uri to avoid apex/www cookie mismatch.
+  // If GOOGLE_REDIRECT_URI is set, use it (must be www). Otherwise default to www.
+  const requestUrl = new URL(request.url);
+  const canonicalHost = "www.nguyenlananh.com";
+  const defaultRedirect = `https://${canonicalHost}/api/auth/google/callback`;
+  let redirectUri = String(env.GOOGLE_REDIRECT_URI || defaultRedirect).trim();
+  // Safety: if redirectUri is on apex (no www), upgrade to www to match canonical site
+  try {
+    const parsed = new URL(redirectUri);
+    if (parsed.hostname === "nguyenlananh.com") {
+      parsed.hostname = canonicalHost;
+      redirectUri = parsed.toString();
+    }
+  } catch (_e) {}
   const stateSecret = String(env.GOOGLE_OAUTH_STATE_SECRET || "").trim();
 
   if (!clientId) missing.push("GOOGLE_CLIENT_ID");
@@ -271,7 +283,12 @@ export async function googleOAuthCallbackResponse(context) {
 
     // Create session cookie directly after Google OAuth callback
     const cookieValue = await createSessionCookie(context.env, user);
-    const redirectUrl = buildAbsoluteUrl(new URL(context.request.url).origin, nextPath);
+    // Force redirect to www canonical host (callback may run on apex)
+    const callbackOrigin = new URL(context.request.url);
+    if (callbackOrigin.hostname === "nguyenlananh.com") {
+      callbackOrigin.hostname = "www.nguyenlananh.com";
+    }
+    const redirectUrl = buildAbsoluteUrl(callbackOrigin.origin, nextPath);
 
     if (cookieValue) {
       const cookieHeaders = sessionCookieHeaders(cookieValue);
@@ -284,15 +301,17 @@ export async function googleOAuthCallbackResponse(context) {
       });
     }
 
-    // Fallback: if cookie creation fails, redirect to members page with error
-    const loginUrl = new URL("/members/", context.request.url);
-    loginUrl.searchParams.set("error", "SESSION_CREATE_FAILED");
-    return Response.redirect(loginUrl.toString(), 302);
+    // Fallback: if cookie creation fails, redirect to members page with error (force www)
+    const failUrl = new URL("/members/", context.request.url);
+    if (failUrl.hostname === "nguyenlananh.com") failUrl.hostname = "www.nguyenlananh.com";
+    failUrl.searchParams.set("error", "SESSION_CREATE_FAILED");
+    return Response.redirect(failUrl.toString(), 302);
   } catch (error) {
     console.error("[google-oauth] callback error:", { code: error.code, message: error.message });
-    const loginUrl = new URL("/members/", context.request.url);
-    loginUrl.searchParams.set("error", error.code || "google_callback_failed");
-    return Response.redirect(loginUrl.toString(), 302);
+    const errUrl = new URL("/members/", context.request.url);
+    if (errUrl.hostname === "nguyenlananh.com") errUrl.hostname = "www.nguyenlananh.com";
+    errUrl.searchParams.set("error", error.code || "google_callback_failed");
+    return Response.redirect(errUrl.toString(), 302);
   }
 }
 

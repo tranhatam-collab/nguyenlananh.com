@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Đăng nhập Admin | Nguyễn Lan Anh</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="canonical" href="https://admin.nguyenlananh.com/login/" />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <meta property="og:title" content="Đăng nhập Admin | Nguyễn Lan Anh" />
+</head>
+<body data-page="admin-login">
+  <main class="container" role="main" style="max-width:480px; margin-top:8vh;">
+    <section class="panel" id="admin-login-panel">
+      <div style="text-align:center; margin-bottom:24px;">
+        <img src="/assets/brand/logo-mark.svg" alt="" width="56" height="56" style="margin:0 auto;" />
+        <h1 style="font-size:24px; margin:12px 0 4px;">Nền quản trị</h1>
+        <p class="meta" style="margin:0;">Nguyễn Lan Anh — nội bộ</p>
+      </div>
+
+      <form id="admin-login-form" autocomplete="off" novalidate>
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" autocomplete="username" placeholder="admin@nguyenlananh.com" required />
+        </div>
+        <div class="field">
+          <label for="login-password">Mật khẩu</label>
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <div class="actionsRow">
+          <button id="login-submit" class="cta" type="submit" style="width:100%;">Đăng nhập</button>
+        </div>
+        <p id="login-error" class="note" style="color:#c0392b; display:none;"></p>
+        <p id="login-info" class="note" style="display:none;"></p>
+      </form>
+
+      <hr style="margin:24px 0; border:none; border-top:1px solid rgba(0,0,0,.08);" />
+      <p class="meta" style="text-align:center; font-size:13px;">
+        Chỉ dành cho thành viên đội ngũ được cấp quyền.<br />
+        <a href="/" style="font-size:12px;">← Về trang chủ</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+  (function() {
+    "use strict";
+    var form = document.getElementById("admin-login-form");
+    var errEl = document.getElementById("login-error");
+    var infoEl = document.getElementById("login-info");
+    var submitBtn = document.getElementById("login-submit");
+
+    // Check if already logged in
+    fetch("/api/admin/me", { credentials: "include" })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.ok) {
+          infoEl.style.display = "block";
+          infoEl.textContent = "Đã đăng nhập — đang chuyển...";
+          setTimeout(function() { window.location.href = "/admin/"; }, 800);
+        }
+      })
+      .catch(function() {});
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      errEl.style.display = "none";
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Đang đăng nhập...";
+
+      var email = document.getElementById("login-email").value.trim();
+      var password = document.getElementById("login-password").value;
+
+      if (!email || !password) {
+        errEl.textContent = "Vui lòng nhập email và mật khẩu.";
+        errEl.style.display = "block";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Đăng nhập";
+        return;
+      }
+
+      fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email: email, password: password })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.ok) {
+            submitBtn.textContent = "Thành công!";
+            if (data.admin_user.must_change_password) {
+              window.location.href = "/admin/?must_change_password=1";
+            } else {
+              window.location.href = "/admin/";
+            }
+          } else {
+            var msg = (data.error && data.error.message) || "Đăng nhập thất bại.";
+            errEl.textContent = msg;
+            errEl.style.display = "block";
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Đăng nhập";
+          }
+        })
+        .catch(function() {
+          errEl.textContent = "Lỗi kết nối. Vui lòng thử lại.";
+          errEl.style.display = "block";
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Đăng nhập";
+        });
+    });
+  })();
+  </script>
+</body>
+</html>

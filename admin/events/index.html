@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Sự kiện & Logs | Admin Nguyễn Lan Anh</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <style>
+    .events-table { width:100%; font-size:12px; border-collapse:collapse; }
+    .events-table th { text-align:left; padding:6px 8px; border-bottom:2px solid #ddd; position:sticky; top:0; background:#fff; }
+    .events-table td { padding:4px 8px; border-bottom:1px solid #eee; vertical-align:top; }
+    .events-table tr:hover { background:#f8f9fa; }
+    .badge-level { display:inline-block; padding:2px 6px; border-radius:3px; font-size:10px; font-weight:600; }
+    .badge-info { background:#e3f2fd; color:#1565c0; }
+    .badge-warn { background:#fff3e0; color:#e65100; }
+    .badge-error { background:#ffebee; color:#c62828; }
+    .badge-critical { background:#ffcdd2; color:#b71c1c; font-weight:700; }
+    .badge-status-2xx { background:#e8f5e9; color:#2e7d32; }
+    .badge-status-3xx { background:#e3f2fd; color:#1565c0; }
+    .badge-status-4xx { background:#fff3e0; color:#e65100; }
+    .badge-status-5xx { background:#ffebee; color:#c62828; }
+    .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:end; }
+    .filter-bar select, .filter-bar input { font-size:12px; padding:4px 8px; }
+    .filter-bar label { font-size:11px; display:block; margin-bottom:2px; color:#666; }
+    .summary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-bottom:16px; }
+    .summary-card { padding:12px; border:1px solid #ddd; border-radius:6px; text-align:center; }
+    .summary-card .num { font-size:24px; font-weight:700; }
+    .summary-card .lbl { font-size:11px; color:#666; margin-top:4px; }
+    .tab-bar { display:flex; gap:4px; margin-bottom:12px; border-bottom:2px solid #ddd; }
+    .tab-bar button { padding:8px 16px; border:none; background:none; cursor:pointer; font-size:13px; border-bottom:2px solid transparent; margin-bottom:-2px; }
+    .tab-bar button.active { border-bottom-color:#333; font-weight:600; }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .mono { font-family:monospace; font-size:11px; }
+    .truncate { max-width:300px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  </style>
+</head>
+<body data-page="admin-events">
+  <a class="skip" href="#admin-main">Bỏ qua</a>
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="/admin/"><span class="name"><strong>Admin</strong> <span class="tagline">Events & Logs</span></span></a>
+        <div class="actions">
+          <a class="btn" href="/admin/">← Admin</a>
+          <button id="admin-logout" class="btn" type="button" style="display:none;">Đăng xuất</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main" class="container" role="main">
+    <section class="pageHead">
+      <span class="badge">Observability</span>
+      <h1>Sự kiện & Logs toàn hệ thống</h1>
+      <p class="sub">Theo dõi mọi request, auth, payment, email, error trên toàn bộ website.</p>
+      <p id="session-status" class="meta">Đang kiểm tra phiên...</p>
+    </section>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="events">Sự kiện</button>
+      <button class="tab-btn" data-tab="errors">Lỗi</button>
+      <button class="tab-btn" data-tab="summary">Tổng quan</button>
+    </div>
+
+    <!-- Summary tab -->
+    <div id="tab-summary" class="tab-content">
+      <div id="summary-grid" class="summary-grid"></div>
+      <div id="summary-by-category" style="margin-top:16px;"></div>
+      <div id="summary-by-status" style="margin-top:16px;"></div>
+    </div>
+
+    <!-- Events tab -->
+    <div id="tab-events" class="tab-content active">
+      <div class="filter-bar">
+        <div><label>Level</label><select id="filter-level"><option value="">Tất cả</option><option value="info">Info</option><option value="warn">Warn</option><option value="error">Error</option><option value="critical">Critical</option></select></div>
+        <div><label>Category</label><select id="filter-category"><option value="">Tất cả</option><option value="request">Request</option><option value="auth">Auth</option><option value="payment">Payment</option><option value="admin">Admin</option><option value="email">Email</option><option value="content">Content</option><option value="webhook">Webhook</option><option value="system">System</option></select></div>
+        <div><label>Action</label><input id="filter-action" type="text" placeholder="login, order_created..." style="width:120px;" /></div>
+        <div><label>Path</label><input id="filter-path" type="text" placeholder="/api/..." style="width:150px;" /></div>
+        <div><label>Status</label><input id="filter-status" type="number" placeholder="401, 500..." style="width:60px;" /></div>
+        <div><label>User email</label><input id="filter-user" type="text" placeholder="email..." style="width:120px;" /></div>
+        <div><label>Limit</label><select id="filter-limit"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option><option value="500">500</option></select></div>
+        <div><button id="btn-refresh" class="cta" type="button" style="font-size:12px;">Tải</button></div>
+        <div><button id="btn-auto-refresh" class="ghost" type="button" style="font-size:12px;">Auto (10s)</button></div>
+      </div>
+      <div id="events-table-wrap" style="overflow-x:auto;"></div>
+    </div>
+
+    <!-- Errors tab -->
+    <div id="tab-errors" class="tab-content">
+      <div class="filter-bar">
+        <div><label>Status</label><input id="err-filter-status" type="number" placeholder="500..." style="width:60px;" /></div>
+        <div><label>Code</label><input id="err-filter-code" type="text" placeholder="..." style="width:120px;" /></div>
+        <div><label>Resolved</label><select id="err-filter-resolved"><option value="">Tất cả</option><option value="0" selected>Chưa xử lý</option><option value="1">Đã xử lý</option></select></div>
+        <div><label>Limit</label><select id="err-filter-limit"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option></select></div>
+        <div><button id="err-btn-refresh" class="cta" type="button" style="font-size:12px;">Tải</button></div>
+      </div>
+      <div id="errors-table-wrap" style="overflow-x:auto;"></div>
+    </div>
+  </main>
+
+  <script src="/assets/admin-auth.js"></script>
+  <script>
+  (function() {
+    "use strict";
+    if (!window.AdminAuth) return;
+
+    var autoRefreshTimer = null;
+
+    AdminAuth.ensureSession().then(function(session) {
+      if (!session) return;
+      document.getElementById("session-status").textContent = "Đã đăng nhập: " + session.admin_user.email + " | " + session.admin_user.role;
+      var logoutBtn = document.getElementById("admin-logout");
+      if (logoutBtn) {
+        logoutBtn.style.display = "";
+        logoutBtn.addEventListener("click", function() { AdminAuth.logout().then(function() { window.location.href = "/admin/login/"; }); });
+      }
+      loadSummary();
+      loadEvents();
+      loadErrors();
+    });
+
+    // Tab switching
+    document.querySelectorAll(".tab-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll(".tab-btn").forEach(function(b) { b.classList.remove("active"); });
+        document.querySelectorAll(".tab-content").forEach(function(c) { c.classList.remove("active"); });
+        btn.classList.add("active");
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    function esc(s) { return String(s||"").replace(/[&<>"']/g, function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+
+    function loadSummary() {
+      fetch("/api/admin/events/summary", { credentials: "include" })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.ok) return;
+          var s = data.summary;
+          var grid = document.getElementById("summary-grid");
+          grid.innerHTML = "";
+          var cards = [
+            { num: s.total, lbl: "Tổng events", color: "#333" },
+            { num: s.lastHour, lbl: "Giờ qua", color: "#1565c0" },
+            { num: s.last24h, lbl: "24h qua", color: "#1565c0" },
+            { num: s.errors, lbl: "Lỗi", color: "#c62828" },
+            { num: s.warnings, lbl: "Cảnh báo", color: "#e65100" },
+            { num: s.unresolvedErrors, lbl: "Lỗi chưa xử lý", color: "#c62828" },
+          ];
+          cards.forEach(function(c) {
+            var div = document.createElement("div");
+            div.className = "summary-card";
+            div.innerHTML = '<div class="num" style="color:' + c.color + '">' + c.num + '</div><div class="lbl">' + c.lbl + '</div>';
+            grid.appendChild(div);
+          });
+
+          var catEl = document.getElementById("summary-by-category");
+          if (s.byCategory && s.byCategory.length) {
+            catEl.innerHTML = "<h3>Theo category</h3><table class='events-table'><tr><th>Category</th><th>Số lượng</th></tr>" +
+              s.byCategory.map(function(c) { return "<tr><td>" + esc(c.category) + "</td><td>" + c.count + "</td></tr>"; }).join("") + "</table>";
+          }
+
+          var stEl = document.getElementById("summary-by-status");
+          if (s.byStatus && s.byStatus.length) {
+            stEl.innerHTML = "<h3>Theo HTTP status</h3><table class='events-table'><tr><th>Status</th><th>Số lượng</th></tr>" +
+              s.byStatus.map(function(c) { return "<tr><td>" + c.status + "</td><td>" + c.count + "</td></tr>"; }).join("") + "</table>";
+          }
+        });
+    }
+
+    function loadEvents() {
+      var params = new URLSearchParams();
+      var level = document.getElementById("filter-level").value; if (level) params.set("level", level);
+      var cat = document.getElementById("filter-category").value; if (cat) params.set("category", cat);
+      var action = document.getElementById("filter-action").value; if (action) params.set("action", action);
+      var path = document.getElementById("filter-path").value; if (path) params.set("path", path);
+      var status = document.getElementById("filter-status").value; if (status) params.set("status", status);
+      var user = document.getElementById("filter-user").value; if (user) params.set("user_email", user);
+      var limit = document.getElementById("filter-limit").value; if (limit) params.set("limit", limit);
+
+      fetch("/api/admin/events?" + params.toString(), { credentials: "include" })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var wrap = document.getElementById("events-table-wrap");
+          if (!data.ok) { wrap.innerHTML = "<p class='note'>Lỗi tải events.</p>"; return; }
+          if (!data.events || !data.events.length) { wrap.innerHTML = "<p class='note'>Chưa có event nào.</p>"; return; }
+          var html = "<table class='events-table'><thead><tr>";
+          html += "<th>Thời gian</th><th>Level</th><th>Category</th><th>Action</th><th>Method</th><th>Path</th><th>Status</th><th>Duration</th><th>User</th><th>Admin</th><th>IP</th><th>Country</th>";
+          html += "</tr></thead><tbody>";
+          data.events.forEach(function(e) {
+            var lvlClass = "badge-" + (e.level || "info");
+            var stClass = e.status >= 500 ? "badge-status-5xx" : e.status >= 400 ? "badge-status-4xx" : e.status >= 300 ? "badge-status-3xx" : e.status >= 200 ? "badge-status-2xx" : "";
+            html += "<tr>";
+            html += "<td class='mono'>" + esc((e.ts||"").replace("T"," ").slice(0,19)) + "</td>";
+            html += "<td><span class='badge-level " + lvlClass + "'>" + esc(e.level) + "</span></td>";
+            html += "<td>" + esc(e.category) + "</td>";
+            html += "<td>" + esc(e.action) + "</td>";
+            html += "<td>" + esc(e.method) + "</td>";
+            html += "<td class='mono truncate' title='" + esc(e.path) + "'>" + esc(e.path) + "</td>";
+            html += "<td><span class='badge-level " + stClass + "'>" + e.status + "</span></td>";
+            html += "<td class='mono'>" + (e.duration_ms || 0) + "ms</td>";
+            html += "<td class='truncate'>" + esc(e.user_email) + "</td>";
+            html += "<td class='truncate'>" + esc(e.admin_email) + "</td>";
+            html += "<td class='mono'>" + esc(e.ip) + "</td>";
+            html += "<td>" + esc(e.country) + "</td>";
+            html += "</tr>";
+          });
+          html += "</tbody></table>";
+          wrap.innerHTML = html;
+        });
+    }
+
+    function loadErrors() {
+      var params = new URLSearchParams();
+      var status = document.getElementById("err-filter-status").value; if (status) params.set("status", status);
+      var code = document.getElementById("err-filter-code").value; if (code) params.set("code", code);
+      var resolved = document.getElementById("err-filter-resolved").value; if (resolved !== "") params.set("resolved", resolved);
+      var limit = document.getElementById("err-filter-limit").value; if (limit) params.set("limit", limit);
+
+      fetch("/api/admin/errors?" + params.toString(), { credentials: "include" })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var wrap = document.getElementById("errors-table-wrap");
+          if (!data.ok) { wrap.innerHTML = "<p class='note'>Lỗi tải errors.</p>"; return; }
+          if (!data.errors || !data.errors.length) { wrap.innerHTML = "<p class='note'>Không có lỗi nào.</p>"; return; }
+          var html = "<table class='events-table'><thead><tr>";
+          html += "<th>Thời gian</th><th>Status</th><th>Code</th><th>Message</th><th>Path</th><th>Method</th><th>User</th><th>Admin</th><th>IP</th><th>Resolved</th><th>Action</th>";
+          html += "</tr></thead><tbody>";
+          data.errors.forEach(function(e) {
+            html += "<tr>";
+            html += "<td class='mono'>" + esc((e.ts||"").replace("T"," ").slice(0,19)) + "</td>";
+            html += "<td><span class='badge-level " + (e.status >= 500 ? "badge-error" : "badge-warn") + "'>" + e.status + "</span></td>";
+            html += "<td>" + esc(e.code) + "</td>";
+            html += "<td class='truncate' title='" + esc(e.message) + "'>" + esc(e.message) + "</td>";
+            html += "<td class='mono truncate' title='" + esc(e.path) + "'>" + esc(e.path) + "</td>";
+            html += "<td>" + esc(e.method) + "</td>";
+            html += "<td class='truncate'>" + esc(e.user_email) + "</td>";
+            html += "<td class='truncate'>" + esc(e.admin_email) + "</td>";
+            html += "<td class='mono'>" + esc(e.ip) + "</td>";
+            html += "<td>" + (e.resolved ? "✅" : "⛔") + "</td>";
+            html += "<td>";
+            if (!e.resolved) {
+              html += "<button class='ghost' style='font-size:10px;' data-resolve='" + e.id + "'>Đánh dấu đã xử lý</button>";
+            }
+            html += "</td>";
+            html += "</tr>";
+          });
+          html += "</tbody></table>";
+          wrap.innerHTML = html;
+          wrap.querySelectorAll("[data-resolve]").forEach(function(btn) {
+            btn.addEventListener("click", function() {
+              var id = btn.getAttribute("data-resolve");
+              fetch("/api/admin/errors/" + id, { method: "PATCH", credentials: "include" })
+                .then(function(r) { return r.json(); })
+                .then(function() { loadErrors(); loadSummary(); });
+            });
+          });
+        });
+    }
+
+    document.getElementById("btn-refresh").addEventListener("click", loadEvents);
+    document.getElementById("err-btn-refresh").addEventListener("click", loadErrors);
+    document.querySelectorAll("#filter-level,#filter-category,#filter-action,#filter-path,#filter-status,#filter-user,#filter-limit").forEach(function(el) {
+      el.addEventListener("change", loadEvents);
+    });
+    document.querySelectorAll("#err-filter-status,#err-filter-code,#err-filter-resolved,#err-filter-limit").forEach(function(el) {
+      el.addEventListener("change", loadErrors);
+    });
+
+    // Auto-refresh
+    document.getElementById("btn-auto-refresh").addEventListener("click", function() {
+      if (autoRefreshTimer) {
+        clearInterval(autoRefreshTimer);
+        autoRefreshTimer = null;
+        this.textContent = "Auto (10s)";
+        this.classList.remove("cta");
+        this.classList.add("ghost");
+      } else {
+        autoRefreshTimer = setInterval(function() { loadEvents(); loadSummary(); }, 10000);
+        this.textContent = "Stop auto";
+        this.classList.remove("ghost");
+        this.classList.add("cta");
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -156,7 +156,7 @@ export const PROVIDER_CATALOG = [
     region: "international",
     methods: ["paypal_balance", "card"],
     currencies: ["USD"],
-    requiredSecrets: ["PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET", "PAYPAL_WEBHOOK_ID", "PAYPAL_MERCHANT_EMAIL"]
+    requiredSecrets: ["PAYPAL_CLIENT_ID", "PAYPAL_CLIENT_SECRET", "PAYPAL_MERCHANT_EMAIL"]
   },
   {
     code: "stripe",

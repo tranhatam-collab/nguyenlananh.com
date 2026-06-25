@@ -948,8 +948,9 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   assert(plan, "INVALID_PLAN", "Unknown membership plan.", 422);
 
   const isMicro = String(plan.code).startsWith("micro_");
+  const isPremium = String(plan.code).startsWith("asmt_") || String(plan.code).startsWith("prog_") || String(plan.code).startsWith("cert_") || String(plan.code).startsWith("diag_");
 
-  if (!isMicro) {
+  if (!isMicro && !isPremium) {
     const baseExpiry =
       user && user.active && isFutureIso(user.expires_at)
         ? user.expires_at
@@ -963,6 +964,19 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
       expires_at: expiresAt,
       updated_at: nowIso()
     });
+  } else if (isPremium) {
+    // Premium product: create/update user but don't change membership tier.
+    // Grant content_access for the purchased plan.
+    if (!user) {
+      user = await upsertUserMembership(db, {
+        email: order.email,
+        membership_type: "premium_purchase",
+        membership_label: plan.label,
+        preferred_language: getLocale(order.locale),
+        expires_at: daysFrom(nowIso(), plan.durationDays),
+        updated_at: nowIso()
+      });
+    }
   } else {
     if (!user) {
       user = await upsertUserMembership(db, {
@@ -973,6 +987,38 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
         expires_at: daysFrom(nowIso(), plan.durationDays),
         updated_at: nowIso()
       });
+    }
+  }
+
+  // Grant content_access for premium products
+  if (isPremium) {
+    const contentSlug = plan.code.replace(/^(asmt_|prog_|cert_|diag_)/, "");
+    const expiresAt = plan.durationDays >= 36500 ? null : daysFrom(nowIso(), plan.durationDays);
+    try {
+      const existingAccess = await db
+        .prepare("SELECT id FROM content_access WHERE user_id = ? AND plan_code = ?")
+        .bind(user.id, plan.code)
+        .first();
+      if (!existingAccess) {
+        await db
+          .prepare(
+            `INSERT INTO content_access (id, user_id, plan_code, content_slug, granted_at, expires_at, source, order_id, created_at)
+             VALUES (?, ?, ?, ?, ?, ?, 'purchase', ?, ?)`
+          )
+          .bind(
+            randomId("ca"),
+            user.id,
+            plan.code,
+            contentSlug,
+            nowIso(),
+            expiresAt,
+            order.internal_order_id,
+            nowIso()
+          )
+          .run();
+      }
+    } catch (_e) {
+      // content_access table may not exist yet — non-fatal
     }
   }
 

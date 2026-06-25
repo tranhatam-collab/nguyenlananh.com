@@ -353,17 +353,28 @@ export async function onRequest(context) {
       if (db) {
         const user = await getUserById(db, memberSession.sub);
         if (!isMembershipActive(user)) {
-          logWarn({
-            route: url.pathname,
-            code: "MEMBER_DENY_NO_MEMBERSHIP",
-            msg: "Gated content access denied — no active paid membership",
-            email: user?.email,
-            membership_type: user?.membership_type,
-          });
-          return new Response(null, {
-            status: 302,
-            headers: { Location: membersUrl, "Cache-Control": "no-store" },
-          });
+          // Check content_access for premium product purchases
+          let hasContentAccess = false;
+          try {
+            const access = await db
+              .prepare("SELECT expires_at FROM content_access WHERE user_id = ? AND (expires_at IS NULL OR expires_at > ?)")
+              .bind(memberSession.sub, new Date().toISOString())
+              .first();
+            hasContentAccess = !!access;
+          } catch (_e) {}
+          if (!hasContentAccess) {
+            logWarn({
+              route: url.pathname,
+              code: "MEMBER_DENY_NO_MEMBERSHIP",
+              msg: "Gated content access denied — no active paid membership or content access",
+              email: user?.email,
+              membership_type: user?.membership_type,
+            });
+            return new Response(null, {
+              status: 302,
+              headers: { Location: membersUrl, "Cache-Control": "no-store" },
+            });
+          }
         }
         context.data = context.data || {};
         context.data.session = memberSession;

@@ -32,7 +32,7 @@
 
       // Update each list item
       LESSON_SLUGS.forEach((slug) => {
-        const link = document.querySelector(`a[href="/members/academy/${slug}/"]`);
+        const link = document.querySelector(`a[href="/members/deep/${slug}/"]`);
         if (!link) return;
         const p = progressMap[slug];
         if (p) {

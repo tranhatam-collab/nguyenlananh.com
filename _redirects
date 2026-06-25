@@ -42,3 +42,20 @@ https://docs.nguyenlananh.com/en/ /en/tai-lieu/ 301
 # Pages ưu tiên _redirects trước static serving → /docs/* trả 404 thay vì serve file.
 # Scripts đọc /docs/ từ filesystem local (không qua HTTP) → không bị ảnh hưởng.
 /docs/* /404.html 404
+
+# Academy → Deep canonical migration (C3 fix)
+# Old academy lesson URLs redirect to new deep canonical URLs
+/members/academy/life-system-map-v1/ /members/deep/life-system-map/ 301
+/members/academy/7-day-rhythm-audit/ /members/deep/rhythm-design-lab/ 301
+/members/academy/space-friction-map/ /members/deep/space-reset-practitioner/ 301
+/members/academy/family-role-boundary-map/ /members/deep/family-pattern-mapping/ 301
+/members/academy/creative-workflow-audit/ /members/deep/creative-practice-studio/ 301
+/members/academy/personal-resource-audit/ /members/deep/personal-capital/ 301
+/members/academy/decision-clarity-sheet/ /members/deep/decision-clarity/ 301
+/members/academy/environmental-influence-map/ /members/deep/environmental-influence/ 301
+/members/academy/community-fit-assessment/ /members/deep/practice-companion-level-1/ 301
+/members/academy/37-day-project-charter/ /members/deep/practice-method-designer/ 301
+
+# Academy index → Deep index
+/members/academy/ /members/deep/ 301
+/members/academy/index.html /members/deep/index.html 301

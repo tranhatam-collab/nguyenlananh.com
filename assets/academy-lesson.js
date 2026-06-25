@@ -12,14 +12,14 @@
   function getLessonSlug() {
     const parts = window.location.pathname.split("/").filter(Boolean);
     // /members/academy/<slug>/ → ["members", "academy", "<slug>"]
-    if (parts.length >= 3 && parts[0] === "members" && parts[1] === "academy") {
+    if (parts.length >= 3 && parts[0] === "members" && parts[1] === "deep") {
       return parts[2];
     }
     return null;
   }
 
   function getProgressKey(slug) {
-    return `academy_progress_${slug}`;
+    return `deep_progress_${slug}`;
   }
 
   // Save self-assessment answers locally + to server

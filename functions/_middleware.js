@@ -8,27 +8,64 @@ import { randomId } from "./_lib/utils.js";
 const ADMIN_PATHS = ["/admin", "/en/admin"];
 const ADMIN_LOGIN_PATHS = ["/admin/login", "/en/admin/login", "/admin/login/", "/en/admin/login/"];
 
-// Paths under /members/ that require active paid membership.
+// Paths under /members/ that require active paid membership OR content_access.
 // /members/ itself, /members/start/, /members/dashboard/ stay public.
+// /members/deep/ index is public (shows list), individual lessons require entitlement.
 const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/"];
-
-// Paths under /members/ that require login (any membership tier, including free).
-// Academy free lessons are login-gated but do NOT require paid membership.
-const LOGIN_GATED_MEMBER_PREFIXES = ["/members/academy/", "/en/members/academy/"];
 
 // Paths under /members/ that are public (no session needed).
 const PUBLIC_MEMBER_PATHS = [
   "/members/",
   "/members/start/",
   "/members/index.html",
-  "/members/academy/",
-  "/members/academy/index.html",
+  "/members/deep/",
+  "/members/deep/index.html",
   "/en/members/",
   "/en/members/start/",
   "/en/members/index.html",
-  "/en/members/academy/",
-  "/en/members/academy/index.html",
+  "/en/members/deep/",
+  "/en/members/deep/index.html",
 ];
+
+// Map: deep lesson slug → required plan_code for content_access.
+// If a lesson is listed here, it requires a specific product purchase.
+// Lessons NOT listed here require active paid membership (year1/2/3) only.
+const DEEP_LESSON_PLAN_MAP = {
+  "rhythm-design-lab": "prog_rhythm_lab",
+  "space-reset-practitioner": "prog_space_reset",
+  "family-pattern-mapping": "prog_family_pattern",
+  "creative-practice-studio": "prog_creative_studio",
+  "personal-capital": "diag_capital_self",
+  "practice-companion-level-1": "cert_companion_l1",
+  "practice-method-designer": "cert_method_designer",
+  "avoidance-map": "asmt_avoidance_self",
+  "emotional-block-mapping": "prog_emo_block",
+  "boundary-foundation": "cert_boundary_found",
+  // These lessons are free-tier (no specific product needed, just membership)
+  "life-system-map": null,
+  "decision-clarity": null,
+  "environmental-influence": null,
+};
+
+function getLandingUrlForLesson(lessonSlug, isEn) {
+  const prefix = isEn ? "/en" : "";
+  const map = {
+    "life-system-map": `${prefix}/members/deep/`,
+    "rhythm-design-lab": `${prefix}/programs/rhythm-design-lab/`,
+    "space-reset-practitioner": `${prefix}/programs/space-reset-practitioner/`,
+    "family-pattern-mapping": `${prefix}/programs/family-pattern-mapping/`,
+    "creative-practice-studio": `${prefix}/programs/creative-practice-studio/`,
+    "personal-capital": `${prefix}/assessments/personal-capital/`,
+    "decision-clarity": `${prefix}/members/deep/`,
+    "environmental-influence": `${prefix}/programs/space-reset-practitioner/`,
+    "practice-companion-level-1": `${prefix}/certification/practice-companion-level-1/`,
+    "practice-method-designer": `${prefix}/certification/practice-method-designer/`,
+    "avoidance-map": `${prefix}/assessments/avoidance-map/`,
+    "emotional-block-mapping": `${prefix}/programs/emotional-block-mapping/`,
+    "boundary-foundation": `${prefix}/programs/boundary-foundation/`,
+  };
+  return map[lessonSlug] || `${prefix}/join/`;
+}
 
 // Admin pages that map to a required permission.
 // Pages not listed here default to "dashboard.view" (minimum for any admin).
@@ -167,8 +204,17 @@ function isGatedMemberPath(pathname) {
   return GATED_MEMBER_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 }
 
-function isLoginGatedMemberPath(pathname) {
-  return LOGIN_GATED_MEMBER_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+function getDeepLessonSlug(pathname) {
+  // /members/deep/<slug>/ → <slug>
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length >= 3 && parts[0] === "members" && parts[1] === "deep") {
+    return parts[2];
+  }
+  // /en/members/deep/<slug>/ → <slug>
+  if (parts.length >= 4 && parts[0] === "en" && parts[1] === "members" && parts[2] === "deep") {
+    return parts[3];
+  }
+  return null;
 }
 
 function isPublicMemberPath(pathname) {
@@ -337,14 +383,15 @@ export async function onRequest(context) {
       }
     }
 
-    // Gating: /members/deep/* requires active paid membership
-    if (isGatedMemberPath(url.pathname)) {
+    // Gating: /members/deep/* requires entitlement check
+    // - /members/deep/ index → public (listed in PUBLIC_MEMBER_PATHS)
+    // - /members/deep/<slug>/ → check plan_code entitlement OR active membership
+    if (isGatedMemberPath(url.pathname) && !isPublicMemberPath(url.pathname)) {
       const en = isEnglishPath(url.pathname);
       const joinUrl = en ? "/en/join/" : "/join/";
-      const membersUrl = en ? "/en/members/" : "/members/";
 
       if (!memberSession) {
-        logWarn({ route: url.pathname, code: "MEMBER_DENY_NO_SESSION", msg: "Gated content access denied — no session" });
+        logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Deep content access denied — no session" });
         return new Response(null, {
           status: 302,
           headers: { Location: joinUrl, "Cache-Control": "no-store" },
@@ -353,53 +400,46 @@ export async function onRequest(context) {
 
       if (db) {
         const user = await getUserById(db, memberSession.sub);
-        if (!isMembershipActive(user)) {
-          // Check content_access for premium product purchases
-          let hasContentAccess = false;
+        const lessonSlug = getDeepLessonSlug(url.pathname);
+        const requiredPlan = lessonSlug ? DEEP_LESSON_PLAN_MAP[lessonSlug] : null;
+
+        let hasAccess = false;
+        if (isMembershipActive(user)) {
+          // Active paid membership (year1/2/3 or premium_purchase) grants all deep content
+          hasAccess = true;
+        } else if (requiredPlan) {
+          // Check specific content_access for this plan_code
           try {
             const access = await db
-              .prepare("SELECT expires_at FROM content_access WHERE user_id = ? AND (expires_at IS NULL OR expires_at > ?)")
-              .bind(memberSession.sub, new Date().toISOString())
+              .prepare("SELECT expires_at FROM content_access WHERE user_id = ? AND plan_code = ? AND (expires_at IS NULL OR expires_at > ?)")
+              .bind(memberSession.sub, requiredPlan, new Date().toISOString())
               .first();
-            hasContentAccess = !!access;
+            hasAccess = !!access;
           } catch (_e) {}
-          if (!hasContentAccess) {
-            logWarn({
-              route: url.pathname,
-              code: "MEMBER_DENY_NO_MEMBERSHIP",
-              msg: "Gated content access denied — no active paid membership or content access",
-              email: user?.email,
-              membership_type: user?.membership_type,
-            });
-            return new Response(null, {
-              status: 302,
-              headers: { Location: membersUrl, "Cache-Control": "no-store" },
-            });
-          }
+        } else if (requiredPlan === null) {
+          // Free-tier lesson (no specific plan needed, just logged in)
+          hasAccess = true;
         }
+
+        if (!hasAccess) {
+          const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (en ? "/en/join/" : "/join/");
+          logWarn({
+            route: url.pathname,
+            code: "DEEP_DENY_NO_ENTITLEMENT",
+            msg: `Gated content access denied — no entitlement for ${lessonSlug || "unknown"}`,
+            email: user?.email,
+            membership_type: user?.membership_type,
+          });
+          return new Response(null, {
+            status: 302,
+            headers: { Location: landingUrl, "Cache-Control": "no-store" },
+          });
+        }
+
         context.data = context.data || {};
         context.data.session = memberSession;
         context.data.user = user;
       }
-      return context.next();
-    }
-
-    // Gating: /members/academy/* requires login (any tier, including free)
-    // Academy index is public (listed in PUBLIC_MEMBER_PATHS).
-    if (isLoginGatedMemberPath(url.pathname) && !isPublicMemberPath(url.pathname)) {
-      const en = isEnglishPath(url.pathname);
-      const joinUrl = en ? "/en/join/" : "/join/";
-
-      if (!memberSession) {
-        logWarn({ route: url.pathname, code: "ACADEMY_DENY_NO_SESSION", msg: "Academy access denied — no session" });
-        return new Response(null, {
-          status: 302,
-          headers: { Location: joinUrl, "Cache-Control": "no-store" },
-        });
-      }
-
-      context.data = context.data || {};
-      context.data.session = memberSession;
       return context.next();
     }
 

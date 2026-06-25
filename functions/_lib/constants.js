@@ -1,166 +1,292 @@
-export const PLANS = {
+// ============================================================
+// Product taxonomy — separated by family type for inventory clarity
+// ============================================================
+
+export const MEMBERSHIP_PLANS = {
   year1: {
     code: "year1",
     label: "Core Access",
     priceUsd: 3,
     priceVnd: 75000,
-    durationDays: 365
+    durationDays: 365,
+    tier: "paid"
   },
   year2: {
     code: "year2",
     label: "Year 2 Continuity",
     priceUsd: 60,
     priceVnd: 1490000,
-    durationDays: 365
+    durationDays: 365,
+    tier: "paid"
   },
   year3: {
     code: "year3",
     label: "Year 3+ Mastery",
     priceUsd: 99,
     priceVnd: 2490000,
-    durationDays: 365
+    durationDays: 365,
+    tier: "paid"
   },
   lifetime: {
     code: "lifetime",
     label: "Lifetime Founding Member",
     priceUsd: 299,
     priceVnd: 7600000,
-    durationDays: 36500
+    durationDays: 36500,
+    tier: "paid"
   },
   monthly_practice: {
     code: "monthly_practice",
     label: "Practice Monthly",
     priceUsd: 9,
     priceVnd: 225000,
-    durationDays: 31
-  },
+    durationDays: 31,
+    tier: "paid",
+    status: "draft" // not public until recurring billing is ready
+  }
+};
+
+export const MICRO_PRODUCTS = {
   micro_life_reset: {
     code: "micro_life_reset",
     label: "Life Reset Mini",
     priceUsd: 7,
     priceVnd: 175000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "life-reset"
   },
   micro_inner_listening: {
     code: "micro_inner_listening",
     label: "Inner Listening Kit",
     priceUsd: 5,
     priceVnd: 125000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "inner-listening"
   },
   micro_one_corner: {
     code: "micro_one_corner",
     label: "One Corner Reset",
     priceUsd: 3,
     priceVnd: 75000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "space-reset"
   },
   micro_7day_rhythm: {
     code: "micro_7day_rhythm",
     label: "7-Day True Rhythm",
     priceUsd: 9,
     priceVnd: 225000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "rhythm-design"
   },
   micro_companion: {
     code: "micro_companion",
     label: "Companion Circle",
     priceUsd: 9,
     priceVnd: 225000,
-    durationDays: 36500
-  },
-  // === Premium products (Phase 6) ===
+    durationDays: 36500,
+    family: "community"
+  }
+};
+
+export const ASSESSMENTS = {
   asmt_avoidance_self: {
     code: "asmt_avoidance_self",
     label: "Avoidance Map — Self Assessment",
     priceUsd: 19,
     priceVnd: 490000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "avoidance-map",
+    offer: "self"
   },
   asmt_avoidance_review: {
     code: "asmt_avoidance_review",
     label: "Avoidance Map — With Expert Review",
     priceUsd: 79,
     priceVnd: 1950000,
-    durationDays: 36500
-  },
-  prog_rhythm_lab: {
-    code: "prog_rhythm_lab",
-    label: "Rhythm Design Lab — 21 Days",
-    priceUsd: 99,
-    priceVnd: 2500000,
-    durationDays: 365
-  },
-  prog_emo_block: {
-    code: "prog_emo_block",
-    label: "Emotional Block Mapping Intensive — 30 Days",
-    priceUsd: 249,
-    priceVnd: 6300000,
-    durationDays: 365
-  },
-  cert_boundary_found: {
-    code: "cert_boundary_found",
-    label: "Boundary Practice Certification — Foundation",
-    priceUsd: 299,
-    priceVnd: 7600000,
-    durationDays: 365
-  },
-  prog_family_pattern: {
-    code: "prog_family_pattern",
-    label: "Family Pattern Mapping Program — 6 Weeks",
-    priceUsd: 399,
-    priceVnd: 10000000,
-    durationDays: 365
-  },
-  prog_space_reset: {
-    code: "prog_space_reset",
-    label: "Space Reset Practitioner Program",
-    priceUsd: 499,
-    priceVnd: 12700000,
-    durationDays: 365
-  },
-  prog_creative_studio: {
-    code: "prog_creative_studio",
-    label: "Creative Practice Studio — 8 Weeks",
-    priceUsd: 399,
-    priceVnd: 10000000,
-    durationDays: 365
+    durationDays: 36500,
+    family: "avoidance-map",
+    offer: "review"
   },
   diag_capital_self: {
     code: "diag_capital_self",
     label: "Personal Capital Diagnostic — Self",
     priceUsd: 49,
     priceVnd: 1250000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "personal-capital",
+    offer: "self"
   },
   diag_capital_expert: {
     code: "diag_capital_expert",
     label: "Personal Capital Diagnostic — Expert Reviewed",
     priceUsd: 600,
     priceVnd: 15000000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "personal-capital",
+    offer: "expert"
   },
   diag_capital_biz: {
     code: "diag_capital_biz",
     label: "Personal Capital Diagnostic — Founder/Business",
     priceUsd: 1200,
     priceVnd: 30000000,
-    durationDays: 36500
+    durationDays: 36500,
+    family: "personal-capital",
+    offer: "business"
+  }
+};
+
+export const GUIDED_PROGRAMS = {
+  prog_rhythm_lab: {
+    code: "prog_rhythm_lab",
+    label: "Rhythm Design Lab — 21 Days",
+    priceUsd: 99,
+    priceVnd: 2500000,
+    durationDays: 365,
+    family: "rhythm-design"
+  },
+  prog_emo_block: {
+    code: "prog_emo_block",
+    label: "Emotional Block Mapping Intensive — 30 Days",
+    priceUsd: 249,
+    priceVnd: 6300000,
+    durationDays: 365,
+    family: "emotional-block"
+  },
+  prog_family_pattern: {
+    code: "prog_family_pattern",
+    label: "Family Pattern Mapping Program — 6 Weeks",
+    priceUsd: 399,
+    priceVnd: 10000000,
+    durationDays: 365,
+    family: "family-pattern"
+  },
+  prog_space_reset: {
+    code: "prog_space_reset",
+    label: "Space Reset Practitioner Program",
+    priceUsd: 499,
+    priceVnd: 12700000,
+    durationDays: 365,
+    family: "space-reset"
+  },
+  prog_creative_studio: {
+    code: "prog_creative_studio",
+    label: "Creative Practice Studio — 8 Weeks",
+    priceUsd: 399,
+    priceVnd: 10000000,
+    durationDays: 365,
+    family: "creative-practice"
+  }
+};
+
+export const CERTIFICATIONS = {
+  cert_boundary_found: {
+    code: "cert_boundary_found",
+    label: "Boundary Practice Certification — Foundation",
+    priceUsd: 299,
+    priceVnd: 7600000,
+    durationDays: 365,
+    family: "boundary-foundation"
   },
   cert_companion_l1: {
     code: "cert_companion_l1",
     label: "Certified Practice Companion — Level 1",
     priceUsd: 1200,
     priceVnd: 30000000,
-    durationDays: 365
+    durationDays: 365,
+    family: "practice-companion"
   },
   cert_method_designer: {
     code: "cert_method_designer",
     label: "Practice Method Designer Certification",
     priceUsd: 3000,
     priceVnd: 76000000,
-    durationDays: 365
+    durationDays: 365,
+    family: "practice-method"
   }
+};
+
+export const PRODUCT_FAMILIES = [
+  {
+    slug: "avoidance-map",
+    name: "Avoidance Map",
+    category: "assessment",
+    offers: ["asmt_avoidance_self", "asmt_avoidance_review"],
+    landing: "/assessments/avoidance-map/"
+  },
+  {
+    slug: "personal-capital",
+    name: "Personal Capital",
+    category: "diagnostic",
+    offers: ["diag_capital_self", "diag_capital_expert", "diag_capital_biz"],
+    landing: "/assessments/personal-capital/"
+  },
+  {
+    slug: "rhythm-design",
+    name: "Rhythm Design Lab",
+    category: "program",
+    offers: ["prog_rhythm_lab", "micro_7day_rhythm"],
+    landing: "/programs/rhythm-design-lab/"
+  },
+  {
+    slug: "emotional-block",
+    name: "Emotional Block Mapping",
+    category: "program",
+    offers: ["prog_emo_block"],
+    landing: "/programs/emotional-block-mapping/"
+  },
+  {
+    slug: "boundary-foundation",
+    name: "Boundary Practice",
+    category: "certification",
+    offers: ["cert_boundary_found"],
+    landing: "/programs/boundary-foundation/"
+  },
+  {
+    slug: "family-pattern",
+    name: "Family Pattern Mapping",
+    category: "program",
+    offers: ["prog_family_pattern"],
+    landing: "/programs/family-pattern-mapping/"
+  },
+  {
+    slug: "space-reset",
+    name: "Space Reset Practitioner",
+    category: "program",
+    offers: ["prog_space_reset", "micro_one_corner"],
+    landing: "/programs/space-reset-practitioner/"
+  },
+  {
+    slug: "creative-practice",
+    name: "Creative Practice Studio",
+    category: "program",
+    offers: ["prog_creative_studio"],
+    landing: "/programs/creative-practice-studio/"
+  },
+  {
+    slug: "practice-companion",
+    name: "Certified Practice Companion",
+    category: "certification",
+    offers: ["cert_companion_l1"],
+    landing: "/certification/practice-companion-level-1/"
+  },
+  {
+    slug: "practice-method",
+    name: "Practice Method Designer",
+    category: "certification",
+    offers: ["cert_method_designer"],
+    landing: "/certification/practice-method-designer/"
+  }
+];
+
+// Backward-compatible unified PLANS object (used by checkout, fulfillment, middleware)
+export const PLANS = {
+  ...MEMBERSHIP_PLANS,
+  ...MICRO_PRODUCTS,
+  ...ASSESSMENTS,
+  ...GUIDED_PROGRAMS,
+  ...CERTIFICATIONS
 };
 
 export const PROVIDER_CATALOG = [

@@ -81,6 +81,7 @@ const ADMIN_PAGE_PERMISSIONS = {
   "/admin/events": "events.view",
   "/admin/learning": "learning.view",
   "/admin/audit": "audit.view",
+  "/admin/inventory": "audit.view",
 };
 
 // ============================================================

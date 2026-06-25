@@ -1,5 +1,5 @@
 /**
- * Admin audit dashboard — loads aggregated metrics.
+ * Admin audit dashboard — loads aggregated metrics and product inventory.
  */
 (function () {
   "use strict";
@@ -16,12 +16,16 @@
 
   async function loadAudit() {
     try {
-      const res = await fetch("/api/admin/audit");
-      if (!res.ok) {
+      const [auditRes, inventoryRes] = await Promise.all([
+        fetch("/api/admin/audit"),
+        fetch("/api/admin/inventory").catch(() => null)
+      ]);
+
+      if (!auditRes.ok) {
         document.body.insertAdjacentHTML("afterbegin", "<div class='statusBanner error' style='margin:12px;'>Không tải được audit data.</div>");
         return;
       }
-      const data = await res.json();
+      const data = await auditRes.json();
       if (!data.ok) return;
       const a = data.audit;
 
@@ -70,6 +74,30 @@
         creatorBody.innerHTML = (a.creator_applications || []).map(c =>
           `<tr><td>${c.status || "-"}</td><td>${fmtNum(c.cnt)}</td></tr>`
         ).join("") || "<tr><td colspan='2'>No data</td></tr>";
+      }
+
+      if (inventoryRes?.ok) {
+        const invData = await inventoryRes.json();
+        const inv = invData.inventory;
+        const counts = inv?.counts || {};
+        const pfBody = document.getElementById("productFamilyBody");
+        if (pfBody) {
+          pfBody.innerHTML = (inv.product_families || []).map(f =>
+            `<tr><td>${f.name}</td><td>${f.category}</td><td>${fmtNum(f.offers?.length || 0)}</td><td>${f.landing || "-"}</td></tr>`
+          ).join("") || "<tr><td colspan='4'>No data</td></tr>";
+        }
+        const countEls = {
+          "statMembershipPlans": counts.membership_plans,
+          "statMicroProducts": counts.micro_products,
+          "statAssessments": counts.assessments,
+          "statGuidedPrograms": counts.guided_programs,
+          "statCertifications": counts.certifications,
+          "statTotalPlans": counts.total_plans
+        };
+        for (const [id, val] of Object.entries(countEls)) {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.textContent = fmtNum(val);
+        }
       }
     } catch (e) {
       console.error("Audit load failed", e);

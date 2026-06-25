@@ -67,7 +67,7 @@ export const PLANS = {
     code: "asmt_avoidance_review",
     label: "Avoidance Map — With Expert Review",
     priceUsd: 79,
-    priceVnd: 2000000,
+    priceVnd: 1950000,
     durationDays: 36500
   },
   prog_rhythm_lab: {
@@ -122,15 +122,15 @@ export const PLANS = {
   diag_capital_expert: {
     code: "diag_capital_expert",
     label: "Personal Capital Diagnostic — Expert Reviewed",
-    priceUsd: 299,
-    priceVnd: 7600000,
+    priceUsd: 600,
+    priceVnd: 15000000,
     durationDays: 36500
   },
   diag_capital_biz: {
     code: "diag_capital_biz",
     label: "Personal Capital Diagnostic — Founder/Business",
-    priceUsd: 1500,
-    priceVnd: 38000000,
+    priceUsd: 1200,
+    priceVnd: 30000000,
     durationDays: 36500
   },
   cert_companion_l1: {

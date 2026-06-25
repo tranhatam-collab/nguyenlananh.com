@@ -26,14 +26,23 @@
       const a = data.audit;
 
       document.getElementById("statUsers").textContent = fmtNum(a.users);
+      document.getElementById("statPaidMembers").textContent = fmtNum(a.paid_members);
       document.getElementById("statOrders").textContent = fmtNum(a.orders);
       document.getElementById("statPaidOrders").textContent = fmtNum(a.paid_orders);
-      document.getElementById("statContentAccess").textContent = fmtNum(a.content_access);
+      document.getElementById("statPendingOrders").textContent = fmtNum(a.pending_orders);
+      document.getElementById("statFailedOrders").textContent = fmtNum(a.failed_orders);
+      document.getElementById("statRefundedOrders").textContent = fmtNum(a.refunded_orders);
+      document.getElementById("statContentAccess").textContent = fmtNum(a.active_content_access);
+      document.getElementById("statTotalContentAccess").textContent = fmtNum(a.content_access);
+      document.getElementById("statLessonOpened").textContent = fmtNum(a.lesson_opened);
       document.getElementById("statLessonCompleted").textContent = fmtNum(a.lesson_completed);
       document.getElementById("statPractice").textContent = fmtNum(a.practice_submissions);
       document.getElementById("statAssessments").textContent = fmtNum(a.assessment_attempts);
       document.getElementById("statExams").textContent = fmtNum(a.exam_attempts);
       document.getElementById("statCheckins").textContent = fmtNum(a.checkins);
+      document.getElementById("statEvents").textContent = fmtNum(a.site_events_7d);
+      document.getElementById("statWebhookErrors").textContent = fmtNum(a.webhook_errors_7d);
+      document.getElementById("statCreatorSubmissions").textContent = fmtNum(a.creator_submissions);
 
       const rpBody = document.getElementById("revenueProviderBody");
       if (rpBody) {
@@ -52,6 +61,13 @@
       const certBody = document.getElementById("certBody");
       if (certBody) {
         certBody.innerHTML = (a.certifications || []).map(c =>
+          `<tr><td>${c.status || "-"}</td><td>${fmtNum(c.cnt)}</td></tr>`
+        ).join("") || "<tr><td colspan='2'>No data</td></tr>";
+      }
+
+      const creatorBody = document.getElementById("creatorAppBody");
+      if (creatorBody) {
+        creatorBody.innerHTML = (a.creator_applications || []).map(c =>
           `<tr><td>${c.status || "-"}</td><td>${fmtNum(c.cnt)}</td></tr>`
         ).join("") || "<tr><td colspan='2'>No data</td></tr>";
       }

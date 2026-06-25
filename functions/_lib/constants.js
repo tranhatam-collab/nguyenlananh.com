@@ -27,6 +27,13 @@ export const PLANS = {
     priceVnd: 7600000,
     durationDays: 36500
   },
+  monthly_practice: {
+    code: "monthly_practice",
+    label: "Practice Monthly",
+    priceUsd: 9,
+    priceVnd: 225000,
+    durationDays: 31
+  },
   micro_life_reset: {
     code: "micro_life_reset",
     label: "Life Reset Mini",

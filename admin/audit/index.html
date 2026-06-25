@@ -7,11 +7,11 @@
   <meta name="robots" content="noindex,nofollow" />
   <link rel="stylesheet" href="/assets/site.css" />
   <style>
-    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:20px; }
-    .stat-card { padding:16px; border:1px solid rgba(148,163,184,.35); border-radius:8px; text-align:center; }
-    .stat-card .num { font-size:28px; font-weight:700; color:rgba(15,23,42,.9); }
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px; }
+    .stat-card { padding:14px; border:1px solid rgba(148,163,184,.35); border-radius:8px; text-align:center; }
+    .stat-card .num { font-size:26px; font-weight:700; color:rgba(15,23,42,.9); }
     .stat-card .lbl { font-size:12px; color:rgba(15,23,42,.6); margin-top:4px; }
-    .data-table { width:100%; font-size:12px; border-collapse:collapse; }
+    .data-table { width:100%; font-size:13px; border-collapse:collapse; }
     .data-table th { text-align:left; padding:8px; border-bottom:2px solid #ddd; }
     .data-table td { padding:6px 8px; border-bottom:1px solid #eee; }
     .data-table tr:hover { background:#f8f9fa; }
@@ -24,35 +24,50 @@
   <main id="main" class="container" role="main">
     <section class="pageHead">
       <h1>Audit & Reports</h1>
-      <p class="sub">Báo cáo tổng hợp: người dùng, đơn hàng, doanh thu, học tập, chứng nhận.</p>
+      <p class="sub">Báo cáo tổng hợp: người dùng, đơn hàng, doanh thu, học tập, chứng nhận, creator.</p>
     </section>
 
     <div class="stats-grid" id="statsGrid">
       <div class="stat-card"><div class="num" id="statUsers">-</div><div class="lbl">Người dùng</div></div>
+      <div class="stat-card"><div class="num" id="statPaidMembers">-</div><div class="lbl">Thành viên trả phí</div></div>
       <div class="stat-card"><div class="num" id="statOrders">-</div><div class="lbl">Đơn hàng</div></div>
-      <div class="stat-card"><div class="num" id="statPaidOrders">-</div><div class="lbl">Đơn đã thanh toán</div></div>
-      <div class="stat-card"><div class="num" id="statContentAccess">-</div><div class="lbl">Content access</div></div>
+      <div class="stat-card"><div class="num" id="statPaidOrders">-</div><div class="lbl">Đã thanh toán</div></div>
+      <div class="stat-card"><div class="num" id="statPendingOrders">-</div><div class="lbl">Đang chờ</div></div>
+      <div class="stat-card"><div class="num" id="statFailedOrders">-</div><div class="lbl">Thất bại</div></div>
+      <div class="stat-card"><div class="num" id="statRefundedOrders">-</div><div class="lbl">Hoàn tiền</div></div>
+      <div class="stat-card"><div class="num" id="statContentAccess">-</div><div class="lbl">Active content access</div></div>
+      <div class="stat-card"><div class="num" id="statLessonOpened">-</div><div class="lbl">Lesson opened</div></div>
       <div class="stat-card"><div class="num" id="statLessonCompleted">-</div><div class="lbl">Lesson completed</div></div>
       <div class="stat-card"><div class="num" id="statPractice">-</div><div class="lbl">Practice submissions</div></div>
       <div class="stat-card"><div class="num" id="statAssessments">-</div><div class="lbl">Assessment attempts</div></div>
       <div class="stat-card"><div class="num" id="statExams">-</div><div class="lbl">Exam attempts</div></div>
       <div class="stat-card"><div class="num" id="statCheckins">-</div><div class="lbl">Check-ins</div></div>
+      <div class="stat-card"><div class="num" id="statEvents">-</div><div class="lbl">Site events 7d</div></div>
+      <div class="stat-card"><div class="num" id="statWebhookErrors">-</div><div class="lbl">Webhook errors 7d</div></div>
+      <div class="stat-card"><div class="num" id="statCreatorSubmissions">-</div><div class="lbl">Creator submissions</div></div>
     </div>
 
-    <section class="panel" style="margin-bottom:12px;">
-      <h3>Doanh thu theo provider</h3>
-      <table class="data-table"><thead><tr><th>Provider</th><th>Doanh thu (VND)</th><th>Số đơn</th></tr></thead><tbody id="revenueProviderBody"></tbody></table>
-    </section>
+    <div class="grid2">
+      <section class="panel" style="margin-bottom:12px;">
+        <h3>Doanh thu theo provider</h3>
+        <table class="data-table"><thead><tr><th>Provider</th><th>Doanh thu (VND)</th><th>Số đơn</th></tr></thead><tbody id="revenueProviderBody"></tbody></table>
+      </section>
+      <section class="panel" style="margin-bottom:12px;">
+        <h3>Doanh thu theo plan</h3>
+        <table class="data-table"><thead><tr><th>Plan</th><th>Doanh thu (VND)</th><th>Số đơn</th></tr></thead><tbody id="revenuePlanBody"></tbody></table>
+      </section>
+    </div>
 
-    <section class="panel" style="margin-bottom:12px;">
-      <h3>Doanh thu theo plan</h3>
-      <table class="data-table"><thead><tr><th>Plan</th><th>Doanh thu (VND)</th><th>Số đơn</th></tr></thead><tbody id="revenuePlanBody"></tbody></table>
-    </section>
-
-    <section class="panel" style="margin-bottom:12px;">
-      <h3>Chứng nhận</h3>
-      <table class="data-table"><thead><tr><th>Status</th><th>Số lượng</th></tr></thead><tbody id="certBody"></tbody></table>
-    </section>
+    <div class="grid2">
+      <section class="panel" style="margin-bottom:12px;">
+        <h3>Chứng nhận</h3>
+        <table class="data-table"><thead><tr><th>Status</th><th>Số lượng</th></tr></thead><tbody id="certBody"></tbody></table>
+      </section>
+      <section class="panel" style="margin-bottom:12px;">
+        <h3>Creator applications</h3>
+        <table class="data-table"><thead><tr><th>Status</th><th>Số lượng</th></tr></thead><tbody id="creatorAppBody"></tbody></table>
+      </section>
+    </div>
   </main>
   <footer role="contentinfo"><div class="container"><div>© <span id="year"></span> · Admin Audit</div></div></footer>
   <script src="/assets/admin-auth.js"></script>

@@ -1,20 +1,23 @@
-# AUDIT GAP — Kế hoạch 45 bài · 45 sản phẩm · 4 membership · Creator · Audit Report
+# AUDIT GAP — Kế hoạch 45 bài · 45 commercial offers · 4 membership · Creator · Audit Report
 
 > Ngày: 2026-06-25
-> HEAD: `d2d6ee2`
-> Mục tiêu: 45 bài viết, 45 sản phẩm, 4 gói thành viên, nhà sáng tạo nội dung, thống kê báo cáo audit
+> HEAD: `55d2f00`
+> Mục tiêu: 45 bài viết, 45 commercial offers, 4 gói thành viên, nhà sáng tạo nội dung, thống kê báo cáo audit
 
 ---
 
 ## Hiện trạng tổng quan
 
-| Mục tiêu | Hiện có | Thiếu | Trạng thái |
+| Mục tiêu | Hiện có | Thiếu | Phán quyết |
 |---|---|---|---|
-| 45 bài viết | ~82 bài viết thực tế | ✅ Đã vượt | ✅ Hoàn thành |
-| 45 sản phẩm | 21 plan codes, 19 landing pages | ~26 sản phẩm | 🔴 Thiếu nhiều |
-| 4 gói thành viên | 4 gói (year1, year2, year3, lifetime) | ✅ Đã đủ | ✅ Hoàn thành |
-| Nhà sáng tạo nội dung | 10 chương trình + admin/creators | Chưa có đăng ký/public profile | 🟡 Thiếu chức năng |
-| Thống kê báo cáo audit | 12 admin pages + /admin/audit/ | ✅ Đã có | ✅ Hoàn thành |
+| 45 bài viết | ~82 bài viết thực tế | ✅ Đã vượt | PASS số lượng, cần quality audit |
+| 45 commercial offers | 22 plan codes, 10 product families, 19 landing pages | ~24–30 offers | HOLD — cần inventory chính xác + product taxonomy |
+| 4 gói thành viên | 5 gói (year1, year2, year3, lifetime, monthly_practice) | ✅ Đã đủ | PASS (monthly chưa public cho đến khi recurring hoàn chỉnh) |
+| Nhà sáng tạo nội dung | 10 chương trình + admin/creators | public creator pages | BUILD REQUIRED |
+| Thống kê báo cáo audit | `/admin/audit/` + API | advanced analytics | P0 — cần mở rộng |
+| Giá mỗi offer | 22 plan codes, mỗi cái 1 giá | ✅ | PASS |
+| PayPal checkout | checkout URL trả về | ✅ | PASS |
+| PayPal fulfillment | webhook endpoint tồn tại | webhook ID + end-to-end test | HOLD |
 
 ---
 
@@ -22,82 +25,72 @@
 
 **Hiện có:** 89 thư mục con trong `/bai-viet/`, 82 bài viết thực tế (trừ 7 trang chuyên mục).
 
-**Đánh giá:** Đã vượt mục tiêu. Tuy nhiên chất lượng và phân bố chủ đề cần kiểm tra:
-- 13 bài mới trong chuỗi hệ thống đời sống ✅
-- Các bài cũ cần rà soát duplicate, độ dài, CTA mapping
+**Đánh giá:** Đã vượt mục tiêu. Cần rà soát chất lượng:
+- Đảm bảo mỗi bài có CTA đúng landing (funnel)
+- Kiểm tra duplicate content giữa các bài
+- Mỗi bài nên đạt 1.500–2.400 từ, H1/H2 rõ ràng
 
-**Gợi ý:** Không cần viết thêm bài để đạt số lượng. Nên tập trung:
-1. Đảm bảo mỗi bài có CTA đúng landing (funnel)
-2. Kiểm tra duplicate content giữa các bài
-3. Đảm bảo mỗi bài ≥1500 từ, có H1/H2 rõ ràng
+**Không cần viết thêm bài cho đủ số lượng.**
 
 ---
 
-## 2. Sản phẩm — 19/45 🔴
+## 2. Sản phẩm — Inventory chưa chính xác 🔴
 
-### Plan codes hiện có (20)
+### Phân biệt taxonomy
+
+| Khái niệm | Ý nghĩa | Ví dụ |
+|---|---|---|
+| Product family | Dòng sản phẩm cốt lõi | Avoidance Map, Personal Capital |
+| Commercial offer | Tier/phiên bản bán | Self, Review, Expert, Business |
+| Landing page | Trang public bán | /assessments/avoidance-map/ |
+| Plan code | Mã checkout | asmt_avoidance_self |
+| Entitlement | Quyền truy cập | content_access |
+
+### Plan codes hiện có (22)
 
 | Nhóm | Số lượng | Plan codes |
 |---|---|---|
-| Membership | 3 | year1, year2, year3 |
+| Membership | 5 | year1, year2, year3, lifetime, monthly_practice |
 | Micro products | 5 | micro_life_reset, micro_inner_listening, micro_one_corner, micro_7day_rhythm, micro_companion |
-| Premium products | 12 | asmt_avoidance_self, asmt_avoidance_review, prog_rhythm_lab, prog_emo_block, cert_boundary_found, prog_family_pattern, prog_space_reset, prog_creative_studio, diag_capital_self, diag_capital_expert, diag_capital_biz, cert_companion_l1, cert_method_designer |
-| **Tổng** | **20** | — |
+| Premium offers | 12 | asmt_avoidance_self, asmt_avoidance_review, prog_rhythm_lab, prog_emo_block, cert_boundary_found, prog_family_pattern, prog_space_reset, prog_creative_studio, diag_capital_self, diag_capital_expert, diag_capital_biz, cert_companion_l1, cert_method_designer |
+| **Tổng** | **22** | — |
+
+### Product families hiện có (10)
+
+1. Avoidance Map
+2. Personal Capital
+3. Rhythm Design Lab
+4. Emotional Block Mapping
+5. Boundary Foundation
+6. Family Pattern Mapping
+7. Space Reset Practitioner
+8. Creative Practice Studio
+9. Practice Companion L1
+10. Practice Method Designer
 
 ### Landing pages hiện có (19)
 
-| Nhóm | Số | Cụ thể |
+| Nhóm | Số | Ghi chú |
 |---|---|---|
 | /products/ | 6 | 5 micro + 1 index |
-| /assessments/ | 3 | avoidance-map, personal-capital, avoidance-map/review, personal-capital/expert, personal-capital/business |
-| /programs/ | 7 | rhythm-design-lab, emotional-block-mapping, boundary-foundation, family-pattern-mapping, space-reset-practitioner, creative-practice-studio, index |
-| /certification/ | 3 | practice-companion-level-1, practice-method-designer, index |
+| /assessments/ | 5 | index + 2 core + 2 tier |
+| /programs/ | 7 | 6 core + 1 index |
+| /certification/ | 3 | 2 core + 1 index |
 | **Tổng** | **19** | — |
 
-**Lưu ý:** `/assessments/` thực tế có 5 landing pages (index + 2 core + 2 tier), nhưng `find` đếm là 3 vì `/assessments/index.html` không có `data-price`?
+### Không tính thiếu bằng 45 − 19 landing pages
 
-**Thiếu để đạt 45 sản phẩm:** cần thêm **25–26 sản phẩm** nữa.
+Mục tiêu đúng là **~45 commercial offers trong khoảng 25–30 product families**. Đang còn cách rất xa nếu tính theo landing pages, nhưng gần hơn nếu tính theo offers.
 
-### Gợi ý 26 sản phẩm còn thiếu
+### 3 pilot products đề xuất đầu tiên
 
-Dựa trên hệ thống 10 chủ đề hiện có, có thể mở rộng theo hướng:
-
-| # | Sản phẩm đề xuất | Loại | Giá gợi ý (USD) |
+| # | Product family | Offer | Giá gợi ý |
 |---|---|---|---|
-| 1 | Life System Map Assessment | Assessment | $29 |
-| 2 | Decision Clarity Diagnostic | Assessment | $19 |
-| 3 | Environmental Influence Audit | Assessment | $29 |
-| 4 | 7-Day Rhythm Audit | Micro/Program | $29 |
-| 5 | Family Boundary Bootcamp | Program | $199 |
-| 6 | Creative Recovery Program | Program | $249 |
-| 7 | Space Reset Mini Course | Program | $149 |
-| 8 | Personal Capital Mini | Micro | $19 |
-| 9 | Community Builder Kit | Micro | $49 |
-| 10 | Avoidance Map Workbook | Micro | $15 |
-| 11 | Emotional Block Journal | Micro | $19 |
-| 12 | Boundary Scripts Deck | Micro | $12 |
-| 13 | Rhythm Design Toolkit | Micro | $25 |
-| 14 | Creative Practice Planner | Micro | $22 |
-| 15 | Life System Map Certification | Certification | $899 |
-| 16 | Emotional Block Facilitator | Certification | $1.500 |
-| 17 | Boundary Coach Certification | Certification | $1.200 |
-| 18 | Family Pattern Facilitator | Certification | $1.800 |
-| 19 | Space Reset Consultant | Certification | $2.000 |
-| 20 | Rhythm Design Coach | Certification | $1.500 |
-| 21 | Personal Capital Advisor | Certification | $2.500 |
-| 22 | Community Lead Program | Program | $699 |
-| 23 | Decision Coach Intensive | Program | $399 |
-| 24 | Environment Design Lab | Program | $349 |
-| 25 | Practice Companion Level 2 | Certification | $2.400 |
-| 26 | Founder Wellbeing Audit | Assessment | $899 |
+| 1 | Self-Trust Practice | self_trust_evidence_builder | 990.000 VND / $39 |
+| 2 | Open Loop Closure | open_loop_closure_sprint | 490.000 VND / $19 |
+| 3 | Personal After-Action Review | personal_after_action_review | 750.000 VND / $29 |
 
-**Lưu ý:** Mỗi sản phẩm mới cần:
-- 1 plan code trong `functions/_lib/constants.js`
-- 1 landing page (HTML + data-plan + data-price)
-- 1 email welcome template (TXX)
-- 1 entry trong `DEEP_LESSON_PLAN_MAP` nếu có lesson gated
-- 1 bài viết gateway nếu cần SEO funnel
-- Cập nhật sitemap
+Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, final output, rubric, report, entitlement, welcome template, refund/revoke, versioning.
 
 ---
 
@@ -108,119 +101,120 @@ Dựa trên hệ thống 10 chủ đề hiện có, có thể mở rộng theo h
 - year2: $60 / 1.490.000 VND
 - year3: $99 / 2.490.000 VND
 - lifetime: $299 / 7.600.000 VND — vĩnh viễn
+- monthly_practice: $9 / 225.000 VND — chưa public cho đến khi recurring hoàn chỉnh
 
 **Trạng thái:** Đã đủ 4 gói. ✅
 
-**Lưu ý:** Gói lifetime cần được đăng ký trong PayPal/VietQR và có email welcome template riêng (TXX).
+**Khuyến nghị:** Nếu anh muốn thay lifetime bằng monthly, em có thể đổi. Monthly cần recurring payment, cancel, failed renewal, grace period, entitlement expiry, billing page trước khi public.
 
 ---
 
-## 4. Nhà sáng tạo nội dung — 10/10+ 🟡
+## 4. Nhà sáng tạo nội dung — Chưa hoàn chỉnh 🟡
 
 **Hiện có:**
 - 10 chương trình trong `/chuong-trinh/`
-- Trang admin `/admin/creators/`
+- `/admin/creators/`
 
 **Thiếu:**
-- Public creator profile pages (không phải admin)
-- Creator registration / application form
-- Creator dashboard (nếu khác admin)
-- Public directory of creators
-- Creator content submission workflow
-
-**Gợi ý:**
-- `/creators/` — directory
+- `/creators/` — public directory
 - `/creators/apply/` — application form
-- `/creators/[slug]/` — public profile
+- `/creators/{slug}/` — public profile
 - `/members/creator-dashboard/` — creator dashboard
+- Submission → review → publish workflow
+- IP, consent, revenue share
+
+**Trạng thái:** BUILD REQUIRED.
 
 ---
 
-## 5. Thống kê báo cáo audit — Đã hoàn thành ✅
+## 5. Thống kê báo cáo audit — Đã có cơ bản ✅, cần mở rộng 🟡
 
 **Hiện có:**
-- 12 admin module pages
-- `/admin/audit/` — báo cáo tổng hợp với:
-  - Tổng users, orders, paid orders
-  - Content access, lesson completed, practice submissions
-  - Assessment attempts, exam attempts, check-ins
-  - Revenue by provider & by plan
-  - Certifications by status
-- `/api/admin/audit` — JSON endpoint
-- Quyền `audit.view` cho super_admin và ops_manager
+- `/admin/audit/` dashboard
+- `/api/admin/audit` JSON endpoint
+- Quyền `audit.view` cho super_admin + ops_manager
+- Các chỉ số: users, paid members, orders, revenue by provider/plan, content access, lesson completed, practice submissions, assessments, exams, checkins, certifications, creator applications, webhook errors
 
-**Có thể mở rộng thêm:**
-- `/admin/reports/` — xuất PDF/Excel
-- `/admin/analytics/` — traffic + conversion
-- Webhook event log viewer
+**Cần mở rộng:**
+- Content stats: tổng bài, bài dưới chuẩn, duplicate risk, missing CTA, broken links
+- Product inventory: product family count, offer count, landing page count, price mismatch, entitlement mismatch
+- Funnel analytics: conversion rate, top pages, top products
+- Webhook event viewer
 - MRR / ARR dashboard
+- Export PDF/Excel
+
+**Trạng thái:** P0 — cần tiếp tục mở rộng.
 
 ---
 
-## 6. Giá sản phẩm — mỗi sản phẩm có giá khác nhau ✅
+## 6. Giá sản phẩm — Mỗi offer có giá khác nhau ✅
 
-**Hiện có 20 plan codes với giá USD riêng biệt:**
+**Hiện có 22 plan codes với giá USD riêng biệt.**
 
-```
-$3, $5, $7, $9, $19, $49, $60, $79, $99, $249, $299, $399, $499, $1.200, $1.500, $3.000
-```
+**Đã đồng bộ:**
+- asmt_avoidance_review: 1.950.000 VND / $79
+- diag_capital_expert: 15.000.000 VND / $600
+- diag_capital_biz: 30.000.000 VND / $1.200
 
-**Đánh giá:** Mỗi sản phẩm hiện có giá khác nhau. ✅
-
-**Vấn đề nhỏ:**
-- `prog_emo_block` và `cert_boundary_found` có priceVnd khác nhau nhưng priceUsd giống? Kiểm tra lại.
-  - prog_emo_block: $249 / 6.300.000 VND
-  - cert_boundary_found: $299 / 7.600.000 VND
-  - diag_capital_expert: $299 / 7.600.000 VND
-  - cert_boundary_found và diag_capital_expert có giá VND giống nhau ($299) nhưng là 2 sản phẩm khác nhau → OK
-
-- `asmt_avoidance_review` landing page mới đặt giá 1.950.000 VND nhưng constants.js vẫn là 2.000.000 VND. Cần đồng bộ.
-
-- `diag_capital_expert` landing page mới đặt 15.000.000 VND nhưng constants.js là 7.600.000 VND. Cần đồng bộ.
-- `diag_capital_biz` landing page mới đặt 30.000.000 VND nhưng constants.js là 38.000.000 VND. Cần đồng bộ.
-
-**Cần fix ngay:** Đồng bộ giá trong constants.js với landing pages.
+**Trạng thái:** PASS.
 
 ---
 
-## 7. Các vấn đề khác cần chú ý
+## 7. PayPal — Checkout PASS, Fulfillment HOLD
 
-### A. Giá tier chưa đồng bộ
-- `asmt_avoidance_review`: landing 1.950.000 vs constants 2.000.000
-- `diag_capital_expert`: landing 15.000.000 vs constants 7.600.000
-- `diag_capital_biz`: landing 30.000.000 vs constants 38.000.000
+| Hạng mục | Trạng thái |
+|---|---|
+| Live creds (CLIENT_ID, CLIENT_SECRET) | ✅ validated |
+| Checkout URL creation | ✅ PASS |
+| Webhook endpoint `/api/payments/paypal/webhook` | ✅ tồn tại |
+| WEBHOOK_ID production | ❌ chưa có bằng chứng |
+| End-to-end fulfillment | ❌ chưa xác minh |
+| Secret rotation | ⚠️ cần làm (secret đã lộ trong chat) |
 
-### B. Sitemap chưa đầy đủ
-- 252 URLs nhưng có thể thiếu các trang chuong-trinh, admin, members deep index mới.
-
-### C. English versions
-- Hầu hết các trang mới chưa có bản en.
-
-### D. Email templates
-- T80–T89 premium templates chưa chắc đã được cấu hình trong Resend.
-
-### E. Webhook PayPal
-- Chưa có PAYPAL_WEBHOOK_ID. Fulfillment tự động chưa chạy.
+**Cần từ anh:**
+1. Email PayPal Business của Thành Tâm Phát → set `PAYPAL_MERCHANT_EMAIL`
+2. Secret PayPal mới (sau khi rotate) → update `PAYPAL_CLIENT_SECRET`
 
 ---
 
-## 8. Khuyến nghị ưu tiên
+## 8. Thứ tự ưu tiên đúng
 
-### P0 (Fix ngay trước go-live)
-1. ✅ Đồng bộ giá tier trong constants.js
-2. ✅ Thêm gói thành viên thứ 4 (lifetime)
-3. ✅ Tạo báo cáo audit tổng hợp `/admin/audit/`
-4. Cấu hình PAYPAL_WEBHOOK_ID
-5. Kiểm tra tất cả landing pages có data-plan đúng
+### P0 — Khóa nền quản trị
+1. ✅ Hoàn thiện inventory và báo cáo audit (đang làm)
+2. ✅ Thêm gói membership thứ tư (đã làm)
+3. ✅ Xây `/admin/audit/` cơ bản (đã làm)
+4. Tách product family, offer, membership registry
+5. Xác minh PayPal webhook end-to-end (cần email + secret mới)
 
-### P1 (Trong tuần tới)
-6. Tạo public creator pages
-7. Tạo báo cáo PDF/Excel export
+### P1 — Creator foundation
+6. `/creators/`
+7. `/creators/apply/`
+8. `/creators/{slug}/`
+9. `/members/creator-dashboard/`
+10. Submission/review workflow
 
-### P2 (Trong tháng tới)
-8. Mở rộng thêm 25 sản phẩm để đạt 45
-9. Tạo bản tiếng Anh cho các trang mới
-10. Cấu hình email templates T80–T89 trong Resend
+### P2 — Ba sản phẩm pilot
+11. Self-Trust Practice Lab
+12. Open Loop Closure Sprint
+13. Personal After-Action Review System
+
+---
+
+## 9. Phán quyết cuối
+
+| Hạng mục | Phán quyết |
+|---|---|
+| Tier price fixes | ✅ VERIFIED |
+| Plan code count | 22 |
+| 45-product claim | HOLD — cần taxonomy rõ ràng |
+| Monthly membership | APPROVED (chưa public) |
+| Lifetime membership | DEPLOYED (có thể thay bằng monthly nếu anh muốn) |
+| Admin audit | P0 — cần mở rộng |
+| Creator public system | P1 — BUILD REQUIRED |
+| PayPal checkout | PASS |
+| PayPal end-to-end fulfillment | HOLD |
+| Build 26 products at once | REJECTED |
+| Build 3 pilot products first | APPROVED |
 
 ---
 

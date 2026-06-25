@@ -41,6 +41,10 @@ const DEEP_LESSON_PLAN_MAP = {
   "avoidance-map": "asmt_avoidance_self",
   "emotional-block-mapping": "prog_emo_block",
   "boundary-foundation": "cert_boundary_found",
+  // Pilot programs
+  "self-trust-practice-lab": "self_trust_evidence_builder",
+  "open-loop-closure-sprint": "open_loop_closure_sprint",
+  "personal-after-action-review": "personal_after_action_review",
   // These lessons are free-tier (no specific product needed, just membership)
   "life-system-map": null,
   "decision-clarity": null,
@@ -63,6 +67,9 @@ function getLandingUrlForLesson(lessonSlug, isEn) {
     "avoidance-map": `${prefix}/assessments/avoidance-map/`,
     "emotional-block-mapping": `${prefix}/programs/emotional-block-mapping/`,
     "boundary-foundation": `${prefix}/programs/boundary-foundation/`,
+    "self-trust-practice-lab": `${prefix}/programs/self-trust-practice-lab/`,
+    "open-loop-closure-sprint": `${prefix}/programs/open-loop-closure-sprint/`,
+    "personal-after-action-review": `${prefix}/programs/personal-after-action-review/`,
   };
   return map[lessonSlug] || `${prefix}/join/`;
 }

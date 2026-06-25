@@ -309,6 +309,46 @@ function renderTemplate(templateId, locale, payload, env) {
     };
   }
 
+  // Pilot program welcome emails (T90-T92)
+  if (templateId === TEMPLATE_IDS.product_self_trust_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Self-Trust Practice Lab is ready"
+        : "[Nguyenlananh.com] Phòng thực hành Niềm tin bản thân đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome to the Self-Trust Practice Lab.\n\nYou now have access to the full program: pre-assessment, 6 lessons, 2 practice labs, submissions, and final report.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Landing page: ${productArticleUrl}\n\nWeek 1-3: Build your evidence log daily. Don't aim for big — aim for honest.\nWeek 4-6: Review and submit your evidence vault.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nChào mừng bạn vào Phòng thực hành Niềm tin bản thân.\n\nBạn đã có quyền truy cập toàn bộ chương trình: pre-assessment, 6 bài học, 2 practice labs, 2 submissions, và báo cáo cuối.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Trang sản phẩm: ${productArticleUrl}\n\nTuần 1-3: Ghi bằng chứng hằng ngày. Không cần lớn — cần thật.\nTuần 4-6: Review và nộp kho bằng chứng.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_open_loop_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Open Loop Closure Sprint starts now"
+        : "[Nguyenlananh.com] Sprint Đóng vòng lặp bắt đầu ngay",
+      text: isEnglish
+        ? `Hi,\n\nWelcome to the Open Loop Closure Sprint — 7 days.\n\nYou now have access to the full program: pre-assessment, 6 lessons, 2 labs, submissions, and final report.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Landing page: ${productArticleUrl}\n\nDay 1: List every open loop. Don't solve yet. Just list.\nDay 7: Close at least 3 loops and submit your report.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nChào mừng bạn vào Sprint Đóng vòng lặp — 7 ngày.\n\nBạn đã có quyền truy cập toàn bộ chương trình: pre-assessment, 6 bài học, 2 labs, 2 submissions, và báo cáo cuối.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Trang sản phẩm: ${productArticleUrl}\n\nNgày 1: Liệt kê tất cả vòng lặp đang treo. Chưa đóng. Chỉ liệt kê.\nNgày 7: Đóng ít nhất 3 loop và nộp báo cáo.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_after_action_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your After-Action Review System is ready"
+        : "[Nguyenlananh.com] Hệ thống Hậu kiểm đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome to the Personal After-Action Review System.\n\nYou now have access to the full program: pre-assessment, 6 lessons, 2 labs, submissions, and final report.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Landing page: ${productArticleUrl}\n\nWeek 1-2: Run an AAR on one recent project using the 4-question framework.\nWeek 3-4: Run an AAR on a 3-month period and submit.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nChào mừng bạn vào Hệ thống Hậu kiểm cá nhân.\n\nBạn đã có quyền truy cập toàn bộ chương trình: pre-assessment, 6 bài học, 2 labs, 2 submissions, và báo cáo cuối.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Trang sản phẩm: ${productArticleUrl}\n\nTuần 1-2: Chạy AAR cho 1 dự án gần nhất với khung 4 câu.\nTuần 3-4: Chạy AAR cho 1 giai đoạn 3 tháng và nộp.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
   return {
     from: systemFromAddress(env),
     reply_to: supportEmail,

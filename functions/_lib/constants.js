@@ -20,6 +20,13 @@ export const PLANS = {
     priceVnd: 2490000,
     durationDays: 365
   },
+  lifetime: {
+    code: "lifetime",
+    label: "Lifetime Founding Member",
+    priceUsd: 299,
+    priceVnd: 7600000,
+    durationDays: 36500
+  },
   micro_life_reset: {
     code: "micro_life_reset",
     label: "Life Reset Mini",

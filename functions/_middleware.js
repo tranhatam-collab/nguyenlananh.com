@@ -80,6 +80,7 @@ const ADMIN_PAGE_PERMISSIONS = {
   "/admin/reflection": "ops.queue",
   "/admin/events": "events.view",
   "/admin/learning": "learning.view",
+  "/admin/audit": "audit.view",
 };
 
 // ============================================================

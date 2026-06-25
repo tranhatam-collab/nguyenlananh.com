@@ -11,10 +11,10 @@
 | Mục tiêu | Hiện có | Thiếu | Trạng thái |
 |---|---|---|---|
 | 45 bài viết | ~82 bài viết thực tế | ✅ Đã vượt | ✅ Hoàn thành |
-| 45 sản phẩm | 20 plan codes, 19 landing pages | ~26 sản phẩm | 🔴 Thiếu nhiều |
-| 4 gói thành viên | 3 gói (year1, year2, year3) | 1 gói | 🟡 Thiếu 1 |
+| 45 sản phẩm | 21 plan codes, 19 landing pages | ~26 sản phẩm | 🔴 Thiếu nhiều |
+| 4 gói thành viên | 4 gói (year1, year2, year3, lifetime) | ✅ Đã đủ | ✅ Hoàn thành |
 | Nhà sáng tạo nội dung | 10 chương trình + admin/creators | Chưa có đăng ký/public profile | 🟡 Thiếu chức năng |
-| Thống kê báo cáo audit | 12 admin pages | Chưa có báo cáo tổng hợp | 🟡 Thiếu báo cáo |
+| Thống kê báo cáo audit | 12 admin pages + /admin/audit/ | ✅ Đã có | ✅ Hoàn thành |
 
 ---
 
@@ -101,19 +101,17 @@ Dựa trên hệ thống 10 chủ đề hiện có, có thể mở rộng theo h
 
 ---
 
-## 3. Gói thành viên — 3/4 🟡
+## 3. Gói thành viên — 4/4 ✅
 
 **Hiện có:**
 - year1: $3 / 75.000 VND
 - year2: $60 / 1.490.000 VND
 - year3: $99 / 2.490.000 VND
+- lifetime: $299 / 7.600.000 VND — vĩnh viễn
 
-**Thiếu:** 1 gói thành viên.
+**Trạng thái:** Đã đủ 4 gói. ✅
 
-**Gợi ý gói thứ 4:**
-- **Lifetime / Founding Member**: $299 / 7.600.000 VND — truy cập vĩnh viễn tất cả free lessons, discount 30% premium products
-- Hoặc **Monthly**: $9 / 225.000 VND — gói tháng linh hoạt
-- Hoặc **Student**: $1 / 25.000 VND — giá ưu đãi
+**Lưu ý:** Gói lifetime cần được đăng ký trong PayPal/VietQR và có email welcome template riêng (TXX).
 
 ---
 
@@ -138,42 +136,24 @@ Dựa trên hệ thống 10 chủ đề hiện có, có thể mở rộng theo h
 
 ---
 
-## 5. Thống kê báo cáo audit — 12 admin pages 🟡
+## 5. Thống kê báo cáo audit — Đã hoàn thành ✅
 
 **Hiện có:**
-- admin/dashboard
-- admin/content
-- admin/members
-- admin/payments
-- admin/events
-- admin/learning
-- admin/creators
-- admin/reflection
-- admin/pilot
-- admin/settings
-- admin/login
+- 12 admin module pages
+- `/admin/audit/` — báo cáo tổng hợp với:
+  - Tổng users, orders, paid orders
+  - Content access, lesson completed, practice submissions
+  - Assessment attempts, exam attempts, check-ins
+  - Revenue by provider & by plan
+  - Certifications by status
+- `/api/admin/audit` — JSON endpoint
+- Quyền `audit.view` cho super_admin và ops_manager
 
-**Thiếu:**
-- `/admin/audit/` — báo cáo audit tổng hợp (số bài, số sản phẩm, doanh thu, người dùng, funnel conversion)
-- `/admin/reports/` — báo cáo định kỳ có thể xuất PDF/Excel
-- `/admin/analytics/` — traffic, conversion, top pages
+**Có thể mở rộng thêm:**
+- `/admin/reports/` — xuất PDF/Excel
+- `/admin/analytics/` — traffic + conversion
 - Webhook event log viewer
-- Revenue / MRR dashboard
-
-**Gợi ý báo cáo audit tổng hợp:**
-| Chỉ số | Nguồn |
-|---|---|
-| Tổng bài viết | Đếm thư mục bai-viet |
-| Tổng sản phẩm | Đếm plan codes |
-| Tổng người dùng | users table |
-| Tổng đơn hàng | orders table |
-| Doanh thu theo provider | orders table |
-| Doanh thu theo plan | orders table |
-| Conversion rate | orders / unique visitors |
-| Top bài viết | site_events |
-| Top sản phẩm | orders |
-| Lesson completion | lesson_progress |
-| Certification issued | certifications |
+- MRR / ARR dashboard
 
 ---
 
@@ -227,19 +207,20 @@ $3, $5, $7, $9, $19, $49, $60, $79, $99, $249, $299, $399, $499, $1.200, $1.500,
 ## 8. Khuyến nghị ưu tiên
 
 ### P0 (Fix ngay trước go-live)
-1. Đồng bộ giá tier trong constants.js
-2. Cấu hình PAYPAL_WEBHOOK_ID
-3. Kiểm tra tất cả landing pages có data-plan đúng
+1. ✅ Đồng bộ giá tier trong constants.js
+2. ✅ Thêm gói thành viên thứ 4 (lifetime)
+3. ✅ Tạo báo cáo audit tổng hợp `/admin/audit/`
+4. Cấu hình PAYPAL_WEBHOOK_ID
+5. Kiểm tra tất cả landing pages có data-plan đúng
 
 ### P1 (Trong tuần tới)
-4. Thêm gói thành viên thứ 4
-5. Tạo báo cáo audit tổng hợp `/admin/audit/`
 6. Tạo public creator pages
+7. Tạo báo cáo PDF/Excel export
 
 ### P2 (Trong tháng tới)
-7. Mở rộng thêm 25 sản phẩm để đạt 45
-8. Tạo bản tiếng Anh cho các trang mới
-9. Cấu hình email templates T80–T89 trong Resend
+8. Mở rộng thêm 25 sản phẩm để đạt 45
+9. Tạo bản tiếng Anh cho các trang mới
+10. Cấu hình email templates T80–T89 trong Resend
 
 ---
 

@@ -3,24 +3,36 @@
 > Ngày: 2026-06-25
 > Project: nguyenlananh.com
 > Merchant: Công Ty Tnhh Thành Tâm Phát
-> HEAD: `e6d59dd` (origin/main = clean)
+> HEAD: `6e114af` (origin/main = clean)
 
 ---
 
-## ✅ LIVE QA — ĐÃ CHẠY XONG
+## ✅ GO-LIVE QA — ĐÃ CHẠY XONG
 
+### Payment Rails
 | # | Check | Result |
 |---|---|---|
-| 1 | PayPal checkout create (`prog_rhythm_lab`, USD $99) | ✅ `checkout_url` trả về `https://www.paypal.com/checkoutnow?token=...` |
-| 2 | VietQR checkout create (`prog_rhythm_lab`, VND 2.5M) | ✅ `checkout_url` trả về `pay.payos.vn` |
-| 3 | Article CTA → Landing | ✅ `/programs/rhythm-design-lab/` |
-| 4 | Deep lesson (no session) → Landing | ✅ 302 → `/programs/rhythm-design-lab/` |
-| 5 | Free deep lesson → Deep index | ✅ 302 → `/members/deep/` |
-| 6 | Old academy redirect → Deep canonical | ✅ 301 → `/members/deep/rhythm-design-lab/` |
-| 7 | Premium landing pages (10) | ✅ 10/10 = 200 |
-| 8 | Public articles (10) | ✅ 10/10 = 200 |
-| 9 | Products / Deep index | ✅ 200 |
-| 10 | Security headers | ✅ HSTS, CSP, X-Frame-Options, X-Content-Type-Options |
+| 1 | PayPal checkout (Live, `asmt_avoidance_review`) | ✅ `checkout_url` trả về `https://www.paypal.com/checkoutnow?token=...` |
+| 2 | VietQR checkout (`diag_capital_biz`) | ✅ `checkout_url` trả về `pay.payos.vn` |
+| 3 | Dual rail UI | ✅ VietQR + PayPal selector on all landing pages |
+| 4 | Merchant brand | ✅ Công Ty Tnhh Thành Tâm Phát |
+
+### Content & Funnel
+| # | Check | Result |
+|---|---|---|
+| 5 | Public articles | ✅ 13/13 = 200 |
+| 6 | Premium landing pages | ✅ 16/16 = 200 (10 products + 3 tier pages + 3 index pages) |
+| 7 | Article CTA → Landing | ✅ 7 funnels verified |
+| 8 | Deep lesson (no session) → Landing | ✅ 302 → landing page |
+| 9 | Free deep lesson → Deep index | ✅ 302 → `/members/deep/` |
+| 10 | Old academy redirect → Deep canonical | ✅ 301 → `/members/deep/<canonical>/` |
+
+### Site Health
+| # | Check | Result |
+|---|---|---|
+| 11 | Sitemap | ✅ 252 URLs |
+| 12 | Security headers | ✅ HSTS, CSP, X-Frame-Options, X-Content-Type-Options |
+| 13 | Git status | ✅ clean |
 
 ---
 
@@ -54,8 +66,9 @@
 - 10 new API endpoints for learning
 - Frontend: academy-lesson.js, academy-index.js
 
-### Phase 6: 10 Premium Products ✅
-- 10 landing pages + 3 index pages (/assessments/, /programs/, /certification/)
+### Phase 6: 13 Premium Product Pages ✅
+- 10 core landing pages + 3 index pages (/assessments/, /programs/, /certification/)
+- 3 tier pages: /assessments/avoidance-map/review/, /assessments/personal-capital/expert/, /assessments/personal-capital/business/
 - 14 new plan codes in constants.js
 - Price range: $19–$3,000 (490K–76M VND)
 - Dual rail checkout: VietQR (VND) + PayPal (USD)
@@ -93,6 +106,7 @@
 - **PayPal**: USD, international cards, merchant = "Công Ty Tnhh Thành Tâm Phát"
 - Auto-detect country from timezone/language for default provider
 - UI selector on all landing pages
+- PayPal webhook endpoint: `/api/payments/paypal/webhook` (see `docs/PAYPAL_WEBHOOK_SETUP.md`)
 
 ---
 

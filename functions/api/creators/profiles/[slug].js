@@ -1,5 +1,5 @@
-import { json, errorResponse } from "../../../../_lib/utils.js";
-import { getDb } from "../../../../_lib/db.js";
+import { json, errorResponse } from "../../../_lib/utils.js";
+import { getDb } from "../../../_lib/db.js";
 
 // GET /api/creators/profiles/:slug
 // Public endpoint for a single approved creator profile.

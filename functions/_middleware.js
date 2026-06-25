@@ -82,6 +82,7 @@ const ADMIN_PAGE_PERMISSIONS = {
   "/admin/learning": "learning.view",
   "/admin/audit": "audit.view",
   "/admin/inventory": "audit.view",
+  "/admin/creator-applications": "members.manage",
 };
 
 // ============================================================

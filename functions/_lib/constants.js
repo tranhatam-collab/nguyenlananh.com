@@ -54,6 +54,98 @@ export const PLANS = {
     priceUsd: 9,
     priceVnd: 225000,
     durationDays: 36500
+  },
+  // === Premium products (Phase 6) ===
+  asmt_avoidance_self: {
+    code: "asmt_avoidance_self",
+    label: "Avoidance Map — Self Assessment",
+    priceUsd: 19,
+    priceVnd: 490000,
+    durationDays: 36500
+  },
+  asmt_avoidance_review: {
+    code: "asmt_avoidance_review",
+    label: "Avoidance Map — With Expert Review",
+    priceUsd: 79,
+    priceVnd: 2000000,
+    durationDays: 36500
+  },
+  prog_rhythm_lab: {
+    code: "prog_rhythm_lab",
+    label: "Rhythm Design Lab — 21 Days",
+    priceUsd: 99,
+    priceVnd: 2500000,
+    durationDays: 365
+  },
+  prog_emo_block: {
+    code: "prog_emo_block",
+    label: "Emotional Block Mapping Intensive — 30 Days",
+    priceUsd: 249,
+    priceVnd: 6300000,
+    durationDays: 365
+  },
+  cert_boundary_found: {
+    code: "cert_boundary_found",
+    label: "Boundary Practice Certification — Foundation",
+    priceUsd: 299,
+    priceVnd: 7600000,
+    durationDays: 365
+  },
+  prog_family_pattern: {
+    code: "prog_family_pattern",
+    label: "Family Pattern Mapping Program — 6 Weeks",
+    priceUsd: 399,
+    priceVnd: 10000000,
+    durationDays: 365
+  },
+  prog_space_reset: {
+    code: "prog_space_reset",
+    label: "Space Reset Practitioner Program",
+    priceUsd: 499,
+    priceVnd: 12700000,
+    durationDays: 365
+  },
+  prog_creative_studio: {
+    code: "prog_creative_studio",
+    label: "Creative Practice Studio — 8 Weeks",
+    priceUsd: 399,
+    priceVnd: 10000000,
+    durationDays: 365
+  },
+  diag_capital_self: {
+    code: "diag_capital_self",
+    label: "Personal Capital Diagnostic — Self",
+    priceUsd: 49,
+    priceVnd: 1250000,
+    durationDays: 36500
+  },
+  diag_capital_expert: {
+    code: "diag_capital_expert",
+    label: "Personal Capital Diagnostic — Expert Reviewed",
+    priceUsd: 299,
+    priceVnd: 7600000,
+    durationDays: 36500
+  },
+  diag_capital_biz: {
+    code: "diag_capital_biz",
+    label: "Personal Capital Diagnostic — Founder/Business",
+    priceUsd: 1500,
+    priceVnd: 38000000,
+    durationDays: 36500
+  },
+  cert_companion_l1: {
+    code: "cert_companion_l1",
+    label: "Certified Practice Companion — Level 1",
+    priceUsd: 1200,
+    priceVnd: 30000000,
+    durationDays: 365
+  },
+  cert_method_designer: {
+    code: "cert_method_designer",
+    label: "Practice Method Designer Certification",
+    priceUsd: 3000,
+    priceVnd: 76000000,
+    durationDays: 365
   }
 };
 
@@ -135,7 +227,18 @@ export const TEMPLATE_IDS = {
   product_micro_inner_listening_welcome: "T71_INNER_LISTENING_WELCOME",
   product_micro_one_corner_welcome: "T72_ONE_CORNER_WELCOME",
   product_micro_7day_rhythm_welcome: "T73_7DAY_RHYTHM_WELCOME",
-  product_micro_companion_welcome: "T74_COMPANION_WELCOME"
+  product_micro_companion_welcome: "T74_COMPANION_WELCOME",
+  // Premium product welcome emails
+  product_asmt_avoidance_welcome: "T80_AVOIDANCE_WELCOME",
+  product_prog_rhythm_lab_welcome: "T81_RHYTHM_LAB_WELCOME",
+  product_prog_emo_block_welcome: "T82_EMO_BLOCK_WELCOME",
+  product_cert_boundary_welcome: "T83_BOUNDARY_WELCOME",
+  product_prog_family_welcome: "T84_FAMILY_PATTERN_WELCOME",
+  product_prog_space_reset_welcome: "T85_SPACE_PRACTITIONER_WELCOME",
+  product_prog_creative_studio_welcome: "T86_CREATIVE_STUDIO_WELCOME",
+  product_diag_capital_welcome: "T87_CAPITAL_DIAGNOSTIC_WELCOME",
+  product_cert_companion_welcome: "T88_COMPANION_L1_WELCOME",
+  product_cert_method_designer_welcome: "T89_METHOD_DESIGNER_WELCOME"
 };
 
 export function planByCode(planCode) {

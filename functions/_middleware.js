@@ -391,10 +391,12 @@ export async function onRequest(context) {
       const joinUrl = en ? "/en/join/" : "/join/";
 
       if (!memberSession) {
-        logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Deep content access denied — no session" });
+        const lessonSlug = getDeepLessonSlug(url.pathname);
+        const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : joinUrl;
+        logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Deep content access denied — no session, redirect to landing" });
         return new Response(null, {
           status: 302,
-          headers: { Location: joinUrl, "Cache-Control": "no-store" },
+          headers: { Location: landingUrl, "Cache-Control": "no-store" },
         });
       }
 

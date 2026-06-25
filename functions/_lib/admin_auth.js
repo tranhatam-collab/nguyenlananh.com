@@ -4,6 +4,7 @@
 // ============================================================
 
 import { requireDb, } from "./db.js";
+import { requireTurnstile } from "./turnstile.js";
 import {
   assert,
   errorResponse,
@@ -423,6 +424,12 @@ export async function adminLoginResponse(context) {
     const password = String(body.password || "");
     assert(email, "EMAIL_REQUIRED", "Email is required.", 422);
     assert(password, "PASSWORD_REQUIRED", "Password is required.", 422);
+
+    // Turnstile bot verification
+    const turnstileError = await requireTurnstile(body, context.request, context.env);
+    if (turnstileError) {
+      return json({ ok: false, error: { code: turnstileError.code, message: turnstileError.message } }, { status: turnstileError.status });
+    }
 
     const user = await getAdminUserByEmail(db, email);
     if (!user || !user.active) {

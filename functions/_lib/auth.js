@@ -288,7 +288,15 @@ export async function googleOAuthCallbackResponse(context) {
     if (callbackOrigin.hostname === "nguyenlananh.com") {
       callbackOrigin.hostname = "www.nguyenlananh.com";
     }
-    const redirectUrl = buildAbsoluteUrl(callbackOrigin.origin, nextPath);
+
+    // 2FA check: if user has 2FA enabled, redirect to verify page instead of nextPath
+    let finalNextPath = nextPath;
+    if (user.otp_enabled) {
+      const verifyPath = locale === "en" ? "/en/members/verify-2fa/" : "/members/verify-2fa/";
+      finalNextPath = `${verifyPath}?next_path=${encodeURIComponent(nextPath)}`;
+    }
+
+    const redirectUrl = buildAbsoluteUrl(callbackOrigin.origin, finalNextPath);
 
     if (cookieValue) {
       const cookieHeaders = sessionCookieHeaders(cookieValue);

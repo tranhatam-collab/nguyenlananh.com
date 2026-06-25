@@ -1,11 +1,17 @@
 import { json, errorResponse, randomId, nowIso } from "../../../_lib/utils.js";
 import { requireDb } from "../../../_lib/db.js";
+import { requireTurnstile } from "../../../_lib/turnstile.js";
 
 // POST /api/creators/apply
 // Public endpoint for creator applications.
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
+
+    // Turnstile bot verification
+    const turnstileError = await requireTurnstile(body, context.request, context.env);
+    if (turnstileError) return errorResponse(turnstileError.status, turnstileError.code, turnstileError.message);
+
     const email = String(body.email || "").trim().toLowerCase();
     const name = String(body.name || "").trim();
     const bio = String(body.bio || "").trim();

@@ -48,8 +48,11 @@
           <textarea id="message" name="message" rows="6" required style="width:100%; border:1px solid var(--line); border-radius:12px; padding:10px;"></textarea>
 
           <div id="contactFeedback" style="margin:10px 0; display:none; padding:10px 12px; border-radius:10px; font-size:14px;"></div>
+          <div id="turnstile-contact" class="cf-turnstile" style="margin-bottom:10px;"></div>
           <div class="actionsRow"><button type="submit" class="cta" id="contactSubmit">Gửi lời nhắn</button></div>
         </form>
+        <script src="/assets/turnstile-config.js"></script>
+        <script src="/assets/turnstile.js"></script>
         <script src="/assets/contact-form.js"></script>
       </article>
     </section>

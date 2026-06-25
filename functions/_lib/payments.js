@@ -1,4 +1,5 @@
 import { PLANS, PROVIDER_CATALOG, TEMPLATE_IDS, planByCode, providerByCode } from "./constants.js";
+import { requireTurnstile } from "./turnstile.js";
 
 function productWelcomeTemplateFor(source) {
   const map = {
@@ -1404,6 +1405,12 @@ export async function createCheckoutResponse(context) {
   try {
     const body = await readJson(context.request);
     assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
+
+    // Turnstile bot verification (graceful skip if not configured)
+    const turnstileError = await requireTurnstile(body, context.request, context.env);
+    if (turnstileError) {
+      return errorResponse(turnstileError.status, turnstileError.code, turnstileError.message);
+    }
 
     const providerCode = String(body.provider || "").trim().toLowerCase();
     const provider = providerByCode(providerCode);

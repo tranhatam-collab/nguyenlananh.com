@@ -38,6 +38,9 @@ EMAIL_FROM_PAY = "pay@nguyenlananh.com"
 EMAIL_FROM_SYSTEM = "noreply@nguyenlananh.com"
 EMAIL_REPLY_TO_SUPPORT = "support@nguyenlananh.com"
 MAIL_API_WORKSPACE_ID = "nguyenlananh.com"
+# Turnstile site key (public, safe to expose). Set TURNSTILE_SECRET_KEY via:
+#   CLOUDFLARE_ACCOUNT_ID=62d57eaa... npx wrangler pages secret put TURNSTILE_SECRET_KEY --project-name=nguyenlananh-com
+# TURNSTILE_SITE_KEY = "0x4XXXXXXXX..."  # Uncomment after creating widget on dash.cloudflare.com
 
 # Preview env KHÔNG dùng D1 cho đến khi có preview DB riêng.
 # Tạo preview DB: wrangler d1 create nguyenlananh-payments-preview

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Bảo mật | Thành viên | Nguyễn Lan Anh</title>
+  <meta name="robots" content="noindex,follow" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/members/security/" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a><nav class="navlinks" aria-label="Điều hướng chính"><a href="/hanh-trinh/">Hành trình</a><a href="/phuong-phap/">Hệ thống</a><a href="/bai-viet/">Bài viết</a><a href="/members/">Thành viên</a></nav><div class="actions"><a class="btn" href="/members/dashboard/">Dashboard</a><button class="hamburger" type="button" id="hamburger" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true"></span></button></div></div></div>
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Điều hướng"><div class="dhead"><div><div style="font-weight:700;font-size:13px;">Điều hướng</div><div class="hint">Chọn một mục để đi tới.</div></div><button class="btn" type="button" id="closeDrawer" aria-label="Đóng menu">Đóng</button></div><nav aria-label="Điều hướng di động"><a href="/hanh-trinh/" data-close>Hành trình</a><a href="/phuong-phap/" data-close>Hệ thống</a><a href="/bai-viet/" data-close>Bài viết</a><a href="/members/" data-close>Thành viên</a><a href="/members/dashboard/" data-close class="drawerCta">Dashboard</a></nav><div class="foot">Đi chậm để đi sâu. Đi thật để đi xa.</div></div></header>
+  <main id="main" class="container" role="main">
+    <section class="pageHead"><p style="margin:0;font-size:13px;color:rgba(15,23,42,.6);"><a href="/members/">Thành viên</a> / <a href="/members/dashboard/">Dashboard</a> / Bảo mật</p><h1>Bảo mật tài khoản</h1><p class="sub">Xác thực 2 bước (2FA) — bảo vệ tài khoản bằng mã OTP từ ứng dụng xác thực.</p></section>
+
+    <!-- 2FA Status -->
+    <article class="panel" id="twofa-status-panel" style="margin-bottom:16px;">
+      <h2>Trạng thái 2FA</h2>
+      <div id="twofa-status-loading" class="note">Đang kiểm tra...</div>
+      <div id="twofa-status-enabled" style="display:none;">
+        <p style="color:#166534; font-weight:600;">✓ 2FA đã bật</p>
+        <p class="note" id="twofa-enabled-at"></p>
+        <div class="actionsRow" style="margin-top:12px;">
+          <button class="btn" id="twofa-disable-btn" type="button">Tắt 2FA</button>
+        </div>
+      </div>
+      <div id="twofa-status-disabled" style="display:none;">
+        <p style="color:#991b1b;">2FA chưa bật</p>
+        <p class="note">Bật 2FA để bảo vệ tài khoản bằng mã OTP từ Google Authenticator, Authy, hoặc 1Password.</p>
+        <div class="actionsRow" style="margin-top:12px;">
+          <button class="cta" id="twofa-setup-btn" type="button">Bật 2FA</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2FA Setup (hidden until clicked) -->
+    <article class="panel" id="twofa-setup-panel" style="display:none; margin-bottom:16px;">
+      <h2>Thiết lập 2FA</h2>
+      <ol class="list">
+        <li>Tải ứng dụng xác thực: <strong>Google Authenticator</strong>, <strong>Authy</strong>, hoặc <strong>1Password</strong>.</li>
+        <li>Quét mã QR bên dưới hoặc nhập thủ công.</li>
+        <li>Nhập mã 6 số từ ứng dụng để xác nhận.</li>
+      </ol>
+
+      <div style="display:flex; flex-wrap:wrap; gap:20px; margin:16px 0;">
+        <div>
+          <img id="twofa-qr" src="" alt="QR code for 2FA" style="width:200px; height:200px; border:1px solid rgba(0,0,0,.1); border-radius:8px;" />
+        </div>
+        <div>
+          <p class="note">Hoặc nhập thủ công:</p>
+          <pre id="twofa-secret" style="background:#f8f9fa; padding:10px; border-radius:6px; font-size:13px; word-break:break-all; user-select:all;"></pre>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="twofa-verify-code">Mã xác nhận (6 số)</label>
+        <input id="twofa-verify-code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" style="font-size:20px; letter-spacing:4px; text-align:center;" />
+      </div>
+      <div class="actionsRow">
+        <button class="cta" id="twofa-enable-btn" type="button">Xác nhận & bật 2FA</button>
+        <button class="btn" id="twofa-cancel-btn" type="button">Hủy</button>
+      </div>
+      <p id="twofa-setup-error" class="note" style="color:#c0392b; display:none;"></p>
+    </article>
+
+    <!-- Backup codes (shown after enabling) -->
+    <article class="panel" id="twofa-backup-panel" style="display:none; margin-bottom:16px; background:#fff8e8; border:1px solid #ead9ad;">
+      <h2>Mã dự phòng — Lưu ngay!</h2>
+      <p style="font-size:.95rem; color:#6b5d3f;">Mỗi mã dùng được 1 lần khi bạn mất điện thoại. Lưu vào nơi an toàn (password manager, in giấy).</p>
+      <pre id="twofa-backup-codes" style="background:#fff; padding:16px; border-radius:8px; font-size:16px; font-family:ui-monospace,monospace; line-height:1.8; user-select:all;"></pre>
+      <div class="actionsRow">
+        <button class="btn" id="twofa-backup-done-btn" type="button">Tôi đã lưu mã dự phòng</button>
+      </div>
+    </article>
+
+    <!-- Disable 2FA (hidden until clicked) -->
+    <article class="panel" id="twofa-disable-panel" style="display:none; margin-bottom:16px;">
+      <h2>Tắt 2FA</h2>
+      <p class="note">Nhập mã OTP hiện tại để xác nhận tắt 2FA.</p>
+      <div class="field">
+        <label for="twofa-disable-code">Mã OTP hiện tại</label>
+        <input id="twofa-disable-code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" style="font-size:20px; letter-spacing:4px; text-align:center;" />
+      </div>
+      <div class="actionsRow">
+        <button class="cta" id="twofa-disable-confirm-btn" type="button" style="background:#c0392b;">Xác nhận tắt 2FA</button>
+        <button class="btn" id="twofa-disable-cancel-btn" type="button">Hủy</button>
+      </div>
+      <p id="twofa-disable-error" class="note" style="color:#c0392b; display:none;"></p>
+    </article>
+
+  </main>
+  <footer role="contentinfo"><div class="container"><div class="fwrap"><div><div style="font-weight:700;color:rgba(15,23,42,.8);">Nguyễn Lan Anh</div><div>© <span id="year"></span></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/">Trang chủ</a><a href="/members/">Thành viên</a><a href="/members/dashboard/">Dashboard</a></div></div></div></footer>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/site.js"></script>
+  <script>
+  (function() {
+    "use strict";
+
+    // Elements
+    var statusLoading = document.getElementById("twofa-status-loading");
+    var statusEnabled = document.getElementById("twofa-status-enabled");
+    var statusDisabled = document.getElementById("twofa-status-disabled");
+    var enabledAt = document.getElementById("twofa-enabled-at");
+    var setupPanel = document.getElementById("twofa-setup-panel");
+    var setupBtn = document.getElementById("twofa-setup-btn");
+    var qrImg = document.getElementById("twofa-qr");
+    var secretEl = document.getElementById("twofa-secret");
+    var verifyCodeInput = document.getElementById("twofa-verify-code");
+    var enableBtn = document.getElementById("twofa-enable-btn");
+    var cancelBtn = document.getElementById("twofa-cancel-btn");
+    var setupError = document.getElementById("twofa-setup-error");
+    var backupPanel = document.getElementById("twofa-backup-panel");
+    var backupCodesEl = document.getElementById("twofa-backup-codes");
+    var backupDoneBtn = document.getElementById("twofa-backup-done-btn");
+    var disableBtn = document.getElementById("twofa-disable-btn");
+    var disablePanel = document.getElementById("twofa-disable-panel");
+    var disableCodeInput = document.getElementById("twofa-disable-code");
+    var disableConfirmBtn = document.getElementById("twofa-disable-confirm-btn");
+    var disableCancelBtn = document.getElementById("twofa-disable-cancel-btn");
+    var disableError = document.getElementById("twofa-disable-error");
+
+    var currentSecret = null;
+
+    function showErr(el, msg) { el.textContent = msg; el.style.display = "block"; }
+    function hideErr(el) { el.style.display = "none"; }
+
+    // Load status
+    fetch("/api/auth/2fa/status", { credentials: "include" })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        statusLoading.style.display = "none";
+        if (data.ok && data.enabled) {
+          statusEnabled.style.display = "block";
+          if (data.enabled_at) enabledAt.textContent = "Bật từ: " + new Date(data.enabled_at).toLocaleDateString("vi-VN");
+        } else {
+          statusDisabled.style.display = "block";
+        }
+      })
+      .catch(function() {
+        statusLoading.textContent = "Không thể kiểm tra trạng thái. Vui lòng đăng nhập lại.";
+      });
+
+    // Setup flow
+    setupBtn.addEventListener("click", function() {
+      hideErr(setupError);
+      setupBtn.disabled = true;
+      setupBtn.textContent = "Đang tạo...";
+
+      fetch("/api/auth/2fa/setup", { method: "POST", credentials: "include" })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          setupBtn.disabled = false;
+          setupBtn.textContent = "Bật 2FA";
+          if (data.ok) {
+            currentSecret = data.secret;
+            qrImg.src = data.qr_url;
+            secretEl.textContent = data.secret;
+            setupPanel.style.display = "block";
+            setupPanel.scrollIntoView({ behavior: "smooth" });
+          } else {
+            showErr(setupError, data.message || "Không thể thiết lập 2FA.");
+          }
+        })
+        .catch(function() {
+          setupBtn.disabled = false;
+          setupBtn.textContent = "Bật 2FA";
+          showErr(setupError, "Lỗi kết nối.");
+        });
+    });
+
+    // Enable (verify code)
+    enableBtn.addEventListener("click", function() {
+      hideErr(setupError);
+      var code = verifyCodeInput.value.trim();
+      if (!code || code.length !== 6) {
+        showErr(setupError, "Vui lòng nhập mã 6 số.");
+        return;
+      }
+      enableBtn.disabled = true;
+      enableBtn.textContent = "Đang xác nhận...";
+
+      fetch("/api/auth/2fa/enable", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ secret: currentSecret, code: code })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          enableBtn.disabled = false;
+          enableBtn.textContent = "Xác nhận & bật 2FA";
+          if (data.ok) {
+            setupPanel.style.display = "none";
+            statusDisabled.style.display = "none";
+            statusEnabled.style.display = "block";
+            // Show backup codes
+            if (data.backup_codes) {
+              backupCodesEl.textContent = data.backup_codes.join("\n");
+              backupPanel.style.display = "block";
+              backupPanel.scrollIntoView({ behavior: "smooth" });
+            }
+          } else {
+            showErr(setupError, data.message || "Mã không đúng. Thử lại.");
+          }
+        })
+        .catch(function() {
+          enableBtn.disabled = false;
+          enableBtn.textContent = "Xác nhận & bật 2FA";
+          showErr(setupError, "Lỗi kết nối.");
+        });
+    });
+
+    cancelBtn.addEventListener("click", function() {
+      setupPanel.style.display = "none";
+      currentSecret = null;
+    });
+
+    backupDoneBtn.addEventListener("click", function() {
+      backupPanel.style.display = "none";
+    });
+
+    // Disable flow
+    disableBtn.addEventListener("click", function() {
+      hideErr(disableError);
+      disablePanel.style.display = "block";
+      disablePanel.scrollIntoView({ behavior: "smooth" });
+    });
+
+    disableConfirmBtn.addEventListener("click", function() {
+      hideErr(disableError);
+      var code = disableCodeInput.value.trim();
+      if (!code || code.length !== 6) {
+        showErr(disableError, "Vui lòng nhập mã 6 số.");
+        return;
+      }
+      disableConfirmBtn.disabled = true;
+      disableConfirmBtn.textContent = "Đang tắt...";
+
+      fetch("/api/auth/2fa/disable", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ code: code })
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          disableConfirmBtn.disabled = false;
+          disableConfirmBtn.textContent = "Xác nhận tắt 2FA";
+          if (data.ok) {
+            disablePanel.style.display = "none";
+            statusEnabled.style.display = "none";
+            statusDisabled.style.display = "block";
+            disableCodeInput.value = "";
+          } else {
+            showErr(disableError, data.message || "Mã không đúng.");
+          }
+        })
+        .catch(function() {
+          disableConfirmBtn.disabled = false;
+          disableConfirmBtn.textContent = "Xác nhận tắt 2FA";
+          showErr(disableError, "Lỗi kết nối.");
+        });
+    });
+
+    disableCancelBtn.addEventListener("click", function() {
+      disablePanel.style.display = "none";
+      disableCodeInput.value = "";
+    });
+  })();
+  </script>
+</body>
+</html>

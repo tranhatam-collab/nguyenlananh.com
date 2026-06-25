@@ -3,6 +3,18 @@
  * Merchant: Công Ty Tnhh Thành Tâm Phát
  */
 (function () {
+  // Auto-load Turnstile if not already loaded
+  if (!window.TurnstileHelper) {
+    var configScript = document.createElement("script");
+    configScript.src = "/assets/turnstile-config.js";
+    configScript.async = false;
+    var tsScript = document.createElement("script");
+    tsScript.src = "/assets/turnstile.js";
+    tsScript.async = false;
+    document.head.appendChild(configScript);
+    document.head.appendChild(tsScript);
+  }
+
   function randomId(prefix) {
     return (prefix || "id") + "_" + Math.random().toString(36).slice(2) + "_" + Date.now().toString(36);
   }
@@ -109,7 +121,8 @@
           provider: provider,
           locale: isPayPal ? "en" : "vi",
           product_source: planCode,
-          identity_country: isPayPal ? "INTL" : "VN"
+          identity_country: isPayPal ? "INTL" : "VN",
+          "cf-turnstile-response": window.TurnstileHelper ? window.TurnstileHelper.getToken() : ""
         })
       });
       const body = await response.json();

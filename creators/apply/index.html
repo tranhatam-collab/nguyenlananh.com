@@ -27,12 +27,15 @@
         <div class="field"><label for="motivation">Tại sao bạn muốn tham gia?</label><textarea id="motivation" name="motivation" rows="3"></textarea></div>
         <div class="field"><label for="experience">Kinh nghiệm liên quan</label><textarea id="experience" name="experience" rows="3"></textarea></div>
         <div class="field"><label for="sample_work_url">Link sample work</label><input id="sample_work_url" name="sample_work_url" type="url" /></div>
+        <div id="turnstile-creator-apply" class="cf-turnstile" style="margin-bottom:10px;"></div>
         <div class="actionsRow"><button type="submit" class="cta">Gửi đơn</button></div>
         <div id="applyStatus" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
       </form>
     </section>
   </main>
   <footer role="contentinfo"><div class="container"><div class="fwrap"><div><div style="font-weight:700;color:rgba(15,23,42,.8);">Nguyễn Lan Anh</div><div>© <span id="year"></span></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/">Trang chủ</a><a href="/creators/">Creators</a></div></div></div></footer>
+  <script src="/assets/turnstile-config.js"></script>
+  <script src="/assets/turnstile.js"></script>
   <script src="/assets/content-registry.js"></script>
   <script src="/assets/site.js"></script>
   <script src="/assets/creator-apply.js"></script>

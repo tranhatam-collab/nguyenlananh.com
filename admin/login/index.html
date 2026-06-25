@@ -28,6 +28,7 @@
           <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" required />
         </div>
         <div class="actionsRow">
+          <div id="turnstile-admin-login" class="cf-turnstile" style="margin-bottom:12px;"></div>
           <button id="login-submit" class="cta" type="submit" style="width:100%;">Đăng nhập</button>
         </div>
         <p id="login-error" class="note" style="color:#c0392b; display:none;"></p>
@@ -42,6 +43,8 @@
     </section>
   </main>
 
+  <script src="/assets/turnstile-config.js"></script>
+  <script src="/assets/turnstile.js"></script>
   <script>
   (function() {
     "use strict";
@@ -49,6 +52,14 @@
     var errEl = document.getElementById("login-error");
     var infoEl = document.getElementById("login-info");
     var submitBtn = document.getElementById("login-submit");
+    var turnstileWidgetId = null;
+
+    // Render Turnstile widget
+    if (window.TurnstileHelper && window.TurnstileHelper.isConfigured()) {
+      window.TurnstileHelper.render(document.getElementById("turnstile-admin-login")).then(function(id) {
+        turnstileWidgetId = id;
+      });
+    }
 
     // Check if already logged in
     fetch("/api/admin/me", { credentials: "include" })
@@ -83,7 +94,11 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email: email, password: password })
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          "cf-turnstile-response": window.TurnstileHelper ? window.TurnstileHelper.getToken(turnstileWidgetId) : ""
+        })
       })
         .then(function(r) { return r.json(); })
         .then(function(data) {
@@ -100,6 +115,7 @@
             errEl.style.display = "block";
             submitBtn.disabled = false;
             submitBtn.textContent = "Đăng nhập";
+            if (window.TurnstileHelper) window.TurnstileHelper.reset(turnstileWidgetId);
           }
         })
         .catch(function() {

@@ -1,11 +1,16 @@
 import { TEMPLATE_IDS } from "../../_lib/constants.js";
 import { requireDb } from "../../_lib/db.js";
 import { sendTemplateEmailDirect } from "../../_lib/email.js";
+import { requireTurnstile } from "../../_lib/turnstile.js";
 import { errorResponse, json, normalizeEmail, nowIso, randomId, readJson } from "../../_lib/utils.js";
 
 export async function onRequestPost(context) {
   const { request, env } = context;
   const body = await readJson(request);
+
+  // Turnstile bot verification
+  const turnstileError = await requireTurnstile(body, request, env);
+  if (turnstileError) return errorResponse(turnstileError.status, turnstileError.code, turnstileError.message);
 
   const name = String(body?.name || "").trim();
   const contact = String(body?.contact || "").trim();

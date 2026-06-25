@@ -1,5 +1,5 @@
 import { json, errorResponse, randomId, nowIso } from "../../../_lib/utils.js";
-import { getDb } from "../../../_lib/db.js";
+import { requireDb } from "../../../_lib/db.js";
 
 // POST /api/creators/apply
 // Public endpoint for creator applications.
@@ -20,7 +20,7 @@ export async function onRequestPost(context) {
       return errorResponse(400, "INVALID_NAME", "Vui lòng nhập tên.");
     }
 
-    const db = getDb(context.env);
+    const db = requireDb(context.env);
     const existing = await db
       .prepare("SELECT id FROM creator_applications WHERE email = ? AND status = 'pending' ORDER BY submitted_at DESC LIMIT 1")
       .bind(email)

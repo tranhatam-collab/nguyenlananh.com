@@ -1,11 +1,11 @@
 import { json, errorResponse } from "../../../_lib/utils.js";
-import { getDb } from "../../../_lib/db.js";
+import { requireDb } from "../../../_lib/db.js";
 
 // GET /api/creators/profiles
 // Public endpoint listing approved creator profiles.
 export async function onRequestGet(context) {
   try {
-    const db = getDb(context.env);
+    const db = requireDb(context.env);
     const { results } = await db
       .prepare("SELECT slug, name, bio, avatar_url, specialties, created_at FROM creator_profiles WHERE status = 'approved' ORDER BY created_at DESC")
       .all();

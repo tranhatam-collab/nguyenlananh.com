@@ -1,5 +1,5 @@
 import { json, errorResponse, randomId, nowIso, getCookieValue } from "../../../_lib/utils.js";
-import { getDb } from "../../../_lib/db.js";
+import { requireDb } from "../../../_lib/db.js";
 
 // POST /api/creators/submissions
 // Requires authenticated member who is an approved creator.
@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
     const session = await getSession(context);
     if (!session) return errorResponse(401, "UNAUTHORIZED", "Bạn cần đăng nhập.");
 
-    const db = getDb(context.env);
+    const db = requireDb(context.env);
     const creator = await db
       .prepare("SELECT id FROM creator_profiles WHERE user_id = ? AND status = 'approved'")
       .bind(session.user_id)
@@ -47,7 +47,7 @@ async function getSession(context) {
                 getCookieValue(context.request, "nla_session");
   if (!token) return null;
   try {
-    const db = getDb(context.env);
+    const db = requireDb(context.env);
     const session = await db
       .prepare("SELECT user_id, email FROM sessions WHERE token = ? AND expires_at > datetime('now')")
       .bind(token)

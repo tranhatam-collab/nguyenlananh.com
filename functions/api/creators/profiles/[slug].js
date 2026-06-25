@@ -1,12 +1,12 @@
 import { json, errorResponse } from "../../../_lib/utils.js";
-import { getDb } from "../../../_lib/db.js";
+import { requireDb } from "../../../_lib/db.js";
 
 // GET /api/creators/profiles/:slug
 // Public endpoint for a single approved creator profile.
 export async function onRequestGet(context) {
   try {
     const { slug } = context.params;
-    const db = getDb(context.env);
+    const db = requireDb(context.env);
     const profile = await db
       .prepare("SELECT slug, name, bio, avatar_url, website, social_links, specialties, created_at FROM creator_profiles WHERE slug = ? AND status = 'approved'")
       .bind(slug)

@@ -427,7 +427,10 @@ export async function onRequest(context) {
               .bind(memberSession.sub, requiredPlan, new Date().toISOString())
               .first();
             hasAccess = !!access;
-          } catch (_e) {}
+          } catch (e) {
+            console.warn("[content-access] DB check failed:", e.message);
+            hasAccess = false;
+          }
         } else if (requiredPlan === null) {
           // Free-tier lesson (no specific plan needed, just logged in)
           hasAccess = true;

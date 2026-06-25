@@ -126,9 +126,11 @@
     function showErr(el, msg) { el.textContent = msg; el.style.display = "block"; }
     function hideErr(el) { el.style.display = "none"; }
 
-    // Load status
-    fetch("/api/auth/2fa/status", { credentials: "include" })
-      .then(function(r) { return r.json(); })
+    // Load status (with 10s timeout fallback)
+    var statusController = new AbortController();
+    var statusTimeoutId = setTimeout(function() { statusController.abort(); }, 10000);
+    fetch("/api/auth/2fa/status", { credentials: "include", signal: statusController.signal })
+      .then(function(r) { clearTimeout(statusTimeoutId); return r.json(); })
       .then(function(data) {
         statusLoading.style.display = "none";
         if (data.ok && data.enabled) {
@@ -138,8 +140,13 @@
           statusDisabled.style.display = "block";
         }
       })
-      .catch(function() {
-        statusLoading.textContent = "Không thể kiểm tra trạng thái. Vui lòng đăng nhập lại.";
+      .catch(function(err) {
+        clearTimeout(statusTimeoutId);
+        if (err && err.name === "AbortError") {
+          statusLoading.textContent = "Không thể kiểm tra trạng thái. Vui lòng tải lại trang.";
+        } else {
+          statusLoading.textContent = "Không thể kiểm tra trạng thái. Vui lòng đăng nhập lại.";
+        }
       });
 
     // Setup flow

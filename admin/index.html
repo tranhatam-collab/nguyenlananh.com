@@ -67,9 +67,10 @@
     <section id="admin-user-panel" class="panel" style="display:none;">
       <h3>Quản lý người dùng Admin</h3>
       <p class="note">Tạo, sửa, xóa tài khoản admin và phân quyền.</p>
+      <!-- TODO: Wire to /api/admin/users when needed -->
       <div class="actionsRow">
-        <button id="admin-users-refresh" class="ghost" type="button">Tải danh sách</button>
-        <button id="admin-user-create-toggle" class="ghost" type="button">+ Tạo admin mới</button>
+        <button id="admin-users-refresh" class="ghost" type="button" disabled>Tải danh sách</button>
+        <button id="admin-user-create-toggle" class="ghost" type="button" disabled>+ Tạo admin mới</button>
       </div>
       <div id="admin-user-create-form" style="display:none; margin-top:12px;">
         <div class="grid2">
@@ -101,8 +102,8 @@
           <label style="font-size:13px;"><input type="checkbox" id="new-admin-must-change" checked /> Yêu cầu đổi mật khẩu khi đăng nhập đầu</label>
         </div>
         <div class="actionsRow" style="margin-top:8px;">
-          <button id="admin-user-create-submit" class="cta" type="button">Tạo tài khoản</button>
-          <button id="admin-user-create-cancel" class="ghost" type="button">Hủy</button>
+          <button id="admin-user-create-submit" class="cta" type="button" disabled>Tạo tài khoản</button>
+          <button id="admin-user-create-cancel" class="ghost" type="button" disabled>Hủy</button>
         </div>
         <p id="admin-user-create-status" class="note"></p>
       </div>

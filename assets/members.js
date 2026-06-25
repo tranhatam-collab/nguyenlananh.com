@@ -1322,23 +1322,30 @@
 
     profileForm?.addEventListener("submit", (event) => {
       event.preventDefault();
-      const profile = saveProfileForEmail(session.email, {
-        fullName: $("#profileFullName")?.value,
-        currentState: $("#profileCurrentState")?.value,
-        desiredShift: $("#profileDesiredShift")?.value,
-        companionRhythm: $("#profileCompanionRhythm")?.value,
-        practiceTrack: $("#profilePracticeTrack")?.value,
-        reminderIntensity: $("#profileReminderIntensity")?.value,
-        reminderPausedUntil: $("#profileReminderPause")?.checked
-          ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
-          : ""
-      });
+      const submitBtn = profileForm.querySelector("button[type='submit']");
+      const origText = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Đang lưu..."; }
+      try {
+        const profile = saveProfileForEmail(session.email, {
+          fullName: $("#profileFullName")?.value,
+          currentState: $("#profileCurrentState")?.value,
+          desiredShift: $("#profileDesiredShift")?.value,
+          companionRhythm: $("#profileCompanionRhythm")?.value,
+          practiceTrack: $("#profilePracticeTrack")?.value,
+          reminderIntensity: $("#profileReminderIntensity")?.value,
+          reminderPausedUntil: $("#profileReminderPause")?.checked
+            ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+            : ""
+        });
 
-      renderProfileInfo(session);
-      if (profileIsComplete(profile)) {
-        setBanner(profileStatus, strings.profileSaved, "success");
+        renderProfileInfo(session);
+        if (profileIsComplete(profile)) {
+          setBanner(profileStatus, strings.profileSaved, "success");
+        }
+        draw();
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origText; }
       }
-      draw();
     });
 
     startCheckout?.addEventListener("click", async () => {
@@ -1351,6 +1358,9 @@
       const identityRef = String(identityRefInput?.value || "").trim();
       const locale = document.documentElement.lang === "en-US" ? "en-US" : "vi";
       setBanner(unlockStatus, strings.checkoutCreating, "warning");
+      const origCheckoutText = startCheckout.textContent;
+      startCheckout.disabled = true;
+      startCheckout.textContent = strings.checkoutCreating;
 
       try {
         const checkout = await createVietQrOrder({
@@ -1379,6 +1389,9 @@
           return;
         }
         setBanner(unlockStatus, message || strings.checkoutFailed, "danger");
+      } finally {
+        startCheckout.disabled = false;
+        startCheckout.textContent = origCheckoutText;
       }
     });
 
@@ -1387,6 +1400,9 @@
         setBanner(unlockStatus, strings.transferMarkFailed, "danger");
         return;
       }
+      const origTransferText = markTransferSent.textContent;
+      markTransferSent.disabled = true;
+      markTransferSent.textContent = "Đang gửi...";
       try {
         await markVietQrPending({
           internal_order_id: currentVietQrOrderId,
@@ -1395,6 +1411,9 @@
         setBanner(unlockStatus, strings.transferMarked, "success");
       } catch (error) {
         setBanner(unlockStatus, error.message || strings.transferMarkFailed, "danger");
+      } finally {
+        markTransferSent.disabled = false;
+        markTransferSent.textContent = origTransferText;
       }
     });
 

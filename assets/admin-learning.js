@@ -20,7 +20,9 @@
       document.getElementById("statPracticeSubmitted").textContent = find(o.practice_submissions, "status", "submitted");
       document.getElementById("statCertsIssued").textContent = find(o.certifications, "status", "issued");
       document.getElementById("statCheckins").textContent = o.total_checkins || 0;
-    } catch (_e) {}
+    } catch (e) {
+      console.error("Load overview failed:", e);
+    }
   }
 
   async function loadAttempts() {
@@ -33,7 +35,11 @@
       body.innerHTML = (data.attempts || []).map(a =>
         `<tr><td>${a.user_email || "-"}</td><td>${a.assessment_slug}</td><td>${a.score}/${a.max_score}</td><td>${a.percentage}%</td><td>${a.passed ? "✅" : "❌"}</td><td>${a.submitted_at || "-"}</td></tr>`
       ).join("") || "<tr><td colspan='6'>No data</td></tr>";
-    } catch (_e) {}
+    } catch (e) {
+      console.error("Load failed:", e);
+      const container = document.getElementById("attemptsBody");
+      if (container) container.innerHTML = "<tr><td colspan='6' style='text-align:center;padding:20px;color:#991b1b;'>Lỗi tải dữ liệu. Vui lòng tải lại trang.</td></tr>";
+    }
   }
 
   async function loadExams() {
@@ -46,7 +52,11 @@
       body.innerHTML = (data.attempts || []).map(a =>
         `<tr><td>${a.user_email || "-"}</td><td>${a.exam_slug}</td><td>${a.score}/${a.max_score}</td><td>${a.percentage}%</td><td>${a.passed ? "✅" : "❌"}</td><td>${a.submitted_at || "-"}</td></tr>`
       ).join("") || "<tr><td colspan='6'>No data</td></tr>";
-    } catch (_e) {}
+    } catch (e) {
+      console.error("Load failed:", e);
+      const container = document.getElementById("examsBody");
+      if (container) container.innerHTML = "<tr><td colspan='6' style='text-align:center;padding:20px;color:#991b1b;'>Lỗi tải dữ liệu. Vui lòng tải lại trang.</td></tr>";
+    }
   }
 
   async function loadPractice() {
@@ -59,7 +69,11 @@
       body.innerHTML = (data.submissions || []).map(s =>
         `<tr><td>${s.user_email || "-"}</td><td>${s.lesson_slug}</td><td>${s.status}</td><td>${s.review_score || "-"}</td><td>${s.submitted_at || "-"}</td></tr>`
       ).join("") || "<tr><td colspan='5'>No data</td></tr>";
-    } catch (_e) {}
+    } catch (e) {
+      console.error("Load failed:", e);
+      const container = document.getElementById("practiceBody");
+      if (container) container.innerHTML = "<tr><td colspan='5' style='text-align:center;padding:20px;color:#991b1b;'>Lỗi tải dữ liệu. Vui lòng tải lại trang.</td></tr>";
+    }
   }
 
   async function loadCerts() {
@@ -72,7 +86,11 @@
       body.innerHTML = (data.certifications || []).map(c =>
         `<tr><td>${c.user_email || "-"}</td><td>${c.title}</td><td>${c.cert_number}</td><td>${c.status}</td><td>${c.issued_at || "-"}</td></tr>`
       ).join("") || "<tr><td colspan='5'>No data</td></tr>";
-    } catch (_e) {}
+    } catch (e) {
+      console.error("Load failed:", e);
+      const container = document.getElementById("certsBody");
+      if (container) container.innerHTML = "<tr><td colspan='5' style='text-align:center;padding:20px;color:#991b1b;'>Lỗi tải dữ liệu. Vui lòng tải lại trang.</td></tr>";
+    }
   }
 
   function initTabs() {

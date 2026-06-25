@@ -20,9 +20,19 @@
     subStatus.classList.remove("hidden");
   }
 
+  let statusResolved = false;
+
   async function init() {
+    // Timeout fallback: if status doesn't resolve in 10s, show error
+    setTimeout(() => {
+      if (!statusResolved) {
+        setStatus("Không thể kiểm tra trạng thái. Vui lòng tải lại trang.", "error");
+      }
+    }, 10000);
+
     try {
       const res = await fetch("/api/members/me");
+      statusResolved = true;
       if (!res.ok) {
         setStatus("Bạn cần <a href='/join/'>đăng nhập</a>.", "error");
         return;
@@ -35,6 +45,7 @@
       setStatus(`Xin chào ${user.name || user.email}. Bạn đã được duyệt là creator.`, "success");
       subForm?.classList.remove("hidden");
     } catch (e) {
+      statusResolved = true;
       setStatus("Không kiểm tra được trạng thái.", "error");
     }
   }

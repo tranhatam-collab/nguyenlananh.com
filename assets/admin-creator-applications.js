@@ -37,10 +37,16 @@
       `).join("");
 
       list.querySelectorAll(".approve").forEach(btn => {
-        btn.addEventListener("click", e => update(e.target.closest(".app-card").dataset.id, "approved"));
+        btn.addEventListener("click", e => {
+          if (!confirm("Bạn có chắc muốn phê duyệt đơn này?")) return;
+          update(e.target.closest(".app-card").dataset.id, "approved");
+        });
       });
       list.querySelectorAll(".reject").forEach(btn => {
-        btn.addEventListener("click", e => update(e.target.closest(".app-card").dataset.id, "rejected"));
+        btn.addEventListener("click", e => {
+          if (!confirm("Bạn có chắc muốn từ chối đơn này?")) return;
+          update(e.target.closest(".app-card").dataset.id, "rejected");
+        });
       });
     } catch (e) {
       console.error("Applications load failed", e);

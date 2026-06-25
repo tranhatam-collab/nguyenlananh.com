@@ -33,7 +33,9 @@ export async function onRequestPost(context) {
       const secretBytes = base32Decode(user.otp_secret);
       verified = await verifyTOTP(secretBytes, code);
     } else if (backup_code) {
-      const storedHashes = JSON.parse(user.otp_backup_codes || "[]");
+      let storedHashes;
+      try { storedHashes = JSON.parse(user.otp_backup_codes || "[]"); }
+      catch { storedHashes = []; }
       verified = await verifyBackupCode(backup_code, storedHashes);
       usedBackupCode = verified;
       if (verified) {

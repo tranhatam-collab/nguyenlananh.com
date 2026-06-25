@@ -173,15 +173,17 @@ Nhóm "Tôi đã giữ lời":
     <article class="panel articleBody">
       <h2>Submission 1 — Nộp kho bằng chứng tuần 3</h2>
       <p>Sao chép 10-15 dòng bằng chứng tiêu biểu nhất từ 3 tuần đầu vào ô bên dưới và gửi.</p>
+      <div id="submissionNotice" style="display:none;margin:10px 0;padding:10px;background:rgba(234,179,8,.12);border-radius:8px;color:#854d0e;font-size:14px;">Submission sẽ được lưu khi hệ thống grading sẵn sàng. Bạn sẽ nhận thông báo qua email.</div>
       <textarea rows="10" style="width:100%;" placeholder="Dán 10-15 dòng bằng chứng tiêu biểu nhất..."></textarea>
-      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="alert('Submission sẽ được lưu khi hệ thống grading sẵn sàng.')">Gửi submission 1</button></div>
+      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="document.getElementById('submissionNotice').style.display='block';this.disabled=true;this.textContent='Đã ghi nhận';">Gửi submission 1</button></div>
     </article>
 
     <article class="panel articleBody">
       <h2>Submission 2 — Nộp kho bằng chứng tuần 6 + báo cáo cuối</h2>
       <p>Sao chép kho bằng chứng 4 nhóm + báo cáo cuối vào ô bên dưới và gửi.</p>
+      <div id="submissionNotice2" style="display:none;margin:10px 0;padding:10px;background:rgba(234,179,8,.12);border-radius:8px;color:#854d0e;font-size:14px;">Submission sẽ được lưu khi hệ thống grading sẵn sàng. Bạn sẽ nhận thông báo qua email.</div>
       <textarea rows="15" style="width:100%;" placeholder="Dán kho bằng chứng 4 nhóm + báo cáo cuối..."></textarea>
-      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="alert('Submission sẽ được lưu khi hệ thống grading sẵn sàng.')">Gửi submission 2</button></div>
+      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="document.getElementById('submissionNotice2').style.display='block';this.disabled=true;this.textContent='Đã ghi nhận';">Gửi submission 2</button></div>
     </article>
 
     <article class="panel articleBody">

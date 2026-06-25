@@ -15,6 +15,17 @@
   }
 
   async function loadAudit() {
+    const statIds = [
+      "statUsers", "statPaidMembers", "statOrders", "statPaidOrders",
+      "statPendingOrders", "statFailedOrders", "statRefundedOrders",
+      "statContentAccess", "statTotalContentAccess", "statLessonOpened",
+      "statLessonCompleted", "statPractice", "statAssessments", "statExams",
+      "statCheckins", "statEvents", "statWebhookErrors", "statCreatorSubmissions"
+    ];
+    statIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = "Đang tải...";
+    });
     try {
       const [auditRes, inventoryRes] = await Promise.all([
         fetch("/api/admin/audit"),
@@ -125,6 +136,14 @@
       }
     } catch (e) {
       console.error("Audit load failed", e);
+      const auditMain = document.getElementById("admin-main") || document.querySelector("main");
+      if (auditMain) {
+        auditMain.insertAdjacentHTML("afterbegin", "<div class='statusBanner error' style='margin:12px;padding:12px;border:1px solid #991b1b;color:#991b1b;'>Lỗi tải dữ liệu audit. Vui lòng tải lại trang.</div>");
+      }
+      statIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.textContent === "Đang tải...") el.textContent = "-";
+      });
     }
   }
 

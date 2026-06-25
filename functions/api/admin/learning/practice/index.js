@@ -8,7 +8,8 @@ export async function onRequestGet(context) {
     const { db } = await requireAdminPermission(context, "learning.view");
     const url = new URL(context.request.url);
     const status = url.searchParams.get("status") || "submitted";
-    const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 200);
+    const limitParam = parseInt(url.searchParams.get("limit") || "50", 10);
+    const limit = Math.min(Number.isNaN(limitParam) ? 50 : limitParam, 200);
 
     const rows = await db
       .prepare(`SELECT ps.*, u.email as user_email FROM practice_submissions ps

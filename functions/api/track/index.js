@@ -1,4 +1,4 @@
-import { json } from "../../_lib/utils.js";
+import { json, errorResponse } from "../../_lib/utils.js";
 
 export async function onRequestPost(context) {
   try {
@@ -38,7 +38,7 @@ export async function onRequestPost(context) {
 
     return json({ ok: true });
   } catch (err) {
-    return json({ ok: false, error: err.message }, { status: 500 });
+    return errorResponse(500, "TRACK_ERROR", err.message || "Failed to track event");
   }
 }
 

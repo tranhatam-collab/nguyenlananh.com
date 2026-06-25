@@ -180,15 +180,17 @@ Vùng cần làm việc sâu:
     <article class="panel articleBody">
       <h2>Submission 1 — Nộp 2 AAR sự việc (Tuần 2)</h2>
       <p>Dán 2 AAR sự việc hoàn chỉnh vào ô bên dưới và gửi.</p>
+      <div id="submissionNotice" style="display:none;margin:10px 0;padding:10px;background:rgba(234,179,8,.12);border-radius:8px;color:#854d0e;font-size:14px;">Submission sẽ được lưu khi hệ thống grading sẵn sàng. Bạn sẽ nhận thông báo qua email.</div>
       <textarea rows="12" style="width:100%;" placeholder="Dán 2 AAR sự việc..."></textarea>
-      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="alert('Submission sẽ được lưu khi hệ thống grading sẵn sàng.')">Gửi submission 1</button></div>
+      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="document.getElementById('submissionNotice').style.display='block';this.disabled=true;this.textContent='Đã ghi nhận';">Gửi submission 1</button></div>
     </article>
 
     <article class="panel articleBody">
       <h2>Submission 2 — Nộp AAR giai đoạn + báo cáo cuối (Tuần 4)</h2>
       <p>Dán AAR giai đoạn 3 tháng và báo cáo cuối vào ô bên dưới và gửi.</p>
+      <div id="submissionNotice2" style="display:none;margin:10px 0;padding:10px;background:rgba(234,179,8,.12);border-radius:8px;color:#854d0e;font-size:14px;">Submission sẽ được lưu khi hệ thống grading sẵn sàng. Bạn sẽ nhận thông báo qua email.</div>
       <textarea rows="15" style="width:100%;" placeholder="Dán AAR giai đoạn + báo cáo cuối..."></textarea>
-      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="alert('Submission sẽ được lưu khi hệ thống grading sẵn sàng.')">Gửi submission 2</button></div>
+      <div class="actionsRow" style="margin-top:10px;"><button class="cta" type="button" onclick="document.getElementById('submissionNotice2').style.display='block';this.disabled=true;this.textContent='Đã ghi nhận';">Gửi submission 2</button></div>
     </article>
 
     <article class="panel articleBody">

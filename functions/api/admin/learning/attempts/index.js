@@ -8,7 +8,11 @@ export async function onRequestGet(context) {
     const { db } = await requireAdminPermission(context, "learning.view");
     const url = new URL(context.request.url);
     const type = url.searchParams.get("type") || "assessment";
-    const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 200);
+    if (!["assessment", "exam"].includes(type)) {
+      return errorResponse(400, "INVALID_TYPE", "Type must be 'assessment' or 'exam'.");
+    }
+    const limitParam = parseInt(url.searchParams.get("limit") || "50", 10);
+    const limit = Math.min(Number.isNaN(limitParam) ? 50 : limitParam, 200);
 
     let rows;
     if (type === "exam") {

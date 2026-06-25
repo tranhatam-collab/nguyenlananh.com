@@ -176,16 +176,24 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Live creds (CLIENT_ID, CLIENT_SECRET) | ✅ validated |
+| Live creds (CLIENT_ID, CLIENT_SECRET) | ✅ set trong Cloudflare Pages secrets |
+| MERCHANT_EMAIL | ✅ set (tranhatam@gmail.com) |
 | Checkout URL creation | ✅ PASS |
 | Webhook endpoint `/api/payments/paypal/webhook` | ✅ tồn tại |
-| WEBHOOK_ID production | ❌ chưa có bằng chứng |
-| End-to-end fulfillment | ❌ chưa xác minh |
-| Secret rotation | ⚠️ cần làm (secret đã lộ trong chat) |
+| WEBHOOK_ID production | ❌ chưa set — cần tạo webhook trong PayPal dashboard trước |
+| End-to-end fulfillment | ❌ chưa xác minh (cần WEBHOOK_ID) |
+| Secret rotation | ⚠️ URGENT — credentials đã lộ trong chat, cần rotate sau khi verify |
 
-**Cần từ anh:**
-1. Email PayPal Business của Thành Tâm Phát → set `PAYPAL_MERCHANT_EMAIL`
-2. Secret PayPal mới (sau khi rotate) → update `PAYPAL_CLIENT_SECRET`
+**Đã set (commit `67a2d60`):**
+- `PAYPAL_CLIENT_ID` ✅
+- `PAYPAL_CLIENT_SECRET` ✅
+- `PAYPAL_MERCHANT_EMAIL` ✅
+
+**Cần làm tiếp:**
+1. Tạo webhook trong PayPal Developer Dashboard (xem `docs/PAYPAL_WEBHOOK_SETUP.md`)
+2. Set `PAYPAL_WEBHOOK_ID` qua wrangler
+3. Test end-to-end: thanh toán → webhook → fulfillment → entitlement
+4. **Rotate credentials** vì đã lộ trong chat history
 
 ---
 
@@ -230,8 +238,8 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 | Creator public system | ✅ Routing fix xong, còn policy + onboarding |
 | Creator routing `/creators/:slug/` | ✅ FIXED tại `d349134` |
 | Price validation CI | ✅ `npm run validate:prices` tại `d349134` |
-| PayPal checkout | PASS |
-| PayPal end-to-end fulfillment | HOLD |
+| PayPal checkout | PASS (creds set) |
+| PayPal end-to-end fulfillment | HOLD — cần WEBHOOK_ID |
 | Build 26 products at once | REJECTED |
 | Build 3 pilot products first | APPROVED |
 

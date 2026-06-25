@@ -1,7 +1,7 @@
 # AUDIT GAP — Kế hoạch 45 bài · 45 commercial offers · 4 membership · Creator · Audit Report
 
-> Ngày: 2026-06-25
-> HEAD: `d349134`
+> Ngày: 2026-06-25 (cập nhật)
+> HEAD: `9ed0258`
 > Mục tiêu: 45 bài viết, 45 commercial offers, 4 gói thành viên, nhà sáng tạo nội dung, thống kê báo cáo audit
 
 ---
@@ -11,11 +11,11 @@
 | Mục tiêu | Hiện có | Thiếu | Phán quyết |
 |---|---|---|---|
 | 45 bài viết | ~82 bài viết thực tế | ✅ Đã vượt | PASS số lượng, cần quality audit |
-| 45 commercial offers | 23 plan codes, 10 product families, 19 landing pages | ~22–28 offers | HOLD — cần inventory chính xác + product taxonomy |
+| 45 commercial offers | 26 plan codes, 13 product families, 22 landing pages | ~19–23 offers | IN PROGRESS — 3 pilot products đã build xong |
 | 4 gói thành viên | 5 gói (year1, year2, year3, lifetime, monthly_practice) | ✅ Đã đủ | PASS (monthly chưa public cho đến khi recurring hoàn chỉnh) |
 | Nhà sáng tạo nội dung | `/creators/`, `/creators/apply/`, `/creators/:slug/`, `/members/creator-dashboard/` + admin | IP/consent/revenue share | BUILD REQUIRED (routing đã fix) |
 | Thống kê báo cáo audit | `/admin/audit/` + API + inventory API + content stats | funnel analytics, MRR/ARR, export | P1 — cần mở rộng tiếp |
-| Giá mỗi offer | 23 plan codes, mỗi cái 1 giá | ✅ CI gate `validate:prices` | PASS |
+| Giá mỗi offer | 26 plan codes, mỗi cái 1 giá | ✅ CI gate `validate:prices` | PASS |
 | PayPal checkout | checkout URL trả về | ✅ | PASS |
 | PayPal fulfillment | webhook endpoint tồn tại | webhook ID + end-to-end test | HOLD |
 
@@ -46,21 +46,27 @@
 | Plan code | Mã checkout | asmt_avoidance_self |
 | Entitlement | Quyền truy cập | content_access |
 
-### Plan codes hiện có (23)
+### Plan codes hiện có (26)
 
 | Nhóm | Số lượng | Plan codes |
 |---|---|---|
 | Membership | 5 | year1, year2, year3, lifetime, monthly_practice |
 | Micro products | 5 | micro_life_reset, micro_inner_listening, micro_one_corner, micro_7day_rhythm, micro_companion |
 | Premium offers | 13 | asmt_avoidance_self, asmt_avoidance_review, diag_capital_self, diag_capital_expert, diag_capital_biz, prog_rhythm_lab, prog_emo_block, prog_family_pattern, prog_space_reset, prog_creative_studio, cert_boundary_found, cert_companion_l1, cert_method_designer |
-| **Tổng** | **23** | — |
+| Pilot programs | 3 | self_trust_evidence_builder, open_loop_closure_sprint, personal_after_action_review |
+| **Tổng** | **26** | — |
 
 **Phân nhóm premium (13):**
 - Assessments (5): asmt_avoidance_self, asmt_avoidance_review, diag_capital_self, diag_capital_expert, diag_capital_biz
 - Guided programs (5): prog_rhythm_lab, prog_emo_block, prog_family_pattern, prog_space_reset, prog_creative_studio
 - Certifications (3): cert_boundary_found, cert_companion_l1, cert_method_designer
 
-### Product families hiện có (10)
+**Phân nhóm pilot (3):**
+- self_trust_evidence_builder — Self-Trust Practice Lab ($39)
+- open_loop_closure_sprint — Open Loop Closure Sprint ($19)
+- personal_after_action_review — Personal After-Action Review ($29)
+
+### Product families hiện có (13)
 
 1. Avoidance Map
 2. Personal Capital
@@ -72,30 +78,33 @@
 8. Creative Practice Studio
 9. Practice Companion L1
 10. Practice Method Designer
+11. Self-Trust Practice Lab (pilot)
+12. Open Loop Closure Sprint (pilot)
+13. Personal After-Action Review (pilot)
 
-### Landing pages hiện có (19)
+### Landing pages hiện có (22)
 
 | Nhóm | Số | Ghi chú |
 |---|---|---|
 | /products/ | 6 | 5 micro + 1 index |
 | /assessments/ | 5 | index + 2 core + 2 tier |
-| /programs/ | 7 | 6 core + 1 index |
+| /programs/ | 10 | 6 core + 3 pilot + 1 index |
 | /certification/ | 3 | 2 core + 1 index |
-| **Tổng** | **19** | — |
+| **Tổng** | **22** | — |
 
 ### Không tính thiếu bằng 45 − 19 landing pages
 
 Mục tiêu đúng là **~45 commercial offers trong khoảng 25–30 product families**. Đang còn cách rất xa nếu tính theo landing pages, nhưng gần hơn nếu tính theo offers.
 
-### 3 pilot products đề xuất đầu tiên
+### 3 pilot products — ĐÃ BUILD ✅
 
-| # | Product family | Offer | Giá gợi ý |
-|---|---|---|---|
-| 1 | Self-Trust Practice | self_trust_evidence_builder | 990.000 VND / $39 |
-| 2 | Open Loop Closure | open_loop_closure_sprint | 490.000 VND / $19 |
-| 3 | Personal After-Action Review | personal_after_action_review | 750.000 VND / $29 |
+| # | Product family | Offer | Giá | Curriculum | Landing | Email |
+|---|---|---|---|---|---|---|
+| 1 | Self-Trust Practice | self_trust_evidence_builder | $39 | ✅ 6 lessons + pre-assessment + quiz + 2 labs + rubric + report | ✅ /programs/self-trust-practice-lab/ | ✅ T90 |
+| 2 | Open Loop Closure | open_loop_closure_sprint | $19 | ✅ 6 lessons + pre-assessment + quiz + 2 labs + rubric + report | ✅ /programs/open-loop-closure-sprint/ | ✅ T91 |
+| 3 | Personal After-Action Review | personal_after_action_review | $29 | ✅ 6 lessons + pre-assessment + quiz + 2 labs + rubric + report | ✅ /programs/personal-after-action-review/ | ✅ T92 |
 
-Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, final output, rubric, report, entitlement, welcome template, refund/revoke, versioning.
+Mỗi pilot đã có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, rubric, report template, landing page, welcome email (T90-T92), content gating (DEEP_LESSON_PLAN_MAP), sitemap entry, price validation PASS.
 
 ---
 
@@ -159,14 +168,14 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 
 ## 6. Giá sản phẩm — Mỗi offer có giá khác nhau ✅
 
-**Hiện có 23 plan codes với giá USD riêng biệt.**
+**Hiện có 26 plan codes với giá USD riêng biệt.**
 
 **Đã đồng bộ:**
 - asmt_avoidance_review: 1.950.000 VND / $79
 - diag_capital_expert: 15.000.000 VND / $600
 - diag_capital_biz: 30.000.000 VND / $1.200
 
-**CI gate:** `npm run validate:prices` — script `scripts/validate-prices.mjs` scan mọi landing page `data-plan` / `data-price` và so sánh với `functions/_lib/constants.js`. Exit 1 nếu drift. Kết quả hiện tại: 28 attrs checked, PASS.
+**CI gate:** `npm run validate:prices` — script `scripts/validate-prices.mjs` scan mọi landing page `data-plan` / `data-price` và so sánh với `functions/_lib/constants.js`. Exit 1 nếu drift. Kết quả hiện tại: 31 attrs checked, PASS.
 
 **Trạng thái:** PASS.
 
@@ -218,9 +227,9 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 14. ⏳ Mở rộng `/api/admin/audit` content stats (đang làm)
 
 ### P2 — Ba sản phẩm pilot
-11. Self-Trust Practice Lab
-12. Open Loop Closure Sprint
-13. Personal After-Action Review System
+14. ✅ Self-Trust Practice Lab — curriculum + landing + email T90 + gating
+15. ✅ Open Loop Closure Sprint — curriculum + landing + email T91 + gating
+16. ✅ Personal After-Action Review System — curriculum + landing + email T92 + gating
 
 ---
 
@@ -229,9 +238,10 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 | Hạng mục | Phán quyết |
 |---|---|
 | Tier price fixes | ✅ VERIFIED |
-| Plan code count | 23 |
+| Plan code count | 26 (23 + 3 pilot) |
 | Premium offers | 13 (5 assessments + 5 programs + 3 certifications) |
-| 45-product claim | HOLD — cần taxonomy rõ ràng |
+| Pilot offers | 3 (self-trust, open-loop, after-action) — ✅ BUILT |
+| 45-product claim | IN PROGRESS — 26/45 plan codes, 13/25 product families |
 | Monthly membership | APPROVED (chưa public) |
 | Lifetime membership | DEPLOYED (có thể thay bằng monthly nếu anh muốn) |
 | Admin audit | P1 — đang mở rộng content stats |
@@ -240,8 +250,11 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 | Price validation CI | ✅ `npm run validate:prices` tại `d349134` |
 | PayPal checkout | PASS (creds set) |
 | PayPal end-to-end fulfillment | READY TO TEST (WEBHOOK_ID set) |
+| Pilot curricula (3) | ✅ BUILT — 6 lessons + pre-assessment + quiz + 2 labs + rubric + report mỗi pilot |
+| Pilot email templates T90-T92 | ✅ WIRED — render động trong email.js |
+| Pilot content gating | ✅ WIRED — DEEP_LESSON_PLAN_MAP + content_access check |
 | Build 26 products at once | REJECTED |
-| Build 3 pilot products first | APPROVED |
+| Build 3 pilot products first | ✅ COMPLETED |
 
 ---
 

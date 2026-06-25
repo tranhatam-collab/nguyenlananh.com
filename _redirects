@@ -59,3 +59,9 @@ https://docs.nguyenlananh.com/en/ /en/tai-lieu/ 301
 # Academy index → Deep index
 /members/academy/ /members/deep/ 301
 /members/academy/index.html /members/deep/index.html 301
+
+# Creator public profile — /creators/:slug/ serves the profile shell page.
+# Static assets (/creators/, /creators/apply/, /creators/profile/) take precedence
+# over this rewrite on Cloudflare Pages, so only unmatched slugs hit this rule.
+# The profile page JS reads the slug from window.location.pathname.
+/creators/:slug/ /creators/profile/ 200

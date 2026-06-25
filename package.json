@@ -4,6 +4,7 @@
   "private": true,
   "description": "Nguyễn Lan Anh — personal development platform",
   "scripts": {
-    "test": "bash scripts/smoke-production.sh"
+    "test": "bash scripts/smoke-production.sh",
+    "validate:prices": "node scripts/validate-prices.mjs --fail"
   }
 }

@@ -40,6 +40,8 @@ const ROLE_PERMISSIONS = {
     "events.view",
     "errors.view",
     "errors.resolve",
+    "learning.view",
+    "learning.manage",
   ],
   ops_manager: [
     "dashboard.view",
@@ -53,6 +55,7 @@ const ROLE_PERMISSIONS = {
     "audit.view",
     "events.view",
     "errors.view",
+    "learning.view",
   ],
   finance: [
     "dashboard.view",

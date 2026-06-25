@@ -11,7 +11,21 @@ function productWelcomeTemplateFor(source) {
     micro_inner_listening: TEMPLATE_IDS.product_micro_inner_listening_welcome,
     micro_one_corner: TEMPLATE_IDS.product_micro_one_corner_welcome,
     micro_7day_rhythm: TEMPLATE_IDS.product_micro_7day_rhythm_welcome,
-    micro_companion: TEMPLATE_IDS.product_micro_companion_welcome
+    micro_companion: TEMPLATE_IDS.product_micro_companion_welcome,
+    // Premium products
+    asmt_avoidance_self: TEMPLATE_IDS.product_asmt_avoidance_welcome,
+    asmt_avoidance_review: TEMPLATE_IDS.product_asmt_avoidance_welcome,
+    prog_rhythm_lab: TEMPLATE_IDS.product_prog_rhythm_lab_welcome,
+    prog_emo_block: TEMPLATE_IDS.product_prog_emo_block_welcome,
+    cert_boundary_found: TEMPLATE_IDS.product_cert_boundary_welcome,
+    prog_family_pattern: TEMPLATE_IDS.product_prog_family_welcome,
+    prog_space_reset: TEMPLATE_IDS.product_prog_space_reset_welcome,
+    prog_creative_studio: TEMPLATE_IDS.product_prog_creative_studio_welcome,
+    diag_capital_self: TEMPLATE_IDS.product_diag_capital_welcome,
+    diag_capital_expert: TEMPLATE_IDS.product_diag_capital_welcome,
+    diag_capital_biz: TEMPLATE_IDS.product_diag_capital_welcome,
+    cert_companion_l1: TEMPLATE_IDS.product_cert_companion_welcome,
+    cert_method_designer: TEMPLATE_IDS.product_cert_method_designer_welcome
   };
   return map[source] || null;
 }
@@ -29,7 +43,21 @@ function productDeepUrlFor(source, locale) {
     micro_inner_listening: `${prefix}/products/inner-listening-kit/`,
     micro_one_corner: `${prefix}/products/one-corner-reset/`,
     micro_7day_rhythm: `${prefix}/products/7-day-true-rhythm/`,
-    micro_companion: `${prefix}/products/companion-circle/`
+    micro_companion: `${prefix}/products/companion-circle/`,
+    // Premium products — link to landing page (gated content not yet built)
+    asmt_avoidance_self: `${prefix}/assessments/avoidance-map/`,
+    asmt_avoidance_review: `${prefix}/assessments/avoidance-map/`,
+    prog_rhythm_lab: `${prefix}/programs/rhythm-design-lab/`,
+    prog_emo_block: `${prefix}/programs/emotional-block-mapping/`,
+    cert_boundary_found: `${prefix}/programs/boundary-foundation/`,
+    prog_family_pattern: `${prefix}/programs/family-pattern-mapping/`,
+    prog_space_reset: `${prefix}/programs/space-reset-practitioner/`,
+    prog_creative_studio: `${prefix}/programs/creative-practice-studio/`,
+    diag_capital_self: `${prefix}/assessments/personal-capital/`,
+    diag_capital_expert: `${prefix}/assessments/personal-capital/`,
+    diag_capital_biz: `${prefix}/assessments/personal-capital/`,
+    cert_companion_l1: `${prefix}/certification/practice-companion-level-1/`,
+    cert_method_designer: `${prefix}/certification/practice-method-designer/`
   };
   return map[source] || "";
 }
@@ -844,7 +872,7 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
     payload: commonPayload
   });
 
-  const productSource = user?.product_source || order?.metadata_json?.product_source || null;
+  const productSource = user?.product_source || order?.metadata_json?.product_source || order?.plan_code || null;
   const productWelcomeTemplate = productWelcomeTemplateFor(productSource);
   if (productWelcomeTemplate) {
     await queueAndSendEmail({

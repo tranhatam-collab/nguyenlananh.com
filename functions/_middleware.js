@@ -42,6 +42,7 @@ const ADMIN_PAGE_PERMISSIONS = {
   "/admin/pilot": "ops.queue",
   "/admin/reflection": "ops.queue",
   "/admin/events": "events.view",
+  "/admin/learning": "learning.view",
 };
 
 // ============================================================

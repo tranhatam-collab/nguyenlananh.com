@@ -77,3 +77,8 @@ CREATE INDEX IF NOT EXISTS idx_audit_log_created ON admin_audit_log(created_at D
 -- admin_users.manage  |     ✅      |     ❌      |   ❌    |      ❌
 -- ops.queue           |     ✅      |     ✅      |   ❌    |      ❌
 -- audit.view          |     ✅      |     ✅      |   ❌    |      ❌
+-- events.view         |     ✅      |     ✅      |   ❌    |      ❌
+-- errors.view         |     ✅      |     ✅      |   ❌    |      ❌
+-- errors.resolve      |     ✅      |     ✅      |   ❌    |      ❌
+-- learning.view       |     ✅      |     ✅      |   ❌    |      ❌
+-- learning.manage     |     ✅      |     ❌      |   ❌    |      ❌

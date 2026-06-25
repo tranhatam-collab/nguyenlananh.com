@@ -1,6 +1,6 @@
-import { requireDb } from "../../_lib/db.js";
-import { requireSession } from "../../_lib/session.js";
-import { json, errorResponse, nowIso, randomId } from "../../_lib/utils.js";
+import { requireDb } from "../../../_lib/db.js";
+import { requireSession } from "../../../_lib/session.js";
+import { json, errorResponse, nowIso, randomId } from "../../../_lib/utils.js";
 
 // GET /api/learn/checkin?program_slug=<slug>
 // Returns all checkins for a user in a program.

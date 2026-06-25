@@ -1,6 +1,6 @@
-import { requireDb } from "../../_lib/db.js";
-import { requireSession } from "../../_lib/session.js";
-import { json, errorResponse, nowIso, randomId } from "../../_lib/utils.js";
+import { requireDb } from "../../../_lib/db.js";
+import { requireSession } from "../../../_lib/session.js";
+import { json, errorResponse, nowIso, randomId } from "../../../_lib/utils.js";
 
 // GET /api/reports/[id]
 // Returns a learning report by ID (must belong to the requesting user)

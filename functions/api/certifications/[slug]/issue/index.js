@@ -1,6 +1,6 @@
-import { requireDb } from "../../../_lib/db.js";
-import { requireSession } from "../../../_lib/session.js";
-import { json, errorResponse, nowIso, randomId } from "../../../_lib/utils.js";
+import { requireDb } from "../../../../_lib/db.js";
+import { requireSession } from "../../../../_lib/session.js";
+import { json, errorResponse, nowIso, randomId } from "../../../../_lib/utils.js";
 
 // POST /api/certifications/[slug]/issue
 // Issues a certificate if the user has passed the exam + submitted practice evidence.

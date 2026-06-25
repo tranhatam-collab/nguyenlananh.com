@@ -1,6 +1,6 @@
-import { requireDb } from "../../../_lib/db.js";
-import { requireSession } from "../../../_lib/session.js";
-import { json, errorResponse } from "../../../_lib/utils.js";
+import { requireDb } from "../../../../_lib/db.js";
+import { requireSession } from "../../../../_lib/session.js";
+import { json, errorResponse } from "../../../../_lib/utils.js";
 
 // GET /api/assessments/[slug]/score?attempt_id=<id>
 // Returns the scored result for a specific attempt.

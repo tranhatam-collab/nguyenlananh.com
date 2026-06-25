@@ -1,5 +1,5 @@
-import { requireAdminPermission } from "../../../../_lib/admin_auth.js";
-import { json, errorResponse } from "../../../../_lib/utils.js";
+import { requireAdminPermission } from "../../../_lib/admin_auth.js";
+import { json, errorResponse } from "../../../_lib/utils.js";
 
 // GET /api/admin/audit
 // Returns aggregated audit metrics for the site.

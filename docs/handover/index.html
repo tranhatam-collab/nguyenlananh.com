@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Hướng dẫn Admin | NguyenLanAnh.com</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <style>
+    .guide-content { max-width: 820px; margin: 40px auto; padding: 0 20px; line-height: 1.7; }
+    .guide-content h1 { font-size: 28px; margin: 32px 0 16px; }
+    .guide-content h2 { font-size: 22px; margin: 28px 0 12px; border-bottom: 2px solid rgba(42,24,16,.1); padding-bottom: 6px; }
+    .guide-content h3 { font-size: 18px; margin: 20px 0 8px; }
+    .guide-content p { margin: 8px 0; }
+    .guide-content ul, .guide-content ol { margin: 8px 0 16px 24px; }
+    .guide-content li { margin: 4px 0; }
+    .guide-content table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .guide-content th, .guide-content td { border: 1px solid rgba(42,24,16,.15); padding: 8px 10px; text-align: left; font-size: 14px; }
+    .guide-content th { background: rgba(42,24,16,.05); font-weight: 700; }
+    .guide-content code { background: rgba(42,24,16,.06); padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    .guide-content pre { background: rgba(42,24,16,.04); padding: 12px; border-radius: 8px; overflow-x: auto; }
+    .guide-content blockquote { border-left: 4px solid rgba(234,179,8,.4); padding-left: 16px; margin: 12px 0; color: rgba(42,24,16,.7); }
+    .guide-content hr { border: none; border-top: 1px solid rgba(42,24,16,.1); margin: 24px 0; }
+    .guide-content a { color: #2563eb; }
+    .guide-toc { background: rgba(42,24,16,.03); border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+    .guide-toc ol { margin: 8px 0 8px 24px; }
+    .guide-toc a { text-decoration: none; }
+    .guide-toc a:hover { text-decoration: underline; }
+    .guide-warning { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+    .guide-info { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2); border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Hướng dẫn Admin</span></span></a><nav class="navlinks" aria-label="Điều hướng chính"><a href="/">Trang chủ</a><a href="/admin/">Admin</a></nav><div class="actions"><a class="btn" href="/admin/login/">Đăng nhập</a></div></div></div></header>
+
+  <main id="main" class="guide-content" role="main">
+
+    <h1>Hướng dẫn Bàn giao Admin — NguyenLanAnh.com</h1>
+    <blockquote>Tài liệu dành cho người tiếp quản hệ thống <strong>không cần biết code</strong><br/>Phiên bản 1.0 — 25/06/2026</blockquote>
+
+    <div class="guide-toc">
+      <strong>Mục lục</strong>
+      <ol>
+        <li><a href="#s1">Tổng quan hệ thống</a></li>
+        <li><a href="#s2">Trước khi bắt đầu — Kiểm tra sức khỏe</a></li>
+        <li><a href="#s3">Quản trị Admin — Hướng dẫn từng bước</a></li>
+        <li><a href="#s4">Quản lý thành viên</a></li>
+        <li><a href="#s5">Quản lý đơn hàng &amp; thanh toán</a></li>
+        <li><a href="#s6">Quản lý nội dung</a></li>
+        <li><a href="#s7">Quản lý Creator</a></li>
+        <li><a href="#s8">Báo cáo Audit &amp; Thống kê</a></li>
+        <li><a href="#s9">Bảo mật — 2FA &amp; Turnstile</a></li>
+        <li><a href="#s10">Email &amp; Thông báo</a></li>
+        <li><a href="#s11">Xử lý sự cố thường gặp</a></li>
+        <li><a href="#s12">Liên hệ kỹ thuật</a></li>
+      </ol>
+    </div>
+
+    <h2 id="s1">1. Tổng quan hệ thống</h2>
+    <h3>Website của bạn gồm gì?</h3>
+    <table>
+      <tr><th>Phần</th><th>Mô tả</th><th>Ai dùng?</th></tr>
+      <tr><td>Trang public</td><td>Trang chủ, bài viết, sản phẩm, liên hệ</td><td>Khách ghé thăm</td></tr>
+      <tr><td>Khu thành viên</td><td>Dashboard, bài học, thực hành, nhật ký</td><td>Người đã đăng ký</td></tr>
+      <tr><td>Nền admin</td><td>Quản lý user, đơn hàng, nội dung, báo cáo</td><td>Bạn (admin)</td></tr>
+      <tr><td>Creator</td><td>Trang cho nhà sáng tạo nội dung</td><td>Creator đã được duyệt</td></tr>
+      <tr><td>API</td><td>Hệ thống xử lý dữ liệu (tự động)</td><td>Hệ thống tự chạy</td></tr>
+    </table>
+
+    <h3>Website chạy ở đâu?</h3>
+    <ul>
+      <li><strong>Tên miền:</strong> <code>www.nguyenlananh.com</code></li>
+      <li><strong>Hosting:</strong> Cloudflare (miễn phí, ổn định, nhanh)</li>
+      <li><strong>Database:</strong> Cloudflare D1 (SQLite trên cloud)</li>
+      <li><strong>Email:</strong> Resend + mail.iai.one</li>
+      <li><strong>Thanh toán:</strong> VietQR (VN) + PayPal (quốc tế)</li>
+    </ul>
+
+    <h3>3 đường dẫn chính bạn cần biết:</h3>
+    <ol>
+      <li><strong>Trang chủ:</strong> <code>https://www.nguyenlananh.com</code></li>
+      <li><strong>Đăng nhập admin:</strong> <code>https://www.nguyenlananh.com/admin/login/</code></li>
+      <li><strong>Dashboard admin:</strong> <code>https://www.nguyenlananh.com/admin/</code></li>
+    </ol>
+
+    <h2 id="s2">2. Trước khi bắt đầu — Kiểm tra sức khỏe</h2>
+    <h3>Bước 1: Đăng nhập admin</h3>
+    <ol>
+      <li>Mở trình duyệt (Chrome hoặc Safari)</li>
+      <li>Vào <code>https://www.nguyenlananh.com/admin/login/</code></li>
+      <li>Nhập email + mật khẩu admin</li>
+      <li>Nhấn "Đăng nhập"</li>
+      <li>Nếu có widget "Tôi không phải robot" — hãy tick vào</li>
+    </ol>
+    <div class="guide-warning">⚠️ <strong>Lưu ý:</strong> Nếu sai mật khẩu 5 lần, tài khoản sẽ bị khóa 15 phút.</div>
+
+    <h3>Bước 2: Kiểm tra các chức năng chính</h3>
+    <table>
+      <tr><th>Menu</th><th>URL</th><th>Chức năng</th></tr>
+      <tr><td>Dashboard</td><td><code>/admin/</code></td><td>Tổng quan</td></tr>
+      <tr><td>Thành viên</td><td><code>/admin/members/</code></td><td>Quản lý user</td></tr>
+      <tr><td>Nội dung</td><td><code>/admin/content/</code></td><td>Quản lý bài viết</td></tr>
+      <tr><td>Payments</td><td><code>/admin/payments/</code></td><td>Đơn hàng</td></tr>
+      <tr><td>Learning</td><td><code>/admin/learning/</code></td><td>Tiến độ học</td></tr>
+      <tr><td>Audit</td><td><code>/admin/audit/</code></td><td>Báo cáo thống kê</td></tr>
+      <tr><td>Creator Apps</td><td><code>/admin/creator-applications/</code></td><td>Duyệt Creator</td></tr>
+    </table>
+
+    <h3>Bước 3: Đổi mật khẩu (QUAN TRỌNG)</h3>
+    <ol>
+      <li>Vào Dashboard admin</li>
+      <li>Tìm nút "Đổi mật khẩu"</li>
+      <li>Nhập mật khẩu hiện tại + mật khẩu mới</li>
+      <li>Mật khẩu mới nên: tối thiểu 12 ký tự, có chữ hoa, chữ thường, số, ký tự đặc biệt</li>
+      <li>Lưu mật khẩu trong password manager (1Password, Bitwarden, hoặc ghi giấy an toàn)</li>
+    </ol>
+
+    <h2 id="s3">3. Quản trị Admin</h2>
+    <h3>3.1. Tạo tài khoản admin mới</h3>
+    <p><strong>Khi nào cần:</strong> Khi muốn thêm người quản trị khác.</p>
+    <ol>
+      <li>Vào <code>/admin/</code></li>
+      <li>Tìm form "Tạo admin user"</li>
+      <li>Nhập email, tên hiển thị, vai trò</li>
+      <li>Vai trò: <code>super_admin</code> (toàn quyền), <code>ops_manager</code> (vận hành), <code>content_manager</code> (nội dung), <code>support_agent</code> (hỗ trợ)</li>
+      <li>Nhấn "Tạo" → hệ thống gửi mật khẩu tạm qua email</li>
+    </ol>
+
+    <h3>3.2. Vai trò &amp; quyền hạn</h3>
+    <table>
+      <tr><th>Vai trò</th><th>Xem user</th><th>Sửa user</th><th>Xem đơn</th><th>Sửa đơn</th><th>Duyệt Creator</th><th>Xem Audit</th><th>Tạo admin</th></tr>
+      <tr><td>super_admin</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>ops_manager</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+      <tr><td>content_manager</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td><td>❌</td></tr>
+      <tr><td>support_agent</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td></tr>
+    </table>
+
+    <h2 id="s4">4. Quản lý thành viên</h2>
+    <h3>4.1. Xem danh sách thành viên</h3>
+    <p>Vào <code>/admin/members/</code> — bạn sẽ thấy bảng gồm: Email, Tên, Loại membership, Ngày đăng ký, Trạng thái.</p>
+
+    <h3>4.2. Cấp membership thủ công</h3>
+    <ol>
+      <li>Vào <code>/admin/members/</code></li>
+      <li>Tìm user → nhấn "Edit"</li>
+      <li>Đổi <code>membership_type</code> thành: <code>year1</code>, <code>year2</code>, <code>year3</code>, hoặc <code>lifetime</code></li>
+      <li>Nhấn "Save"</li>
+    </ol>
+
+    <h3>4.3. Cấp quyền truy cập sản phẩm</h3>
+    <ol>
+      <li>Vào <code>/admin/members/</code> → tìm user → nhấn "Edit"</li>
+      <li>Trong phần <code>content_access</code>, thêm product code (xem đầy đủ trong /admin/audit/ → Product Inventory)</li>
+      <li>Nhấn "Save"</li>
+    </ol>
+
+    <div class="guide-warning">⚠️ <strong>CẢNH BÁO:</strong> Xóa user = mất toàn bộ dữ liệu. Không thể hoàn tác. Khuyến nghị: set <code>active = 0</code> thay vì xóa.</div>
+
+    <h2 id="s5">5. Quản lý đơn hàng &amp; thanh toán</h2>
+    <h3>5.1. Xem đơn hàng</h3>
+    <p>Vào <code>/admin/payments/</code> — bạn sẽ thấy: Mã đơn, Email khách, Sản phẩm, Số tiền, Provider, Trạng thái.</p>
+
+    <h3>5.2. Trạng thái đơn hàng</h3>
+    <table>
+      <tr><th>Trạng thái</th><th>Ý nghĩa</th><th>Hành động?</th></tr>
+      <tr><td><code>pending</code></td><td>Đang chờ thanh toán</td><td>Không — khách đang thanh toán</td></tr>
+      <tr><td><code>paid</code> / <code>captured</code> / <code>completed</code></td><td>Đã thanh toán</td><td>Không — hệ thống tự cấp quyền</td></tr>
+      <tr><td><code>failed</code> / <code>denied</code> / <code>canceled</code></td><td>Thất bại</td><td>Liên hệ khách nếu cần</td></tr>
+      <tr><td><code>refunded</code> / <code>reversed</code></td><td>Đã hoàn tiền</td><td>Hệ thống tự thu hồi quyền</td></tr>
+    </table>
+
+    <h3>5.3. Hoàn tiền (Refund)</h3>
+    <ol>
+      <li>Vào <code>/admin/payments/</code> → tìm đơn → nhấn "Refund" → xác nhận</li>
+      <li>Hệ thống tự: hoàn tiền qua PayPal, thu hồi quyền truy cập, gửi email cho khách</li>
+    </ol>
+
+    <h2 id="s6">6. Quản lý nội dung</h2>
+    <h3>6.1. Bài viết</h3>
+    <p>Bài viết là file HTML tĩnh trong <code>/bai-viet/</code>. Mỗi bài là 1 thư mục con. Để thêm bài mới: cần người kỹ thuật giúp, hoặc dùng Creator Dashboard.</p>
+
+    <h3>6.2. Sản phẩm &amp; giá</h3>
+    <p>Xem danh sách tại <code>/admin/audit/</code> → "Product Inventory". Đổi giá: cần người kỹ thuật sửa trong <code>constants.js</code>, sau đó chạy <code>npm run validate:prices</code>.</p>
+
+    <h3>6.3. Kiểm tra broken links</h3>
+    <p>Chạy: <code>npm run validate:links</code> — nếu PASS → không có link hỏng.</p>
+
+    <h2 id="s7">7. Quản lý Creator</h2>
+    <h3>7.1. Duyệt đơn ứng tuyển</h3>
+    <ol>
+      <li>Vào <code>/admin/creator-applications/</code></li>
+      <li>Đọc đơn → chọn: <strong>Approve</strong> (duyệt) / <strong>Reject</strong> (từ chối) / <strong>Request changes</strong> (yêu cầu sửa)</li>
+      <li>Hệ thống tự gửi email thông báo cho Creator</li>
+    </ol>
+
+    <h3>7.2. Chính sách Creator</h3>
+    <p>Đọc tại <code>/creators/policy/</code>: IP (Creator giữ 100% bản quyền), Revenue share 70/30, Thanh toán hàng tháng (tối thiểu 500.000 VND hoặc $20).</p>
+
+    <h2 id="s8">8. Báo cáo Audit &amp; Thống kê</h2>
+    <h3>Chỉ số chính trong <code>/admin/audit/</code></h3>
+    <ul>
+      <li><strong>MRR</strong> — Doanh thu định kỳ hàng tháng</li>
+      <li><strong>ARR</strong> — Doanh thu định kỳ/năm</li>
+      <li><strong>Revenue 30 ngày</strong> — Tổng doanh thu 30 ngày qua</li>
+      <li><strong>Conversion funnel</strong> — Tỷ lệ: user → paid → học xong → nộp bài</li>
+      <li><strong>Recent webhook events</strong> — 20 sự kiện thanh toán mới nhất</li>
+      <li><strong>Revenue by month</strong> — Doanh thu theo tháng</li>
+      <li><strong>New users 30d/7d</strong> — Người dùng mới</li>
+    </ul>
+
+    <h3>Khi nào cần lo?</h3>
+    <table>
+      <tr><th>Chỉ số</th><th>Bình thường</th><th>Cần lo</th></tr>
+      <tr><td>Webhook errors 7 ngày</td><td>0</td><td>&gt; 5</td></tr>
+      <tr><td>Failed orders</td><td>&lt; 10%</td><td>&gt; 20%</td></tr>
+      <tr><td>User → Paid conversion</td><td>5-15%</td><td>&lt; 2%</td></tr>
+      <tr><td>Bài dưới chuẩn</td><td>&lt; 20%</td><td>&gt; 50%</td></tr>
+    </table>
+
+    <h2 id="s9">9. Bảo mật — 2FA &amp; Turnstile</h2>
+    <h3>9.1. Bật 2FA</h3>
+    <ol>
+      <li>Đăng nhập thành viên tại <code>/members/</code></li>
+      <li>Vào <code>/members/security/</code></li>
+      <li>Nhấn "Bật 2FA" → tải Google Authenticator → quét QR → nhập mã 6 số</li>
+      <li><strong>Lưu mã dự phòng</strong> ở nơi an toàn</li>
+    </ol>
+
+    <h3>9.2. Mất điện thoại?</h3>
+    <ol>
+      <li>Dùng <strong>mã dự phòng</strong> đã lưu</li>
+      <li>Vào <code>/members/verify-2fa/</code> → mở "Dùng mã dự phòng" → nhập 1 mã</li>
+    </ol>
+    <div class="guide-warning">⚠️ Nếu mất cả điện thoại LẪN mã dự phòng → liên hệ kỹ thuật để reset thủ công.</div>
+
+    <h3>9.3. Turnstile (Bot Protection)</h3>
+    <p>Tự động chặn bot spam trên form đăng nhập, liên hệ, ứng tuyển, thanh toán. Bạn không cần làm gì — Turnstile chạy tự động.</p>
+
+    <h2 id="s10">10. Email &amp; Thông báo</h2>
+    <h3>Hệ thống email tự động</h3>
+    <table>
+      <tr><th>Email</th><th>Khi nào gửi</th><th>Mẫu</th></tr>
+      <tr><td>Welcome magic link</td><td>User đăng ký mới</td><td>T01</td></tr>
+      <tr><td>Payment receipt</td><td>Khách thanh toán xong</td><td>T03</td></tr>
+      <tr><td>Payment failed</td><td>Thanh toán thất bại</td><td>T04</td></tr>
+      <tr><td>Refund notice</td><td>Hoàn tiền</td><td>T11</td></tr>
+      <tr><td>Contact form</td><td>Khách gửi liên hệ</td><td>T15</td></tr>
+      <tr><td>Product welcome</td><td>Khách mua sản phẩm</td><td>T20-T92</td></tr>
+      <tr><td>Creator onboarding</td><td>Có người ứng tuyển</td><td>T93</td></tr>
+      <tr><td>Creator approved</td><td>Admin duyệt Creator</td><td>T94</td></tr>
+      <tr><td>Creator rejected</td><td>Admin từ chối</td><td>T95</td></tr>
+    </table>
+
+    <h2 id="s11">11. Xử lý sự cố thường gặp</h2>
+
+    <h3>Sự cố 1: "Không đăng nhập được admin"</h3>
+    <ul>
+      <li>Sai email/mật khẩu → Kiểm tra lại</li>
+      <li>Khóa 5 lần sai → Chờ 15 phút</li>
+      <li>Tài khoản bị khóa → Liên hệ super_admin khác</li>
+      <li>Widget Turnstile không hiện → Tắt ad blocker</li>
+    </ul>
+
+    <h3>Sự cố 2: "Khách báo không nhận email"</h3>
+    <ul>
+      <li>Kiểm tra thư rác/spam</li>
+      <li>Kiểm tra email đúng trong <code>/admin/members/</code></li>
+      <li>Kiểm tra <code>/admin/audit/</code> → site_events</li>
+    </ul>
+
+    <h3>Sự cố 3: "Đã thanh toán nhưng không có quyền truy cập"</h3>
+    <ul>
+      <li>Vào <code>/admin/payments/</code> → tìm đơn hàng</li>
+      <li>Nếu <code>pending</code> → chờ webhook (vài phút)</li>
+      <li>Nếu <code>paid</code> mà không có quyền → cấp thủ công (mục 4.3)</li>
+      <li>Nếu <code>failed</code> → khách cần thanh toán lại</li>
+    </ul>
+
+    <h3>Sự cố 4: "Website chậm hoặc không mở"</h3>
+    <p>Kiểm tra <code>https://www.cloudflarestatus.com/</code> — nếu Cloudflare OK → liên hệ kỹ thuật.</p>
+
+    <h3>Sự cố 5: "Lỗi TURNSTILE_FAILED"</h3>
+    <p>Khách thử: refresh trang, tắt VPN, tắt ad blocker. Nếu vẫn lỗi → liên hệ kỹ thuật.</p>
+
+    <h2 id="s12">12. Liên hệ kỹ thuật</h2>
+    <h3>Khi nào cần liên hệ?</h3>
+    <ul>
+      <li>Website không hoạt động</li>
+      <li>Lỗi không tự khắc phục được</li>
+      <li>Cần thêm tính năng mới</li>
+      <li>Cần đổi giá sản phẩm</li>
+      <li>Cần tạo bài viết mới (HTML)</li>
+      <li>Mất 2FA + mất mã dự phòng</li>
+    </ul>
+
+    <h3>Thông tin cần cung cấp khi báo lỗi</h3>
+    <ol>
+      <li><strong>Bạn đang làm gì?</strong> (ví dụ: "Tôi đang duyệt đơn Creator")</li>
+      <li><strong>Trang nào?</strong> (ví dụ: <code>/admin/creator-applications/</code>)</li>
+      <li><strong>Lỗi hiển thị gì?</strong> (chụp màn hình nếu được)</li>
+      <li><strong>Thời gian xảy ra?</strong> (ngày/giờ)</li>
+      <li><strong>Email user liên quan</strong> (nếu có)</li>
+    </ol>
+
+    <div class="guide-warning">
+      <strong>Bảo mật — KHÔNG BAO GIỜ:</strong><br/>
+      ❌ Chia sẻ mật khẩu admin cho ai<br/>
+      ❌ Gửi credentials qua chat/email<br/>
+      ❌ Cho ai khác quyền super_admin nếu không cần thiết<br/>
+      ❌ Sửa code nếu không biết dev<br/>
+      <strong>NÊN:</strong><br/>
+      ✅ Đổi mật khẩu định kỳ 3 tháng/lần<br/>
+      ✅ Bật 2FA cho tài khoản admin<br/>
+      ✅ Kiểm tra audit log hàng tuần
+    </div>
+
+    <h2>Phụ lục A: Danh sách URL quan trọng</h2>
+    <table>
+      <tr><th>URL</th><th>Mục đích</th></tr>
+      <tr><td><code>https://www.nguyenlananh.com</code></td><td>Trang chủ</td></tr>
+      <tr><td><code>/admin/login/</code></td><td>Đăng nhập admin</td></tr>
+      <tr><td><code>/admin/</code></td><td>Dashboard admin</td></tr>
+      <tr><td><code>/admin/members/</code></td><td>Quản lý thành viên</td></tr>
+      <tr><td><code>/admin/payments/</code></td><td>Quản lý đơn hàng</td></tr>
+      <tr><td><code>/admin/audit/</code></td><td>Báo cáo audit</td></tr>
+      <tr><td><code>/admin/creator-applications/</code></td><td>Duyệt Creator</td></tr>
+      <tr><td><code>/members/security/</code></td><td>Bảo mật (2FA)</td></tr>
+      <tr><td><code>/creators/policy/</code></td><td>Chính sách Creator</td></tr>
+      <tr><td><code>/lien-he/</code></td><td>Liên hệ</td></tr>
+    </table>
+
+    <h2>Phụ lục B: Kiểm tra định kỳ</h2>
+    <table>
+      <tr><th>Tần suất</th><th>Việc cần làm</th><th>Ở đâu</th></tr>
+      <tr><td>Hàng ngày</td><td>Kiểm tra đơn hàng mới</td><td><code>/admin/payments/</code></td></tr>
+      <tr><td>Hàng ngày</td><td>Kiểm tra webhook errors</td><td><code>/admin/audit/</code></td></tr>
+      <tr><td>Hàng tuần</td><td>Xem báo cáo audit</td><td><code>/admin/audit/</code></td></tr>
+      <tr><td>Hàng tuần</td><td>Duyệt đơn Creator</td><td><code>/admin/creator-applications/</code></td></tr>
+      <tr><td>Hàng tháng</td><td>Kiểm tra MRR/ARR</td><td><code>/admin/audit/</code></td></tr>
+      <tr><td>3 tháng/lần</td><td>Đổi mật khẩu admin</td><td><code>/admin/</code></td></tr>
+    </table>
+
+    <hr/>
+    <p style="color:rgba(42,24,16,.5); font-size:.85rem; text-align:center;">Tài liệu này được tạo bởi Devin · 25/06/2026 · Nếu có thắc mắc, liên hệ kỹ thuật.</p>
+
+  </main>
+
+  <footer role="contentinfo"><div class="container"><div class="fwrap"><div><div style="font-weight:700;color:rgba(42,24,16,.8);">Nguyễn Lan Anh</div><div>© <span id="year"></span> · Đi vào bên trong để tái thiết cuộc đời</div></div></div></div></footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

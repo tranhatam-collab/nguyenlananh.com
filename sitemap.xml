@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.nguyenlananh.com/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/</loc><changefreq>daily</changefreq><priority>0.95</priority></url>
@@ -228,7 +228,7 @@
   <url><loc>https://www.nguyenlananh.com/products/inner-listening-kit/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/products/life-reset-mini/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/products/one-corner-reset/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <!-- 10 life-system public articles — 2026-06-24 -->
+  
   <url><loc>https://www.nguyenlananh.com/bai-viet/ban-do-he-thong-doi-song-ca-nhan/</loc><lastmod>2026-06-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/thiet-ke-nhip-song-ben-vung/</loc><lastmod>2026-06-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.nguyenlananh.com/bai-viet/khong-gian-song-va-nang-luc-hanh-dong/</loc><lastmod>2026-06-24</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -252,4 +252,4 @@
   <url><loc>https://www.nguyenlananh.com/certification/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.nguyenlananh.com/certification/practice-companion-level-1/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.nguyenlananh.com/certification/practice-method-designer/</loc><lastmod>2026-06-25</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-</urlset>
+<url><loc>https://www.nguyenlananh.com/bai-viet/ban-do-ne-tranh/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url><url><loc>https://www.nguyenlananh.com/bai-viet/diem-nghen-cam-xuc/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url><url><loc>https://www.nguyenlananh.com/bai-viet/nen-tang-ranh-gioi/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url><url><loc>https://www.nguyenlananh.com/assessments/avoidance-map/review/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url><url><loc>https://www.nguyenlananh.com/assessments/personal-capital/expert/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url><url><loc>https://www.nguyenlananh.com/assessments/personal-capital/business/</loc><changefreq>monthly</changefreq><priority>0.74</priority></url></urlset>

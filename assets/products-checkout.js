@@ -16,9 +16,10 @@
   function hide(el) { if (el) el.classList.add("hidden"); }
   function show(el) { if (el) el.classList.remove("hidden"); }
 
-  const planCode = document.body.dataset.plan || "";
-  const planPrice = document.body.dataset.price || "";
-  if (!planCode) return;
+  function getCurrentPlan() {
+    return document.body.dataset.plan || "";
+  }
+  if (!getCurrentPlan()) return;
 
   const buyNow = $("#buyNow");
   const emailInput = $("#buyerEmail");
@@ -75,6 +76,12 @@
   }
 
   buyNow.addEventListener("click", async () => {
+    const planCode = getCurrentPlan();
+    if (!planCode) {
+      setBanner(checkoutStatus, "Không tìm thấy gói sản phẩm.", "error");
+      return;
+    }
+
     const email = String(emailInput?.value || "").trim();
     if (!email || !email.includes("@")) {
       setBanner(checkoutStatus, "Vui lòng nhập email hợp lệ.", "warning");

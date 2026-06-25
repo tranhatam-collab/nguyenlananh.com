@@ -12,14 +12,22 @@ const ADMIN_LOGIN_PATHS = ["/admin/login", "/en/admin/login", "/admin/login/", "
 // /members/ itself, /members/start/, /members/dashboard/ stay public.
 const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/"];
 
+// Paths under /members/ that require login (any membership tier, including free).
+// Academy free lessons are login-gated but do NOT require paid membership.
+const LOGIN_GATED_MEMBER_PREFIXES = ["/members/academy/", "/en/members/academy/"];
+
 // Paths under /members/ that are public (no session needed).
 const PUBLIC_MEMBER_PATHS = [
   "/members/",
   "/members/start/",
   "/members/index.html",
+  "/members/academy/",
+  "/members/academy/index.html",
   "/en/members/",
   "/en/members/start/",
   "/en/members/index.html",
+  "/en/members/academy/",
+  "/en/members/academy/index.html",
 ];
 
 // Admin pages that map to a required permission.
@@ -156,6 +164,10 @@ function adminPagePermission(pathname) {
 
 function isGatedMemberPath(pathname) {
   return GATED_MEMBER_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+}
+
+function isLoginGatedMemberPath(pathname) {
+  return LOGIN_GATED_MEMBER_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 }
 
 function isPublicMemberPath(pathname) {
@@ -357,6 +369,25 @@ export async function onRequest(context) {
         context.data.session = memberSession;
         context.data.user = user;
       }
+      return context.next();
+    }
+
+    // Gating: /members/academy/* requires login (any tier, including free)
+    // Academy index is public (listed in PUBLIC_MEMBER_PATHS).
+    if (isLoginGatedMemberPath(url.pathname) && !isPublicMemberPath(url.pathname)) {
+      const en = isEnglishPath(url.pathname);
+      const joinUrl = en ? "/en/join/" : "/join/";
+
+      if (!memberSession) {
+        logWarn({ route: url.pathname, code: "ACADEMY_DENY_NO_SESSION", msg: "Academy access denied — no session" });
+        return new Response(null, {
+          status: 302,
+          headers: { Location: joinUrl, "Cache-Control": "no-store" },
+        });
+      }
+
+      context.data = context.data || {};
+      context.data.session = memberSession;
       return context.next();
     }
 

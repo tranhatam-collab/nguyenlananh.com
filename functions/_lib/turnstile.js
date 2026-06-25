@@ -3,6 +3,14 @@
 
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
+// Cloudflare test keys — always pass verification, provide ZERO real protection.
+// If these are set in production, fail CLOSED (reject all) to force admin to use real keys.
+const TEST_SECRET_KEYS = new Set([
+  "1x0000000000000000000000000000000AA", // always-pass test secret
+  "2x0000000000000000000000000000000AA", // always-block test secret
+  "3x0000000000000000000000000000000AA", // already-valid test secret
+]);
+
 /**
  * Verify a Turnstile token server-side.
  * @param {string} token - cf-turnstile-response token from frontend
@@ -15,6 +23,11 @@ export async function verifyTurnstileToken(token, remoteIp, env) {
   if (!secret) {
     // If not configured, allow through (graceful degradation)
     return { success: true, skipped: true, error: "TURNSTILE_SECRET_KEY not configured" };
+  }
+  if (TEST_SECRET_KEYS.has(secret)) {
+    // Test secret key detected — fail CLOSED to prevent fake bot protection
+    console.error("[turnstile] TEST secret key in production — rejecting all tokens. Set a real secret key via Cloudflare dashboard → Turnstile.");
+    return { success: false, error: "Turnstile is misconfigured (test key). Contact admin to fix." };
   }
   if (!token) {
     return { success: false, error: "Missing Turnstile token" };

@@ -3,7 +3,24 @@
 > Ngày: 2026-06-25
 > Project: nguyenlananh.com
 > Merchant: Công Ty Tnhh Thành Tâm Phát
-> HEAD: `962d0c2` (origin/main = local, clean)
+> HEAD: `e6d59dd` (origin/main = clean)
+
+---
+
+## ✅ LIVE QA — ĐÃ CHẠY XONG
+
+| # | Check | Result |
+|---|---|---|
+| 1 | PayPal checkout create (`prog_rhythm_lab`, USD $99) | ✅ `checkout_url` trả về `https://www.paypal.com/checkoutnow?token=...` |
+| 2 | VietQR checkout create (`prog_rhythm_lab`, VND 2.5M) | ✅ `checkout_url` trả về `pay.payos.vn` |
+| 3 | Article CTA → Landing | ✅ `/programs/rhythm-design-lab/` |
+| 4 | Deep lesson (no session) → Landing | ✅ 302 → `/programs/rhythm-design-lab/` |
+| 5 | Free deep lesson → Deep index | ✅ 302 → `/members/deep/` |
+| 6 | Old academy redirect → Deep canonical | ✅ 301 → `/members/deep/rhythm-design-lab/` |
+| 7 | Premium landing pages (10) | ✅ 10/10 = 200 |
+| 8 | Public articles (10) | ✅ 10/10 = 200 |
+| 9 | Products / Deep index | ✅ 200 |
+| 10 | Security headers | ✅ HSTS, CSP, X-Frame-Options, X-Content-Type-Options |
 
 ---
 

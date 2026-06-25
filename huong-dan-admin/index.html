@@ -235,7 +235,19 @@
     <div class="guide-warning">⚠️ Nếu mất cả điện thoại LẪN mã dự phòng → liên hệ kỹ thuật để reset thủ công.</div>
 
     <h3>9.3. Turnstile (Bot Protection)</h3>
-    <p>Tự động chặn bot spam trên form đăng nhập, liên hệ, ứng tuyển, thanh toán. Bạn không cần làm gì — Turnstile chạy tự động.</p>
+    <div class="guide-warning">
+      ⚠️ <strong>YÊU CẦU HÀNH ĐỘNG:</strong> Turnstile hiện đang dùng <strong>test key</strong> (chưa bảo vệ thật).
+      Bạn cần tạo widget thật trên Cloudflare dashboard:<br/>
+      1. Vào <code>dash.cloudflare.com</code> → Turnstile → Add Widget<br/>
+      2. Widget name: <code>nguyenlananh-prod</code><br/>
+      3. Domain: <code>nguyenlananh.com</code><br/>
+      4. Mode: Managed<br/>
+      5. Tạo xong → copy <strong>Site Key</strong> (bắt đầu <code>0x4...</code>) và <strong>Secret Key</strong><br/>
+      6. Set Secret Key: <code>npx wrangler pages secret put TURNSTILE_SECRET_KEY --project-name=nguyenlananh-com</code><br/>
+      7. Sửa Site Key trong <code>/assets/turnstile-config.js</code> → thay <code>1x00000000000000000000AA</code> bằng site key thật<br/>
+      8. Deploy lại → test: token <code>"dummy"</code> phải trả <code>TURNSTILE_FAILED</code><br/>
+      <strong>Cho đến khi làm xong, tất cả form có Turnstile sẽ BỊ KHÓA (fail closed).</strong>
+    </div>
 
     <h2 id="s10">10. Email &amp; Thông báo</h2>
     <h3>Hệ thống email tự động</h3>

@@ -376,7 +376,7 @@ async function createPayPalCheckout(env, order, idempotencyKey) {
       payment_source: {
         paypal: {
           experience_context: {
-            brand_name: "Nguyenlananh.com",
+            brand_name: "Công Ty Tnhh Thành Tâm Phát",
             user_action: "PAY_NOW",
             return_url: order.success_url,
             cancel_url: order.cancel_url

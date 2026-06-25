@@ -25,7 +25,11 @@ function productWelcomeTemplateFor(source) {
     diag_capital_expert: TEMPLATE_IDS.product_diag_capital_welcome,
     diag_capital_biz: TEMPLATE_IDS.product_diag_capital_welcome,
     cert_companion_l1: TEMPLATE_IDS.product_cert_companion_welcome,
-    cert_method_designer: TEMPLATE_IDS.product_cert_method_designer_welcome
+    cert_method_designer: TEMPLATE_IDS.product_cert_method_designer_welcome,
+    // Pilot programs
+    self_trust_evidence_builder: TEMPLATE_IDS.product_self_trust_welcome,
+    open_loop_closure_sprint: TEMPLATE_IDS.product_open_loop_welcome,
+    personal_after_action_review: TEMPLATE_IDS.product_after_action_welcome
   };
   return map[source] || null;
 }
@@ -57,7 +61,11 @@ function productDeepUrlFor(source, locale) {
     diag_capital_expert: `${prefix}/assessments/personal-capital/`,
     diag_capital_biz: `${prefix}/assessments/personal-capital/`,
     cert_companion_l1: `${prefix}/certification/practice-companion-level-1/`,
-    cert_method_designer: `${prefix}/certification/practice-method-designer/`
+    cert_method_designer: `${prefix}/certification/practice-method-designer/`,
+    // Pilot programs — link to landing page (gated content not yet built)
+    self_trust_evidence_builder: `${prefix}/programs/self-trust-practice-lab/`,
+    open_loop_closure_sprint: `${prefix}/programs/open-loop-closure-sprint/`,
+    personal_after_action_review: `${prefix}/programs/personal-after-action-review/`
   };
   return map[source] || "";
 }
@@ -976,7 +984,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   assert(plan, "INVALID_PLAN", "Unknown membership plan.", 422);
 
   const isMicro = String(plan.code).startsWith("micro_");
-  const isPremium = String(plan.code).startsWith("asmt_") || String(plan.code).startsWith("prog_") || String(plan.code).startsWith("cert_") || String(plan.code).startsWith("diag_");
+  const isPremium = String(plan.code).startsWith("asmt_") || String(plan.code).startsWith("prog_") || String(plan.code).startsWith("cert_") || String(plan.code).startsWith("diag_") || String(plan.code).startsWith("self_trust_") || String(plan.code).startsWith("open_loop_") || String(plan.code).startsWith("personal_after_");
 
   if (!isMicro && !isPremium) {
     const baseExpiry =

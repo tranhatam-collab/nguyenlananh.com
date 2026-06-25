@@ -207,6 +207,42 @@ export const CERTIFICATIONS = {
   }
 };
 
+// ============================================================
+// Pilot programs — first wave of new product families (P2)
+// Each pilot has scaffold (landing + checkout + entitlement).
+// Curriculum (lessons, quizzes, labs) will be added in a follow-up wave.
+// ============================================================
+
+export const PILOT_PROGRAMS = {
+  self_trust_evidence_builder: {
+    code: "self_trust_evidence_builder",
+    label: "Self-Trust Practice Lab — Evidence Builder",
+    priceUsd: 39,
+    priceVnd: 990000,
+    durationDays: 365,
+    family: "self-trust-practice",
+    status: "pilot"
+  },
+  open_loop_closure_sprint: {
+    code: "open_loop_closure_sprint",
+    label: "Open Loop Closure Sprint — 7 Days",
+    priceUsd: 19,
+    priceVnd: 490000,
+    durationDays: 365,
+    family: "open-loop-closure",
+    status: "pilot"
+  },
+  personal_after_action_review: {
+    code: "personal_after_action_review",
+    label: "Personal After-Action Review System",
+    priceUsd: 29,
+    priceVnd: 750000,
+    durationDays: 365,
+    family: "after-action-review",
+    status: "pilot"
+  }
+};
+
 export const PRODUCT_FAMILIES = [
   {
     slug: "avoidance-map",
@@ -277,6 +313,27 @@ export const PRODUCT_FAMILIES = [
     category: "certification",
     offers: ["cert_method_designer"],
     landing: "/certification/practice-method-designer/"
+  },
+  {
+    slug: "self-trust-practice",
+    name: "Self-Trust Practice Lab",
+    category: "program",
+    offers: ["self_trust_evidence_builder"],
+    landing: "/programs/self-trust-practice-lab/"
+  },
+  {
+    slug: "open-loop-closure",
+    name: "Open Loop Closure Sprint",
+    category: "program",
+    offers: ["open_loop_closure_sprint"],
+    landing: "/programs/open-loop-closure-sprint/"
+  },
+  {
+    slug: "after-action-review",
+    name: "Personal After-Action Review",
+    category: "program",
+    offers: ["personal_after_action_review"],
+    landing: "/programs/personal-after-action-review/"
   }
 ];
 
@@ -286,7 +343,8 @@ export const PLANS = {
   ...MICRO_PRODUCTS,
   ...ASSESSMENTS,
   ...GUIDED_PROGRAMS,
-  ...CERTIFICATIONS
+  ...CERTIFICATIONS,
+  ...PILOT_PROGRAMS
 };
 
 export const PROVIDER_CATALOG = [
@@ -378,7 +436,11 @@ export const TEMPLATE_IDS = {
   product_prog_creative_studio_welcome: "T86_CREATIVE_STUDIO_WELCOME",
   product_diag_capital_welcome: "T87_CAPITAL_DIAGNOSTIC_WELCOME",
   product_cert_companion_welcome: "T88_COMPANION_L1_WELCOME",
-  product_cert_method_designer_welcome: "T89_METHOD_DESIGNER_WELCOME"
+  product_cert_method_designer_welcome: "T89_METHOD_DESIGNER_WELCOME",
+  // Pilot program welcome emails
+  product_self_trust_welcome: "T90_SELF_TRUST_WELCOME",
+  product_open_loop_welcome: "T91_OPEN_LOOP_WELCOME",
+  product_after_action_welcome: "T92_AFTER_ACTION_WELCOME"
 };
 
 export function planByCode(planCode) {

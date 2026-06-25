@@ -31,6 +31,15 @@ export async function onRequestGet(context) {
       events,
       webhookErrors,
       contentStats,
+      mrrData,
+      arrData,
+      revenue30d,
+      topPlans30d,
+      conversionFunnel,
+      recentWebhookEvents,
+      revenueByMonth,
+      newUsers30d,
+      newUsers7d,
     ] = await Promise.all([
       db.prepare("SELECT COUNT(*) as total FROM users").first(),
       db.prepare("SELECT COUNT(*) as total FROM users WHERE membership_type IS NOT NULL AND membership_type != 'free'").first(),
@@ -55,15 +64,43 @@ export async function onRequestGet(context) {
       db.prepare("SELECT COUNT(*) as total FROM site_events WHERE created_at >= datetime('now', '-7 days')").first().catch(() => ({ total: 0 })),
       db.prepare("SELECT COUNT(*) as total FROM webhook_events WHERE status IN ('failed','error') AND created_at >= datetime('now', '-7 days')").first().catch(() => ({ total: 0 })),
       fetchContentStats(context),
+      // MRR: sum of recurring revenue in last 30 days (monthly_practice only)
+      db.prepare("SELECT SUM(amount) as total FROM orders WHERE plan_code = 'monthly_practice' AND payment_status IN ('paid','captured','completed') AND created_at >= datetime('now', '-30 days')").first().catch(() => ({ total: 0 })),
+      // ARR: MRR * 12 (annualized)
+      db.prepare("SELECT SUM(amount) as total FROM orders WHERE plan_code = 'monthly_practice' AND payment_status IN ('paid','captured','completed') AND created_at >= datetime('now', '-30 days')").first().catch(() => ({ total: 0 })),
+      // Revenue last 30 days (all plans)
+      db.prepare("SELECT SUM(amount) as total, COUNT(*) as cnt FROM orders WHERE payment_status IN ('paid','captured','completed') AND created_at >= datetime('now', '-30 days')").first().catch(() => ({ total: 0, cnt: 0 })),
+      // Top plans by revenue in last 30 days
+      db.prepare("SELECT plan_code, SUM(amount) as total, COUNT(*) as cnt FROM orders WHERE payment_status IN ('paid','captured','completed') AND created_at >= datetime('now', '-30 days') GROUP BY plan_code ORDER BY total DESC LIMIT 10").all().catch(() => ({ results: [] })),
+      // Conversion funnel: visitors (users) → paid → lesson_completed → practice_submitted
+      Promise.resolve({
+        users: userCount?.total || 0,
+        paid: paidOrders?.total || 0,
+        lesson_completed: lessonCompleted?.total || 0,
+        practice_submitted: practiceSubmitted?.total || 0,
+      }),
+      // Recent webhook events (last 20)
+      db.prepare("SELECT id, provider, event_type, status, created_at FROM webhook_events ORDER BY created_at DESC LIMIT 20").all().catch(() => ({ results: [] })),
+      // Revenue by month (last 12 months)
+      db.prepare("SELECT strftime('%Y-%m', created_at) as month, SUM(amount) as total, COUNT(*) as cnt FROM orders WHERE payment_status IN ('paid','captured','completed') AND created_at >= datetime('now', '-365 days') GROUP BY month ORDER BY month DESC").all().catch(() => ({ results: [] })),
+      // New users last 30 days
+      db.prepare("SELECT COUNT(*) as total FROM users WHERE created_at >= datetime('now', '-30 days')").first().catch(() => ({ total: 0 })),
+      // New users last 7 days
+      db.prepare("SELECT COUNT(*) as total FROM users WHERE created_at >= datetime('now', '-7 days')").first().catch(() => ({ total: 0 })),
     ]);
+
+    const mrr = mrrData?.total || 0;
+    const arr = (arrData?.total || 0) * 12;
+    const totalUsers = userCount?.total || 0;
+    const totalPaid = paidOrders?.total || 0;
 
     return json({
       ok: true,
       audit: {
-        users: userCount?.total || 0,
+        users: totalUsers,
         paid_members: memberCount?.total || 0,
         orders: orderCount?.total || 0,
-        paid_orders: paidOrders?.total || 0,
+        paid_orders: totalPaid,
         pending_orders: pendingOrders?.total || 0,
         failed_orders: failedOrders?.total || 0,
         refunded_orders: refundedOrders?.total || 0,
@@ -83,6 +120,30 @@ export async function onRequestGet(context) {
         site_events_7d: events?.total || 0,
         webhook_errors_7d: webhookErrors?.total || 0,
         content_stats: contentStats,
+        // New: MRR/ARR
+        mrr: mrr,
+        arr: arr,
+        // New: revenue last 30 days
+        revenue_30d: revenue30d?.total || 0,
+        orders_30d: revenue30d?.cnt || 0,
+        // New: top plans 30 days
+        top_plans_30d: topPlans30d.results || [],
+        // New: conversion funnel
+        conversion_funnel: {
+          users: totalUsers,
+          paid: totalPaid,
+          lesson_completed: lessonCompleted?.total || 0,
+          practice_submitted: practiceSubmitted?.total || 0,
+          user_to_paid_rate: totalUsers > 0 ? (totalPaid / totalUsers * 100).toFixed(2) + "%" : "0%",
+          paid_to_lesson_rate: totalPaid > 0 ? ((lessonCompleted?.total || 0) / totalPaid * 100).toFixed(2) + "%" : "0%",
+        },
+        // New: recent webhook events
+        recent_webhook_events: recentWebhookEvents.results || [],
+        // New: revenue by month
+        revenue_by_month: revenueByMonth.results || [],
+        // New: user growth
+        new_users_30d: newUsers30d?.total || 0,
+        new_users_7d: newUsers7d?.total || 0,
       },
     });
   } catch (err) {

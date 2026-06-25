@@ -440,7 +440,11 @@ export const TEMPLATE_IDS = {
   // Pilot program welcome emails
   product_self_trust_welcome: "T90_SELF_TRUST_WELCOME",
   product_open_loop_welcome: "T91_OPEN_LOOP_WELCOME",
-  product_after_action_welcome: "T92_AFTER_ACTION_WELCOME"
+  product_after_action_welcome: "T92_AFTER_ACTION_WELCOME",
+  // Creator onboarding
+  creator_onboarding: "T93_CREATOR_ONBOARDING",
+  creator_approved: "T94_CREATOR_APPROVED",
+  creator_rejected: "T95_CREATOR_REJECTED"
 };
 
 export function planByCode(planCode) {

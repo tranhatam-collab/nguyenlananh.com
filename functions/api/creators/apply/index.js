@@ -1,6 +1,8 @@
 import { json, errorResponse, randomId, nowIso } from "../../../_lib/utils.js";
 import { requireDb } from "../../../_lib/db.js";
 import { requireTurnstile } from "../../../_lib/turnstile.js";
+import { TEMPLATE_IDS } from "../../../_lib/constants.js";
+import { sendTemplateEmailDirect } from "../../../_lib/email.js";
 
 // POST /api/creators/apply
 // Public endpoint for creator applications.
@@ -47,6 +49,17 @@ export async function onRequestPost(context) {
       )
       .bind(id, email, name, bio, motivation, sampleWorkUrl, experience, ip, ua, nowIso())
       .run();
+
+    // Send onboarding email (non-blocking)
+    try {
+      await sendTemplateEmailDirect({
+        env: context.env,
+        templateId: TEMPLATE_IDS.creator_onboarding,
+        recipientEmail: email,
+        language: "vi",
+        payload: { creator_name: name, email }
+      });
+    } catch (_e) { /* non-blocking */ }
 
     return json({ ok: true, message: "Đơn đã gửi. Cảm ơn bạn." });
   } catch (err) {

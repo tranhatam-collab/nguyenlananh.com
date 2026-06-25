@@ -349,6 +349,51 @@ function renderTemplate(templateId, locale, payload, env) {
     };
   }
 
+  // Creator onboarding (T93-T95)
+  const creatorName = String(payload?.creator_name || payload?.name || "bạn");
+  const creatorDashboardUrl = "https://www.nguyenlananh.com/members/creator-dashboard/";
+  const creatorPolicyUrl = "https://www.nguyenlananh.com/creators/policy/";
+
+  if (templateId === TEMPLATE_IDS.creator_onboarding) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Welcome to the Creator program"
+        : "[Nguyenlananh.com] Chào mừng bạn vào chương trình Creator",
+      text: isEnglish
+        ? `Hi ${creatorName},\n\nThank you for applying to become a Creator on nguyenlananh.com.\n\nWe received your application and will review it within 5-7 business days. You'll receive an email once approved.\n\nWhile you wait, please review our Creator Policy:\n- IP rights, consent, revenue share: ${creatorPolicyUrl}\n\nIf approved, you'll get access to the Creator Dashboard: ${creatorDashboardUrl}\n\nSupport: ${supportEmail}`
+        : `Chào ${creatorName},\n\nCảm ơn bạn đã ứng tuyển làm Creator trên nguyenlananh.com.\n\nChúng tôi đã nhận đơn và sẽ duyệt trong 5-7 ngày làm việc. Bạn sẽ nhận email khi được duyệt.\n\nTrong lúc chờ, vui lòng đọc Chính sách Creator:\n- Quyền IP, đồng thuận, chia sẻ doanh thu: ${creatorPolicyUrl}\n\nNếu được duyệt, bạn sẽ có quyền truy cập Creator Dashboard: ${creatorDashboardUrl}\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.creator_approved) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Creator application is approved!"
+        : "[Nguyenlananh.com] Đơn Creator của bạn đã được duyệt!",
+      text: isEnglish
+        ? `Hi ${creatorName},\n\nCongratulations! Your Creator application has been approved.\n\nYou can now:\n- Access your Creator Dashboard: ${creatorDashboardUrl}\n- Submit your first content piece\n- Review the Creator Policy (IP, revenue share 70/30): ${creatorPolicyUrl}\n\nNext steps:\n1. Complete your creator profile (bio, avatar, links)\n2. Submit your first article or lesson\n3. Wait for review (usually 2-3 days)\n\nRevenue share: You keep 70% of all sales from your content. Payouts are monthly (min 500,000 VND or $20).\n\nWelcome aboard!\nSupport: ${supportEmail}`
+        : `Chào ${creatorName},\n\nChúc mừng! Đơn Creator của bạn đã được duyệt.\n\nBạn có thể:\n- Truy cập Creator Dashboard: ${creatorDashboardUrl}\n- Nộp nội dung đầu tiên\n- Đọc Chính sách Creator (IP, doanh thu 70/30): ${creatorPolicyUrl}\n\nBước tiếp theo:\n1. Hoàn thiện profile (bio, avatar, links)\n2. Nộp bài viết hoặc bài học đầu tiên\n3. Chờ duyệt (thường 2-3 ngày)\n\nChia sẻ doanh thu: Bạn giữ 70% doanh thu từ nội dung. Thanh toán hàng tháng (tối thiểu 500.000 VND hoặc $20).\n\nChào mừng bạn!\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.creator_rejected) {
+    const reason = String(payload?.reason || "");
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Update on your Creator application"
+        : "[Nguyenlananh.com] Cập nhật đơn Creator của bạn",
+      text: isEnglish
+        ? `Hi ${creatorName},\n\nThank you for your interest in becoming a Creator on nguyenlananh.com.\n\nAfter review, we're unable to approve your application at this time.${reason ? `\n\nReason: ${reason}` : ""}\n\nThis doesn't mean you can't apply again. We encourage you to:\n- Review our content values and methodology\n- Submit more sample work\n- Apply again after 30 days\n\nIf you have questions, reply to this email.\n\nSupport: ${supportEmail}`
+        : `Chào ${creatorName},\n\nCảm ơn bạn đã quan tâm đến chương trình Creator trên nguyenlananh.com.\n\nSau khi xem xét, chúng tôi chưa thể duyệt đơn của bạn lúc này.${reason ? `\n\nLý do: ${reason}` : ""}\n\nĐiều này không có nghĩa bạn không thể ứng tuyển lại. Chúng tôi khuyến khích:\n- Đọc lại giá trị nội dung và phương pháp của chúng tôi\n- Gửi thêm sample work\n- Ứng tuyển lại sau 30 ngày\n\nNếu có thắc mắc, trả lời email này.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
   return {
     from: systemFromAddress(env),
     reply_to: supportEmail,

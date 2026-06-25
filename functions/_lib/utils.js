@@ -42,6 +42,12 @@ export function normalizeEmail(value) {
   return String(value || "").trim().toLowerCase();
 }
 
+export function getCookieValue(request, name) {
+  const cookieHeader = request.headers.get("Cookie") || request.headers.get("cookie") || "";
+  const match = cookieHeader.split(";").map(c => c.trim()).find(c => c.startsWith(name + "="));
+  return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
+}
+
 export function randomId(prefix) {
   return `${prefix}_${crypto.randomUUID().replace(/-/g, "")}`;
 }

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Creator Dashboard | Nguyễn Lan Anh</title>
+  <meta name="description" content="Quản lý nội dung và submission cho nhà sáng tạo." />
+  <link rel="canonical" href="https://www.nguyenlananh.com/members/creator-dashboard/" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Bỏ qua điều hướng</a>
+  <header class="topbar" role="banner"><div class="container"><div class="navwrap"><a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Creator</span></span></a><nav class="navlinks" aria-label="Điều hướng chính"><a href="/members/dashboard/">Dashboard</a><a href="/members/creator-dashboard/" style="font-weight:700;">Creator</a></nav></div></div></header>
+  <main id="main" class="container" role="main">
+    <section class="pageHead">
+      <h1>Creator Dashboard</h1>
+      <p class="sub">Quản lý bài viết, nội dung và submission của bạn.</p>
+    </section>
+
+    <section id="creatorStatus" class="panel"><p class="note">Đang kiểm tra trạng thái...</p></section>
+
+    <section id="submissionForm" class="panel hidden">
+      <h3>Gửi nội dung mới</h3>
+      <div class="field"><label for="subType">Loại</label><select id="subType"><option value="article">Bài viết</option><option value="worksheet">Worksheet</option><option value="reflection">Reflection</option></select></div>
+      <div class="field"><label for="subTitle">Tiêu đề</label><input id="subTitle" type="text" /></div>
+      <div class="field"><label for="subContent">Nội dung / ghi chú</label><textarea id="subContent" rows="6"></textarea></div>
+      <div class="actionsRow"><button id="submitBtn" class="cta" type="button">Lưu draft</button></div>
+      <div id="subStatus" class="statusBanner hidden" role="status" style="margin-top:10px;"></div>
+    </section>
+  </main>
+  <footer role="contentinfo"><div class="container"><div class="fwrap"><div><div style="font-weight:700;color:rgba(15,23,42,.8);">Nguyễn Lan Anh</div><div>© <span id="year"></span></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;"><a href="/members/">Members</a><a href="/creators/">Creators</a></div></div></div></footer>
+  <script src="/assets/content-registry.js"></script>
+  <script src="/assets/site.js"></script>
+  <script src="/assets/creator-dashboard.js"></script>
+</body>
+</html>

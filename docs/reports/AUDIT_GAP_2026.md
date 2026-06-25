@@ -1,7 +1,7 @@
 # AUDIT GAP — Kế hoạch 45 bài · 45 commercial offers · 4 membership · Creator · Audit Report
 
 > Ngày: 2026-06-25
-> HEAD: `55d2f00`
+> HEAD: `d349134`
 > Mục tiêu: 45 bài viết, 45 commercial offers, 4 gói thành viên, nhà sáng tạo nội dung, thống kê báo cáo audit
 
 ---
@@ -11,11 +11,11 @@
 | Mục tiêu | Hiện có | Thiếu | Phán quyết |
 |---|---|---|---|
 | 45 bài viết | ~82 bài viết thực tế | ✅ Đã vượt | PASS số lượng, cần quality audit |
-| 45 commercial offers | 22 plan codes, 10 product families, 19 landing pages | ~24–30 offers | HOLD — cần inventory chính xác + product taxonomy |
+| 45 commercial offers | 23 plan codes, 10 product families, 19 landing pages | ~22–28 offers | HOLD — cần inventory chính xác + product taxonomy |
 | 4 gói thành viên | 5 gói (year1, year2, year3, lifetime, monthly_practice) | ✅ Đã đủ | PASS (monthly chưa public cho đến khi recurring hoàn chỉnh) |
-| Nhà sáng tạo nội dung | 10 chương trình + admin/creators | public creator pages | BUILD REQUIRED |
-| Thống kê báo cáo audit | `/admin/audit/` + API | advanced analytics | P0 — cần mở rộng |
-| Giá mỗi offer | 22 plan codes, mỗi cái 1 giá | ✅ | PASS |
+| Nhà sáng tạo nội dung | `/creators/`, `/creators/apply/`, `/creators/:slug/`, `/members/creator-dashboard/` + admin | IP/consent/revenue share | BUILD REQUIRED (routing đã fix) |
+| Thống kê báo cáo audit | `/admin/audit/` + API + inventory API + content stats | funnel analytics, MRR/ARR, export | P1 — cần mở rộng tiếp |
+| Giá mỗi offer | 23 plan codes, mỗi cái 1 giá | ✅ CI gate `validate:prices` | PASS |
 | PayPal checkout | checkout URL trả về | ✅ | PASS |
 | PayPal fulfillment | webhook endpoint tồn tại | webhook ID + end-to-end test | HOLD |
 
@@ -46,14 +46,19 @@
 | Plan code | Mã checkout | asmt_avoidance_self |
 | Entitlement | Quyền truy cập | content_access |
 
-### Plan codes hiện có (22)
+### Plan codes hiện có (23)
 
 | Nhóm | Số lượng | Plan codes |
 |---|---|---|
 | Membership | 5 | year1, year2, year3, lifetime, monthly_practice |
 | Micro products | 5 | micro_life_reset, micro_inner_listening, micro_one_corner, micro_7day_rhythm, micro_companion |
-| Premium offers | 12 | asmt_avoidance_self, asmt_avoidance_review, prog_rhythm_lab, prog_emo_block, cert_boundary_found, prog_family_pattern, prog_space_reset, prog_creative_studio, diag_capital_self, diag_capital_expert, diag_capital_biz, cert_companion_l1, cert_method_designer |
-| **Tổng** | **22** | — |
+| Premium offers | 13 | asmt_avoidance_self, asmt_avoidance_review, diag_capital_self, diag_capital_expert, diag_capital_biz, prog_rhythm_lab, prog_emo_block, prog_family_pattern, prog_space_reset, prog_creative_studio, cert_boundary_found, cert_companion_l1, cert_method_designer |
+| **Tổng** | **23** | — |
+
+**Phân nhóm premium (13):**
+- Assessments (5): asmt_avoidance_self, asmt_avoidance_review, diag_capital_self, diag_capital_expert, diag_capital_biz
+- Guided programs (5): prog_rhythm_lab, prog_emo_block, prog_family_pattern, prog_space_reset, prog_creative_studio
+- Certifications (3): cert_boundary_found, cert_companion_l1, cert_method_designer
 
 ### Product families hiện có (10)
 
@@ -109,21 +114,24 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 
 ---
 
-## 4. Nhà sáng tạo nội dung — Chưa hoàn chỉnh 🟡
+## 4. Nhà sáng tạo nội dung — Đã có cơ bản ✅, cần hoàn thiện 🟡
 
 **Hiện có:**
 - 10 chương trình trong `/chuong-trinh/`
-- `/admin/creators/`
-
-**Thiếu:**
+- `/admin/creators/` — admin review
 - `/creators/` — public directory
 - `/creators/apply/` — application form
-- `/creators/{slug}/` — public profile
+- `/creators/:slug/` — public profile (routing đã fix tại `d349134`)
 - `/members/creator-dashboard/` — creator dashboard
-- Submission → review → publish workflow
-- IP, consent, revenue share
+- API: apply, profiles list, profile by slug, submissions, admin applications
+- DB schema: `creator_profiles`, `creator_applications`, `creator_submissions`
 
-**Trạng thái:** BUILD REQUIRED.
+**Thiếu:**
+- IP, consent, revenue share policy
+- Public submission → review → publish workflow end-to-end test
+- Creator onboarding email template
+
+**Trạng thái:** BUILD REQUIRED (còn lại policy + onboarding).
 
 ---
 
@@ -132,29 +140,33 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 **Hiện có:**
 - `/admin/audit/` dashboard
 - `/api/admin/audit` JSON endpoint
+- `/api/admin/inventory` JSON endpoint (product taxonomy)
 - Quyền `audit.view` cho super_admin + ops_manager
 - Các chỉ số: users, paid members, orders, revenue by provider/plan, content access, lesson completed, practice submissions, assessments, exams, checkins, certifications, creator applications, webhook errors
+- Product inventory: product families, offer counts, plan code counts theo nhóm
+- Content stats: tổng bài, bài public, category pages, bài dưới chuẩn độ dài, missing CTA, missing metadata (đang build)
 
-**Cần mở rộng:**
-- Content stats: tổng bài, bài dưới chuẩn, duplicate risk, missing CTA, broken links
-- Product inventory: product family count, offer count, landing page count, price mismatch, entitlement mismatch
+**Cần mở rộng tiếp:**
 - Funnel analytics: conversion rate, top pages, top products
 - Webhook event viewer
 - MRR / ARR dashboard
 - Export PDF/Excel
+- Duplicate risk, broken links
 
-**Trạng thái:** P0 — cần tiếp tục mở rộng.
+**Trạng thái:** P1 — đang mở rộng content stats.
 
 ---
 
 ## 6. Giá sản phẩm — Mỗi offer có giá khác nhau ✅
 
-**Hiện có 22 plan codes với giá USD riêng biệt.**
+**Hiện có 23 plan codes với giá USD riêng biệt.**
 
 **Đã đồng bộ:**
 - asmt_avoidance_review: 1.950.000 VND / $79
 - diag_capital_expert: 15.000.000 VND / $600
 - diag_capital_biz: 30.000.000 VND / $1.200
+
+**CI gate:** `npm run validate:prices` — script `scripts/validate-prices.mjs` scan mọi landing page `data-plan` / `data-price` và so sánh với `functions/_lib/constants.js`. Exit 1 nếu drift. Kết quả hiện tại: 28 attrs checked, PASS.
 
 **Trạng thái:** PASS.
 
@@ -180,18 +192,22 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 ## 8. Thứ tự ưu tiên đúng
 
 ### P0 — Khóa nền quản trị
-1. ✅ Hoàn thiện inventory và báo cáo audit (đang làm)
+1. ✅ Hoàn thiện inventory và báo cáo audit (đã làm)
 2. ✅ Thêm gói membership thứ tư (đã làm)
 3. ✅ Xây `/admin/audit/` cơ bản (đã làm)
-4. Tách product family, offer, membership registry
-5. Xác minh PayPal webhook end-to-end (cần email + secret mới)
+4. ✅ Tách product family, offer, membership registry (đã làm)
+5. ✅ Fix creator routing `/creators/:slug/` (đã làm tại `d349134`)
+6. ✅ Price validation CI gate `validate:prices` (đã làm tại `d349134`)
+7. Xác minh PayPal webhook end-to-end (cần email + secret mới)
 
-### P1 — Creator foundation
-6. `/creators/`
-7. `/creators/apply/`
-8. `/creators/{slug}/`
-9. `/members/creator-dashboard/`
-10. Submission/review workflow
+### P1 — Creator foundation + audit mở rộng
+8. ✅ `/creators/` (đã làm)
+9. ✅ `/creators/apply/` (đã làm)
+10. ✅ `/creators/{slug}/` (đã làm, routing fix)
+11. ✅ `/members/creator-dashboard/` (đã làm)
+12. ✅ Submission/review workflow (đã làm)
+13. ⏳ IP, consent, revenue share policy
+14. ⏳ Mở rộng `/api/admin/audit` content stats (đang làm)
 
 ### P2 — Ba sản phẩm pilot
 11. Self-Trust Practice Lab
@@ -205,12 +221,15 @@ Mỗi pilot phải có: pre-assessment, 6 lessons, quiz, 2 labs, 2 submissions, 
 | Hạng mục | Phán quyết |
 |---|---|
 | Tier price fixes | ✅ VERIFIED |
-| Plan code count | 22 |
+| Plan code count | 23 |
+| Premium offers | 13 (5 assessments + 5 programs + 3 certifications) |
 | 45-product claim | HOLD — cần taxonomy rõ ràng |
 | Monthly membership | APPROVED (chưa public) |
 | Lifetime membership | DEPLOYED (có thể thay bằng monthly nếu anh muốn) |
-| Admin audit | P0 — cần mở rộng |
-| Creator public system | P1 — BUILD REQUIRED |
+| Admin audit | P1 — đang mở rộng content stats |
+| Creator public system | ✅ Routing fix xong, còn policy + onboarding |
+| Creator routing `/creators/:slug/` | ✅ FIXED tại `d349134` |
+| Price validation CI | ✅ `npm run validate:prices` tại `d349134` |
 | PayPal checkout | PASS |
 | PayPal end-to-end fulfillment | HOLD |
 | Build 26 products at once | REJECTED |

@@ -5,6 +5,7 @@
   "description": "Nguyễn Lan Anh — personal development platform",
   "scripts": {
     "test": "bash scripts/smoke-production.sh",
-    "validate:prices": "node scripts/validate-prices.mjs --fail"
+    "validate:prices": "node scripts/validate-prices.mjs --fail",
+    "build:content-stats": "node scripts/build-content-stats.mjs"
   }
 }

@@ -99,6 +99,30 @@
           if (el && val !== undefined) el.textContent = fmtNum(val);
         }
       }
+
+      // Content stats (pre-computed by scripts/build-content-stats.mjs)
+      const cs = a.content_stats;
+      if (cs) {
+        const genEl = document.getElementById("contentStatsGenerated");
+        if (genEl && cs.generated_at) {
+          genEl.textContent = "Cập nhật: " + new Date(cs.generated_at).toLocaleString("vi-VN");
+        }
+        const csEls = {
+          "statViArticles": cs.vi?.total_articles,
+          "statViCategories": cs.vi?.category_pages,
+          "statViUnderStandard": cs.vi?.under_standard,
+          "statViMissingCta": cs.vi?.missing_cta,
+          "statViMissingMeta": cs.vi?.missing_metadata,
+          "statEnArticles": cs.en?.total_articles,
+          "statEnUnderStandard": cs.en?.under_standard,
+          "statViEnBoth": cs.vi_en_coverage?.both,
+          "statViEnViOnly": cs.vi_en_coverage?.vi_only
+        };
+        for (const [id, val] of Object.entries(csEls)) {
+          const el = document.getElementById(id);
+          if (el && val !== undefined) el.textContent = fmtNum(val);
+        }
+      }
     } catch (e) {
       console.error("Audit load failed", e);
     }

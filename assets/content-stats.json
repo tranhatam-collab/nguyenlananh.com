@@ -1,0 +1,1011 @@
+{
+  "generated_at": "2026-06-25T12:57:53.162Z",
+  "min_words": 1500,
+  "vi": {
+    "locale": "vi",
+    "total_articles": 87,
+    "category_pages": 6,
+    "under_standard": 66,
+    "missing_cta": 0,
+    "missing_metadata": 3,
+    "articles": [
+      {
+        "slug": "am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve",
+        "words": 757,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ban-do-he-thong-doi-song-ca-nhan",
+        "words": 3837,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ban-do-ne-tranh",
+        "words": 596,
+        "has_cta": true,
+        "has_metadata": false
+      },
+      {
+        "slug": "ban-do-vong-lap-ca-nhan",
+        "words": 1867,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ban-khong-thieu-kien-thuc",
+        "words": 369,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "bon-truc-thay-doi",
+        "words": 1538,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "cai-choi",
+        "words": 1601,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chi-can-dung",
+        "words": 449,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chu-tam-sau",
+        "words": 975,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chua-tung-co-huong",
+        "words": 440,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "co-don-khong-phai-vi-thieu-nguoi",
+        "words": 2129,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "co-nguoi-can-dung-lai",
+        "words": 416,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "cong-dong-dong-hanh-va-truong-thanh",
+        "words": 3330,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "cong-dong-song-moi",
+        "words": 378,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than",
+        "words": 169,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon",
+        "words": 263,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than-khong-ao-tuong-doi-doi",
+        "words": 2033,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-hien-tai-tu-do-tuong-lai",
+        "words": 252,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "di-vao-ben-trong",
+        "words": 208,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban",
+        "words": 879,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "diem-nghen-cam-xuc",
+        "words": 588,
+        "has_cta": true,
+        "has_metadata": false
+      },
+      {
+        "slug": "dieu-ban-dang-tranh",
+        "words": 449,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song",
+        "words": 284,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dieu-tre-em-can-khong-chi-la-day-dung",
+        "words": 555,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dong-chay-sang-tao-dong-chay-su-song",
+        "words": 237,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-37-ngay",
+        "words": 231,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-buoc",
+        "words": 225,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-doi-song-37-ngay",
+        "words": 3602,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-nhat-ky",
+        "words": 167,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gan-duc-khoi-trong",
+        "words": 419,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-dinh-khong-chi-la-noi-ta-lon-len",
+        "words": 601,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu",
+        "words": 253,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-nao-la-vinh-cuu-truoc-song-gio",
+        "words": 255,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-noi-tai",
+        "words": 167,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hanh-trinh-di-vao-ben-trong",
+        "words": 267,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-gia-dinh-noi-phan-xa-duoc-hoc",
+        "words": 1832,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-gia-dinh-va-goc-re",
+        "words": 1241,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-gia-dinh-va-quyen-lua-chon",
+        "words": 3130,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-van-hanh-lao-dong-sang-tao",
+        "words": 3603,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hieu-cuoc-doi-minh",
+        "words": 443,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hoc-tap-sang-tao-truong-thanh",
+        "words": 273,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hoi-sinh-su-song-tu-su-sang-tao-nguyen-so",
+        "words": 255,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "im-lang-noi-ban-van-dang-ne",
+        "words": 1776,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ket-noi-linh-hon-vat-the",
+        "words": 242,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ket-noi-sang-tao",
+        "words": 246,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-doi-song-bat-dau-roi-khoi-tay-minh",
+        "words": 1787,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-moi-truong-khong-con-phu-hop",
+        "words": 502,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-mot-goc-nha-duoc-dat-lai-dung-cho",
+        "words": 1344,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khoi-tu-tam",
+        "words": 490,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khong-gian-song-va-nang-luc-hanh-dong",
+        "words": 3689,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that",
+        "words": 1428,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "kien-tao-mot-doi-song-y-nghia",
+        "words": 249,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "kinh-te-cua-su-ro-rang",
+        "words": 1331,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "kinh-te-noi-tai-va-nguon-luc-ca-nhan",
+        "words": 3498,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lang-nghe-va-ra-quyet-dinh-ro-rang",
+        "words": 3239,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao",
+        "words": 183,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao-he-van-hanh",
+        "words": 1240,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song",
+        "words": 2093,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "minh-dang-di-con-duong-gi",
+        "words": 261,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "moi-truong-la-nguoi-thay-vo-hinh",
+        "words": 1949,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mon-hoc-don-dep",
+        "words": 181,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mon-hoc-don-dep-tong-quan",
+        "words": 236,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon",
+        "words": 1272,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nen-tang-ranh-gioi",
+        "words": 639,
+        "has_cta": true,
+        "has_metadata": false
+      },
+      {
+        "slug": "neu-minh-sai-thi-sao",
+        "words": 430,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nghe-lai-thu-minh-da-im-lang-qua-lau",
+        "words": 1491,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ngoi-nha-thu-2",
+        "words": 398,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay",
+        "words": 638,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nhat-ky-37-ngay-lam-chu-ngay-1",
+        "words": 582,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nhung-vong-lap-ban-chua-goi-ten",
+        "words": 1431,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nuoi-day-tre-khong-lam-gay-tu-nhien",
+        "words": 2097,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "quan-tri-nang-luong",
+        "words": 1050,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "quet-la-va-viec-hoc",
+        "words": 245,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ranh-gioi-lanh-manh",
+        "words": 1150,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "sai-moi-truong",
+        "words": 328,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-sai-nhip",
+        "words": 454,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-theo-dong-chay",
+        "words": 385,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-theo-thoi-quen",
+        "words": 335,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "su-du-va-tien-bac",
+        "words": 1098,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "tai-thiet-khong-gian-song",
+        "words": 1294,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "thiet-ke-moi-truong-song-phu-hop",
+        "words": 4243,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "thiet-ke-nhip-song-ben-vung",
+        "words": 3030,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "thieu-su-that",
+        "words": 429,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "truong-thanh-thong-qua-mon-hoc-don-dep",
+        "words": 266,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "tu-55-trieu-den-tu-do",
+        "words": 257,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "viet-phan-tu",
+        "words": 996,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "vu-tru-vat-chat",
+        "words": 383,
+        "has_cta": true,
+        "has_metadata": true
+      }
+    ]
+  },
+  "en": {
+    "locale": "en",
+    "total_articles": 74,
+    "category_pages": 6,
+    "under_standard": 74,
+    "missing_cta": 0,
+    "missing_metadata": 0,
+    "articles": [
+      {
+        "slug": "am-thanh-tu-than-khi-mot-tieng-hat-tro-thanh-cach-tro-ve",
+        "words": 623,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ban-do-vong-lap-ca-nhan",
+        "words": 1479,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ban-khong-thieu-kien-thuc",
+        "words": 271,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "bon-truc-thay-doi",
+        "words": 1069,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "cai-choi",
+        "words": 1128,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chi-can-dung",
+        "words": 284,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chu-tam-sau",
+        "words": 757,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "chua-tung-co-huong",
+        "words": 282,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "co-don-khong-phai-vi-thieu-nguoi",
+        "words": 1294,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "co-nguoi-can-dung-lai",
+        "words": 277,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "cong-dong-song-moi",
+        "words": 264,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than",
+        "words": 130,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than-hoc-tap-nhan-thuc-cao-hon",
+        "words": 187,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-ban-than-khong-ao-tuong-doi-doi",
+        "words": 1357,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dau-tu-hien-tai-tu-do-tuong-lai",
+        "words": 189,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "di-vao-ben-trong",
+        "words": 188,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "di-vao-ben-trong-giai-ma-nhung-gi-dang-van-hanh-ban",
+        "words": 607,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dieu-ban-dang-tranh",
+        "words": 296,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dieu-dang-tiec-nhat-khi-ket-thuc-mot-kiep-song",
+        "words": 224,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dieu-tre-em-can-khong-chi-la-day-dung",
+        "words": 429,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "dong-chay-sang-tao-dong-chay-su-song",
+        "words": 179,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-37-ngay",
+        "words": 178,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-buoc",
+        "words": 171,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "du-an-nhat-ky",
+        "words": 125,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gan-duc-khoi-trong",
+        "words": 313,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-dinh-khong-chi-la-noi-ta-lon-len",
+        "words": 516,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-cuoc-doi-ban-dang-gia-bao-nhieu",
+        "words": 189,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-nao-la-vinh-cuu-truoc-song-gio",
+        "words": 185,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "gia-tri-noi-tai",
+        "words": 115,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hanh-trinh-di-vao-ben-trong",
+        "words": 199,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-gia-dinh-noi-phan-xa-duoc-hoc",
+        "words": 1404,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "he-gia-dinh-va-goc-re",
+        "words": 1014,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hieu-cuoc-doi-minh",
+        "words": 304,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hoc-tap-sang-tao-truong-thanh",
+        "words": 178,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "hoi-sinh-su-song-tu-su-sang-tao-nguyen-so",
+        "words": 186,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "im-lang-noi-ban-van-dang-ne",
+        "words": 1367,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ket-noi-linh-hon-vat-the",
+        "words": 198,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ket-noi-sang-tao",
+        "words": 177,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-doi-song-bat-dau-roi-khoi-tay-minh",
+        "words": 1464,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-moi-truong-khong-con-phu-hop",
+        "words": 382,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khi-mot-goc-nha-duoc-dat-lai-dung-cho",
+        "words": 1120,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khoi-tu-tam",
+        "words": 325,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that",
+        "words": 1216,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "kien-tao-mot-doi-song-y-nghia",
+        "words": 191,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "kinh-te-cua-su-ro-rang",
+        "words": 1030,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao",
+        "words": 151,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao-he-van-hanh",
+        "words": 998,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "lao-dong-sang-tao-khong-phai-dau-ra-ma-la-cach-song",
+        "words": 1231,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "minh-dang-di-con-duong-gi",
+        "words": 197,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "moi-truong-la-nguoi-thay-vo-hinh",
+        "words": 1139,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mon-hoc-don-dep",
+        "words": 134,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mon-hoc-don-dep-tong-quan",
+        "words": 193,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon",
+        "words": 1064,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "neu-minh-sai-thi-sao",
+        "words": 294,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nghe-lai-thu-minh-da-im-lang-qua-lau",
+        "words": 1220,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ngoi-nha-thu-2",
+        "words": 280,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ngoi-nha-thu-hai-noi-ban-dang-song-moi-ngay",
+        "words": 455,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nhat-ky-37-ngay-lam-chu-ngay-1",
+        "words": 380,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nhung-vong-lap-ban-chua-goi-ten",
+        "words": 1080,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "nuoi-day-tre-khong-lam-gay-tu-nhien",
+        "words": 1318,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "quan-tri-nang-luong",
+        "words": 851,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "quet-la-va-viec-hoc",
+        "words": 190,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "ranh-gioi-lanh-manh",
+        "words": 897,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "sai-moi-truong",
+        "words": 233,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-sai-nhip",
+        "words": 327,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-theo-dong-chay",
+        "words": 297,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "song-theo-thoi-quen",
+        "words": 234,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "su-du-va-tien-bac",
+        "words": 879,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "tai-thiet-khong-gian-song",
+        "words": 1062,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "thieu-su-that",
+        "words": 282,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "truong-thanh-thong-qua-mon-hoc-don-dep",
+        "words": 193,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "tu-55-trieu-den-tu-do",
+        "words": 191,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "viet-phan-tu",
+        "words": 823,
+        "has_cta": true,
+        "has_metadata": true
+      },
+      {
+        "slug": "vu-tru-vat-chat",
+        "words": 257,
+        "has_cta": true,
+        "has_metadata": true
+      }
+    ]
+  },
+  "vi_en_coverage": {
+    "both": 74,
+    "vi_only": 13,
+    "en_only": 0,
+    "vi_only_slugs": [
+      "ban-do-he-thong-doi-song-ca-nhan",
+      "ban-do-ne-tranh",
+      "cong-dong-dong-hanh-va-truong-thanh",
+      "diem-nghen-cam-xuc",
+      "du-an-doi-song-37-ngay",
+      "he-gia-dinh-va-quyen-lua-chon",
+      "he-van-hanh-lao-dong-sang-tao",
+      "khong-gian-song-va-nang-luc-hanh-dong",
+      "kinh-te-noi-tai-va-nguon-luc-ca-nhan",
+      "lang-nghe-va-ra-quyet-dinh-ro-rang",
+      "nen-tang-ranh-gioi",
+      "thiet-ke-moi-truong-song-phu-hop",
+      "thiet-ke-nhip-song-ben-vung"
+    ],
+    "en_only_slugs": []
+  }
+}

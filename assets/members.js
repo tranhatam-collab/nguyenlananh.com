@@ -1440,17 +1440,11 @@
     });
   }
 
-  function redirectFreeMemberToStart(session) {
-    if (!session || isPaidMembership(session)) return false;
-    const pathname = window.location.pathname;
-    const startPath = startPathForPath(pathname);
-
-    if (!isMembersPath(pathname) || isPublicMembersLanding(pathname) || pathname === startPath) {
-      return false;
-    }
-
-    window.location.replace(`${startPath}?gate=paid`);
-    return true;
+  function redirectFreeMemberToStart(_session) {
+    // No-op: Profile is no longer a global gate. Free members can browse
+    // the member area freely. Paid content (/members/deep/*) is gated
+    // server-side by _middleware.js. See PLAN_SKIP_PROFILE_2026-06-26.
+    return false;
   }
 
   async function initMembersArea() {

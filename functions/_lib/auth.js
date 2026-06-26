@@ -50,6 +50,7 @@ import {
   errorResponse,
   getLocale,
   json,
+  localeToDashboardPath,
   normalizeEmail,
   normalizeNextPath,
   nowIso,
@@ -153,7 +154,7 @@ export async function googleOAuthStartResponse(context) {
 
     const url = new URL(context.request.url);
     const locale = getLocale(url.searchParams.get("locale") || "vi");
-    const nextPath = normalizeNextPath(url.searchParams.get("next_path") || membersStartPath(locale), locale);
+    const nextPath = normalizeNextPath(url.searchParams.get("next_path") || localeToDashboardPath(locale), locale);
     const state = await createSignedOauthState(cfg.stateSecret, {
       nonce: randomId("gstate"),
       locale,
@@ -252,7 +253,7 @@ export async function googleOAuthCallbackResponse(context) {
     const locale = getLocale(state.locale || profilePayload.locale || "vi");
     const db = requireDb(context.env);
     const user = await ensureCompanionUser(db, email, locale, state.product_source || null);
-    const nextPath = normalizeNextPath(state.next_path || membersStartPath(locale), locale);
+    const nextPath = normalizeNextPath(state.next_path || localeToDashboardPath(locale), locale);
 
     // Update product_source if provided in OAuth state
     if (state.product_source && !user.product_source) {

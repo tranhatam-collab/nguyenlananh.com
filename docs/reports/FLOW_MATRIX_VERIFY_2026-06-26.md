@@ -1,6 +1,7 @@
 ## FLOW MATRIX REPORT — 2026-06-26 — Devin (GLM-5.2)
 
-> Full end-to-end flow matrix for VI and EN, per AI_DEV_WORKING_RULES.md §2. 98/98 PASS, 0 FAIL.
+> Full end-to-end flow matrix for VI and EN, per AI_DEV_WORKING_RULES.md §2.
+> **Matrix: 98/98 PASS. Status: PROVISIONAL — `error=5` OAuth issue pending diagnosis.**
 
 ---
 
@@ -105,6 +106,11 @@ Run: `node scripts/flow-matrix.mjs https://www.nguyenlananh.com`
 5. **Added `scripts/generate-en-product-pages.mjs`**
    - Re-runnable generator for English product/membership pages from a data map.
 
+6. **Google OAuth error logging + user-facing error banner** (commit after matrix)
+   - Catch block in `googleOAuthCallbackResponse` now logs full error details (code, message, stack, allProps) to both `console.error` and `site_errors` D1 table
+   - `/members/` and `/en/members/` now display a human-readable error banner when `?error=<code>` is present
+   - EN members page now has a "Sign in with Google" button (was missing — only had "Already a member" link)
+
 ---
 
 ## 5. BLOCKED / STILL REQUIRES USER ACTION
@@ -114,16 +120,23 @@ Run: `node scripts/flow-matrix.mjs https://www.nguyenlananh.com`
    - Set production site key in `assets/turnstile-config.js`
    - Set production secret key in Cloudflare dashboard environment variables (`TURNSTILE_SECRET_KEY`)
 
-2. **Google OAuth end-to-end** — server-side verified: redirect_uri accepted by Google. Need user to test actual login in incognito browser and confirm:
-   - `/join/` → "Đăng nhập bằng Google" → choose account → Allow
-   - Final URL and whether member dashboard loads
+2. **Google OAuth `error=5`** — ⚠️ **UNRESOLVED / PENDING DIAGNOSIS**
+   - User reported landing on `https://www.nguyenlananh.com/members/?error=5` after Google login
+   - Code has no `error=5` constant — this is `error.code` from a thrown Error in the callback catch block
+   - Deployed full error logging (stack, allProps) to `site_errors` table on 2026-06-26
+   - **Need user to retry login** so the actual error code/message/stack is captured in D1
+   - Once captured, root cause can be identified and fixed
+
+3. **Google OAuth end-to-end happy path** — server-side verified: redirect_uri accepted by Google, start endpoint returns 302 correctly. Need user to test actual login in incognito browser AFTER `error=5` is resolved.
 
 ---
 
 ## 6. VERDICT
 
-**PASS** — VI and EN flow matrices are 98/98 PASS.
+**PASS (matrix) / PENDING (OAuth error=5)**
 
-All production routes are consistent with git HEAD, all sellable products have functional landing pages in both languages, member gating is active, contact forms are wired to the API, and Turnstile rejects dummy tokens correctly.
+- Flow matrix: 98/98 PASS — all product landings, checkout APIs, contact forms, member gating, and nav links work correctly in both VI and EN.
+- Source ↔ production hash: MATCH 100%.
+- Multi-host consistency: apex + www + preview all consistent.
 
-Remaining work is operational (Turnstile prod keys, Google OAuth manual browser test), not code fixes.
+**NOT 100% COMPLETE** — the `error=5` Google OAuth issue reported by the user is unresolved. The code now logs the full error to D1, but the user must retry login to capture the actual error. Until then, this report is **provisional**, not final.

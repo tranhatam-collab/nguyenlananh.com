@@ -69,7 +69,14 @@ export function toHex(buffer) {
 }
 
 export function base64UrlEncodeJson(payload) {
-  const raw = btoa(JSON.stringify(payload));
+  // btoa() only handles Latin1. Use TextEncoder to support Unicode (Vietnamese, etc.)
+  const json = JSON.stringify(payload);
+  const bytes = new TextEncoder().encode(json);
+  let binary = "";
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  const raw = btoa(binary);
   return raw.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
@@ -77,7 +84,14 @@ export function base64UrlDecodeJson(encoded) {
   try {
     const normalized = String(encoded || "").replace(/-/g, "+").replace(/_/g, "/");
     const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
-    return JSON.parse(atob(`${normalized}${padding}`));
+    const binary = atob(`${normalized}${padding}`);
+    // Decode UTF-8 bytes back to string (inverse of TextEncoder encode)
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    const json = new TextDecoder().decode(bytes);
+    return JSON.parse(json);
   } catch (_error) {
     return null;
   }

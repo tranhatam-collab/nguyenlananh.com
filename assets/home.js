@@ -18,7 +18,8 @@
   var $ = function(s, root){ return (root||document).querySelector(s); };
   var $$ = function(s, root){ return Array.from((root||document).querySelectorAll(s)); };
 
-  $("#year").textContent = new Date().getFullYear();
+  var yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   var drawer = $("#drawer");
   var hamburger = $("#hamburger");

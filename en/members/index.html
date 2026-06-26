@@ -60,6 +60,7 @@
           "GOOGLE_PROFILE_FAILED":"Could not fetch your Google profile. Please try again.",
           "GOOGLE_EMAIL_MISSING":"Your Google account has no email. Please use a different account.",
           "GOOGLE_EMAIL_UNVERIFIED":"Your Google email is not verified. Please verify it on Google first.",
+          "5":"Google login hit a technical session error. Please try again in an incognito window; the system has logged details for support.",
           "google_callback_failed":"Google login failed. Please try again."
         };
         b.textContent=msg[e]||("Login error ("+e+"). Please try again or contact support if the issue persists.");
@@ -72,7 +73,7 @@
       <p class="sub">The new flow starts with free Google registration and a basic companion profile. The paid member layer only opens after you can actually see where you are.</p>
       <div class="actionsRow">
         <a class="cta" href="/en/join/">Register for free</a>
-        <a class="ghost" href="/api/auth/google/start/?locale=en">Sign in with Google</a>
+        <a class="ghost" href="/en/api/auth/google/start/?locale=en">Sign in with Google</a>
       </div>
     </section>
 

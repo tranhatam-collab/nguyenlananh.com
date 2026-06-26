@@ -316,13 +316,20 @@ export async function googleOAuthCallbackResponse(context) {
     return Response.redirect(failUrl.toString(), 302);
   } catch (error) {
     // Log full error details for debugging (including stack and all enumerable props)
+    const allProps = {};
+    for (const key of Object.getOwnPropertyNames(error || {})) {
+      allProps[key] = String(error[key]);
+    }
+    for (const key of Object.keys(error || {})) {
+      allProps[key] = String(error[key]);
+    }
     const errorDetails = {
-      code: error.code,
-      message: error.message,
-      stack: error.stack,
-      name: error.name,
-      cause: error.cause ? String(error.cause) : undefined,
-      allProps: Object.keys(error).reduce((acc, k) => { acc[k] = String(error[k]); return acc; }, {})
+      code: error?.code,
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+      cause: error?.cause ? String(error.cause) : undefined,
+      allProps
     };
     console.error("[google-oauth] callback error:", JSON.stringify(errorDetails));
 
@@ -331,9 +338,8 @@ export async function googleOAuthCallbackResponse(context) {
       const db = context.env?.PAYMENTS_DB;
       if (db) {
         await db.prepare(
-          "INSERT INTO site_errors (id, ts, request_id, status, code, message, path, method, stack, ip, user_email, admin_email, request_body, resolved, resolved_at, resolved_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NULL, NULL)"
+          "INSERT INTO site_errors (ts, request_id, status, code, message, path, method, stack, ip, user_email, admin_email, request_body, resolved, resolved_at, resolved_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NULL, NULL)"
         ).bind(
-          randomId("err"),
           nowIso(),
           "google_callback",
           error.status || 500,
@@ -346,7 +352,8 @@ export async function googleOAuthCallbackResponse(context) {
           "", "", "",
         ).run();
       }
-    } catch (_logErr) {
+    } catch (logErr) {
+      console.error("[google-oauth] failed to persist callback error:", logErr?.message || String(logErr));
       // Don't let logging failure mask the original error
     }
 
@@ -356,4 +363,3 @@ export async function googleOAuthCallbackResponse(context) {
     return Response.redirect(errUrl.toString(), 302);
   }
 }
-

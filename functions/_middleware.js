@@ -11,7 +11,8 @@ const ADMIN_LOGIN_PATHS = ["/admin/login", "/en/admin/login", "/admin/login/", "
 // Paths under /members/ that require active paid membership OR content_access.
 // /members/ itself, /members/start/, /members/dashboard/ stay public.
 // /members/deep/ index is public (shows list), individual lessons require entitlement.
-const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/"];
+// /members/pro/ index is public (shows list of 8 upgrade packs), individual packs require paid membership.
+const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/", "/members/pro/", "/en/members/pro/"];
 
 // Paths under /members/ that are public (no session needed).
 const PUBLIC_MEMBER_PATHS = [
@@ -20,11 +21,15 @@ const PUBLIC_MEMBER_PATHS = [
   "/members/index.html",
   "/members/deep/",
   "/members/deep/index.html",
+  "/members/pro/",
+  "/members/pro/index.html",
   "/en/members/",
   "/en/members/start/",
   "/en/members/index.html",
   "/en/members/deep/",
   "/en/members/deep/index.html",
+  "/en/members/pro/",
+  "/en/members/pro/index.html",
 ];
 
 // Map: deep lesson slug → required plan_code for content_access.
@@ -393,17 +398,19 @@ export async function onRequest(context) {
       }
     }
 
-    // Gating: /members/deep/* requires entitlement check
-    // - /members/deep/ index → public (listed in PUBLIC_MEMBER_PATHS)
+    // Gating: /members/deep/* and /members/pro/* require entitlement check
+    // - index pages → public (listed in PUBLIC_MEMBER_PATHS)
     // - /members/deep/<slug>/ → check plan_code entitlement OR active membership
+    // - /members/pro/<slug>/ → requires active paid membership (no per-product entitlement)
     if (isGatedMemberPath(url.pathname) && !isPublicMemberPath(url.pathname)) {
       const en = isEnglishPath(url.pathname);
       const joinUrl = en ? "/en/join/" : "/join/";
+      const isProPath = url.pathname.includes("/members/pro/");
 
       if (!memberSession) {
         const lessonSlug = getDeepLessonSlug(url.pathname);
-        const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : joinUrl;
-        logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Deep content access denied — no session, redirect to landing" });
+        const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? (en ? "/en/members/pro/" : "/members/pro/") : joinUrl);
+        logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Gated content access denied — no session, redirect to landing" });
         return new Response(null, {
           status: 302,
           headers: { Location: landingUrl, "Cache-Control": "no-store" },
@@ -416,7 +423,10 @@ export async function onRequest(context) {
         const requiredPlan = lessonSlug ? DEEP_LESSON_PLAN_MAP[lessonSlug] : null;
 
         let hasAccess = false;
-        if (isMembershipActive(user)) {
+        if (isProPath) {
+          // Pro packs require active paid membership only (no per-product entitlement)
+          hasAccess = isMembershipActive(user);
+        } else if (isMembershipActive(user)) {
           // Active paid membership (year1/2/3 or premium_purchase) grants all deep content
           hasAccess = true;
         } else if (requiredPlan) {
@@ -437,11 +447,11 @@ export async function onRequest(context) {
         }
 
         if (!hasAccess) {
-          const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (en ? "/en/join/" : "/join/");
+          const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? (en ? "/en/members/pro/" : "/members/pro/") : (en ? "/en/join/" : "/join/"));
           logWarn({
             route: url.pathname,
             code: "DEEP_DENY_NO_ENTITLEMENT",
-            msg: `Gated content access denied — no entitlement for ${lessonSlug || "unknown"}`,
+            msg: `Gated content access denied — no entitlement for ${lessonSlug || (isProPath ? "pro" : "unknown")}`,
             email: user?.email,
             membership_type: user?.membership_type,
           });

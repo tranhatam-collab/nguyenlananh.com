@@ -315,10 +315,44 @@ export async function googleOAuthCallbackResponse(context) {
     failUrl.searchParams.set("error", "SESSION_CREATE_FAILED");
     return Response.redirect(failUrl.toString(), 302);
   } catch (error) {
-    console.error("[google-oauth] callback error:", { code: error.code, message: error.message });
+    // Log full error details for debugging (including stack and all enumerable props)
+    const errorDetails = {
+      code: error.code,
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      cause: error.cause ? String(error.cause) : undefined,
+      allProps: Object.keys(error).reduce((acc, k) => { acc[k] = String(error[k]); return acc; }, {})
+    };
+    console.error("[google-oauth] callback error:", JSON.stringify(errorDetails));
+
+    // Persist to site_errors for post-mortem
+    try {
+      const db = context.env?.PAYMENTS_DB;
+      if (db) {
+        await db.prepare(
+          "INSERT INTO site_errors (id, ts, request_id, status, code, message, path, method, stack, ip, user_email, admin_email, request_body, resolved, resolved_at, resolved_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, NULL, NULL)"
+        ).bind(
+          randomId("err"),
+          nowIso(),
+          "google_callback",
+          error.status || 500,
+          String(error.code || "google_callback_failed"),
+          String(error.message || "Google OAuth callback failed"),
+          "/api/auth/google/callback",
+          "GET",
+          JSON.stringify(errorDetails).slice(0, 2000),
+          "",
+          "", "", "",
+        ).run();
+      }
+    } catch (_logErr) {
+      // Don't let logging failure mask the original error
+    }
+
     const errUrl = new URL("/members/", context.request.url);
     if (errUrl.hostname === "nguyenlananh.com") errUrl.hostname = "www.nguyenlananh.com";
-    errUrl.searchParams.set("error", error.code || "google_callback_failed");
+    errUrl.searchParams.set("error", String(error.code || "google_callback_failed"));
     return Response.redirect(errUrl.toString(), 302);
   }
 }

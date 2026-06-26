@@ -34,28 +34,6 @@ const CONTACT_PAGES = {
   en: "/en/lien-he/",
 };
 
-// Product landing pages with their data-plan attribute
-const PRODUCT_LANDINGS_VI = [
-  { path: "/products/one-corner-reset/", plan: "micro_one_corner", price: 75000 },
-  { path: "/products/7-day-true-rhythm/", plan: "micro_7day_rhythm", price: 225000 },
-  { path: "/products/life-reset-mini/", plan: "micro_life_reset", price: 175000 },
-  { path: "/products/companion-circle/", plan: "micro_companion", price: 225000 },
-  { path: "/products/inner-listening-kit/", plan: "micro_inner_listening", price: 125000 },
-  { path: "/assessments/personal-capital/", plan: "diag_capital_self", price: 1250000 },
-  { path: "/assessments/avoidance-map/", plan: "asmt_avoidance_self", price: 490000 },
-  { path: "/programs/family-pattern-mapping/", plan: "prog_family_pattern", price: 10000000 },
-  { path: "/programs/open-loop-closure-sprint/", plan: "open_loop_closure_sprint", price: 490000 },
-  { path: "/programs/boundary-foundation/", plan: "cert_boundary_found", price: 7600000 },
-  { path: "/programs/personal-after-action-review/", plan: "personal_after_action_review", price: 750000 },
-  { path: "/programs/self-trust-practice-lab/", plan: "self_trust_evidence_builder", price: 990000 },
-  { path: "/programs/space-reset-practitioner/", plan: "prog_space_reset", price: 12700000 },
-  { path: "/programs/creative-practice-studio/", plan: "prog_creative_studio", price: 10000000 },
-  { path: "/programs/emotional-block-mapping/", plan: "prog_emo_block", price: 6300000 },
-  { path: "/programs/rhythm-design-lab/", plan: "prog_rhythm_lab", price: 2500000 },
-  { path: "/certification/practice-method-designer/", plan: "cert_method_designer", price: 76000000 },
-  { path: "/certification/practice-companion-level-1/", plan: "cert_companion_l1", price: 30000000 },
-];
-
 // Product landing pages with data-plan (both VI and EN)
 const PRODUCT_LANDINGS_VI = [
   { path: "/products/one-corner-reset/", plan: "micro_one_corner", price: 75000 },

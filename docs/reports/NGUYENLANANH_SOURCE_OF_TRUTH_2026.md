@@ -25,7 +25,7 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
 ## Deployment
 - Source of truth branch: main
-- Production deployment preview: https://9dd70342.nguyenlananh-com-63s.pages.dev
+- Production deployment preview: https://08626747.nguyenlananh-com-63s.pages.dev
 - Production domain: https://www.nguyenlananh.com/
 - Last verified commit: 76e89ab
 - Previous commits in this audit: 2c98cff (baseline), dfdbac1 (price fix), 876822a (smoke test fix), a9d6272 (audit docs), 51ae2f3 (payment fix), aa031a1 (SOT update), f5cd30ab (Phase 2 audit report), c83bb27 (SOT update), fa4a991 (SEO fix), a07590e (SOT update), 76e89ab (final report)

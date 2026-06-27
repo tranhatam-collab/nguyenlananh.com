@@ -4,8 +4,8 @@
 **Auditor:** Cascade AI
 **Repository:** tranhatam-collab/nguyenlananh.com
 **Branch:** main
-**Final verified commit:** a07590e
-**Final production deployment preview:** https://9dd70342.nguyenlananh-com-63s.pages.dev
+**Final verified commit:** aa6a345
+**Final production deployment preview:** https://08626747.nguyenlananh-com-63s.pages.dev
 **Production domain:** https://www.nguyenlananh.com/
 
 ---
@@ -137,6 +137,8 @@ The site is technically ready for go-live. The payment fulfillment bug is fixed,
 | f5cd30ab | docs(audit): add Phase 2 audit report | https://4e3e408a.nguyenlananh-com-63s.pages.dev |
 | fa4a991 | fix(seo): add hreflang, canonical, og tags to 38 public pages; add sr-only helper and creator profile h1 | https://9dd70342.nguyenlananh-com-63s.pages.dev |
 | a07590e | docs(audit): lock source of truth to SEO fix commit | https://9dd70342.nguyenlananh-com-63s.pages.dev |
+| 76e89ab | docs(audit): final go-live audit report | https://9dd70342.nguyenlananh-com-63s.pages.dev |
+| aa6a345 | docs(audit): lock source of truth to final report; final deploy | https://08626747.nguyenlananh-com-63s.pages.dev |
 
 ---
 

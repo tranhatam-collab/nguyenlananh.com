@@ -4,8 +4,8 @@ Audit date: 2026-06-27
 Verified by: Cascade AI
 Repository: tranhatam-collab/nguyenlananh.com
 Branch: main
-Commit: f5cd30ab (HEAD -> main)
-Commit message: docs(audit): add Phase 2 audit report (security, SEO, a11y, D1, payment, email, admin RBAC)
+Commit: fa4a991 (HEAD -> main)
+Commit message: fix(seo): add hreflang, canonical, og tags to 38 public pages; add sr-only helper and creator profile h1
 Working tree: clean
 Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
@@ -25,10 +25,10 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
 ## Deployment
 - Source of truth branch: main
-- Production deployment preview: https://4e3e408a.nguyenlananh-com-63s.pages.dev
+- Production deployment preview: https://9dd70342.nguyenlananh-com-63s.pages.dev
 - Production domain: https://www.nguyenlananh.com/
-- Last verified commit: f5cd30ab
-- Previous commits in this audit: 2c98cff (baseline), dfdbac1 (price fix), 876822a (smoke test fix), a9d6272 (audit docs), 51ae2f3 (payment fix), aa031a1 (SOT update)
+- Last verified commit: fa4a991
+- Previous commits in this audit: 2c98cff (baseline), dfdbac1 (price fix), 876822a (smoke test fix), a9d6272 (audit docs), 51ae2f3 (payment fix), aa031a1 (SOT update), f5cd30ab (Phase 2 audit report), c83bb27 (SOT update), 9dd70342 (deploy URL note)
 
 ## Superseded Documents
 - Any older audit or deployment note referencing a different project, database, or account is marked SUPERSEDED and no longer source of truth.
@@ -37,7 +37,7 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 ```bash
 git status           # clean
 git branch --show-current   # main
-git log -1 --oneline        # f5cd30ab...
+git log -1 --oneline        # fa4a991...
 ```
 
 ## Status: BASELINE LOCKED

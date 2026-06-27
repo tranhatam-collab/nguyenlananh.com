@@ -8,5 +8,8 @@
     "validate:prices": "node scripts/validate-prices.mjs --fail",
     "validate:links": "node scripts/check-broken-links.mjs",
     "build:content-stats": "node scripts/build-content-stats.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.100.0"
   }
 }

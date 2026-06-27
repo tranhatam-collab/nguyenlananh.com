@@ -78,6 +78,8 @@
         checkoutRedirecting: "Checkout is ready. Opening payment page...",
         checkoutFailed: "Unable to create checkout right now.",
         checkoutRailError: "Your identity area does not match this payment rail.",
+        turnstileMissing: "Please complete the security check before creating checkout.",
+        turnstileUnavailable: "Security check is not ready yet. Reload the page and try again.",
         transferMarked: "Transfer has been marked. The order now waits for admin confirmation.",
         transferMarkFailed: "Unable to mark transfer at this step.",
         adminConfirmHint: "Admin must confirm VietQR transfer inside /admin/payments/ before membership unlock.",
@@ -135,6 +137,8 @@
       checkoutRedirecting: "Checkout đã sẵn sàng. Đang mở trang thanh toán...",
       checkoutFailed: "Chưa thể tạo checkout lúc này.",
       checkoutRailError: "Khu vực định danh không khớp với cổng thanh toán.",
+      turnstileMissing: "Vui lòng hoàn tất xác minh bảo mật trước khi tạo checkout.",
+      turnstileUnavailable: "Xác minh bảo mật chưa sẵn sàng. Hãy tải lại trang rồi thử lại.",
       transferMarked: "Đã ghi nhận bạn đã chuyển khoản. Đơn đang chờ admin xác nhận.",
       transferMarkFailed: "Chưa thể đánh dấu chuyển khoản ở bước này.",
       adminConfirmHint: "Admin cần xác nhận ở /admin/payments/ thì membership mới mở.",
@@ -1268,7 +1272,33 @@
     const planInput = $("#unlockPlan");
     const markTransferSent = $("#markTransferSent");
     const confirmUnlock = $("#confirmPaid");
+    const turnstileContainer = $("#turnstile-checkout");
     let currentVietQrOrderId = null;
+    let turnstileWidgetId = null;
+    let turnstileReady = null;
+
+    function renderCheckoutTurnstile() {
+      if (!turnstileContainer) return Promise.resolve(null);
+      if (turnstileReady) return turnstileReady;
+      turnstileReady = (async () => {
+        if (!window.TurnstileHelper || !window.TurnstileHelper.isConfigured()) return null;
+        turnstileWidgetId = await window.TurnstileHelper.render(turnstileContainer);
+        return turnstileWidgetId;
+      })().catch(() => null);
+      return turnstileReady;
+    }
+
+    async function getCheckoutTurnstileToken() {
+      await renderCheckoutTurnstile();
+      if (!window.TurnstileHelper) return "";
+      return String(window.TurnstileHelper.getToken(turnstileWidgetId) || "").trim();
+    }
+
+    function resetCheckoutTurnstile() {
+      if (window.TurnstileHelper) window.TurnstileHelper.reset(turnstileWidgetId);
+    }
+
+    void renderCheckoutTurnstile();
 
     const params = new URLSearchParams(window.location.search);
     if (params.get("gate") === "paid" && gateNotice) {
@@ -1362,15 +1392,29 @@
       startCheckout.disabled = true;
       startCheckout.textContent = strings.checkoutCreating;
 
+      let usedTurnstile = false;
       try {
-        const checkout = await createVietQrOrder({
+        if (turnstileContainer && !window.TurnstileHelper) {
+          setBanner(unlockStatus, strings.turnstileUnavailable, "danger");
+          return;
+        }
+        const turnstileToken = await getCheckoutTurnstileToken();
+        if (turnstileContainer && !turnstileToken) {
+          setBanner(unlockStatus, strings.turnstileMissing, "warning");
+          return;
+        }
+        usedTurnstile = Boolean(turnstileToken);
+        const payload = {
           email: session.email,
           plan_code: String(planInput?.value || "year1"),
           locale,
           identity_country: "VN",
           identity_ref: identityRef || undefined,
-          next_path: startPathForPath(window.location.pathname)
-        });
+          next_path: startPathForPath(window.location.pathname),
+          "cf-turnstile-response": turnstileToken
+        };
+
+        const checkout = await createVietQrOrder(payload);
         currentVietQrOrderId = checkout.internal_order_id;
         vietqrTransferNote.textContent = checkout.manual_transfer?.transfer_note || "-";
         vietqrAmount.textContent = formatCurrency(checkout.amount, checkout.currency, locale);
@@ -1390,6 +1434,7 @@
         }
         setBanner(unlockStatus, message || strings.checkoutFailed, "danger");
       } finally {
+        if (usedTurnstile) resetCheckoutTurnstile();
         startCheckout.disabled = false;
         startCheckout.textContent = origCheckoutText;
       }

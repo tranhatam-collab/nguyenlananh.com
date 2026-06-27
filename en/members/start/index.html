@@ -125,6 +125,7 @@
         <label for="payerIdRef">Identity reference (National ID/Passport)</label>
         <input id="payerIdRef" type="text" maxlength="80" placeholder="Example: passport or local ID reference" />
       </div>
+      <div id="turnstile-checkout" class="cf-turnstile" style="margin-bottom:10px;"></div>
       <div class="actionsRow" style="margin-top:12px;">
         <button id="startCheckout" class="cta" type="button">Create checkout</button>
         <a id="unlockPayNow" class="ghost hidden" href="#" target="_blank" rel="noopener">Open payment page</a>
@@ -159,6 +160,8 @@
   <footer role="contentinfo"><div class="container"><div>© 2026 · Not to become someone else. To return to who you truly are.</div></div></footer>
     <script src="/assets/content-registry.js"></script>
   <script src="/assets/site.js"></script>
+  <script src="/assets/turnstile-config.js"></script>
+  <script src="/assets/turnstile.js"></script>
   <script src="/assets/members.js?v=20260417b"></script>
     <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>

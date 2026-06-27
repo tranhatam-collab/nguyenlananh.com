@@ -3,18 +3,6 @@
  * Merchant: Công Ty Tnhh Thành Tâm Phát
  */
 (function () {
-  // Auto-load Turnstile if not already loaded
-  if (!window.TurnstileHelper) {
-    var configScript = document.createElement("script");
-    configScript.src = "/assets/turnstile-config.js";
-    configScript.async = false;
-    var tsScript = document.createElement("script");
-    tsScript.src = "/assets/turnstile.js";
-    tsScript.async = false;
-    document.head.appendChild(configScript);
-    document.head.appendChild(tsScript);
-  }
-
   function randomId(prefix) {
     return (prefix || "id") + "_" + Math.random().toString(36).slice(2) + "_" + Date.now().toString(36);
   }
@@ -28,6 +16,25 @@
   function hide(el) { if (el) el.classList.add("hidden"); }
   function show(el) { if (el) el.classList.remove("hidden"); }
 
+  function loadScriptOnce(src, ready) {
+    if (ready && ready()) return Promise.resolve();
+    return new Promise(function(resolve, reject) {
+      var existing = document.querySelector('script[src="' + src + '"]');
+      if (existing) {
+        if (ready && ready()) return resolve();
+        existing.addEventListener("load", function(){ resolve(); }, { once: true });
+        existing.addEventListener("error", function(){ reject(new Error("Unable to load " + src)); }, { once: true });
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = src;
+      script.async = false;
+      script.onload = function(){ resolve(); };
+      script.onerror = function(){ reject(new Error("Unable to load " + src)); };
+      document.head.appendChild(script);
+    });
+  }
+
   function getCurrentPlan() {
     return document.body.dataset.plan || "";
   }
@@ -39,6 +46,8 @@
   const vietqrBox = $("#vietqrBox");
   const payNowLink = $("#payNowLink");
   if (!buyNow) return;
+  let turnstileWidgetId = null;
+  let turnstileReady = null;
 
   // Detect country for default provider
   function guessProvider() {
@@ -77,6 +86,46 @@
     }
   }
 
+  function ensureTurnstileContainer() {
+    if (!checkoutBox) return null;
+    let container = $("#turnstile-product-checkout", checkoutBox);
+    if (container) return container;
+    container = document.createElement("div");
+    container.id = "turnstile-product-checkout";
+    container.className = "cf-turnstile";
+    container.style.cssText = "margin:10px 0;";
+    const actions = checkoutBox.querySelector(".actionsRow");
+    if (actions) checkoutBox.insertBefore(container, actions);
+    else checkoutBox.appendChild(container);
+    return container;
+  }
+
+  function renderTurnstile() {
+    if (turnstileReady) return turnstileReady;
+    turnstileReady = (async function() {
+      await loadScriptOnce("/assets/turnstile-config.js", function(){ return Boolean(window.TURNSTILE_SITE_KEY); });
+      await loadScriptOnce("/assets/turnstile.js", function(){ return Boolean(window.TurnstileHelper); });
+      if (!window.TurnstileHelper || !window.TurnstileHelper.isConfigured()) return null;
+      const container = ensureTurnstileContainer();
+      if (!container) return null;
+      turnstileWidgetId = await window.TurnstileHelper.render(container);
+      return turnstileWidgetId;
+    })().catch(function(){ return null; });
+    return turnstileReady;
+  }
+
+  async function getTurnstileToken() {
+    await renderTurnstile();
+    if (!window.TurnstileHelper) return "";
+    return String(window.TurnstileHelper.getToken(turnstileWidgetId) || "").trim();
+  }
+
+  function resetTurnstile() {
+    if (window.TurnstileHelper) window.TurnstileHelper.reset(turnstileWidgetId);
+  }
+
+  void renderTurnstile();
+
   // Set default based on country
   const defaultProvider = guessProvider();
   const defaultRadio = document.querySelector(`input[name="provider"][value="${defaultProvider}"]`);
@@ -108,7 +157,14 @@
     hide(vietqrBox);
     hide(payNowLink);
 
+    let usedTurnstile = false;
     try {
+      const turnstileToken = await getTurnstileToken();
+      if (!turnstileToken) {
+        setBanner(checkoutStatus, "Vui lòng hoàn tất xác minh bảo mật Turnstile rồi thử lại.", "warning");
+        return;
+      }
+      usedTurnstile = true;
       const response = await fetch("/api/payments/create-checkout", {
         method: "POST",
         headers: {
@@ -122,7 +178,7 @@
           locale: isPayPal ? "en" : "vi",
           product_source: planCode,
           identity_country: isPayPal ? "INTL" : "VN",
-          "cf-turnstile-response": window.TurnstileHelper ? window.TurnstileHelper.getToken() : ""
+          "cf-turnstile-response": turnstileToken
         })
       });
       const body = await response.json();
@@ -165,6 +221,8 @@
       }
     } catch (e) {
       setBanner(checkoutStatus, "Lỗi kết nối. Vui lòng thử lại.", "error");
+    } finally {
+      if (usedTurnstile) resetTurnstile();
     }
   });
 })();

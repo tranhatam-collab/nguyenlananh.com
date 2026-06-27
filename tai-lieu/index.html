@@ -6,16 +6,18 @@
   <meta name="color-scheme" content="light" />
   <title>Tài liệu chính thức — Nguyenlananh.com | Toàn bộ sự thật về hệ, sản phẩm, giá, lộ trình</title>
   <meta name="description" content="Trang tài liệu chính thức của Nguyenlananh.com: giới thiệu, phương pháp, toàn bộ sản phẩm & giá, lộ trình, hướng dẫn bắt đầu, thanh toán, FAQ, liên hệ. Minh bạch tối đa — không giấu giá." />
-  <link rel="canonical" href="https://docs.nguyenlananh.com/" />
-  <link rel="alternate" hreflang="vi" href="https://docs.nguyenlananh.com/" />
-  <link rel="alternate" hreflang="x-default" href="https://docs.nguyenlananh.com/" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/tai-lieu/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/tai-lieu/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/tai-lieu/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/tai-lieu/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/tai-lieu/" />
   <meta name="robots" content="index,follow" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Nguyễn Lan Anh" />
   <meta property="og:title" content="Tài liệu chính thức — Nguyenlananh.com" />
   <meta property="og:description" content="Toàn bộ sự thật về hệ, sản phẩm, giá, lộ trình, hướng dẫn. Minh bạch tối đa." />
-  <meta property="og:url" content="https://docs.nguyenlananh.com/" />
+  <meta property="og:url" content="https://www.nguyenlananh.com/tai-lieu/" />
   <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tài liệu chính thức — Nguyenlananh.com" />
@@ -28,28 +30,37 @@
     "@context":"https://schema.org",
     "@type":"WebSite",
     "name":"Tài liệu chính thức — Nguyenlananh.com",
-    "url":"https://docs.nguyenlananh.com/",
+    "url":"https://www.nguyenlananh.com/tai-lieu/",
     "inLanguage":"vi",
     "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"},
     "publisher":{"@id":"https://www.nguyenlananh.com/#organization"}
   }
   </script>
 
-  <link rel="stylesheet" href="https://www.nguyenlananh.com/assets/site.css" />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="stylesheet" href="/assets/home.css" />
   <style>
-    /* Docs-specific layout */
-    .docsNav{position:sticky;top:0;z-index:5;background:rgba(255,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:18px;}
-    .docsNav .container{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-    .docsNav a{font-size:13px;color:rgba(42,24,16,.72);padding:6px 10px;border-radius:999px;text-decoration:none;}
-    .docsNav a:hover{background:rgba(42,24,16,.06);color:rgba(42,24,16,.95);}
-    .docsNav .brand{font-weight:700;color:rgba(42,24,16,.9);}
-    .docsSection{scroll-margin-top:80px;padding:28px 0 8px;border-top:1px solid rgba(42,24,16,.08);}
+    .docsHero{padding:54px 0 28px;}
+    .docsHeroGrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:22px;align-items:stretch;}
+    .docsHero .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:rgba(42,24,16,.62);margin-bottom:14px;}
+    .docsHero h1{font-size:clamp(34px,6vw,68px);line-height:.98;margin:0;max-width:900px;}
+    .docsHero .lead{font-size:18px;line-height:1.75;max-width:760px;color:rgba(42,24,16,.75);margin:18px 0 0;}
+    .docsHero .reveal{opacity:1;transform:none;}
+    .docsMeta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+    .docsMeta span{display:inline-flex;border:1px solid rgba(42,24,16,.12);border-radius:999px;padding:7px 10px;font-size:12px;color:rgba(42,24,16,.68);background:rgba(255,255,255,.58);}
+    .docsToc{position:sticky;top:84px;align-self:start;background:rgba(255,255,255,.72);border:1px solid rgba(42,24,16,.10);border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(42,24,16,.06);}
+    .docsToc h2{font-size:15px;margin:0 0 10px;}
+    .docsToc nav{display:grid;gap:7px;}
+    .docsToc a{color:rgba(42,24,16,.76);font-size:13px;text-decoration:none;border-radius:12px;padding:9px 10px;background:rgba(42,24,16,.035);}
+    .docsToc a:hover{background:rgba(42,24,16,.08);color:rgba(42,24,16,.96);}
+    .docsSection{scroll-margin-top:96px;padding:34px 0 10px;border-top:1px solid rgba(42,24,16,.08);}
     .docsSection:first-of-type{border-top:none;padding-top:8px;}
-    .docsSection h2{font-size:26px;margin:0 0 6px;}
+    .docsSection h2{font-size:clamp(25px,3.5vw,40px);margin:0 0 8px;line-height:1.08;}
     .docsSection h3{font-size:18px;margin:18px 0 6px;}
     .docsSection p{line-height:1.75;color:rgba(42,24,16,.82);max-width:72ch;}
     .docsSection ul{line-height:1.8;color:rgba(42,24,16,.82);max-width:72ch;}
-    .priceTable{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+    .tableWrap{overflow-x:auto;border:1px solid rgba(42,24,16,.08);border-radius:16px;background:rgba(255,255,255,.56);margin:14px 0;}
+    .priceTable{width:100%;min-width:760px;border-collapse:collapse;font-size:14px;margin:0;}
     .priceTable th,.priceTable td{padding:10px 12px;border-bottom:1px solid rgba(42,24,16,.10);text-align:left;vertical-align:top;}
     .priceTable th{background:rgba(42,24,16,.04);font-weight:600;font-size:13px;color:rgba(42,24,16,.7);}
     .priceTable tr:hover td{background:rgba(42,24,16,.02);}
@@ -70,31 +81,67 @@
     .stepCard p{font-size:13px;margin:0 0 10px;line-height:1.65;color:rgba(42,24,16,.78);}
     .stepCard a{font-size:13px;}
     .docsFooter{margin-top:30px;padding:20px 0;border-top:1px solid rgba(42,24,16,.10);font-size:13px;color:rgba(42,24,16,.6);line-height:1.7;}
+    @media (max-width: 919px){
+      .docsHeroGrid{grid-template-columns:1fr;}
+      .docsToc{position:relative;top:auto;}
+    }
   </style>
+  <script src="/assets/tracking.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Bỏ qua điều hướng</a>
 
-  <nav class="docsNav" aria-label="Mục lục tài liệu">
+  <header class="topbar" role="banner">
     <div class="container">
-      <a class="brand" href="#top">📄 Tài liệu</a>
-      <a href="#gioi-thieu">Giới thiệu</a>
-      <a href="#phuong-phap">Phương pháp</a>
-      <a href="#san-pham">Sản phẩm &amp; giá</a>
-      <a href="#lo-trinh">Lộ trình</a>
-      <a href="#huong-dan">Hướng dẫn bắt đầu</a>
-      <a href="#thanh-toan">Thanh toán</a>
-      <a href="#cau-hoi">FAQ</a>
-      <a href="#lien-he">Liên hệ</a>
-      <a href="https://www.nguyenlananh.com/" style="margin-left:auto;">← Về trang chủ</a>
+      <div class="navwrap">
+        <a class="brand" href="/" aria-label="Nguyễn Lan Anh — về trang chủ"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Nguyễn Lan Anh</strong><span class="tagline">Đi vào bên trong để tái thiết cuộc đời</span></span></a>
+        <nav class="navlinks" aria-label="Điều hướng chính"><a href="/hanh-trinh/">Hành trình</a><a href="/phuong-phap/">Hệ thống</a><a href="/bai-viet/">Bài viết</a><a href="/members/">Thành viên</a></nav>
+        <div class="actions">
+          <div class="lang" aria-label="Chọn ngôn ngữ">
+            <button class="chip active" type="button" aria-pressed="true" data-lang="vi">🇻🇳 Tiếng Việt</button>
+            <button class="chip" type="button" data-lang="en">🇺🇸 English</button>
+          </div>
+          <a class="btn" href="/join/">Bắt đầu</a>
+          <button class="hamburger" type="button" id="hamburger" aria-label="Mở menu" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true"></span></button>
+        </div>
+      </div>
     </div>
-  </nav>
+
+    <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Điều hướng">
+      <div class="dhead">
+        <div><div style="font-weight:700; font-size:13px;">Điều hướng</div><div class="hint">Chọn một mục để đi tới.</div></div>
+        <button class="btn" type="button" id="closeDrawer" aria-label="Đóng menu">Đóng</button>
+      </div>
+      <nav aria-label="Điều hướng di động"><a href="/hanh-trinh/" data-close>Hành trình</a><a href="/phuong-phap/" data-close>Hệ thống</a><a href="/bai-viet/" data-close>Bài viết</a><a href="/members/" data-close>Thành viên</a><a href="/tai-lieu/" data-close>Tài liệu</a><a href="/join/" data-close class="drawerCta">Đăng ký</a></nav>
+      <div class="foot">Mọi thứ ở đây đi chậm. Vừa đủ. Để bạn không bỏ rơi chính mình.</div>
+    </div>
+  </header>
 
   <main id="main" class="container" role="main">
-    <section id="top" class="pageHead">
-      <h1>Tài liệu chính thức — Nguyenlananh.com</h1>
-      <p class="sub">Toàn bộ sự thật về hệ: đây là gì, cho ai, không cho ai, sản phẩm nào, giá bao nhiêu, lộ trình ra sao, bắt đầu thế nào, trả tiền bằng gì. Minh bạch tối đa — không giấu giá, không oversell.</p>
-      <p class="sub" style="margin-top:6px;color:rgba(42,24,16,.55);font-size:13px;">Cập nhật 2026-06-23 · Phiên bản docs v1 · <a href="https://www.nguyenlananh.com/">nguyenlananh.com</a></p>
+    <section id="top" class="docsHero">
+      <div class="docsHeroGrid">
+        <article class="heroCard reveal">
+          <div class="kicker"><b>Tài liệu chính thức</b> Nguồn chuẩn về hệ, giá, sản phẩm và lộ trình</div>
+          <h1>Minh bạch từ đầu để bạn biết mình đang bước vào điều gì</h1>
+          <p class="lead">Đây là trang tổng hợp chính thức: phương pháp, sản phẩm, giá, thanh toán, giới hạn, hoàn tiền và cách bắt đầu. Không giấu giá, không đẩy mua sớm, không gọi một hệ thực hành đời sống là trị liệu.</p>
+          <div class="docsMeta"><span>Cập nhật 2026-06-27</span><span>Docs v2</span><span>Ngôn ngữ: VI</span><span>Canonical: /tai-lieu/</span></div>
+          <div class="heroActions"><a class="cta" href="/join/">Vào thành viên miễn phí</a><a class="ghost" href="#san-pham">Xem sản phẩm &amp; giá</a></div>
+        </article>
+        <aside class="docsToc reveal" aria-label="Mục lục tài liệu">
+          <h2>Mục lục</h2>
+          <nav>
+            <a href="#gioi-thieu">1. Giới thiệu</a>
+            <a href="#phuong-phap">2. Phương pháp</a>
+            <a href="#san-pham">3. Sản phẩm &amp; giá</a>
+            <a href="#lo-trinh">4. Lộ trình</a>
+            <a href="#huong-dan">5. Hướng dẫn bắt đầu</a>
+            <a href="#thanh-toan">6. Thanh toán</a>
+            <a href="#cau-hoi">7. FAQ</a>
+            <a href="#lien-he">8. Liên hệ</a>
+            <a href="/en/tai-lieu/">English version</a>
+          </nav>
+        </aside>
+      </div>
     </section>
 
     <!-- ============ GIOI THIEU ============ -->
@@ -140,7 +187,7 @@
         <li><strong>Vật thể</strong> — dọn dẹp, không gian, môi trường sống, đồ vật và hành vi.</li>
         <li><strong>Hệ gia đình</strong> — vai trò, luật ngầm, liên thế hệ, tiền bạc, xung đột.</li>
         <li><strong>Hành động &amp; lao động</strong> — sáng tạo, đầu tư bản thân, nhịp sống, năng lực tạo đầu ra.</li>
-      </div>
+      </ul>
       <p style="margin-top:10px;"><a href="https://www.nguyenlananh.com/phuong-phap/">Xem chi tiết phương pháp →</a></p>
     </section>
 
@@ -151,6 +198,7 @@
 
       <h3>3.1 · Sản phẩm nhỏ (micro) — đã sống</h3>
       <p>Nhập môn nhẹ, 1–7 ngày, giá thấp. Dùng để bắt đầu thật, không phải để "thử xem".</p>
+      <div class="tableWrap">
       <table class="priceTable">
         <thead><tr><th>#</th><th>Tên</th><th>Đầu ra</th><th>Giá (USD)</th><th>≈ VND</th><th>Trạng thái</th></tr></thead>
         <tbody>
@@ -161,10 +209,12 @@
           <tr><td>5</td><td><a href="https://www.nguyenlananh.com/products/companion-circle/">Companion Circle</a></td><td>Vòng đồng hành nhỏ, có hướng dẫn</td><td>29–59</td><td>740.000–1.505.000</td><td><span class="status status-live">SỐNG</span></td></tr>
         </tbody>
       </table>
+      </div>
 
       <h3>3.2 · Sản phẩm chuyên môn (premium) — 10 sản phẩm</h3>
       <p>Mỗi sản phẩm = một con đường thực hành có cấu trúc: test đầu vào → bài học → thực hành → nộp bằng chứng → chấm rubric → báo cáo cá nhân → thi cuối → chứng nhận (nếu là certification). Giá cao hơn vì có đánh giá thật, bằng chứng, báo cáo, và đầu ra đo được.</p>
 
+      <div class="tableWrap">
       <table class="priceTable">
         <thead><tr><th>#</th><th>Tên</th><th>Loại</th><th>Đầu ra cốt lõi</th><th>Giá (USD)</th><th>Trạng thái</th></tr></thead>
         <tbody>
@@ -180,6 +230,7 @@
           <tr><td>10</td><td>Practice Method Designer Certification</td><td>Certification cao</td><td>Chương trình 7 ngày + workbook + bài bảo vệ + chứng nhận</td><td>3.000–7.500</td><td><span class="status status-soon">SẮP RA</span></td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="callout danger">
         <strong>Sản phẩm HOLD (#3 Emotional Block, #5 Family Pattern):</strong> Chưa mở bán vì cần hoàn thiện <em>ethics policy</em>, <em>escalation protocol</em> (khi nào chuyển chuyên gia y tế), và <em>disclaimer pháp lý</em>. Đây là sản phẩm chạm vùng nhạy cảm — không bán khi chưa có hàng rào an toàn đủ.
@@ -324,22 +375,27 @@
     </section>
 
     <div class="docsFooter">
-      <p>© 2026 Nguyễn Lan Anh · Tài liệu chính thức docs.nguyenlananh.com · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</p>
+      <p>© 2026 Nguyễn Lan Anh · Tài liệu chính thức nguyenlananh.com/tai-lieu · Không phải để trở thành ai đó. Mà để trở về đúng là mình.</p>
       <p>Trang này là nguồn duy nhất về giá, sản phẩm, lộ trình. Nếu có mâu thuẫn với bất kỳ trang/nguồn nào khác, nội dung tại đây là chuẩn.</p>
     </div>
   </main>
 
   <script>
-    // Smooth scroll cho docs nav
-    document.querySelectorAll('.docsNav a[href^="#"]').forEach(a=>{
+    document.querySelectorAll('.docsToc a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
         const id=a.getAttribute('href').slice(1);
         const el=document.getElementById(id);
         if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
       });
     });
-    // Year
-    const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+    const drawer=document.getElementById('drawer');
+    const hamburger=document.getElementById('hamburger');
+    const closeDrawer=document.getElementById('closeDrawer');
+    function setDrawer(open){if(!drawer||!hamburger)return;drawer.classList.toggle('open',open);hamburger.setAttribute('aria-expanded',open?'true':'false');document.body.classList.toggle('drawerOpen',open);}
+    if(hamburger)hamburger.addEventListener('click',()=>setDrawer(!drawer.classList.contains('open')));
+    if(closeDrawer)closeDrawer.addEventListener('click',()=>setDrawer(false));
+    document.querySelectorAll('[data-close]').forEach(a=>a.addEventListener('click',()=>setDrawer(false)));
+    document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.lang==='en')window.location.href='/en/tai-lieu/';}));
   </script>
 </body>
 </html>

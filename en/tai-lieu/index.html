@@ -6,17 +6,18 @@
   <meta name="color-scheme" content="light" />
   <title>Official Documentation — Nguyenlananh.com | The full truth about the system, products, pricing, roadmap</title>
   <meta name="description" content="Official documentation for Nguyenlananh.com: introduction, method, all products & pricing, roadmap, getting started guide, payment, FAQ, contact. Maximum transparency — no hidden prices." />
-  <link rel="canonical" href="https://docs.nguyenlananh.com/en/" />
-  <link rel="alternate" hreflang="vi" href="https://docs.nguyenlananh.com/" />
-  <link rel="alternate" hreflang="en" href="https://docs.nguyenlananh.com/en/" />
-  <link rel="alternate" hreflang="x-default" href="https://docs.nguyenlananh.com/" />
+  <link rel="canonical" href="https://www.nguyenlananh.com/en/tai-lieu/" />
+  <link rel="alternate" hreflang="vi" href="https://www.nguyenlananh.com/tai-lieu/" />
+  <link rel="alternate" hreflang="en-US" href="https://www.nguyenlananh.com/en/tai-lieu/" />
+  <link rel="alternate" hreflang="en" href="https://www.nguyenlananh.com/en/tai-lieu/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.nguyenlananh.com/tai-lieu/" />
   <meta name="robots" content="index,follow" />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Nguyễn Lan Anh" />
   <meta property="og:title" content="Official Documentation — Nguyenlananh.com" />
   <meta property="og:description" content="The full truth about the system, products, pricing, roadmap, guides. Maximum transparency." />
-  <meta property="og:url" content="https://docs.nguyenlananh.com/en/" />
+  <meta property="og:url" content="https://www.nguyenlananh.com/en/tai-lieu/" />
   <meta property="og:image" content="https://www.nguyenlananh.com/assets/og/og-homepage.svg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Official Documentation — Nguyenlananh.com" />
@@ -29,27 +30,37 @@
     "@context":"https://schema.org",
     "@type":"WebSite",
     "name":"Official Documentation — Nguyenlananh.com",
-    "url":"https://docs.nguyenlananh.com/en/",
+    "url":"https://www.nguyenlananh.com/en/tai-lieu/",
     "inLanguage":"en",
     "isPartOf":{"@id":"https://www.nguyenlananh.com/#website"},
     "publisher":{"@id":"https://www.nguyenlananh.com/#organization"}
   }
   </script>
 
-  <link rel="stylesheet" href="https://www.nguyenlananh.com/assets/site.css" />
+  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="stylesheet" href="/assets/home.css" />
   <style>
-    .docsNav{position:sticky;top:0;z-index:5;background:rgba(255,251,245,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:18px;}
-    .docsNav .container{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
-    .docsNav a{font-size:13px;color:rgba(42,24,16,.72);padding:6px 10px;border-radius:999px;text-decoration:none;}
-    .docsNav a:hover{background:rgba(42,24,16,.06);color:rgba(42,24,16,.95);}
-    .docsNav .brand{font-weight:700;color:rgba(42,24,16,.9);}
-    .docsSection{scroll-margin-top:80px;padding:28px 0 8px;border-top:1px solid rgba(42,24,16,.08);}
+    .docsHero{padding:54px 0 28px;}
+    .docsHeroGrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:22px;align-items:stretch;}
+    .docsHero .kicker{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:rgba(42,24,16,.62);margin-bottom:14px;}
+    .docsHero h1{font-size:clamp(34px,6vw,68px);line-height:.98;margin:0;max-width:900px;}
+    .docsHero .lead{font-size:18px;line-height:1.75;max-width:760px;color:rgba(42,24,16,.75);margin:18px 0 0;}
+    .docsHero .reveal{opacity:1;transform:none;}
+    .docsMeta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+    .docsMeta span{display:inline-flex;border:1px solid rgba(42,24,16,.12);border-radius:999px;padding:7px 10px;font-size:12px;color:rgba(42,24,16,.68);background:rgba(255,255,255,.58);}
+    .docsToc{position:sticky;top:84px;align-self:start;background:rgba(255,255,255,.72);border:1px solid rgba(42,24,16,.10);border-radius:18px;padding:16px;box-shadow:0 18px 50px rgba(42,24,16,.06);}
+    .docsToc h2{font-size:15px;margin:0 0 10px;}
+    .docsToc nav{display:grid;gap:7px;}
+    .docsToc a{color:rgba(42,24,16,.76);font-size:13px;text-decoration:none;border-radius:12px;padding:9px 10px;background:rgba(42,24,16,.035);}
+    .docsToc a:hover{background:rgba(42,24,16,.08);color:rgba(42,24,16,.96);}
+    .docsSection{scroll-margin-top:96px;padding:34px 0 10px;border-top:1px solid rgba(42,24,16,.08);}
     .docsSection:first-of-type{border-top:none;padding-top:8px;}
-    .docsSection h2{font-size:26px;margin:0 0 6px;}
+    .docsSection h2{font-size:clamp(25px,3.5vw,40px);margin:0 0 8px;line-height:1.08;}
     .docsSection h3{font-size:18px;margin:18px 0 6px;}
     .docsSection p{line-height:1.75;color:rgba(42,24,16,.82);max-width:72ch;}
     .docsSection ul{line-height:1.8;color:rgba(42,24,16,.82);max-width:72ch;}
-    .priceTable{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+    .tableWrap{overflow-x:auto;border:1px solid rgba(42,24,16,.08);border-radius:16px;background:rgba(255,255,255,.56);margin:14px 0;}
+    .priceTable{width:100%;min-width:760px;border-collapse:collapse;font-size:14px;margin:0;}
     .priceTable th,.priceTable td{padding:10px 12px;border-bottom:1px solid rgba(42,24,16,.10);text-align:left;vertical-align:top;}
     .priceTable th{background:rgba(42,24,16,.04);font-weight:600;font-size:13px;color:rgba(42,24,16,.7);}
     .priceTable tr:hover td{background:rgba(42,24,16,.02);}
@@ -70,32 +81,67 @@
     .stepCard p{font-size:13px;margin:0 0 10px;line-height:1.65;color:rgba(42,24,16,.78);}
     .stepCard a{font-size:13px;}
     .docsFooter{margin-top:30px;padding:20px 0;border-top:1px solid rgba(42,24,16,.10);font-size:13px;color:rgba(42,24,16,.6);line-height:1.7;}
+    @media (max-width: 919px){
+      .docsHeroGrid{grid-template-columns:1fr;}
+      .docsToc{position:relative;top:auto;}
+    }
   </style>
+  <script src="/assets/tracking.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip navigation</a>
 
-  <nav class="docsNav" aria-label="Documentation table of contents">
+  <header class="topbar" role="banner">
     <div class="container">
-      <a class="brand" href="#top">📄 Docs</a>
-      <a href="#intro">Introduction</a>
-      <a href="#method">Method</a>
-      <a href="#products">Products &amp; pricing</a>
-      <a href="#roadmap">Roadmap</a>
-      <a href="#getting-started">Getting started</a>
-      <a href="#payment">Payment</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-      <a href="https://docs.nguyenlananh.com/" style="margin-left:auto;">🇻🇳 Tiếng Việt</a>
-      <a href="https://www.nguyenlananh.com/en/">← Home</a>
+      <div class="navwrap">
+        <a class="brand" href="/en/" aria-label="Lan Anh Nguyen — back to home"><span class="mark" aria-hidden="true"><img class="markIcon" src="/assets/brand/logo-mark.svg" alt="" width="40" height="40" loading="eager" decoding="async" aria-hidden="true" role="presentation"/></span><span class="name"><strong>Lan Anh Nguyen</strong><span class="tagline">Rebuild your life from within</span></span></a>
+        <nav class="navlinks" aria-label="Primary navigation"><a href="/en/hanh-trinh/">Journey</a><a href="/en/phuong-phap/">System</a><a href="/en/bai-viet/">Articles</a><a href="/en/members/">Members</a></nav>
+        <div class="actions">
+          <div class="lang" aria-label="Choose language">
+            <button class="chip" type="button" data-lang="vi">🇻🇳 Tiếng Việt</button>
+            <button class="chip active" type="button" aria-pressed="true" data-lang="en">🇺🇸 English</button>
+          </div>
+          <a class="btn" href="/en/join/">Start</a>
+          <button class="hamburger" type="button" id="hamburger" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span aria-hidden="true"></span></button>
+        </div>
+      </div>
     </div>
-  </nav>
+
+    <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navigation">
+      <div class="dhead">
+        <div><div style="font-weight:700; font-size:13px;">Navigation</div><div class="hint">Choose a section to continue.</div></div>
+        <button class="btn" type="button" id="closeDrawer" aria-label="Close menu">Close</button>
+      </div>
+      <nav aria-label="Mobile navigation"><a href="/en/hanh-trinh/" data-close>Journey</a><a href="/en/phuong-phap/" data-close>System</a><a href="/en/bai-viet/" data-close>Articles</a><a href="/en/members/" data-close>Members</a><a href="/en/tai-lieu/" data-close>Docs</a><a href="/en/join/" data-close class="drawerCta">Join</a></nav>
+      <div class="foot">Move slowly enough to not abandon yourself.</div>
+    </div>
+  </header>
 
   <main id="main" class="container" role="main">
-    <section id="top" class="pageHead">
-      <h1>Official Documentation — Nguyenlananh.com</h1>
-      <p class="sub">The full truth about the system: what it is, who it's for, who it's not for, what products exist, what they cost, what the roadmap looks like, how to start, how to pay. Maximum transparency — no hidden prices, no overselling.</p>
-      <p class="sub" style="margin-top:6px;color:rgba(42,24,16,.55);font-size:13px;">Updated 2026-06-23 · Docs v1 · <a href="https://www.nguyenlananh.com/en/">nguyenlananh.com</a></p>
+    <section id="top" class="docsHero">
+      <div class="docsHeroGrid">
+        <article class="heroCard reveal">
+          <div class="kicker"><b>Official documentation</b> The source of truth for system, pricing, products, and roadmap</div>
+          <h1>Transparent from the start, so you know exactly what you are entering</h1>
+          <p class="lead">This is the official hub for the method, products, pricing, payment, limits, refunds, and getting started. No hidden prices, no early sales pressure, and no pretending a life-practice system is therapy.</p>
+          <div class="docsMeta"><span>Updated 2026-06-27</span><span>Docs v2</span><span>Language: EN</span><span>Canonical: /en/tai-lieu/</span></div>
+          <div class="heroActions"><a class="cta" href="/en/join/">Join free member</a><a class="ghost" href="#products">View products &amp; pricing</a></div>
+        </article>
+        <aside class="docsToc reveal" aria-label="Documentation table of contents">
+          <h2>Contents</h2>
+          <nav>
+            <a href="#intro">1. Introduction</a>
+            <a href="#method">2. Method</a>
+            <a href="#products">3. Products &amp; pricing</a>
+            <a href="#roadmap">4. Roadmap</a>
+            <a href="#getting-started">5. Getting started</a>
+            <a href="#payment">6. Payment</a>
+            <a href="#faq">7. FAQ</a>
+            <a href="#contact">8. Contact</a>
+            <a href="/tai-lieu/">Tiếng Việt</a>
+          </nav>
+        </aside>
+      </div>
     </section>
 
     <!-- ============ INTRO ============ -->
@@ -152,6 +198,7 @@
 
       <h3>3.1 · Micro products — live now</h3>
       <p>Light entry, 1–7 days, low price. For starting real, not for "trying out."</p>
+      <div class="tableWrap">
       <table class="priceTable">
         <thead><tr><th>#</th><th>Name</th><th>Output</th><th>Price (USD)</th><th>≈ VND</th><th>Status</th></tr></thead>
         <tbody>
@@ -162,10 +209,12 @@
           <tr><td>5</td><td><a href="https://www.nguyenlananh.com/products/companion-circle/">Companion Circle</a></td><td>Small companion group with guidance</td><td>29–59</td><td>740,000–1,505,000</td><td><span class="status status-live">LIVE</span></td></tr>
         </tbody>
       </table>
+      </div>
 
       <h3>3.2 · Professional products — 10 products</h3>
       <p>Each product = a structured practice path: entry test → lessons → practice → submit evidence → rubric scoring → personal report → final exam → certification (if applicable). Higher prices because there's real assessment, evidence, reporting, and measurable output.</p>
 
+      <div class="tableWrap">
       <table class="priceTable">
         <thead><tr><th>#</th><th>Name</th><th>Type</th><th>Core output</th><th>Price (USD)</th><th>Status</th></tr></thead>
         <tbody>
@@ -181,6 +230,7 @@
           <tr><td>10</td><td>Practice Method Designer Certification</td><td>Advanced cert</td><td>7-day program + workbook + defense + certification</td><td>3,000–7,500</td><td><span class="status status-soon">COMING</span></td></tr>
         </tbody>
       </table>
+      </div>
 
       <div class="callout danger">
         <strong>HOLD products (#3 Emotional Block, #5 Family Pattern):</strong> Not yet available because they need completed <em>ethics policy</em>, <em>escalation protocol</em> (when to refer to a medical professional), and <em>legal disclaimer</em>. These products touch sensitive territory — no sales until safety guardrails are sufficient.
@@ -322,13 +372,13 @@
     </section>
 
     <div class="docsFooter">
-      <p>© 2026 Nguyễn Lan Anh · Official documentation docs.nguyenlananh.com · Not to become someone else. But to return to who you truly are.</p>
+      <p>© 2026 Nguyễn Lan Anh · Official documentation nguyenlananh.com/en/tai-lieu · Not to become someone else. But to return to who you truly are.</p>
       <p>This page is the single source of truth for pricing, products, and roadmap. If there's a conflict with any other page/source, content here is authoritative.</p>
     </div>
   </main>
 
   <script>
-    document.querySelectorAll('.docsNav a[href^="#"]').forEach(a=>{
+    document.querySelectorAll('.docsToc a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
         const id=a.getAttribute('href').slice(1);
         const el=document.getElementById(id);
@@ -336,6 +386,14 @@
       });
     });
     const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+    const drawer=document.getElementById('drawer');
+    const hamburger=document.getElementById('hamburger');
+    const closeDrawer=document.getElementById('closeDrawer');
+    function setDrawer(open){if(!drawer||!hamburger)return;drawer.classList.toggle('open',open);hamburger.setAttribute('aria-expanded',open?'true':'false');document.body.classList.toggle('drawerOpen',open);}
+    if(hamburger)hamburger.addEventListener('click',()=>setDrawer(!drawer.classList.contains('open')));
+    if(closeDrawer)closeDrawer.addEventListener('click',()=>setDrawer(false));
+    document.querySelectorAll('[data-close]').forEach(a=>a.addEventListener('click',()=>setDrawer(false)));
+    document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.lang==='vi')window.location.href='/tai-lieu/';}));
   </script>
 </body>
 </html>

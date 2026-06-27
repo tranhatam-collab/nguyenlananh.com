@@ -4,8 +4,8 @@ Audit date: 2026-06-27
 Verified by: Cascade AI
 Repository: tranhatam-collab/nguyenlananh.com
 Branch: main
-Commit: 876822a (HEAD -> main)
-Commit message: test(smoke): align expectations with current production reality (admin 302, remove magic link)
+Commit: a9d6272 (HEAD -> main)
+Commit message: docs(audit): add source of truth and QA report for 2026-06-27
 Working tree: clean
 Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
@@ -25,9 +25,10 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
 ## Deployment
 - Source of truth branch: main
-- Production deployment ID: to be verified via Cloudflare dashboard
-- Last verified commit: 876822a
-- Previous commits in this audit: 2c98cff (baseline), dfdbac1 (price fix)
+- Production deployment preview: https://fba15026.nguyenlananh-com-63s.pages.dev
+- Production domain: https://www.nguyenlananh.com/
+- Last verified commit: a9d6272
+- Previous commits in this audit: 2c98cff (baseline), dfdbac1 (price fix), 876822a (smoke test fix)
 
 ## Superseded Documents
 - Any older audit or deployment note referencing a different project, database, or account is marked SUPERSEDED and no longer source of truth.
@@ -36,7 +37,7 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 ```bash
 git status           # clean
 git branch --show-current   # main
-git log -1 --oneline        # 876822a...
+git log -1 --oneline        # a9d6272...
 ```
 
 ## Status: BASELINE LOCKED

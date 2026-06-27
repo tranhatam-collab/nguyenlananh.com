@@ -29,7 +29,7 @@ Git remote: git@github.com:tranhatam-collab/nguyenlananh.com.git
 
 ## Deployment
 - Source of truth branch: main
-- Production deployment preview: https://950de60a.nguyenlananh-com-63s.pages.dev
+- Production deployment preview: https://0a7c0639.nguyenlananh-com-63s.pages.dev
 - Production domain: https://www.nguyenlananh.com/
 - Last verified commit: 94af663
 - Email migration commit: 94af663 (feat(email): complete product templates, login_url instead of magic_link, payment notifications, Resend-ready config)

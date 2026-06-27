@@ -2,6 +2,36 @@ import { requireAdminSession } from "../../../_lib/admin_auth.js";
 import { json, errorResponse, normalizeEmail, timingSafeEqualHex } from "../../../_lib/utils.js";
 import { sendTemplateEmailDirect } from "../../../_lib/email.js";
 import { TEMPLATE_IDS } from "../../../_lib/constants.js";
+import { checkAdminEmailTestRateLimit, rateLimitResponse } from "../../../_lib/ratelimit.js";
+
+const DEFAULT_TEST_RECIPIENT = "support@nguyenlananh.com";
+
+function allowedRecipients(env) {
+  const configured = String(env.ADMIN_TEST_EMAIL_ALLOWED_TO || "")
+    .split(",")
+    .map((email) => normalizeEmail(email))
+    .filter(Boolean);
+  const fallback = normalizeEmail(env.EMAIL_REPLY_TO_SUPPORT) || DEFAULT_TEST_RECIPIENT;
+  return new Set(configured.length ? configured : [fallback]);
+}
+
+function assertAllowedRecipient(env, email) {
+  if (allowedRecipients(env).has(email)) return;
+  const error = new Error("Recipient is not allowed for production email tests.");
+  error.code = "ADMIN_EMAIL_TEST_RECIPIENT_DENIED";
+  error.status = 403;
+  throw error;
+}
+
+function normalizeTemplateId(input) {
+  const templateId = String(input || TEMPLATE_IDS.resend).trim();
+  const allowed = new Set(Object.values(TEMPLATE_IDS));
+  if (allowed.has(templateId)) return templateId;
+  const error = new Error("Template is not allowed for email tests.");
+  error.code = "ADMIN_EMAIL_TEST_TEMPLATE_DENIED";
+  error.status = 422;
+  throw error;
+}
 
 async function requireAdminTestAccess(context) {
   const providedKey = String(context.request.headers.get("x-admin-key") || "").trim();
@@ -32,9 +62,13 @@ async function requireAdminTestAccess(context) {
 export async function onRequestPost(context) {
   try {
     await requireAdminTestAccess(context);
+    const rateLimit = await checkAdminEmailTestRateLimit(context.env, context.request);
+    if (rateLimit.limited) return rateLimitResponse(rateLimit.code, rateLimit.retryAfter);
+
     const body = await context.request.json();
-    const to = normalizeEmail(body?.to) || context.env.EMAIL_REPLY_TO_SUPPORT || "support@nguyenlananh.com";
-    const templateId = body?.template || TEMPLATE_IDS.resend;
+    const to = normalizeEmail(body?.to) || normalizeEmail(context.env.EMAIL_REPLY_TO_SUPPORT) || DEFAULT_TEST_RECIPIENT;
+    assertAllowedRecipient(context.env, to);
+    const templateId = normalizeTemplateId(body?.template);
     const language = body?.language === "en" ? "en" : "vi";
 
     const result = await sendTemplateEmailDirect({

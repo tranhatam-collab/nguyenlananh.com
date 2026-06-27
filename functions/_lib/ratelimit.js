@@ -2,6 +2,7 @@ import { errorResponse } from "./utils.js";
 
 const MAGIC_EMAIL_HOURLY = 5;
 const MAGIC_IP_HOURLY = 20;
+const ADMIN_EMAIL_TEST_HOURLY = 3;
 
 function windowStartHour() {
   const now = new Date();
@@ -72,6 +73,49 @@ export async function checkMagicLinkRateLimit(env, email, request) {
   } catch (error) {
     console.error("[ratelimit] DB error:", error.message);
     // Fail-closed on DB errors to prevent abuse during outages
+    return { limited: true, code: "RATE_LIMIT_ERROR", retryAfter: 3600 };
+  }
+}
+
+export async function checkAdminEmailTestRateLimit(env, request) {
+  const db = env.PAYMENTS_DB;
+  if (!db) {
+    console.warn("[ratelimit] PAYMENTS_DB missing — blocking admin email test");
+    return { limited: true, code: "RATE_LIMIT_DB_MISSING", retryAfter: 3600 };
+  }
+
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const hour = windowStartHour();
+  const key = `admin_email_test:${ip}:${hour}`;
+
+  try {
+    await db
+      .prepare(
+        `CREATE TABLE IF NOT EXISTS rate_limits (
+          key TEXT PRIMARY KEY,
+          window_start TEXT NOT NULL,
+          count INTEGER NOT NULL DEFAULT 0
+        )`
+      )
+      .run();
+
+    const row = await db.prepare("SELECT count FROM rate_limits WHERE key = ?").bind(key).first();
+    const count = (row?.count || 0) + 1;
+    if (count > ADMIN_EMAIL_TEST_HOURLY) {
+      return { limited: true, code: "RATE_LIMIT_ADMIN_EMAIL_TEST", retryAfter: 3600 };
+    }
+
+    await db
+      .prepare(
+        `INSERT INTO rate_limits (key, window_start, count) VALUES (?, ?, ?)
+         ON CONFLICT(key) DO UPDATE SET count = excluded.count`
+      )
+      .bind(key, hour, count)
+      .run();
+
+    return { limited: false, remaining: ADMIN_EMAIL_TEST_HOURLY - count };
+  } catch (error) {
+    console.error("[ratelimit] admin email test DB error:", error.message);
     return { limited: true, code: "RATE_LIMIT_ERROR", retryAfter: 3600 };
   }
 }

@@ -7,7 +7,7 @@ function normalizeEmailProvider(env) {
     .trim()
     .toLowerCase();
   if (explicit) return explicit;
-  if (env.MAIL_API_KEY || env.MAIL_API_BASE_URL || env.MAIL_API_URL) return "mail_iai_one";
+  if (env.MAIL_API_KEY) return "mail_iai_one";
   if (env.RESEND_API_KEY) return "resend";
   return "preview";
 }

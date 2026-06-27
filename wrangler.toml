@@ -31,6 +31,10 @@ database_id = "16dfc26d-ed33-4dc1-a349-6e216860ae05"
 # crons = ["0 9 * * *"]
 
 [env.production.vars]
+# Email provider: "mail_iai_one" (default) or "resend" (temporary fallback).
+# Set secret RESEND_API_KEY via: wrangler pages secret put RESEND_API_KEY
+# Set secret MAIL_API_KEY via: wrangler pages secret put MAIL_API_KEY
+EMAIL_PROVIDER = "mail_iai_one"
 MAIL_API_BASE_URL = "https://api.mail.iai.one/v1"
 EMAIL_FROM = "Nguyen Lan Anh <hello@nguyenlananh.com>"
 EMAIL_FROM_NOREPLY = "Nguyen Lan Anh <noreply@nguyenlananh.com>"

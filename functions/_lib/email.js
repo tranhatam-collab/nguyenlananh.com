@@ -35,6 +35,8 @@ function renderTemplate(templateId, locale, payload, env) {
   const supportEmail = payload.support_email || supportAddress(env);
 
   if (templateId === TEMPLATE_IDS.welcome) {
+    const loginUrl = payload.login_url || payload.magic_link || dashboardUrl || "";
+    const loginExpireMinutes = payload.login_url_expire_minutes || 60;
     return {
       from: systemFromAddress(env),
       reply_to: supportEmail,
@@ -42,19 +44,21 @@ function renderTemplate(templateId, locale, payload, env) {
         ? "[Nguyenlananh.com] Welcome to your journey system"
         : "[Nguyenlananh.com] Chào mừng bạn vào hệ hành trình",
       text: isEnglish
-        ? `Hi,\n\nYour membership is now active.\nPlan: ${payload.plan_name}\nMagic link: ${payload.magic_link}\nDashboard: ${dashboardUrl}\n\nIf this was not you, contact ${supportEmail}.`
-        : `Chào bạn,\n\nTài khoản thành viên của bạn đã được kích hoạt.\nGói: ${payload.plan_name}\nMagic link: ${payload.magic_link}\nDashboard: ${dashboardUrl}\n\nNếu cần hỗ trợ, vui lòng liên hệ ${supportEmail}.`
+        ? `Hi,\n\nYour membership is now active.\nPlan: ${payload.plan_name}\nLogin link (expires in ${loginExpireMinutes} minutes): ${loginUrl}\nDashboard: ${dashboardUrl}\n\nIf this was not you, contact ${supportEmail}.`
+        : `Chào bạn,\n\nTài khoản thành viên của bạn đã được kích hoạt.\nGói: ${payload.plan_name}\nLink đăng nhập (có hiệu lực trong ${loginExpireMinutes} phút): ${loginUrl}\nDashboard: ${dashboardUrl}\n\nNếu cần hỗ trợ, vui lòng liên hệ ${supportEmail}.`
     };
   }
 
   if (templateId === TEMPLATE_IDS.resend) {
+    const loginUrl = payload.login_url || payload.magic_link || "";
+    const loginExpireMinutes = payload.login_url_expire_minutes || payload.magic_link_expire_minutes || 60;
     return {
       from: systemFromAddress(env),
       reply_to: supportEmail,
-      subject: isEnglish ? "[Nguyenlananh.com] Your new magic link" : "[Nguyenlananh.com] Magic link mới của bạn",
+      subject: isEnglish ? "[Nguyenlananh.com] Your new login link" : "[Nguyenlananh.com] Link đăng nhập mới của bạn",
       text: isEnglish
-        ? `Hi,\n\nHere is your new login magic link:\n${payload.magic_link}\n\nThis link expires in ${payload.magic_link_expire_minutes || 15} minutes.`
-        : `Chào bạn,\n\nĐây là magic link mới để đăng nhập:\n${payload.magic_link}\n\nLink có hiệu lực trong ${payload.magic_link_expire_minutes || 15} phút.`
+        ? `Hi,\n\nHere is your new login link:\n${loginUrl}\n\nThis link expires in ${loginExpireMinutes} minutes. If you did not request this, contact ${supportEmail}.`
+        : `Chào bạn,\n\nĐây là link đăng nhập mới của bạn:\n${loginUrl}\n\nLink có hiệu lực trong ${loginExpireMinutes} phút. Nếu bạn không yêu cầu, vui lòng liên hệ ${supportEmail}.`
     };
   }
 
@@ -349,8 +353,231 @@ function renderTemplate(templateId, locale, payload, env) {
     };
   }
 
+  // Micro product welcome emails (T70-T74)
+  if (templateId === TEMPLATE_IDS.product_micro_life_reset_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Life Reset Mini guide is ready"
+        : "[Nguyenlananh.com] Hướng dẫn Life Reset Mini của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Life Reset Mini.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nToday: pick one area of life that feels off. Write one sentence: "What is actually draining me here?" That question is the reset.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Life Reset Mini.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nHôm nay: chọn một lĩnh vực đời sống đang lệch nhịp. Viết một câu: "Điều gì thực sự đang làm tôi kiệt?" Câu hỏi đó là reset.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_micro_inner_listening_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Inner Listening Kit is ready"
+        : "[Nguyenlananh.com] Bộ Lắng nghe Bên trong của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Inner Listening Kit.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nToday: sit for 5 minutes. Do not fix anything. Just listen to what is moving inside you.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Bộ Lắng nghe Bên trong.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nHôm nay: ngồi 5 phút. Đừng sửa gì. Chỉ lắng nghe điều gì đang chuyển động bên trong.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_micro_one_corner_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your One Corner Reset is ready"
+        : "[Nguyenlananh.com] Bộ Dọn Một Góc của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the One Corner Reset.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nToday: pick one corner. Not a room. One corner. Remove 3 things that do not belong there.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Bộ Dọn Một Góc.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nHôm nay: chọn một góc. Không phải một phòng. Một góc. Bỏ 3 thứ không thuộc về nơi đó.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_micro_7day_rhythm_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your 7-Day True Rhythm starts now"
+        : "[Nguyenlananh.com] Nhịp Sống Thật 7 ngày của bạn bắt đầu ngay",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the 7-Day True Rhythm.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nDay 1: write down your actual wake, eat, work, rest, and sleep times. Not the ideal. The actual.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Nhịp Sống Thật 7 ngày.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nNgày 1: ghi lại giờ thức, ăn, làm, nghỉ, ngủ thực tế. Không phải lý tưởng. Mà là thực tế.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_micro_companion_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Companion Circle is ready"
+        : "[Nguyenlananh.com] Vòng Đồng hành của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Companion Circle.\n\nStart here:\n- Deep track: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nThis is a small, guided circle. Show up as you are. The first step is to share one thing you are currently holding.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Vòng Đồng hành.\n\nBắt đầu tại đây:\n- Chuyên đề: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nĐây là một vòng nhỏ, có hướng dẫn. Hãy đến như bạn đang là. Bước đầu là chia sẻ một điều bạn đang mang theo.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  // Premium product welcome emails (T80-T89)
+  if (templateId === TEMPLATE_IDS.product_asmt_avoidance_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Avoidance Map assessment is ready"
+        : "[Nguyenlananh.com] Bài đánh giá Bản đồ Né tránh của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Avoidance Map assessment.\n\nStart here:\n- Assessment: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nTake the assessment in one sitting if possible. The map is most useful when you answer honestly, not ideally.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập bài đánh giá Bản đồ Né tránh.\n\nBắt đầu tại đây:\n- Bài đánh giá: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nNên làm bài trong một lần. Bản đồ có ích nhất khi bạn trả lời thật, không phải lý tưởng.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_prog_rhythm_lab_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Rhythm Design Lab is ready"
+        : "[Nguyenlananh.com] Phòng thực hành Thiết kế Nhịp sống đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Rhythm Design Lab.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nWeek 1: audit your current rhythm. Week 2: design one small, repeatable change.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Phòng thực hành Thiết kế Nhịp sống.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nTuần 1: kiểm tra nhịp sống hiện tại. Tuần 2: thiết kế một thay đổi nhỏ, có thể lặp lại.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_prog_emo_block_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Emotional Block Mapping is ready"
+        : "[Nguyenlananh.com] Bản đồ Khối Cảm xúc của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Emotional Block Mapping program.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nToday: name one place where you feel stuck but cannot say why. That is your first block.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập chương trình Bản đồ Khối Cảm xúc.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nHôm nay: gọi tên một nơi bạn cảm thấy mắc kẹt nhưng không nói được lý do. Đó là khối đầu tiên.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_cert_boundary_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Boundary Foundation Certification is ready"
+        : "[Nguyenlananh.com] Chứng nhận Nền tảng Ranh giới của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You are enrolled in the Boundary Practice Certification — Foundation.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nThis certification includes 6 modules, a final exam, and a practical submission. Plan 4-6 weeks.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã đăng ký Chứng nhận Thực hành Ranh giới — Nền tảng.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nChứng nhận gồm 6 module, thi cuối và bài thực hành. Dự kiến 4-6 tuần.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_prog_family_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Family Pattern Mapping is ready"
+        : "[Nguyenlananh.com] Bản đồ Mô thức Gia đình của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Family Pattern Mapping program.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nWeek 1: map one role you play in your family without choosing it.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập chương trình Bản đồ Mô thức Gia đình.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nTuần 1: vẽ một vai bạn đang đóng trong gia đình mà không chọn nó.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_prog_space_reset_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Space Reset Practitioner path is ready"
+        : "[Nguyenlananh.com] Lộ trình Space Reset Practitioner đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You are now on the Space Reset Practitioner path.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nModule 1: observe before you change. Do not declutter yet. Just look.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã bắt đầu lộ trình Space Reset Practitioner.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nModule 1: quan sát trước khi thay đổi. Chưa dọn. Chỉ nhìn.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_prog_creative_studio_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Creative Practice Studio is open"
+        : "[Nguyenlananh.com] Xưởng Thực hành Sáng tạo của bạn đã mở",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Creative Practice Studio.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nDay 1: gather 5 raw materials (images, quotes, questions) before making anything.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Xưởng Thực hành Sáng tạo.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nNgày 1: thu thập 5 nguyên liệu thô (hình ảnh, trích dẫn, câu hỏi) trước khi tạo gì.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_diag_capital_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Inner Capital Diagnostic is ready"
+        : "[Nguyenlananh.com] Bộ chẩn đoán Vốn Nội tại của bạn đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You now have access to the Inner Capital Diagnostic.\n\nStart here:\n- Diagnostic: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nSet aside 20-30 minutes. Answer about the last 90 days, not who you want to become.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã có quyền truy cập Bộ chẩn đoán Vốn Nội tại.\n\nBắt đầu tại đây:\n- Chẩn đoán: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nDành 20-30 phút. Trả lời về 90 ngày qua, không phải về người bạn muốn trở thành.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_cert_companion_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Certified Practice Companion L1 path is ready"
+        : "[Nguyenlananh.com] Lộ trình Certified Practice Companion L1 đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You are enrolled in the Certified Practice Companion — Level 1 path.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nThis is a 12-month certification path. You will move through practice labs, submissions, and a final assessment.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã đăng ký lộ trình Certified Practice Companion — Level 1.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nĐây là lộ trình chứng nhận 12 tháng. Bạn sẽ trải qua practice labs, bài nộp và đánh giá cuối.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.product_cert_method_designer_welcome) {
+    return {
+      from: systemFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? "[Nguyenlananh.com] Your Practice Method Designer path is ready"
+        : "[Nguyenlananh.com] Lộ trình Practice Method Designer đã sẵn sàng",
+      text: isEnglish
+        ? `Hi,\n\nWelcome. You are enrolled in the Practice Method Designer path.\n\nStart here:\n- Program: ${productDeepUrl}\n- Base article: ${productArticleUrl}\n\nThis path teaches you to design repeatable practice systems for yourself and others.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nBạn đã đăng ký lộ trình Practice Method Designer.\n\nBắt đầu tại đây:\n- Chương trình: ${productDeepUrl}\n- Bài viết nền: ${productArticleUrl}\n\nLộ trình này dạy bạn thiết kế hệ thống thực hành có thể lặp lại cho bản thân và người khác.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
+  // User notifications
+  if (templateId === TEMPLATE_IDS.payment_pending) {
+    return {
+      from: paymentFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? `[Nguyenlananh.com] Payment pending confirmation #${payload.order_id}`
+        : `[Nguyenlananh.com] Thanh toán đang chờ xác nhận #${payload.order_id}`,
+      text: isEnglish
+        ? `Hi,\n\nWe received your order and are waiting for the bank transfer to be confirmed.\n\nOrder: ${payload.order_id}\nAmount: ${payload.amount} ${payload.currency}\nTransfer note: ${payload.transfer_note || "-"}\n\nOnce confirmed, you will receive a welcome email with your login link.\n\nQuestions? ${supportEmail}`
+        : `Chào bạn,\n\nChúng tôi đã nhận đơn hàng và đang chờ xác nhận chuyển khoản.\n\nĐơn: ${payload.order_id}\nSố tiền: ${payload.amount} ${payload.currency}\nNội dung CK: ${payload.transfer_note || "-"}\n\nKhi được xác nhận, bạn sẽ nhận email chào mừng kèm link đăng nhập.\n\nThắc mắc: ${supportEmail}`
+    };
+  }
+
+  if (templateId === TEMPLATE_IDS.payment_confirmed) {
+    return {
+      from: paymentFromAddress(env),
+      reply_to: supportEmail,
+      subject: isEnglish
+        ? `[Nguyenlananh.com] Payment confirmed #${payload.order_id}`
+        : `[Nguyenlananh.com] Thanh toán đã được xác nhận #${payload.order_id}`,
+      text: isEnglish
+        ? `Hi,\n\nYour payment has been confirmed. You can now access your content.\n\nOrder: ${payload.order_id}\nAmount: ${payload.amount} ${payload.currency}\nDashboard: ${payload.dashboard_url || "-"}\n\nIf you do not see your content, try logging in again.\n\nSupport: ${supportEmail}`
+        : `Chào bạn,\n\nThanh toán của bạn đã được xác nhận. Bạn có thể truy cập nội dung ngay bây giờ.\n\nĐơn: ${payload.order_id}\nSố tiền: ${payload.amount} ${payload.currency}\nDashboard: ${payload.dashboard_url || "-"}\n\nNếu chưa thấy nội dung, hãy đăng nhập lại.\n\nHỗ trợ: ${supportEmail}`
+    };
+  }
+
   // Creator onboarding (T93-T95)
-  const creatorName = String(payload?.creator_name || payload?.name || "bạn");
   const creatorDashboardUrl = "https://www.nguyenlananh.com/members/creator-dashboard/";
   const creatorPolicyUrl = "https://www.nguyenlananh.com/creators/policy/";
 

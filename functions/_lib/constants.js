@@ -441,6 +441,9 @@ export const TEMPLATE_IDS = {
   product_self_trust_welcome: "T90_SELF_TRUST_WELCOME",
   product_open_loop_welcome: "T91_OPEN_LOOP_WELCOME",
   product_after_action_welcome: "T92_AFTER_ACTION_WELCOME",
+  // Payment notifications
+  payment_pending: "T96_PAYMENT_PENDING",
+  payment_confirmed: "T97_PAYMENT_CONFIRMED",
   // Creator onboarding
   creator_onboarding: "T93_CREATOR_ONBOARDING",
   creator_approved: "T94_CREATOR_APPROVED",

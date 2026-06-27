@@ -84,7 +84,25 @@ function productArticleUrlFor(source, locale) {
     micro_inner_listening: `${prefix}/bai-viet/nghe-lai-thu-minh-da-im-lang-qua-lau/`,
     micro_one_corner: `${prefix}/bai-viet/khi-mot-goc-nha-duoc-dat-lai-dung-cho/`,
     micro_7day_rhythm: `${prefix}/bai-viet/khong-phai-ban-thieu-ky-luat-ma-thieu-mot-nhip-song-that/`,
-    micro_companion: `${prefix}/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/`
+    micro_companion: `${prefix}/bai-viet/mot-nguoi-dong-hanh-dung-khong-keo-ban-di-nhanh-hon/`,
+    // Premium products
+    asmt_avoidance_self: `${prefix}/bai-viet/ban-do-ne-tranh/`,
+    asmt_avoidance_review: `${prefix}/bai-viet/ban-do-ne-tranh/`,
+    prog_rhythm_lab: `${prefix}/bai-viet/thiet-ke-nhip-song-that/`,
+    prog_emo_block: `${prefix}/bai-viet/khoi-cam-xuc-va-moi-quan-he/`,
+    cert_boundary_found: `${prefix}/bai-viet/ranh-gioi-la-gi/`,
+    prog_family_pattern: `${prefix}/bai-viet/he-gia-dinh-va-goc-re/`,
+    prog_space_reset: `${prefix}/bai-viet/tai-thiet-khong-gian-song/`,
+    prog_creative_studio: `${prefix}/bai-viet/lao-dong-sang-tao-he-van-hanh/`,
+    diag_capital_self: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
+    diag_capital_expert: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
+    diag_capital_biz: `${prefix}/bai-viet/kinh-te-cua-su-ro-rang/`,
+    cert_companion_l1: `${prefix}/bai-viet/nguoi-dong-hanh-thuc-hanh/`,
+    cert_method_designer: `${prefix}/bai-viet/thiet-ke-phuong-phap-thuc-hanh/`,
+    // Pilot programs
+    self_trust_evidence_builder: `${prefix}/bai-viet/lam-sao-tin-minh/`,
+    open_loop_closure_sprint: `${prefix}/bai-viet/dong-vong-lap-treo/`,
+    personal_after_action_review: `${prefix}/bai-viet/hau-kiem-ca-nhan/`
   };
   return map[source] || "";
 }
@@ -1279,6 +1297,22 @@ export async function markVietQrPendingResponse(context) {
 
     const vietQrOrder = await getVietQrOrderByInternalOrderId(db, internalOrderId);
 
+    await queueAndSendEmail({
+      db,
+      env: context.env,
+      templateId: TEMPLATE_IDS.payment_pending,
+      recipientEmail: order.email,
+      language: getLocale(order.locale),
+      dedupeKey: `${TEMPLATE_IDS.payment_pending}:${order.email}:${internalOrderId}`,
+      payload: {
+        order_id: internalOrderId,
+        amount: order.amount,
+        currency: order.currency,
+        transfer_note: vietQrOrder?.transfer_note || order.provider_order_id || null,
+        support_email: context.env.EMAIL_REPLY_TO_SUPPORT || "support@nguyenlananh.com"
+      }
+    });
+
     return json({
       ok: true,
       internal_order_id: internalOrderId,
@@ -1365,6 +1399,24 @@ export async function confirmVietQrOrderResponse(context) {
       confirmation_note: String(body.confirmation_note || "").slice(0, 240) || null,
       confirmed_at: nowIso(),
       updated_at: nowIso()
+    });
+
+    const origin = originFromRequest(context.request, context.env);
+    const dashboardUrl = buildAbsoluteUrl(origin, localeToDashboardPath(getLocale(order.locale)));
+    await queueAndSendEmail({
+      db,
+      env: context.env,
+      templateId: TEMPLATE_IDS.payment_confirmed,
+      recipientEmail: order.email,
+      language: getLocale(order.locale),
+      dedupeKey: `${TEMPLATE_IDS.payment_confirmed}:${order.email}:${internalOrderId}`,
+      payload: {
+        order_id: internalOrderId,
+        amount: order.amount,
+        currency: order.currency,
+        dashboard_url: dashboardUrl,
+        support_email: context.env.EMAIL_REPLY_TO_SUPPORT || "support@nguyenlananh.com"
+      }
     });
 
     return json({

@@ -103,8 +103,8 @@
   function renderTurnstile() {
     if (turnstileReady) return turnstileReady;
     turnstileReady = (async function() {
-      await loadScriptOnce("/assets/turnstile-config.js?v=20260627b", function(){ return Boolean(window.TURNSTILE_SITE_KEY); });
-      await loadScriptOnce("/assets/turnstile.js?v=20260627b", function(){ return Boolean(window.TurnstileHelper); });
+      await loadScriptOnce("/assets/turnstile-config.js?v=20260627c", function(){ return Boolean(window.TURNSTILE_SITE_KEY); });
+      await loadScriptOnce("/assets/turnstile.js?v=20260627c", function(){ return Boolean(window.TurnstileHelper); });
       if (!window.TurnstileHelper || !window.TurnstileHelper.isConfigured()) return null;
       const container = ensureTurnstileContainer();
       if (!container) return null;

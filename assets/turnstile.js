@@ -11,15 +11,46 @@
   let loaded = false;
   let loadPromise = null;
 
+  function waitForTurnstile() {
+    if (window.turnstile) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const started = Date.now();
+      const timer = window.setInterval(() => {
+        if (window.turnstile) {
+          window.clearInterval(timer);
+          resolve();
+          return;
+        }
+        if (Date.now() - started > 10000) {
+          window.clearInterval(timer);
+          reject(new Error("Turnstile API did not become ready"));
+        }
+      }, 50);
+    });
+  }
+
   function loadScript() {
-    if (loaded) return Promise.resolve();
+    if (loaded) return waitForTurnstile();
     if (loadPromise) return loadPromise;
     loadPromise = new Promise((resolve, reject) => {
+      const existing = document.querySelector('script[src^="' + SCRIPT_URL + '"]');
+      if (existing) {
+        waitForTurnstile().then(() => {
+          loaded = true;
+          resolve();
+        }).catch(reject);
+        return;
+      }
       const s = document.createElement("script");
       s.src = SCRIPT_URL + "?render=explicit";
       s.async = true;
       s.defer = true;
-      s.onload = () => { loaded = true; resolve(); };
+      s.onload = () => {
+        waitForTurnstile().then(() => {
+          loaded = true;
+          resolve();
+        }).catch(reject);
+      };
       s.onerror = () => reject(new Error("Failed to load Turnstile script"));
       document.head.appendChild(s);
     });

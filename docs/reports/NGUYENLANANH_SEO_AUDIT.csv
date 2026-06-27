@@ -142,7 +142,7 @@ file,title,description_length,canonical,hreflang,og,schema,h1_count,issues
 "creators/apply/index.html","Đăng ký làm creator | Nguyễn Lan Anh","65","https://www.nguyenlananh.com/creators/apply/","yes","yes","no","1","missing schema"
 "creators/index.html","Nhà sáng tạo nội dung | Nguyễn Lan Anh","92","https://www.nguyenlananh.com/creators/","yes","yes","no","1","missing schema"
 "creators/policy/index.html","Chính sách Creator | Quyền IP · Đồng thuận · Doanh thu","95","https://www.nguyenlananh.com/creators/policy/","yes","yes","no","1","missing schema"
-"creators/profile/index.html","Creator Profile | Nguyễn Lan Anh","28","https://www.nguyenlananh.com/creators/profile/","yes","yes","no","0","missing schema; missing h1"
+"creators/profile/index.html","Creator Profile | Nguyễn Lan Anh","28","https://www.nguyenlananh.com/creators/profile/","yes","yes","no","1","missing schema"
 "dieu-khoan/index.html","Điều khoản sử dụng | Nguyenlananh.com","147","https://www.nguyenlananh.com/dieu-khoan/","yes","yes","no","1","missing schema"
 "du-an/du-an-37-ngay/index.html","Dự án 37 ngày | Nguyenlananh.com","140","https://www.nguyenlananh.com/du-an/du-an-37-ngay/","yes","yes","no","1","missing schema"
 "du-an/du-an-buoc/index.html","Dự án BƯỚC | Nguyenlananh.com","147","https://www.nguyenlananh.com/du-an/du-an-buoc/","yes","yes","no","1","missing schema"

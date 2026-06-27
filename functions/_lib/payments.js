@@ -90,11 +90,9 @@ function productArticleUrlFor(source, locale) {
 }
 
 import {
-  createMagicLink,
   createOrder,
   createVietQrOrder,
   findIdempotency,
-  getMagicLinkByHash,
   getOrderByCaptureId,
   getOrderByInternalId,
   getOrderByProviderOrderId,
@@ -104,7 +102,6 @@ import {
   getVietQrOrderByInternalOrderId,
   getWebhookByEventId,
   listVietQrOrders,
-  markMagicLinkUsed,
   recordWebhook,
   requireDb,
   revokeUserMembership,
@@ -827,36 +824,22 @@ function buildCaptureLookup(event) {
   );
 }
 
-async function issueMagicLink({ db, order, user, env, request }) {
+async function buildLoginUrl({ order, user, env, request }) {
   const origin = originFromRequest(request, env);
-  const dashboardPath = localeToDashboardPath(order.locale);
+  const joinPath = localeToJoinPath(order.locale || user.preferred_language);
   const nextPath = normalizeNextPath(order.metadata_json?.next_path, order.locale);
-  const rawToken = randomToken(24);
-  const tokenHash = await sha256Hex(rawToken);
-  const createdAt = nowIso();
-  const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
-
-  await createMagicLink(db, {
-    user_id: user.id,
-    email: user.email,
-    token_hash: tokenHash,
-    redirect_path: nextPath,
-    expires_at: expiresAt,
-    created_at: createdAt
-  });
-
+  const url = new URL(buildAbsoluteUrl(origin, joinPath));
+  url.searchParams.set("email", user.email);
+  if (nextPath) {
+    url.searchParams.set("next", nextPath);
+  }
   return {
-    token: rawToken,
-    expires_at: expiresAt,
-    url: withQuery(buildAbsoluteUrl(origin, dashboardPath), {
-      magic: rawToken,
-      next: nextPath
-    }),
+    url: url.toString(),
     next_path: nextPath
   };
 }
 
-async function sendFulfillmentEmails({ db, env, order, user, magicLink, providerCaptureId, request }) {
+async function sendFulfillmentEmails({ db, env, order, user, loginUrl, providerCaptureId, request }) {
   const origin = originFromRequest(request, env);
   const locale = getLocale(order.locale || user.preferred_language);
   const dashboardUrl = buildAbsoluteUrl(origin, localeToDashboardPath(locale));
@@ -867,7 +850,7 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
     order_id: order.internal_order_id,
     capture_id: providerCaptureId,
     dashboard_url: dashboardUrl,
-    magic_link: magicLink.url,
+    login_url: loginUrl.url,
     support_email: env.EMAIL_REPLY_TO_SUPPORT || "support@nguyenlananh.com"
   };
 
@@ -908,7 +891,7 @@ async function sendFulfillmentEmails({ db, env, order, user, magicLink, provider
     dedupeKey: `${TEMPLATE_IDS.welcome}:${user.email}:${order.internal_order_id}:${providerCaptureId || "na"}`,
     payload: {
       ...commonPayload,
-      magic_link_expire_minutes: 15
+      login_url_expire_minutes: 60
     }
   });
 }
@@ -965,7 +948,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   let user = order.user_id ? await getUserById(db, order.user_id) : await getUserByEmail(db, order.email);
 
   if (order.fulfillment_status === "fulfilled" && user) {
-    const magicLink = await issueMagicLink({ db, order, user, env, request });
+    const loginUrl = await buildLoginUrl({ order, user, env, request });
     return {
       internal_order_id: order.internal_order_id,
       provider: order.provider,
@@ -976,8 +959,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
       fulfillment_status: "FULFILLED",
       membership_type: user.membership_type,
       expires_at: user.expires_at,
-      magic_link: magicLink.url,
-      magic_link_expires_at: magicLink.expires_at
+      login_url: loginUrl.url
     };
   }
 
@@ -1072,13 +1054,13 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   });
 
   const refreshedOrder = await getOrderByInternalId(db, order.internal_order_id);
-  const magicLink = await issueMagicLink({ db, order: refreshedOrder, user, env, request });
+  const loginUrl = await buildLoginUrl({ order: refreshedOrder, user, env, request });
   await sendFulfillmentEmails({
     db,
     env,
     order: refreshedOrder,
     user,
-    magicLink,
+    loginUrl,
     providerCaptureId: providerCaptureId || order.provider_capture_id,
     request
   });
@@ -1093,8 +1075,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
     fulfillment_status: "FULFILLED",
     membership_type: user.membership_type,
     expires_at: user.expires_at,
-    magic_link: magicLink.url,
-    magic_link_expires_at: magicLink.expires_at,
+    login_url: loginUrl.url,
     queued_email_templates: [TEMPLATE_IDS.receipt, TEMPLATE_IDS.welcome]
   };
 }
@@ -1671,8 +1652,7 @@ export async function resendMagicLinkResponse(context) {
         next_path: normalizeNextPath(body.next_path, locale)
       }
     };
-    const magicLink = await issueMagicLink({
-      db,
+    const loginUrl = await buildLoginUrl({
       order,
       user,
       env: context.env,
@@ -1685,10 +1665,10 @@ export async function resendMagicLinkResponse(context) {
       templateId: TEMPLATE_IDS.resend,
       recipientEmail: user.email,
       language: locale,
-      dedupeKey: `${TEMPLATE_IDS.resend}:${user.email}:${magicLink.expires_at}`,
+      dedupeKey: `${TEMPLATE_IDS.resend}:${user.email}:${Date.now()}`,
       payload: {
-        magic_link: magicLink.url,
-        magic_link_expire_minutes: 15
+        login_url: loginUrl.url,
+        login_url_expire_minutes: 60
       }
     });
 
@@ -1696,46 +1676,30 @@ export async function resendMagicLinkResponse(context) {
       ok: true,
       queued: true,
       template_id: TEMPLATE_IDS.resend,
-      expires_in_minutes: 15
+      expires_in_minutes: 60
     });
   } catch (error) {
-    return errorResponse(error.status || 500, error.code || "MAGIC_RESEND_FAILED", error.message || "Unable to resend magic link.");
+    return errorResponse(error.status || 500, error.code || "LOGIN_RESEND_FAILED", error.message || "Unable to resend login link.");
   }
 }
 
 export async function consumeMagicLinkResponse(context) {
+  // Magic link authentication was removed by design (commit 8c93caae).
+  // Existing links in old emails are no longer valid. Redirect users to
+  // the Google OAuth join/login flow so they can authenticate safely.
   try {
     const body = await readJson(context.request);
-    assert(body, "INVALID_JSON", "Request body must be valid JSON.", 400);
-    const token = String(body.token || "").trim();
-    assert(token, "TOKEN_REQUIRED", "Magic token is required.", 422);
-
-    const db = requireDb(context.env);
-    const tokenHash = await sha256Hex(token);
-    const magicLink = await getMagicLinkByHash(db, tokenHash);
-    assert(magicLink, "MAGIC_NOT_FOUND", "Magic link was not found.", 404);
-    assert(!magicLink.used_at, "MAGIC_USED", "Magic link was already used.", 409);
-    assert(new Date(magicLink.expires_at).getTime() > Date.now(), "MAGIC_EXPIRED", "Magic link has expired.", 410);
-
-    const user = magicLink.user_id ? await getUserById(db, magicLink.user_id) : await getUserByEmail(db, magicLink.email);
-    assert(user && user.active, "MEMBERSHIP_INACTIVE", "Membership is inactive.", 403);
-
-    await markMagicLinkUsed(db, magicLink.id, nowIso());
-
+    const next = normalizeNextPath(body?.next_path || "/members/dashboard/", "vi");
+    const url = new URL(buildAbsoluteUrl(originFromRequest(context.request, context.env), "/join/"));
+    url.searchParams.set("next", next);
     return json({
-      ok: true,
-      session: {
-        id: randomId("sess"),
-        email: user.email,
-        membershipType: user.membership_type,
-        membershipLabel: user.membership_label,
-        expiresAt: user.expires_at,
-        startedAt: nowIso()
-      },
-      next_path: normalizeNextPath(body.next_path || magicLink.redirect_path, user.preferred_language)
-    });
+      ok: false,
+      code: "MAGIC_LINK_DEPRECATED",
+      message: "Magic links are no longer supported. Please sign in with Google.",
+      login_url: url.toString()
+    }, { status: 410 });
   } catch (error) {
-    return errorResponse(error.status || 500, error.code || "MAGIC_CONSUME_FAILED", error.message || "Unable to consume magic link.");
+    return errorResponse(410, "MAGIC_LINK_DEPRECATED", "Magic links are no longer supported. Please sign in with Google.");
   }
 }
 

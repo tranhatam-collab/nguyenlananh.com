@@ -30,10 +30,14 @@ fi
 check() {
   local name="$1" method="$2" path="$3" expected="$4" body="${5:-}"
   local code
+  local extra_headers=()
   [ -z "$body" ] && body='{}'
+  if [ "$path" = "/api/payments/vietqr/create-order" ]; then
+    extra_headers=(-H "X-Idempotency-Key: smoke-$(date +%s)-$$")
+  fi
   if [ "$method" = "POST" ]; then
     code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-      -H "Content-Type: application/json" -d "$body" "$BASE_URL$path")
+      -H "Content-Type: application/json" ${extra_headers[@]:+"${extra_headers[@]}"} -d "$body" "$BASE_URL$path")
   else
     code=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL$path")
   fi
@@ -52,11 +56,13 @@ check "home"           GET  "/"                              200
 check "en-home"        GET  "/en/"                           200
 check "members"        GET  "/members/"                      200
 echo "-- Functions / API (proves functions/ deployed) --"
-check "admin-page"     GET  "/admin/"                        200
+# Admin routes redirect to login when unauthenticated (correct RBAC behavior)
+check "admin-page"     GET  "/admin/"                        302
 check "session-noauth" GET  "/api/auth/session"              401
 check "logout"         POST "/api/auth/logout"               200
-check "magic-request"  POST "/api/auth/magic-links/request"  422 '{}'
-# Secrets are configured in production (GOOGLE_*, MAGIC_LINK_SECRET, etc.),
+# Magic link removed by design (commit 8c93caae); Google OAuth is the sole auth method.
+# Payment order creation requires a Turnstile token from the frontend, so it is tested manually.
+# Secrets are configured in production (GOOGLE_*, etc.),
 # so Google OAuth start should now build the redirect (302) instead of 501.
 check "google-start"   GET  "/api/auth/google/start"         302
 

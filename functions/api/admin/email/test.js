@@ -6,13 +6,20 @@ import { TEMPLATE_IDS } from "../../../_lib/constants.js";
 async function requireAdminTestAccess(context) {
   const providedKey = String(context.request.headers.get("x-admin-key") || "").trim();
   const secretKey = String(
+    context.env.ADMIN_TEST_EMAIL_KEY ||
     context.env.PAYMENTS_ADMIN_KEY ||
     context.env.ADMIN_OPS_KEY ||
     context.env.ADMIN_PAYMENT_CONFIRM_KEY ||
     ""
   ).trim();
-  if (secretKey && providedKey && timingSafeEqualHex(providedKey, secretKey)) {
-    return true;
+  if (secretKey && providedKey) {
+    if (timingSafeEqualHex(providedKey, secretKey)) {
+      return true;
+    }
+    const error = new Error("Invalid admin key.");
+    error.code = "ADMIN_KEY_INVALID";
+    error.status = 403;
+    throw error;
   }
   await requireAdminSession(context);
   return true;

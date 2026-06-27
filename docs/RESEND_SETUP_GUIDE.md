@@ -33,20 +33,20 @@ npx wrangler pages secret put RESEND_API_KEY --project-name=nguyenlananh-com
 
 Paste the `re_...` key when prompted.
 
-## 5. Switch the email provider to Resend
+## 5. Deploy with Resend auto-detected
 
-Edit `wrangler.toml`:
-
-```toml
-[env.production.vars]
-EMAIL_PROVIDER = "resend"
-```
-
-Then deploy:
+The code will automatically use Resend when `RESEND_API_KEY` is set and `MAIL_API_KEY` is not set. Just deploy:
 
 ```bash
 export CLOUDFLARE_ACCOUNT_ID=62d57eaa548617aeecac766e5a1cb98e
 npx wrangler pages deploy . --project-name nguyenlananh-com --branch main --commit-dirty=true
+```
+
+To force Resend even if both keys exist, set the `EMAIL_PROVIDER` secret:
+
+```bash
+npx wrangler pages secret put EMAIL_PROVIDER --project-name=nguyenlananh-com
+# Enter: resend
 ```
 
 ## 6. Test sending an email
@@ -62,9 +62,20 @@ npx wrangler pages dev . --local
 
 When the original VPS is restored:
 
-1. Set `EMAIL_PROVIDER = "mail_iai_one"` in `wrangler.toml`.
-2. Re-deploy.
-3. Optionally delete the `RESEND_API_KEY` secret:
+1. Delete the `EMAIL_PROVIDER` secret if you set it to `resend`:
+
+```bash
+npx wrangler pages secret delete EMAIL_PROVIDER --project-name=nguyenlananh-com
+```
+
+2. Ensure `MAIL_API_KEY` secret is set:
+
+```bash
+npx wrangler pages secret put MAIL_API_KEY --project-name=nguyenlananh-com
+```
+
+3. Re-deploy.
+4. Optionally delete the `RESEND_API_KEY` secret:
 
 ```bash
 npx wrangler pages secret delete RESEND_API_KEY --project-name=nguyenlananh-com

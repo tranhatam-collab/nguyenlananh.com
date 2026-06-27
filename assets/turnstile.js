@@ -33,14 +33,20 @@
   // Render widget into a container element, returns widget ID
   async function render(container, options) {
     if (!isConfigured()) return null;
+    if (!container) return null;
+    if (container.dataset.turnstileWidgetId) return container.dataset.turnstileWidgetId;
     await loadScript();
     if (!window.turnstile) return null;
-    return window.turnstile.render(container, Object.assign({
+    const widgetId = window.turnstile.render(container, Object.assign({
       sitekey: SITE_KEY,
       theme: "light",
       size: "normal",
       retry: "auto",
     }, options || {}));
+    if (widgetId != null) {
+      container.dataset.turnstileWidgetId = String(widgetId);
+    }
+    return widgetId;
   }
 
   // Get token from a rendered widget by ID, or from hidden input
@@ -72,10 +78,10 @@
     if (!isConfigured()) return;
     const containers = document.querySelectorAll(".cf-turnstile");
     if (!containers.length) return;
-    await loadScript();
-    containers.forEach((el) => {
+    await Promise.all(Array.from(containers).map((el) => {
       if (!el.dataset.sitekey) el.dataset.sitekey = SITE_KEY;
-    });
+      return render(el);
+    }));
   }
 
   window.TurnstileHelper = {

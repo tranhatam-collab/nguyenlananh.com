@@ -1214,9 +1214,9 @@
     });
   }
 
-  function initJoinPage() {
+  async function initJoinPage() {
     const strings = memberStrings();
-    const session = getSession();
+    const session = await refreshSessionFromServer();
     const activeBlock = $("#alreadyMember");
     const joinBlock = $("#joinFlow");
     const primaryLink = $("#alreadyMemberPrimary");
@@ -1230,6 +1230,14 @@
         const href = new URL(googleBtn.href, window.location.origin);
         href.searchParams.set("source", source);
         googleBtn.href = href.toString();
+      }
+    }
+
+    if (session) {
+      const dashboardPath = dashboardPathForPath(window.location.pathname);
+      if (window.location.pathname === joinPathForPath(window.location.pathname)) {
+        window.location.replace(dashboardPath);
+        return;
       }
     }
 
@@ -1521,7 +1529,15 @@
   async function init() {
     const page = document.body.getAttribute("data-page");
     if (page === "join") {
-      initJoinPage();
+      await initJoinPage();
+      return;
+    }
+
+    if (isPublicMembersLanding(window.location.pathname)) {
+      const session = await refreshSessionFromServer();
+      if (session) {
+        window.location.replace(dashboardPathForPath(window.location.pathname));
+      }
       return;
     }
 

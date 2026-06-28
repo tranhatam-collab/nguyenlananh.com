@@ -195,8 +195,11 @@
   }
 
   const joinHref = isEnglish ? "/en/join/" : "/join/";
+  const membersHref = isEnglish ? "/en/members/" : "/members/";
+  const membersDashboardHref = isEnglish ? "/en/members/dashboard/" : "/members/dashboard/";
   const joinNavLabel = ctaCopy.joinNav || (isEnglish ? "Join membership" : "Đăng ký thành viên");
   const joinCtaLabel = ctaCopy.joinPrimary || (isEnglish ? "Free companionship" : "Đồng hành miễn phí");
+  const memberWorkspaceLabel = isEnglish ? "Member workspace" : "Không gian thành viên";
 
   $$(`a[href="${joinHref}"]`).forEach((anchor) => {
     const inTopbar = Boolean(anchor.closest(".topbar"));
@@ -213,7 +216,59 @@
     }
   });
 
+  function authRouteFromHref(href) {
+    if (!href || !href.startsWith("/")) return null;
+    return routeFromHref(href.split(/[?#]/, 1)[0]);
+  }
+
+  function shouldRelabelToWorkspace(anchor) {
+    if (!anchor) return false;
+    if (anchor.classList.contains("btn") || anchor.classList.contains("drawerCta")) return true;
+    const text = String(anchor.textContent || "").toLowerCase();
+    return /đăng ký|đăng nhập|join|sign in|free|miễn phí/.test(text);
+  }
+
+  async function fetchMemberSession() {
+    try {
+      const response = await fetch("/api/auth/session", { method: "GET", headers: { Accept: "application/json" } });
+      if (!response.ok) return null;
+      const body = await response.json().catch(() => null);
+      if (body && body.ok && body.session && body.session.email) return body.session;
+    } catch (_err) {
+      return null;
+    }
+    return null;
+  }
+
+  function rewriteNavigationForLoggedInMember() {
+    $$("a[href]").forEach((anchor) => {
+      const route = authRouteFromHref(anchor.getAttribute("href"));
+      if (route === "/members/" || route === "/join/") {
+        anchor.setAttribute("href", membersDashboardHref);
+        if (shouldRelabelToWorkspace(anchor)) {
+          anchor.textContent = memberWorkspaceLabel;
+        }
+      }
+    });
+  }
+
+  function redirectPublicAuthPagesToWorkspace() {
+    const current = normalizePath(window.location.pathname);
+    if (current === joinHref || current === membersHref) {
+      window.location.replace(membersDashboardHref);
+      return true;
+    }
+    return false;
+  }
+
   localizeSharedChrome();
+
+  void (async () => {
+    const session = await fetchMemberSession();
+    if (!session) return;
+    rewriteNavigationForLoggedInMember();
+    redirectPublicAuthPagesToWorkspace();
+  })();
 
   const articleImageLibrary = {
     "bon-truc-thay-doi": "/assets/images/articles/di-vao-ben-trong-hero.svg",

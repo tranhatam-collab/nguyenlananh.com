@@ -28,6 +28,14 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Verify clean git state
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FAIL: Working tree has uncommitted changes. CI must deploy from a clean commit."
+            exit 1
+          fi
+          echo "PASS: Working tree is clean."
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
@@ -71,6 +79,32 @@ jobs:
           code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/nonexistent")
           echo "/nonexistent -> $code"
           [ "$code" != "404" ] && { echo "FAIL: /nonexistent should return 404"; ERR=1; }
+
+          echo "--- Product teaser (public) ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/products/")
+          echo "/products/ -> $code"
+          [ "$code" != "200" ] && { echo "FAIL: /products/ should return 200"; ERR=1; }
+
+          echo "--- Product detail gating (anonymous) ---"
+          for path in "/products/life-reset-mini/" "/en/products/life-reset-mini/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "302" ] && { echo "FAIL: $path should redirect to login"; ERR=1; }
+          done
+
+          echo "--- Member workspace gating (anonymous) ---"
+          for path in "/members/products/" "/en/members/products/" "/members/library/" "/en/members/library/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "302" ] && { echo "FAIL: $path should redirect to login"; ERR=1; }
+          done
+
+          echo "--- Member workspace alias redirects ---"
+          for path in "/members/dashboard/products/" "/members/dashboard/library/" "/en/members/dashboard/products/" "/en/members/dashboard/library/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "301" ] && [ "$code" != "302" ] && [ "$code" != "200" ] && { echo "FAIL: $path should redirect"; ERR=1; }
+          done
 
           echo "--- Functions (unauthenticated) ---"
           code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/api/auth/session")

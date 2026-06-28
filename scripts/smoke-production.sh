@@ -58,6 +58,15 @@ check "members"        GET  "/members/"                      200
 check "products-teaser" GET "/products/"                     200
 check "product-detail-gated-vi" GET "/products/life-reset-mini/" 302
 check "product-detail-gated-en" GET "/en/products/life-reset-mini/" 302
+echo "-- Member workspace gating (anonymous → 302 /join/) --"
+check "member-products-vi"  GET "/members/products/"         302
+check "member-products-en"  GET "/en/members/products/"      302
+check "member-library-vi"   GET "/members/library/"          302
+check "member-library-en"   GET "/en/members/library/"       302
+check "member-products-alias" GET "/members/dashboard/products/" 301
+check "member-library-alias"  GET "/members/dashboard/library/" 301
+check "member-products-alias-en" GET "/en/members/dashboard/products/" 301
+check "member-library-alias-en"  GET "/en/members/dashboard/library/" 301
 echo "-- Functions / API (proves functions/ deployed) --"
 # Admin routes redirect to login when unauthenticated (correct RBAC behavior)
 check "admin-page"     GET  "/admin/"                        302

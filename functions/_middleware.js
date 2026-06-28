@@ -23,6 +23,19 @@ const PUBLIC_PRODUCT_PATHS = [
   "/en/products/index.html",
 ];
 
+// Member workspace paths that require any authenticated session.
+// These redirect anonymous users to /join/.
+const MEMBER_ONLY_PATHS = [
+  "/members/products/",
+  "/members/products/index.html",
+  "/members/library/",
+  "/members/library/index.html",
+  "/en/members/products/",
+  "/en/members/products/index.html",
+  "/en/members/library/",
+  "/en/members/library/index.html",
+];
+
 // Paths under /members/ that are public (no session needed).
 const PUBLIC_MEMBER_PATHS = [
   "/members/",
@@ -243,6 +256,11 @@ function getDeepLessonSlug(pathname) {
 
 function isPublicMemberPath(pathname) {
   return PUBLIC_MEMBER_PATHS.some((p) => pathname === p || pathname === p.replace(/\/$/, ""));
+}
+
+function isMemberOnlyPath(pathname) {
+  const normalized = pathname.endsWith("/") ? pathname : pathname + "/";
+  return MEMBER_ONLY_PATHS.some((p) => normalized === p || normalized.startsWith(p));
 }
 
 function isEnglishPath(pathname) {
@@ -497,19 +515,32 @@ export async function onRequest(context) {
     if (isProductPath(url.pathname) && !isPublicProductPath(url.pathname)) {
       const en = isEnglishPath(url.pathname);
       const slug = getProductSlug(url.pathname);
+      const workspaceBase = en ? "/en/members/products/" : "/members/products/";
+      const workspaceUrl = slug ? `${workspaceBase}?product=${encodeURIComponent(slug)}` : workspaceBase;
+
       if (!memberSession) {
         const joinUrl = en ? "/en/join/" : "/join/";
         return new Response(null, {
           status: 302,
-          headers: { Location: joinUrl, "Cache-Control": "no-store" },
+          headers: { Location: `${joinUrl}?next_path=${encodeURIComponent(workspaceUrl)}`, "Cache-Control": "no-store" },
         });
       }
 
-      const workspaceBase = en ? "/en/members/products/" : "/members/products/";
-      const workspaceUrl = slug ? `${workspaceBase}#${slug}` : workspaceBase;
       return new Response(null, {
         status: 302,
         headers: { Location: workspaceUrl, "Cache-Control": "no-store" },
+      });
+    }
+
+    // Member workspace hubs require an authenticated session.
+    // Anonymous visitors are redirected to /join/.
+    if (isMemberOnlyPath(url.pathname) && !memberSession) {
+      const en = isEnglishPath(url.pathname);
+      const joinUrl = en ? "/en/join/" : "/join/";
+      const nextPath = url.pathname + url.search + url.hash;
+      return new Response(null, {
+        status: 302,
+        headers: { Location: `${joinUrl}?next_path=${encodeURIComponent(nextPath)}`, "Cache-Control": "no-store" },
       });
     }
 

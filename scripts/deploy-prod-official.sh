@@ -33,6 +33,20 @@ export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT_ID"
 
 cd "$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 
+# GUARDRAIL: Only GitHub Actions for production.
+if [ "${CI:-}" != "true" ]; then
+  echo "⚠️  WARNING: Manual production deploy detected."
+  echo "   The canonical deploy path is: git push main → GitHub Actions"
+  echo "   This script is for emergency use only."
+  echo "   Press Ctrl+C now to abort, or wait 3s to continue..."
+  sleep 3
+fi
+
+if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  echo "⚠️  Working tree has uncommitted changes. Commit first."
+  exit 1
+fi
+
 echo "== Deploy to OFFICIAL account $ACCOUNT_ID =="
 
 # 0. Verify auth works against the official account.

@@ -48,6 +48,14 @@
     }
   };
 
+  const PRODUCT_REGISTRY = {
+    "life-reset-mini": { nameVI: "Life Reset Mini", nameEN: "Life Reset Mini", planCode: "micro_life_reset", type: "product", priceUsd: 7, descVI: "1 bài đọc, 1 workbook, 1 bài tập viết tay, 1 hướng dẫn thực hành.", descEN: "One reading, one workbook, one handwriting exercise, one practice guide." },
+    "inner-listening-kit": { nameVI: "Inner Listening Kit", nameEN: "Inner Listening Kit", planCode: "micro_inner_listening", type: "product", priceUsd: 5, descVI: "Lắng nghe lại những âm thanh bên trong bạn đã tự tắt đi.", descEN: "Listen back to the inner voice you have silenced." },
+    "7-day-true-rhythm": { nameVI: "7 Ngày Nhịp Thật", nameEN: "7-Day True Rhythm", planCode: "micro_7day_rhythm", type: "program", priceUsd: 9, descVI: "Lộ trình 7 ngày thiết lập nhịp sống thật.", descEN: "7-day program to establish a true life rhythm." },
+    "companion-circle": { nameVI: "Vòng Tròn Đồng Hành", nameEN: "Companion Circle", planCode: "micro_companion", type: "program", priceUsd: 9, descVI: "Không gian đồng hành nhóm nhỏ.", descEN: "Small group companion space." },
+    "one-corner-reset": { nameVI: "One Corner Reset", nameEN: "One Corner Reset", planCode: "micro_one_corner", type: "product", priceUsd: 3, descVI: "Thiết lập lại một góc trong cuộc sống.", descEN: "Reset one corner of your life." },
+  };
+
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
@@ -382,6 +390,7 @@
       email: serverSession.email,
       membershipType: serverSession.membershipType || "free",
       membershipLabel: serverSession.membershipLabel || incomingPlan.label,
+      contentAccess: Array.isArray(serverSession.contentAccess) ? serverSession.contentAccess : [],
       startedAt: serverSession.startedAt || new Date().toISOString(),
       expiresAt
     });
@@ -1226,17 +1235,26 @@
     if (googleBtn) {
       const urlParams = new URLSearchParams(window.location.search);
       const source = urlParams.get("source");
+      const nextPath = urlParams.get("next_path");
+      const href = new URL(googleBtn.href, window.location.origin);
       if (source) {
-        const href = new URL(googleBtn.href, window.location.origin);
         href.searchParams.set("source", source);
-        googleBtn.href = href.toString();
       }
+      if (nextPath) {
+        href.searchParams.set("next_path", nextPath);
+      }
+      googleBtn.href = href.toString();
     }
 
     if (session) {
-      const dashboardPath = dashboardPathForPath(window.location.pathname);
+      const urlParams = new URLSearchParams(window.location.search);
+      const nextPath = urlParams.get("next_path");
       if (window.location.pathname === joinPathForPath(window.location.pathname)) {
-        window.location.replace(dashboardPath);
+        if (nextPath && nextPath.startsWith("/")) {
+          window.location.replace(nextPath);
+        } else {
+          window.location.replace(dashboardPathForPath(window.location.pathname));
+        }
         return;
       }
     }
@@ -1500,11 +1518,112 @@
     return false;
   }
 
+  function hasProductAccess(session, product) {
+    if (!session || !product) return false;
+    if (isPaidMembership(session)) return true;
+    const planCode = product.planCode || "";
+    if (!planCode) return false;
+    const access = Array.isArray(session.contentAccess) ? session.contentAccess : [];
+    return access.some((item) => item && item.planCode === planCode);
+  }
+
+  function initProductsPage(session) {
+    const isEnglish = document.documentElement.lang === "en-US";
+    const params = new URLSearchParams(window.location.search);
+    const productSlug = params.get("product");
+    const catalogEl = $("#productCatalogList");
+    const detailView = $("#productDetailView");
+    const catalogView = $("#productCatalogView");
+
+    if (productSlug && PRODUCT_REGISTRY[productSlug]) {
+      const product = PRODUCT_REGISTRY[productSlug];
+      const name = isEnglish ? product.nameEN : product.nameVI;
+      const desc = isEnglish ? product.descEN : product.descVI;
+
+      if (detailView) detailView.style.display = "block";
+      if (catalogView) catalogView.style.display = "none";
+
+      const nameEl = $("#productDetailName");
+      const descEl = $("#productDetailDesc");
+      const statusEl = $("#productDetailStatus");
+      const actionsEl = $("#productDetailActions");
+      const titleEl = $("#productsPageTitle");
+      const subEl = $("#productsPageSub");
+
+      if (titleEl) titleEl.textContent = name;
+      if (subEl) subEl.textContent = isEnglish ? "Viewing product details based on your account." : "Đang xem chi tiết sản phẩm theo quyền tài khoản.";
+      if (nameEl) nameEl.textContent = name;
+      if (descEl) descEl.textContent = desc;
+
+      const hasAccess = hasProductAccess(session, product);
+      const isPaid = isPaidMembership(session);
+      const isFree = !hasAccess && !isPaid && session;
+
+      if (statusEl) {
+        if (hasAccess) {
+          statusEl.innerHTML = `<div class="checkItem"><div><strong style="color:var(--green)">✓ ${isEnglish ? "Access granted" : "Đã mở quyền"}</strong><p class="note">${isPaid ? (isEnglish ? "Your paid membership includes this product." : "Gói thành viên trả phí của bạn bao gồm sản phẩm này.") : (isEnglish ? "This product is attached to your account purchase." : "Sản phẩm này đã gắn với tài khoản mua hàng của bạn.")}</p></div></div>`;
+        } else if (isFree) {
+          statusEl.innerHTML = `<div class="checkItem"><div><strong>${isEnglish ? "Free member" : "Thành viên miễn phí"}</strong><p class="note">${isEnglish ? "Upgrade your membership to unlock full access." : "Nâng cấp gói thành viên để mở toàn bộ quyền truy cập."}</p></div></div>`;
+        } else {
+          statusEl.innerHTML = `<div class="checkItem"><div><strong>${isEnglish ? "Not purchased" : "Chưa mua"}</strong><p class="note">${isEnglish ? "Purchase this product to access its content." : "Mua sản phẩm này để truy cập nội dung."}</p></div></div>`;
+        }
+      }
+
+      if (actionsEl) {
+        const actions = [];
+        if (hasAccess) {
+          actions.push(`<a class="cta" href="/${isEnglish ? "en/" : ""}members/deep/">${isEnglish ? "Open deep content" : "Mở nội dung chuyên sâu"}</a>`);
+          actions.push(`<a class="ghost" href="/${isEnglish ? "en/" : ""}members/practice/">${isEnglish ? "Go to practice" : "Đi tới thực hành"}</a>`);
+        } else {
+          actions.push(`<a class="cta" href="/${isEnglish ? "en/" : ""}join/">${isEnglish ? "Upgrade membership" : "Nâng cấp thành viên"}</a>`);
+          actions.push(`<a class="ghost" href="/${isEnglish ? "en/" : ""}products/${productSlug}/">${isEnglish ? "View public teaser" : "Xem teaser public"}</a>`);
+        }
+        actions.push(`<a class="ghost" href="/${isEnglish ? "en/" : ""}members/products/">${isEnglish ? "Back to all products" : "Về tất cả sản phẩm"}</a>`);
+        actionsEl.innerHTML = actions.join("");
+      }
+
+      const linkEl = document.querySelector("link[rel=canonical]");
+      if (linkEl) linkEl.href = `https://www.nguyenlananh.com/${isEnglish ? "en/" : ""}members/products/?product=${productSlug}`;
+      return;
+    }
+
+    if (catalogEl && session) {
+      let html = "";
+      const slugs = Object.keys(PRODUCT_REGISTRY);
+      for (const slug of slugs) {
+        const p = PRODUCT_REGISTRY[slug];
+        const name = isEnglish ? p.nameEN : p.nameVI;
+        const desc = isEnglish ? p.descEN : p.descVI;
+        const accessStatus = hasProductAccess(session, p)
+          ? `<span style="color:var(--green);font-size:12px">${isEnglish ? "Access granted" : "Đã mở"}</span>`
+          : `<span style="font-size:12px">${isEnglish ? "Upgrade required" : "Cần nâng cấp"}</span>`;
+        html += `<div class="checkItem"><div><strong><a href="/${isEnglish ? "en/" : ""}members/products/?product=${slug}">${name}</a></strong><p class="note">${desc}</p><p>${accessStatus}</p></div></div>`;
+      }
+      catalogEl.innerHTML = html;
+    }
+  }
+
+  function initLibraryPage(session) {
+    const isEnglish = document.documentElement.lang === "en-US";
+    const summaryEl = $("#libraryAccessSummary");
+    const contentEl = $("#libraryAccessContent");
+    if (!summaryEl || !contentEl) return;
+
+    const isPaid = isPaidMembership(session);
+    summaryEl.style.display = "block";
+
+    if (isPaid) {
+      contentEl.innerHTML = `<div class="checkItem"><div><strong style="color:var(--green)">✓ ${isEnglish ? "Full library access" : "Toàn quyền thư viện"}</strong><p class="note">${isEnglish ? "All documents, workbooks, and resources are unlocked." : "Tất cả tài liệu, workbook và tài nguyên đã được mở khóa."}</p></div></div>`;
+    } else {
+      contentEl.innerHTML = `<div class="checkItem"><div><strong>${isEnglish ? "Limited access" : "Quyền truy cập giới hạn"}</strong><p class="note">${isEnglish ? "Upgrade your membership to unlock full library resources." : "Nâng cấp gói thành viên để mở toàn bộ tài nguyên thư viện."}</p></div></div>`;
+    }
+  }
+
   async function initMembersArea() {
     const session = await refreshSessionFromServer();
     if (!session) {
-      const next = encodeURIComponent(window.location.pathname);
-      window.location.href = `${joinPathForPath(window.location.pathname)}?next=${next}`;
+      const nextPath = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+      window.location.href = `${joinPathForPath(window.location.pathname)}?next_path=${nextPath}`;
       return;
     }
 
@@ -1524,6 +1643,8 @@
     if (page === "members-pilot") initPilotPage(session);
     if (page === "members-reflection") initReflectionPage(session);
     if (page === "members-experience") initExperiencePage();
+    if (page === "members-products") initProductsPage(session);
+    if (page === "members-library") initLibraryPage(session);
   }
 
   async function init() {

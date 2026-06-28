@@ -4,6 +4,25 @@ set -euo pipefail
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$REPO_ROOT"
 
+# GUARDRAIL: Warn if this is a production deploy outside GitHub Actions.
+# The canonical deploy path is push-to-main → GitHub Actions.
+# Manual deploy is allowed only for emergency hotfixes.
+if [ "${CI:-}" != "true" ] && [ "${BRANCH:-main}" = "main" ]; then
+  echo "⚠️  WARNING: Manual production deploy detected."
+  echo "   The canonical deploy path is: git push main → GitHub Actions"
+  echo "   Manual deploy bypasses CI guardrails (artifact consistency, smoke tests)."
+  echo "   Press Ctrl+C now to abort, or wait 3s to continue..."
+  sleep 3
+fi
+
+# Verify clean working tree for production deploy
+if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  echo "⚠️  Working tree has uncommitted changes. Deploying dirty state makes it"
+  echo "   impossible to verify which commit is running in production."
+  echo "   Commit or stash changes first, then re-run."
+  exit 1
+fi
+
 PROJECT_NAME="${CLOUDFLARE_PAGES_PROJECT:-nguyenlananh-com}"
 export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-62d57eaa548617aeecac766e5a1cb98e}"
 BUILD_DIR="${BUILD_DIR:-}"

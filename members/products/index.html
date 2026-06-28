@@ -23,13 +23,28 @@
 </header>
 
   <main id="main" class="container" role="main">
-    <section class="pageHead">
-      <h1>Sản phẩm thành viên</h1>
-      <p class="sub">Đây là khu vực mở sản phẩm, chương trình và chứng nhận theo quyền tài khoản của bạn.</p>
-      <div class="actionsRow"><a class="ghost" href="/members/dashboard/">Về dashboard</a><a class="ghost" href="/products/">Xem teaser public</a></div>
+    <section class="pageHead" id="productsPageHead">
+      <h1 id="productsPageTitle">Sản phẩm thành viên</h1>
+      <p class="sub" id="productsPageSub">Đây là khu vực mở sản phẩm, chương trình và chứng nhận theo quyền tài khoản của bạn.</p>
+      <div class="actionsRow" id="productsPageActions"><a class="ghost" href="/members/dashboard/">Về dashboard</a><a class="ghost" href="/products/">Xem teaser public</a></div>
     </section>
 
-    <section class="panel">
+    <section class="panel" id="productDetailView" style="display:none">
+      <div id="productDetailContent">
+        <h2 id="productDetailName"></h2>
+        <p id="productDetailDesc" class="note"></p>
+        <div id="productDetailStatus" class="panel" style="margin-top:1rem"></div>
+        <div class="actionsRow" id="productDetailActions" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <section class="panel" id="productCatalogView">
+      <h3>Tất cả sản phẩm</h3>
+      <p class="note">Trạng thái quyền truy cập của bạn cho từng sản phẩm sẽ hiển thị bên dưới.</p>
+      <div id="productCatalogList" class="list"></div>
+    </section>
+
+    <section class="panel" id="productsQuickAccess">
       <h3>Lối vào nhanh</h3>
       <ul class="list">
         <li><a href="/assessments/">Assessments</a> — báo cáo đầu vào và chiến lược cá nhân.</li>

@@ -4,11 +4,14 @@ export const RELEASE_INCLUDE_PATHS = [
   "_redirects",
   "admin",
   "assets",
+  "assessments",
   "bat-dau",
   "bai-viet",
   "chinh-sach-bao-mat",
   "chuong-trinh",
+  "certification",
   "content",
+  "creators",
   "dieu-khoan",
   "du-an",
   "en",
@@ -22,6 +25,8 @@ export const RELEASE_INCLUDE_PATHS = [
   "members",
   "mien-tru-trach-nhiem",
   "phuong-phap",
+  "products",
+  "programs",
   "robots.txt",
   "sitemap.xml"
 ];

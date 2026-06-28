@@ -624,82 +624,7 @@ function buildVietQrTransferNote(internalOrderId) {
   return `NLA${normalized.slice(-10)}`;
 }
 
-async function createVietQrCheckout(env, order, idempotencyKey) {
-  if (vietQrViaPayIaiOne(env)) {
-    const payload = {
-      tenant_code: payIaiOneTenantCode(env),
-      site_code: payIaiOneSiteCode(env),
-      internal_order_id: order.internal_order_id,
-      provider: String(env.PAY_IAI_ONE_VN_PROVIDER || PAY_IAI_ONE_DEFAULT_PROVIDER).trim().toLowerCase(),
-      plan_code: order.plan.code,
-      amount: Math.max(0, Math.round(Number(order.amount || 0))),
-      currency: "VND",
-      billing_cycle: "one_time",
-      success_url: order.success_url,
-      cancel_url: order.cancel_url,
-      callback_url: String(env.PAY_IAI_ONE_CALLBACK_URL || order.success_url).trim() || order.success_url,
-      user_id: `nla_${order.internal_order_id}`,
-      email: order.email,
-      full_name: String(order.metadata_json?.full_name || "Nguyenlananh Member"),
-      locale: order.locale || "vi",
-      ref_code: `nguyenlananh:${order.plan.code || "unknown"}`
-    };
-
-    const headers = {
-      "Content-Type": "application/json",
-      "x-idempotency-key": idempotencyKey || randomId("nla_pay")
-    };
-    headers[providerApiKeyHeaderName(env)] = String(env.PAY_IAI_ONE_API_KEY || "");
-
-    const optionalSiteKey = String(env.PAY_IAI_ONE_SITE_KEY || "").trim();
-    if (optionalSiteKey) {
-      headers["x-site-key"] = optionalSiteKey;
-    }
-
-    const response = await fetch(`${payIaiOneBaseUrl(env)}/internal/checkout-session`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload)
-    });
-
-    const body = await response.json().catch(() => ({}));
-    const checkoutUrl = firstByKeys(body, new Set(["checkout_url", "checkoutUrl", "redirect_url", "redirectUrl", "paymentLink", "payment_link", "url"]));
-    const providerOrderId =
-      firstByKeys(body, new Set(["provider_order_id", "providerOrderId", "orderCode", "order_id", "id"])) ||
-      payload.internal_order_id;
-    const providerSessionId =
-      firstByKeys(body, new Set(["provider_payment_id", "providerPaymentId", "payment_link_id", "paymentLinkId", "payment_session_id"])) || null;
-    const message = String(
-      firstByKeys(body, new Set(["message", "desc", "error", "detail"])) || "pay.iai.one checkout request failed."
-    );
-    const code = String(firstByKeys(body, new Set(["code", "status"])) || "");
-    const success = body.ok === true || body.success === true;
-
-    if (!response.ok || !success || !checkoutUrl) {
-      const error = new Error(message);
-      error.status = response.status >= 400 ? response.status : 502;
-      error.code = code === "214" ? "PAY_IAI_ONE_PROVIDER_214" : code || "PAY_IAI_ONE_CHECKOUT_FAILED";
-      throw error;
-    }
-
-    return {
-      provider_order_id: String(providerOrderId),
-      provider_session_id: providerSessionId ? String(providerSessionId) : null,
-      checkout_url: String(checkoutUrl),
-      raw: {
-        mode: "pay_iai_one",
-        transfer_note:
-          firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
-          String(providerOrderId),
-        qr_url: String(checkoutUrl),
-        bank_bin: firstByKeys(body, new Set(["bank_bin", "bankBin"])) || "",
-        account_no: firstByKeys(body, new Set(["account_no", "accountNo"])) || "",
-        account_name: firstByKeys(body, new Set(["account_name", "accountName"])) || "",
-        provider_payload: body
-      }
-    };
-  }
-
+function buildDirectVietQrCheckout(env, order, extraRaw = {}) {
   const transferNote = buildVietQrTransferNote(order.internal_order_id);
   const qrUrl = buildVietQrQuickLink({
     bankBin: env.VIETQR_BANK_BIN,
@@ -721,11 +646,103 @@ async function createVietQrCheckout(env, order, idempotencyKey) {
       account_no: String(env.VIETQR_ACCOUNT_NO || ""),
       account_name: String(env.VIETQR_ACCOUNT_NAME || ""),
       amount: Number(order.amount || 0),
-      currency: "VND"
+      currency: "VND",
+      ...extraRaw
     }
   };
 }
 
+async function createVietQrCheckout(env, order, idempotencyKey) {
+  if (vietQrViaPayIaiOne(env)) {
+    try {
+      const payload = {
+        tenant_code: payIaiOneTenantCode(env),
+        site_code: payIaiOneSiteCode(env),
+        internal_order_id: order.internal_order_id,
+        provider: String(env.PAY_IAI_ONE_VN_PROVIDER || PAY_IAI_ONE_DEFAULT_PROVIDER).trim().toLowerCase(),
+        plan_code: order.plan.code,
+        amount: Math.max(0, Math.round(Number(order.amount || 0))),
+        currency: "VND",
+        billing_cycle: "one_time",
+        success_url: order.success_url,
+        cancel_url: order.cancel_url,
+        callback_url: String(env.PAY_IAI_ONE_CALLBACK_URL || order.success_url).trim() || order.success_url,
+        user_id: `nla_${order.internal_order_id}`,
+        email: order.email,
+        full_name: String(order.metadata_json?.full_name || "Nguyenlananh Member"),
+        locale: order.locale || "vi",
+        ref_code: `nguyenlananh:${order.plan.code || "unknown"}`
+      };
+
+      const headers = {
+        "Content-Type": "application/json",
+        "x-idempotency-key": idempotencyKey || randomId("nla_pay")
+      };
+      headers[providerApiKeyHeaderName(env)] = String(env.PAY_IAI_ONE_API_KEY || "");
+
+      const optionalSiteKey = String(env.PAY_IAI_ONE_SITE_KEY || "").trim();
+      if (optionalSiteKey) {
+        headers["x-site-key"] = optionalSiteKey;
+      }
+
+      const response = await fetch(`${payIaiOneBaseUrl(env)}/internal/checkout-session`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload)
+      });
+
+      const body = await response.json().catch(() => ({}));
+      const checkoutUrl = firstByKeys(body, new Set(["checkout_url", "checkoutUrl", "redirect_url", "redirectUrl", "paymentLink", "payment_link", "url"]));
+      const providerOrderId =
+        firstByKeys(body, new Set(["provider_order_id", "providerOrderId", "orderCode", "order_id", "id"])) ||
+        payload.internal_order_id;
+      const providerSessionId =
+        firstByKeys(body, new Set(["provider_payment_id", "providerPaymentId", "payment_link_id", "paymentLinkId", "payment_session_id"])) || null;
+      const message = String(
+        firstByKeys(body, new Set(["message", "desc", "error", "detail"])) || "pay.iai.one checkout request failed."
+      );
+      const code = String(firstByKeys(body, new Set(["code", "status"])) || "");
+      const success = body.ok === true || body.success === true;
+
+      if (!response.ok || !success || !checkoutUrl) {
+        const error = new Error(message);
+        error.status = response.status >= 400 ? response.status : 502;
+        error.code = code === "214" ? "PAY_IAI_ONE_PROVIDER_214" : code || "PAY_IAI_ONE_CHECKOUT_FAILED";
+        throw error;
+      }
+
+      return {
+        provider_order_id: String(providerOrderId),
+        provider_session_id: providerSessionId ? String(providerSessionId) : null,
+        checkout_url: String(checkoutUrl),
+        raw: {
+          mode: "pay_iai_one",
+          transfer_note:
+            firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
+            String(providerOrderId),
+          qr_url: String(checkoutUrl),
+          bank_bin: firstByKeys(body, new Set(["bank_bin", "bankBin"])) || "",
+          account_no: firstByKeys(body, new Set(["account_no", "accountNo"])) || "",
+          account_name: firstByKeys(body, new Set(["account_name", "accountName"])) || "",
+          provider_payload: body
+        }
+      };
+    } catch (error) {
+      if (!directVietQrSecretsReady(env)) {
+        throw error;
+      }
+
+      return buildDirectVietQrCheckout(env, order, {
+        mode: "manual_confirm_fallback",
+        fallback_source: "pay_iai_one",
+        fallback_error_code: String(error?.code || "PAY_IAI_ONE_CHECKOUT_FAILED"),
+        fallback_error_message: String(error?.message || "pay.iai.one checkout request failed.")
+      });
+    }
+  }
+
+  return buildDirectVietQrCheckout(env, order);
+}
 async function hmacSha256Hex(secret, payload) {
   const key = await crypto.subtle.importKey(
     "raw",
@@ -1027,8 +1044,9 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
     }
   }
 
-  // Grant content_access for premium products
-  if (isPremium) {
+  // Grant content_access for product purchases. Paid memberships are handled by
+  // membership_type; micro/premium one-off purchases need explicit entitlement.
+  if (isPremium || isMicro) {
     const contentSlug = plan.code.replace(/^(asmt_|prog_|cert_|diag_)/, "");
     const expiresAt = plan.durationDays >= 36500 ? null : daysFrom(nowIso(), plan.durationDays);
     try {

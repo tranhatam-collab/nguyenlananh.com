@@ -195,11 +195,15 @@
   }
 
   const joinHref = isEnglish ? "/en/join/" : "/join/";
+  const productHref = "/sanpham/";
+  const docsHref = "https://docs.nguyenlananh.com/";
   const membersHref = isEnglish ? "/en/members/" : "/members/";
   const membersDashboardHref = isEnglish ? "/en/members/dashboard/" : "/members/dashboard/";
   const joinNavLabel = ctaCopy.joinNav || (isEnglish ? "Join membership" : "Đăng ký thành viên");
   const joinCtaLabel = ctaCopy.joinPrimary || (isEnglish ? "Free companionship" : "Đồng hành miễn phí");
   const memberWorkspaceLabel = isEnglish ? "Member workspace" : "Không gian thành viên";
+  const productNavLabel = navCopy[productHref] || (isEnglish ? "Products" : "Sản phẩm");
+  const docsNavLabel = isEnglish ? "Docs" : "Tài liệu";
 
   $$(`a[href="${joinHref}"]`).forEach((anchor) => {
     const inTopbar = Boolean(anchor.closest(".topbar"));
@@ -215,6 +219,57 @@
       anchor.textContent = joinCtaLabel;
     }
   });
+
+  function createNavAnchor(href, label, classes = "") {
+    const anchor = document.createElement("a");
+    anchor.href = href;
+    anchor.textContent = label;
+    if (classes) anchor.className = classes;
+    if (href.startsWith("http")) {
+      anchor.target = "_blank";
+      anchor.rel = "noopener";
+    }
+    return anchor;
+  }
+
+  function ensurePublicMenuLinks() {
+    const topbarNav = document.querySelector(".topbar .navlinks");
+    const drawerNav = document.querySelector(".drawer nav");
+    const footerWrap = document.querySelector("footer .fwrap div:last-child");
+
+    // Only apply to public chrome (has journey/system links).
+    const isPublicChrome = !!(topbarNav && topbarNav.querySelector('a[href="/hanh-trinh/"]'));
+    if (!isPublicChrome) return;
+
+    if (topbarNav && !topbarNav.querySelector(`a[href="${productHref}"]`)) {
+      const baiViet = topbarNav.querySelector('a[href="/bai-viet/"]');
+      const productLink = createNavAnchor(productHref, productNavLabel);
+      if (baiViet && baiViet.nextSibling) topbarNav.insertBefore(productLink, baiViet.nextSibling);
+      else topbarNav.appendChild(productLink);
+    }
+    if (topbarNav && !topbarNav.querySelector(`a[href="${docsHref}"]`)) {
+      topbarNav.appendChild(createNavAnchor(docsHref, docsNavLabel));
+    }
+
+    if (drawerNav && !drawerNav.querySelector(`a[href="${productHref}"]`)) {
+      const baiViet = drawerNav.querySelector('a[href="/bai-viet/"]');
+      const productLink = createNavAnchor(productHref, productNavLabel);
+      if (baiViet && baiViet.nextSibling) drawerNav.insertBefore(productLink, baiViet.nextSibling);
+      else drawerNav.appendChild(productLink);
+    }
+    if (drawerNav && !drawerNav.querySelector(`a[href="${docsHref}"]`)) {
+      const docsLink = createNavAnchor(docsHref, docsNavLabel);
+      docsLink.setAttribute("data-close", "");
+      drawerNav.appendChild(docsLink);
+    }
+
+    if (footerWrap && !footerWrap.querySelector(`a[href="${productHref}"]`)) {
+      footerWrap.appendChild(createNavAnchor(productHref, productNavLabel));
+    }
+    if (footerWrap && !footerWrap.querySelector(`a[href="${docsHref}"]`)) {
+      footerWrap.appendChild(createNavAnchor(docsHref, docsNavLabel));
+    }
+  }
 
   function authRouteFromHref(href) {
     if (!href || !href.startsWith("/")) return null;
@@ -262,6 +317,7 @@
   }
 
   localizeSharedChrome();
+  ensurePublicMenuLinks();
 
   void (async () => {
     const session = await fetchMemberSession();

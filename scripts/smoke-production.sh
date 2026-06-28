@@ -66,6 +66,17 @@ check "logout"         POST "/api/auth/logout"               200
 # so Google OAuth start should now build the redirect (302) instead of 501.
 check "google-start"   GET  "/api/auth/google/start"         302
 
+echo "-- Turnstile runtime config --"
+check "turnstile-config" GET "/api/turnstile/config"         200
+turnstile_body=$(curl -s "$BASE_URL/api/turnstile/config")
+if printf '%s' "$turnstile_body" | grep -q 'window.TURNSTILE_SITE_KEY_CONFIGURED = true;'; then
+  printf '  %s  %-6s %-45s %s\n' "$(green PASS)" "CHECK" "turnstile configured flag" "true"
+  PASS=$((PASS+1))
+else
+  printf '  %s  %-6s %-45s %s\n' "$(red FAIL)" "CHECK" "turnstile configured flag" "missing/false"
+  FAIL=$((FAIL+1))
+fi
+
 echo ""
 echo "== RESULT: $(green "$PASS PASS"), $( [ "$FAIL" -gt 0 ] && red "$FAIL FAIL" || echo "$FAIL FAIL" ) =="
 [ "$FAIL" -eq 0 ]

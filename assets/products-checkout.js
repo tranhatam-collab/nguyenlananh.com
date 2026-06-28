@@ -103,7 +103,7 @@
   function renderTurnstile() {
     if (turnstileReady) return turnstileReady;
     turnstileReady = (async function() {
-      await loadScriptOnce("/api/turnstile/config.js?v=20260628a", function(){ return Boolean(window.TURNSTILE_SITE_KEY_CONFIGURED); });
+      await loadScriptOnce("/api/turnstile/config?v=20260628a", function(){ return Boolean(window.TURNSTILE_SITE_KEY_CONFIGURED); });
       await loadScriptOnce("/assets/turnstile.js?v=20260627c", function(){ return Boolean(window.TurnstileHelper); });
       if (!window.TurnstileHelper || !window.TurnstileHelper.isConfigured()) return null;
       const container = ensureTurnstileContainer();

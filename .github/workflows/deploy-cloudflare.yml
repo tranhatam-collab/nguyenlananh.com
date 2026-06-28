@@ -52,6 +52,14 @@ jobs:
           set +e
           ERR=0
 
+          echo "--- Turnstile path guard (no legacy .js config URL) ---"
+          if grep -R --line-number '/api/turnstile/config\.js' . --include='*.html' --include='*.js' --exclude-dir=node_modules >/dev/null; then
+            echo "FAIL: legacy /api/turnstile/config.js references found in source"
+            ERR=1
+          else
+            echo "PASS: no legacy /api/turnstile/config.js references"
+          fi
+
           echo "--- Static pages ---"
           for path in "/" "/sitemap.xml" "/en/"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
@@ -73,6 +81,17 @@ jobs:
           echo "/admin/ -> $code"
           if [ "$code" != "302" ] && [ "$code" != "200" ]; then
             echo "FAIL: /admin/ should redirect or serve admin page"; ERR=1
+          fi
+
+          echo "--- Turnstile runtime config ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$URL/api/turnstile/config")
+          echo "/api/turnstile/config -> $code"
+          [ "$code" != "200" ] && { echo "FAIL: /api/turnstile/config should return 200"; ERR=1; }
+          if ! curl -s "$URL/api/turnstile/config" | grep -q 'window.TURNSTILE_SITE_KEY_CONFIGURED = true;'; then
+            echo "FAIL: turnstile config flag is not true"
+            ERR=1
+          else
+            echo "PASS: turnstile config flag is true"
           fi
 
           echo "---"

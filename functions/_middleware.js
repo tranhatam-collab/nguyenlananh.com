@@ -14,6 +14,15 @@ const ADMIN_LOGIN_PATHS = ["/admin/login", "/en/admin/login", "/admin/login/", "
 // /members/pro/ index is public (shows list of 8 upgrade packs), individual packs require paid membership.
 const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/", "/members/pro/", "/en/members/pro/"];
 
+// Public product teaser pages.
+// Product detail pages are member-only and redirect into member workspace.
+const PUBLIC_PRODUCT_PATHS = [
+  "/products/",
+  "/products/index.html",
+  "/en/products/",
+  "/en/products/index.html",
+];
+
 // Paths under /members/ that are public (no session needed).
 const PUBLIC_MEMBER_PATHS = [
   "/members/",
@@ -238,6 +247,21 @@ function isPublicMemberPath(pathname) {
 
 function isEnglishPath(pathname) {
   return (pathname || "").startsWith("/en/");
+}
+
+function isProductPath(pathname) {
+  return pathname.startsWith("/products/") || pathname.startsWith("/en/products/");
+}
+
+function isPublicProductPath(pathname) {
+  return PUBLIC_PRODUCT_PATHS.some((p) => pathname === p || pathname === p.replace(/\/$/, ""));
+}
+
+function getProductSlug(pathname) {
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length >= 2 && parts[0] === "products") return parts[1];
+  if (parts.length >= 3 && parts[0] === "en" && parts[1] === "products") return parts[2];
+  return "";
 }
 
 function isMembershipActive(user) {
@@ -466,6 +490,27 @@ export async function onRequest(context) {
         context.data.user = user;
       }
       return context.next();
+    }
+
+    // Product detail pages are member-only workspace surfaces.
+    // Public can only access teaser/index pages under /products/.
+    if (isProductPath(url.pathname) && !isPublicProductPath(url.pathname)) {
+      const en = isEnglishPath(url.pathname);
+      const slug = getProductSlug(url.pathname);
+      if (!memberSession) {
+        const joinUrl = en ? "/en/join/" : "/join/";
+        return new Response(null, {
+          status: 302,
+          headers: { Location: joinUrl, "Cache-Control": "no-store" },
+        });
+      }
+
+      const workspaceBase = en ? "/en/members/products/" : "/members/products/";
+      const workspaceUrl = slug ? `${workspaceBase}#${slug}` : workspaceBase;
+      return new Response(null, {
+        status: 302,
+        headers: { Location: workspaceUrl, "Cache-Control": "no-store" },
+      });
     }
 
     if (!isAdminPath(url.pathname)) {

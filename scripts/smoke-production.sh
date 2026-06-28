@@ -55,6 +55,9 @@ echo "-- Static --"
 check "home"           GET  "/"                              200
 check "en-home"        GET  "/en/"                           200
 check "members"        GET  "/members/"                      200
+check "products-teaser" GET "/products/"                     200
+check "product-detail-gated-vi" GET "/products/life-reset-mini/" 302
+check "product-detail-gated-en" GET "/en/products/life-reset-mini/" 302
 echo "-- Functions / API (proves functions/ deployed) --"
 # Admin routes redirect to login when unauthenticated (correct RBAC behavior)
 check "admin-page"     GET  "/admin/"                        302

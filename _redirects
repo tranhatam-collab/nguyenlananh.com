@@ -41,6 +41,12 @@ https://docs.nguyenlananh.com/en/ /en/tai-lieu/ 301
 # SEO alias: /sanpham/* canonical to existing /products/*
 /sanpham/* /products/:splat 301
 
+# Member workspace aliases for product/library entry points.
+/members/dashboard/products/ /members/products/ 301
+/members/dashboard/library/ /members/library/ 301
+/en/members/dashboard/products/ /en/members/products/ 301
+/en/members/dashboard/library/ /en/members/library/ 301
+
 # /docs/ leak fix (triệt để) — internal dev docs phải KHÔNG public.
 # Pages ưu tiên _redirects trước static serving → /docs/* trả 404 thay vì serve file.
 # Scripts đọc /docs/ từ filesystem local (không qua HTTP) → không bị ảnh hưởng.

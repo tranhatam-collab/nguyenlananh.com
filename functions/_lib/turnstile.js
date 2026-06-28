@@ -11,6 +11,16 @@ const TEST_SECRET_KEYS = new Set([
   "3x0000000000000000000000000000000AA", // already-valid test secret
 ]);
 
+const TEST_SITE_KEYS = new Set([
+  "1x00000000000000000000AA",
+  "2x00000000000000000000AB",
+  "3x00000000000000000000FF",
+]);
+
+function configuredSiteKey(env) {
+  return String(env?.TURNSTILE_SITE_KEY || env?.TURNSTILE_PUBLIC_SITE_KEY || "").trim();
+}
+
 /**
  * Verify a Turnstile token server-side.
  * @param {string} token - cf-turnstile-response token from frontend
@@ -28,6 +38,14 @@ export async function verifyTurnstileToken(token, remoteIp, env) {
     // Test secret key detected — fail CLOSED to prevent fake bot protection
     console.error("[turnstile] TEST secret key in production — rejecting all tokens. Set a real secret key via Cloudflare dashboard → Turnstile.");
     return { success: false, error: "Turnstile is misconfigured (test key). Contact admin to fix." };
+  }
+  const siteKey = configuredSiteKey(env);
+  if (!siteKey || TEST_SITE_KEYS.has(siteKey)) {
+    console.error("[turnstile] TURNSTILE_SECRET_KEY is configured but TURNSTILE_SITE_KEY is missing or still a test key.");
+    return {
+      success: false,
+      error: "Turnstile is misconfigured (site key missing or mismatched). Contact admin to fix."
+    };
   }
   if (!token) {
     return { success: false, error: "Missing Turnstile token" };

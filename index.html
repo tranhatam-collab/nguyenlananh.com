@@ -1011,17 +1011,7 @@
             <span class="mono" id="emailText"></span>
             <button class="btn" type="button" id="copyEmail">Sao chép email</button>
             <a class="btn" id="homeEmailLink" href="#" aria-label="Mở email">Mở Email</a>
-            <script>
-              (function(){
-                var u="lienhe",d="nguyenlananh.com",e=u+"@"+d;
-                var ed=document.getElementById("homeEmailDisplay");
-                if(ed) ed.textContent=e;
-                var et=document.getElementById("emailText");
-                if(et) et.textContent=e;
-                var hl=document.getElementById("homeEmailLink");
-                if(hl) hl.href="mailto:"+e+"?subject=G%E1%BB%ADi%20m%E1%BB%99t%20d%C3%B2ng%20cho%20Lan%20Anh&body=Ch%C3%A0o%20Lan%20Anh%2C%0A%0AEm%20mu%E1%BB%91n%20n%C3%B3i%20m%E1%BB%99t%20%C4%91i%E1%BB%81u%20r%E1%BA%A5t%20ng%E1%BA%AFn%3A%0A%0A-%20%0A%0AEm%20c%E1%BA%A3m%20%C6%A1n%20Lan%20Anh.";
-              })();
-            </script>
+  <script src="/assets/email-obfuscate.js"></script>
           </div>
 
           <p style="margin-top:12px; color:rgba(42,24,16,.70); font-size:13px; line-height:1.6;">

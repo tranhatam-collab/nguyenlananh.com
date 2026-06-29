@@ -46,27 +46,7 @@
 
   <main id="main" class="container" role="main">
     <div id="loginErrorBanner" class="statusBanner" style="display:none; margin-bottom:16px; padding:12px 16px; border-radius:10px; background:rgba(192,57,43,.08); border:1px solid rgba(192,57,43,.2); color:#c0392b; font-size:14px;"></div>
-    <script>
-      (function(){
-        var p=new URLSearchParams(window.location.search);
-        var e=p.get("error");
-        if(!e) return;
-        var b=document.getElementById("loginErrorBanner");
-        if(!b) return;
-        var msg={
-          "SESSION_CREATE_FAILED":"Không thể tạo phiên đăng nhập. Vui lòng thử lại hoặc liên hệ hỗ trợ.",
-          "GOOGLE_TOKEN_FAILED_invalid_grant":"Mã xác thực Google đã hết hạn. Vui lòng đăng nhập lại.",
-          "GOOGLE_STATE_INVALID":"Phiên đăng nhập đã hết hạn. Vui lòng thử lại.",
-          "GOOGLE_PROFILE_FAILED":"Không thể lấy thông tin từ Google. Vui lòng thử lại.",
-          "GOOGLE_EMAIL_MISSING":"Tài khoản Google không có email. Vui lòng dùng tài khoản khác.",
-          "GOOGLE_EMAIL_UNVERIFIED":"Email Google chưa được xác thực. Vui lòng xác thực email trên Google trước.",
-          "5":"Đăng nhập Google gặp lỗi kỹ thuật khi tạo phiên. Vui lòng thử lại trong cửa sổ ẩn danh; hệ thống đã ghi log để đội kỹ thuật xử lý.",
-          "google_callback_failed":"Đăng nhập Google thất bại. Vui lòng thử lại."
-        };
-        b.textContent=msg[e]||("Lỗi đăng nhập ("+e+"). Vui lòng thử lại hoặc liên hệ hỗ trợ nếu lỗi tiếp tục.");
-        b.style.display="block";
-      })();
-    </script>
+  <script src="/assets/member-login-error.js"></script>
     <section class="pageHead">
       <span class="badge">Membership</span>
       <h1 style="margin-top:8px;">Không vào bằng giá. Vào bằng một quan hệ đồng hành</h1>

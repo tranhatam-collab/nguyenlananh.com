@@ -358,17 +358,17 @@
         <div class="stepCard">
           <h3>Email chung</h3>
           <p><a href="#" id="taiLieuEmailLink"><span id="taiLieuEmail"></span></a><br>Liên hệ, đăng ký, trao đổi chương trình.</p>
-          <script>(function(){var u="lienhe",d="nguyenlananh.com",e=u+"@"+d;var t=document.getElementById("taiLieuEmail");if(t)t.textContent=e;var l=document.getElementById("taiLieuEmailLink");if(l)l.href="mailto:"+e;})();</script>
+          <script src="/assets/email-obfuscate.js"></script>
         </div>
         <div class="stepCard">
           <h3>Hỗ trợ thành viên</h3>
           <p><a href="#" id="taiLieuSupportLink"><span id="taiLieuSupport"></span></a><br>Vấn đề tài khoản, truy cập, thanh toán. Phản hồi trong 24h làm việc.</p>
-          <script>(function(){var e="support@nguyenlananh.com";var t=document.getElementById("taiLieuSupport");if(t)t.textContent=e;var l=document.getElementById("taiLieuSupportLink");if(l)l.href="mailto:"+e;})();</script>
+          <!-- support email handled by email-obfuscate.js -->
         </div>
         <div class="stepCard">
           <h3>Thanh toán</h3>
           <p><a href="#" id="taiLieuPayLink"><span id="taiLieuPay"></span></a><br>Vấn đề giao dịch, biên nhận, hoàn tiền.</p>
-          <script>(function(){var e="pay@nguyenlananh.com";var t=document.getElementById("taiLieuPay");if(t)t.textContent=e;var l=document.getElementById("taiLieuPayLink");if(l)l.href="mailto:"+e;})();</script>
+          <!-- pay email handled by email-obfuscate.js -->
         </div>
       </div>
       <p><a href="https://www.nguyenlananh.com/lien-he/">Trang liên hệ đầy đủ →</a></p>
@@ -380,22 +380,6 @@
     </div>
   </main>
 
-  <script>
-    document.querySelectorAll('.docsToc a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href').slice(1);
-        const el=document.getElementById(id);
-        if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
-      });
-    });
-    const drawer=document.getElementById('drawer');
-    const hamburger=document.getElementById('hamburger');
-    const closeDrawer=document.getElementById('closeDrawer');
-    function setDrawer(open){if(!drawer||!hamburger)return;drawer.classList.toggle('open',open);hamburger.setAttribute('aria-expanded',open?'true':'false');document.body.classList.toggle('drawerOpen',open);}
-    if(hamburger)hamburger.addEventListener('click',()=>setDrawer(!drawer.classList.contains('open')));
-    if(closeDrawer)closeDrawer.addEventListener('click',()=>setDrawer(false));
-    document.querySelectorAll('[data-close]').forEach(a=>a.addEventListener('click',()=>setDrawer(false)));
-    document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.lang==='en')window.location.href='/en/tai-lieu/';}));
-  </script>
+  <script src="/assets/docs-toc.js"></script>
 </body>
 </html>

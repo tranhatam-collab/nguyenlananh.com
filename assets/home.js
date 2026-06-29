@@ -21,35 +21,6 @@
   var yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  var drawer = $("#drawer");
-  var hamburger = $("#hamburger");
-  var closeDrawer = $("#closeDrawer");
-
-  function openDrawer(){
-    drawer.classList.add("open");
-    hamburger.setAttribute("aria-expanded","true");
-    hamburger.setAttribute("aria-label", s.closeMenu);
-  }
-  function shutDrawer(){
-    drawer.classList.remove("open");
-    hamburger.setAttribute("aria-expanded","false");
-    hamburger.setAttribute("aria-label", s.openMenu);
-  }
-  if(hamburger) hamburger.addEventListener("click", function(){
-    (hamburger.getAttribute("aria-expanded") === "true") ? shutDrawer() : openDrawer();
-  });
-  if(closeDrawer) closeDrawer.addEventListener("click", shutDrawer);
-  if(drawer) drawer.addEventListener("click", function(e){
-    if(e.target.closest("[data-close]")) shutDrawer();
-  });
-  document.addEventListener("keydown", function(e){
-    if(e.key === "Escape") shutDrawer();
-  });
-  document.addEventListener("click", function(e){
-    if(!drawer || !drawer.classList.contains("open")) return;
-    if(!drawer.contains(e.target) && !hamburger.contains(e.target)) shutDrawer();
-  });
-
   $$("[data-jump]").forEach(function(btn){
     btn.addEventListener("click", function(){
       var el = $(btn.getAttribute("data-jump"));

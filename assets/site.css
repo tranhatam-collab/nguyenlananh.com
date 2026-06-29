@@ -644,6 +644,83 @@ footer{
   background:rgba(236,253,245,.8);
 }
 
+.socialRow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 0;
+  margin-top:8px;
+  border-top:1px solid var(--line);
+}
+.socialLabel{
+  font-size:13px;
+  color:rgba(42,24,16,.55);
+  white-space:nowrap;
+}
+.socialIcons{
+  display:flex;
+  gap:8px;
+}
+.socialIcons a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  color:rgba(42,24,16,.6);
+  background:rgba(42,24,16,.06);
+  transition:background .15s,color .15s;
+}
+.socialIcons a:hover{
+  background:rgba(217,83,29,.12);
+  color:rgba(42,24,16,.9);
+}
+.shareSection{
+  border-top:1px solid var(--line);
+  margin-top:24px;
+  padding-top:16px;
+}
+.shareInner{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.shareLabel{
+  font-size:13px;
+  font-weight:600;
+  color:rgba(42,24,16,.55);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.shareButtons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.shareBtn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 14px;
+  border:1px solid rgba(42,24,16,.15);
+  border-radius:20px;
+  background:transparent;
+  color:rgba(42,24,16,.7);
+  font-size:13px;
+  cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.shareBtn:hover{
+  background:rgba(217,83,29,.08);
+  border-color:rgba(217,83,29,.25);
+  color:rgba(42,24,16,.9);
+}
+.shareBtnCopy span{
+  font-size:12px;
+}
+
 @media (min-width: 900px){
   .pricingGrid{
     grid-template-columns:repeat(3, minmax(0,1fr));

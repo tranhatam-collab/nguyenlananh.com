@@ -1,6 +1,13 @@
 (function () {
   function $(sel) { return document.querySelector(sel); }
   function $$(sel) { return Array.from(document.querySelectorAll(sel)); }
+  function isQrImageUrl(value) {
+    var url = String(value || "").trim();
+    if (!url) return false;
+    if (/^data:image\//i.test(url)) return true;
+    if (/^https:\/\/img\.vietqr\.io\/image\//i.test(url)) return true;
+    return /^https?:\/\/.+\.(png|jpe?g|webp|gif)(\?.*)?$/i.test(url);
+  }
 
   var cards = $$(".pricingCard[data-plan]");
   if (!cards.length) return;
@@ -179,12 +186,20 @@
         }
 
         if (providerVal === "vietqr") {
-          if (data.checkout_url) {
+          var checkoutUrl = String(data.checkout_url || "").trim();
+          if (isQrImageUrl(checkoutUrl)) {
             var qrImg = document.createElement("div");
             qrImg.style.cssText = "text-align:center;margin:12px 0;";
-            qrImg.innerHTML = '<img src="' + data.checkout_url + '" alt="QR" style="max-width:240px;border-radius:8px;" />';
+            qrImg.innerHTML = '<img src="' + checkoutUrl + '" alt="QR" style="max-width:240px;border-radius:8px;" />';
             box.insertBefore(qrImg, buyBtn);
             setStatus(isEn ? "Scan QR to pay." : "Qu\u00E9t m\u00E3 QR \u0111\u1EC3 thanh to\u00E1n.", "success");
+            buyBtn.style.display = "none";
+          } else if (checkoutUrl) {
+            var linkBox = document.createElement("div");
+            linkBox.style.cssText = "text-align:center;margin:12px 0;";
+            linkBox.innerHTML = '<a class="btn" href="' + checkoutUrl + '" target="_blank" rel="noopener">' + (isEn ? "Open VietQR checkout" : "M\u1EDF c\u1EEDa s\u1ED5 thanh to\u00E1n VietQR") + '</a>';
+            box.insertBefore(linkBox, buyBtn);
+            setStatus(isEn ? "Payment window is ready." : "\u0110\u00E3 t\u1EA1o c\u1ED5ng thanh to\u00E1n.", "success");
             buyBtn.style.display = "none";
           } else if (data.manual_transfer) {
             var mt = data.manual_transfer;

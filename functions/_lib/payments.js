@@ -586,6 +586,14 @@ function firstByKeys(input, keySet) {
   return null;
 }
 
+function isLikelyQrImageUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return false;
+  if (/^data:image\//i.test(url)) return true;
+  if (/^https:\/\/img\.vietqr\.io\/image\//i.test(url)) return true;
+  return /^https?:\/\/.+\.(png|jpe?g|webp|gif)(\?.*)?$/i.test(url);
+}
+
 async function retrieveStripeSession(env, sessionId) {
   const body = await stripeRequest(env, "GET", `/v1/checkout/sessions/${sessionId}`, null, null);
   return {
@@ -721,7 +729,9 @@ async function createVietQrCheckout(env, order, idempotencyKey) {
           transfer_note:
             firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
             String(providerOrderId),
-          qr_url: String(checkoutUrl),
+          qr_url:
+            firstByKeys(body, new Set(["qr_url", "qrUrl", "qr_image", "qrImage", "qr_code_url", "qrCodeUrl"])) ||
+            (isLikelyQrImageUrl(checkoutUrl) ? String(checkoutUrl) : ""),
           bank_bin: firstByKeys(body, new Set(["bank_bin", "bankBin"])) || "",
           account_no: firstByKeys(body, new Set(["account_no", "accountNo"])) || "",
           account_name: firstByKeys(body, new Set(["account_name", "accountName"])) || "",

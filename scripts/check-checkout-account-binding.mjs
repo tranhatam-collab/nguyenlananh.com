@@ -34,6 +34,32 @@ expectIncludes(proLayer, "encodeURIComponent(checkoutUrlFor(slug, plan))", "anon
 expectIncludes(proLayer, "next_path: contentUrlFor(slug),", "Pro checkout returns to purchased content path");
 
 expectIncludes(productCheckout, "email: sessionEmail ? undefined : email,", "logged-in product checkout does not send duplicate email field");
+expectIncludes(productCheckout, "function setupCheckoutModal()", "product checkout opens in an in-page modal");
+expectIncludes(productCheckout, "id = \"productCheckoutOverlay\"", "product checkout modal overlay is created");
+expectIncludes(productCheckout, "function isQrImageUrl(value)", "product checkout distinguishes QR image URLs from hosted checkout URLs");
+expectIncludes(productCheckout, "qrImage.removeAttribute(\"src\");", "product checkout clears broken QR image src when no QR image exists");
+expectIncludes(productCheckout, "Mở cửa sổ thanh toán VietQR", "product checkout exposes hosted VietQR payment window link");
+if (productCheckout.includes("vi.src = body.manual_transfer.qr_url || \"\"")) {
+  fail("product checkout still renders manual_transfer.qr_url blindly into an image");
+} else {
+  pass("product checkout no longer blindly renders manual_transfer.qr_url as an image");
+}
+
+expectIncludes(proLayer, "function isQrImageUrl(value)", "Pro checkout distinguishes QR image URLs from hosted checkout URLs");
+expectIncludes(proLayer, "Open VietQR checkout", "Pro checkout exposes hosted VietQR payment window link");
+if (proLayer.includes("'<img src=\"' + data.checkout_url")) {
+  fail("Pro checkout still renders checkout_url blindly into an image");
+} else {
+  pass("Pro checkout no longer blindly renders checkout_url as an image");
+}
+
+expectIncludes(payments, "function isLikelyQrImageUrl(value)", "backend distinguishes QR image URLs from hosted checkout URLs");
+expectIncludes(payments, "isLikelyQrImageUrl(checkoutUrl) ? String(checkoutUrl) : \"\"", "backend only maps hosted checkout_url to qr_url when it is an image URL");
+if (payments.includes("qr_url: String(checkoutUrl)")) {
+  fail("backend still maps every checkout_url to raw.qr_url");
+} else {
+  pass("backend no longer maps every checkout_url to raw.qr_url");
+}
 
 if (failures) {
   console.error(`checkout account binding guard failed: ${failures}`);

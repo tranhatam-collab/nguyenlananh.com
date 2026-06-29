@@ -15,6 +15,23 @@
   }
   function hide(el) { if (el) el.classList.add("hidden"); }
   function show(el) { if (el) el.classList.remove("hidden"); }
+  function isQrImageUrl(value) {
+    const url = String(value || "").trim();
+    if (!url) return false;
+    if (/^data:image\//i.test(url)) return true;
+    if (/^https:\/\/img\.vietqr\.io\/image\//i.test(url)) return true;
+    return /^https?:\/\/.+\.(png|jpe?g|webp|gif)(\?.*)?$/i.test(url);
+  }
+  function setText(id, value) {
+    const el = $(id);
+    if (el) el.textContent = value || "-";
+  }
+  function setRowVisible(id, value) {
+    const el = $(id);
+    if (!el) return;
+    const row = el.closest("p") || el.parentElement;
+    if (row) row.style.display = value ? "" : "none";
+  }
 
   function loadScriptOnce(src, ready) {
     if (ready && ready()) return Promise.resolve();
@@ -39,6 +56,7 @@
     return document.body.dataset.plan || "";
   }
   if (!getCurrentPlan()) return;
+  const isEnglishPage = /^\/en\//.test(window.location.pathname);
 
   const buyNow = $("#buyNow");
   const emailInput = $("#buyerEmail");
@@ -111,6 +129,71 @@
     }
   }
 
+  function setupCheckoutModal() {
+    if (!checkoutBox || checkoutBox.dataset.checkoutModalReady === "1") return;
+    checkoutBox.dataset.checkoutModalReady = "1";
+
+    const launchRow = document.createElement("div");
+    launchRow.className = "actionsRow";
+    launchRow.style.cssText = "margin-top:12px;";
+    const launch = document.createElement("button");
+    launch.id = "openCheckoutModal";
+    launch.className = "cta";
+    launch.type = "button";
+    launch.textContent = isEnglishPage ? "Open checkout window" : "Mở cửa sổ checkout";
+    launchRow.appendChild(launch);
+    checkoutBox.parentNode.insertBefore(launchRow, checkoutBox);
+
+    const overlay = document.createElement("div");
+    overlay.id = "productCheckoutOverlay";
+    overlay.className = "hidden";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", isEnglishPage ? "Checkout" : "Cửa sổ checkout");
+    overlay.style.cssText = "position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:16px;";
+
+    const modal = document.createElement("div");
+    modal.style.cssText = "background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(15,23,42,.25);max-width:560px;width:min(100%,560px);max-height:90vh;overflow:auto;padding:22px;";
+    const head = document.createElement("div");
+    head.style.cssText = "display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;";
+    head.innerHTML = '<div><h3 style="margin:0 0 4px;">Checkout</h3><p style="margin:0;color:rgba(15,23,42,.62);font-size:14px;">' + (isEnglishPage ? "Choose VietQR or PayPal to complete payment." : "Chọn VietQR hoặc PayPal để hoàn tất thanh toán.") + '</p></div>';
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "ghost";
+    close.textContent = isEnglishPage ? "Close" : "Đóng";
+    close.setAttribute("aria-label", isEnglishPage ? "Close checkout" : "Đóng checkout");
+    head.appendChild(close);
+    modal.appendChild(head);
+    modal.appendChild(checkoutBox);
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    function open() {
+      overlay.classList.remove("hidden");
+      overlay.style.display = "flex";
+      renderTurnstile();
+      const firstControl = overlay.querySelector('input[name="provider"]:checked') || overlay.querySelector("button, input, a");
+      if (firstControl && typeof firstControl.focus === "function") firstControl.focus();
+    }
+    function closeModal() {
+      overlay.classList.add("hidden");
+      overlay.style.display = "none";
+      launch.focus();
+    }
+
+    launch.addEventListener("click", open);
+    close.addEventListener("click", closeModal);
+    overlay.addEventListener("click", function(event) {
+      if (event.target === overlay) closeModal();
+    });
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && !overlay.classList.contains("hidden")) closeModal();
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("checkout") === "1") open();
+  }
+
   function ensureTurnstileContainer() {
     if (!checkoutBox) return null;
     let container = $("#turnstile-product-checkout", checkoutBox);
@@ -149,6 +232,7 @@
     if (window.TurnstileHelper) window.TurnstileHelper.reset(turnstileWidgetId);
   }
 
+  setupCheckoutModal();
   void renderTurnstile();
 
   // Set default based on country
@@ -220,28 +304,42 @@
       }
 
       if (isVietQR) {
-        setBanner(checkoutStatus, "Đã tạo thanh toán. Vui lòng quét mã hoặc chuyển khoản.", "success");
-        if (body.manual_transfer) {
-          show(vietqrBox);
-          const tn = $("#vietqrTransferNote"); if (tn) tn.textContent = body.manual_transfer.transfer_note || "-";
-          const am = $("#vietqrAmount"); if (am) am.textContent = (body.manual_transfer.amount || 0).toLocaleString("vi-VN") + " VND";
-          const an = $("#vietqrAccountName"); if (an) an.textContent = body.manual_transfer.account_name || "-";
-          const ac = $("#vietqrAccountNo"); if (ac) ac.textContent = body.manual_transfer.account_no || "-";
-          const bb = $("#vietqrBankBin"); if (bb) bb.textContent = body.manual_transfer.bank_bin || "-";
-          const vi = $("#vietqrImage"); if (vi) vi.src = body.manual_transfer.qr_url || "";
-        }
-        if (body.checkout_url) {
-          show(vietqrBox);
-          if (String(body.checkout_url).startsWith("https://img.vietqr.io")) {
-            const vi = $("#vietqrImage"); if (vi) vi.src = body.checkout_url;
+        const manual = body.manual_transfer || {};
+        const checkoutUrl = String(body.checkout_url || "").trim();
+        const qrUrl = isQrImageUrl(manual.qr_url) ? manual.qr_url : (isQrImageUrl(checkoutUrl) ? checkoutUrl : "");
+        const hostedPaymentUrl = checkoutUrl && !isQrImageUrl(checkoutUrl) ? checkoutUrl : "";
+
+        show(vietqrBox);
+        setText("#vietqrTransferNote", manual.transfer_note || body.provider_order_id || body.internal_order_id || "");
+        setText("#vietqrAmount", manual.amount ? manual.amount.toLocaleString("vi-VN") + " VND" : "");
+        setText("#vietqrAccountName", manual.account_name || "");
+        setText("#vietqrAccountNo", manual.account_no || "");
+        setText("#vietqrBankBin", manual.bank_bin || "");
+        setRowVisible("#vietqrAccountName", manual.account_name || manual.account_no || manual.bank_bin);
+
+        const qrImage = $("#vietqrImage");
+        if (qrImage) {
+          if (qrUrl) {
+            qrImage.src = qrUrl;
+            qrImage.style.display = "";
           } else {
-            show(payNowLink);
-            if (payNowLink) {
-              payNowLink.href = body.checkout_url;
-              payNowLink.textContent = "Mở trang thanh toán";
-              payNowLink.classList.remove("hidden");
-            }
+            qrImage.removeAttribute("src");
+            qrImage.style.display = "none";
           }
+        }
+
+        if (hostedPaymentUrl && payNowLink) {
+          show(payNowLink);
+          payNowLink.href = hostedPaymentUrl;
+          payNowLink.textContent = "Mở cửa sổ thanh toán VietQR";
+          payNowLink.classList.remove("hidden");
+          setBanner(checkoutStatus, "Đã tạo cổng thanh toán. Bấm mở cửa sổ thanh toán hoặc dùng thông tin chuyển khoản nếu có.", "success");
+        } else if (qrUrl) {
+          hide(payNowLink);
+          setBanner(checkoutStatus, "Đã tạo mã VietQR. Vui lòng quét mã hoặc chuyển khoản.", "success");
+        } else {
+          hide(payNowLink);
+          setBanner(checkoutStatus, "Đã tạo thanh toán. Vui lòng chuyển khoản theo thông tin hiển thị.", "success");
         }
       }
     } catch (e) {

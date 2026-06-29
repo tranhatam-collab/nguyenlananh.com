@@ -56,8 +56,8 @@ check "home"           GET  "/"                              200
 check "en-home"        GET  "/en/"                           200
 check "members"        GET  "/members/"                      200
 check "products-teaser" GET "/products/"                     200
-check "product-detail-gated-vi" GET "/products/life-reset-mini/" 302
-check "product-detail-gated-en" GET "/en/products/life-reset-mini/" 302
+check "product-detail-public-vi" GET "/products/life-reset-mini/" 200
+check "product-detail-public-en" GET "/en/products/life-reset-mini/" 200
 echo "-- Member workspace gating (anonymous → 302 /join/) --"
 check "member-products-vi"  GET "/members/products/"         302
 check "member-products-en"  GET "/en/members/products/"      302
@@ -89,6 +89,13 @@ else
   FAIL=$((FAIL+1))
 fi
 
+echo "-- Pro layer gating (anonymous → 302 /join/) --"
+check "pro-reset-vi"    GET "/members/pro/reset/"             302
+check "pro-reset-en"    GET "/en/members/pro/reset/"          302
+check "pro-index-vi"    GET "/members/pro/"                   200
+check "pro-index-en"    GET "/en/members/pro/"                200
+echo "-- Checkout API gating --"
+check "checkout-no-turnstile" POST "/api/payments/create-checkout" 422
 echo ""
 echo "== RESULT: $(green "$PASS PASS"), $( [ "$FAIL" -gt 0 ] && red "$FAIL FAIL" || echo "$FAIL FAIL" ) =="
 [ "$FAIL" -eq 0 ]

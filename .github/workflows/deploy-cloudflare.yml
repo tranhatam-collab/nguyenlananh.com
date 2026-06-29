@@ -85,12 +85,29 @@ jobs:
           echo "/products/ -> $code"
           [ "$code" != "200" ] && { echo "FAIL: /products/ should return 200"; ERR=1; }
 
-          echo "--- Product detail gating (anonymous) ---"
+          echo "--- Product detail (public) ---"
           for path in "/products/life-reset-mini/" "/en/products/life-reset-mini/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "200" ] && { echo "FAIL: $path should return 200 (public)"; ERR=1; }
+          done
+
+          echo "--- Pro layer gating (anonymous -> 302) ---"
+          for path in "/members/pro/reset/" "/en/members/pro/reset/"; do
             code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
             echo "$path -> $code"
             [ "$code" != "302" ] && { echo "FAIL: $path should redirect to login"; ERR=1; }
           done
+          echo "--- Pro index (public) ---"
+          for path in "/members/pro/" "/en/members/pro/"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path -> $code"
+            [ "$code" != "200" ] && { echo "FAIL: $path should return 200"; ERR=1; }
+          done
+          echo "--- Checkout API gating (no Turnstile) ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$URL/api/payments/create-checkout" -H "Content-Type: application/json" -d '{}')
+          echo "/api/payments/create-checkout -> $code"
+          [ "$code" != "422" ] && { echo "FAIL: create-checkout should reject without Turnstile"; ERR=1; }
 
           echo "--- Member workspace gating (anonymous) ---"
           for path in "/members/products/" "/en/members/products/" "/members/library/" "/en/members/library/"; do

@@ -36,6 +36,9 @@ jobs:
           fi
           echo "PASS: Working tree is clean."
 
+      - name: Checkout account binding guard
+        run: node scripts/check-checkout-account-binding.mjs
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

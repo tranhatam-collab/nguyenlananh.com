@@ -17,6 +17,14 @@
   var checkoutSlug = urlParams.get("checkout") || "";
   var checkoutPlan = urlParams.get("plan") || "";
 
+  function checkoutUrlFor(slug, plan) {
+    return proBase + "?checkout=" + encodeURIComponent(slug) + "&plan=" + encodeURIComponent(plan);
+  }
+
+  function contentUrlFor(slug) {
+    return proBase + slug + "/";
+  }
+
   function updateButtons() {
     cards.forEach(function (card) {
       var plan = card.getAttribute("data-plan") || "";
@@ -26,15 +34,15 @@
 
       if (loggedIn && userPlans.indexOf(plan) !== -1) {
         link.textContent = isEn ? "Enter track" : "V\u00E0o g\u00F3i";
-        link.href = proBase + slug + "/";
+        link.href = contentUrlFor(slug);
         link.className = "btn";
       } else if (loggedIn) {
         link.textContent = isEn ? "Buy track" : "Mua g\u00F3i";
-        link.href = proBase + slug + "/";
+        link.href = checkoutUrlFor(slug, plan);
         link.className = "btn";
       } else {
         link.textContent = isEn ? "Sign in to purchase" : "\u0110\u0103ng nh\u1EADp \u0111\u1EC3 m\u1EDF g\u00F3i";
-        link.href = joinBase + "?next_path=" + encodeURIComponent(proBase + slug + "/");
+        link.href = joinBase + "?next_path=" + encodeURIComponent(checkoutUrlFor(slug, plan));
         link.className = "ghost";
       }
     });
@@ -154,6 +162,7 @@
             provider: providerVal,
             locale: providerVal === "vietqr" ? "vi" : "en",
             product_source: planCode,
+            next_path: contentUrlFor(slug),
             identity_country: providerVal === "vietqr" ? "VN" : "INTL",
             "cf-turnstile-response": token
           })

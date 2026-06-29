@@ -1477,13 +1477,16 @@ export async function createCheckoutResponse(context) {
     assert(rail.allowed, rail.code || "PAYMENT_RAIL_INVALID", rail.message || "Payment rail is not allowed for this identity country.", 422);
     assert(providerSecretsReady(provider, context.env), "PROVIDER_NOT_READY", `${provider.label} is not configured yet.`, 409);
 
-    // Authenticated checkout: use session email. Guest checkout: require body.email.
+    // Authenticated checkout: bind the order to the signed-in account.
+    // Guest checkout remains email-only for public product pages.
     let email;
+    let sessionUserId = null;
     const cookieHeader = context.request.headers.get("Cookie") || "";
     try {
       const session = await parseSessionCookie(context.env, cookieHeader);
       if (session && session.email) {
         email = normalizeEmail(session.email);
+        sessionUserId = String(session.sub || "").trim() || null;
       }
     } catch (_) {}
     if (!email) {
@@ -1548,6 +1551,7 @@ export async function createCheckoutResponse(context) {
 
     await createOrder(db, {
       internal_order_id: internalOrderId,
+      user_id: sessionUserId,
       email,
       locale,
       provider: providerCode,

@@ -197,7 +197,7 @@
           "X-Idempotency-Key": randomId("chk")
         },
         body: JSON.stringify({
-          email,
+          email: sessionEmail ? undefined : email,
           plan_code: planCode,
           provider: provider,
           locale: isPayPal ? "en" : "vi",

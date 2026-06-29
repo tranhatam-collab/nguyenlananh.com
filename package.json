@@ -7,6 +7,7 @@
     "test": "bash scripts/smoke-production.sh",
     "validate:prices": "node scripts/validate-prices.mjs --fail",
     "validate:links": "node scripts/check-broken-links.mjs",
+    "validate:checkout-account": "node scripts/check-checkout-account-binding.mjs",
     "build:content-stats": "node scripts/build-content-stats.mjs"
   },
   "devDependencies": {

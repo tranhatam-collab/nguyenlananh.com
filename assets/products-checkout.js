@@ -213,7 +213,7 @@
             show(payNowLink);
             if (payNowLink) {
               payNowLink.href = body.checkout_url;
-              payNowLink.textContent = "Mở trang thanh toán pay.iai.one";
+              payNowLink.textContent = "Mở trang thanh toán";
               payNowLink.classList.remove("hidden");
             }
           }

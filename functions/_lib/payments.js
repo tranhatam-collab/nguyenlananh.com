@@ -158,7 +158,7 @@ const PAYPAL_API_SANDBOX = "https://api-m.sandbox.paypal.com";
 const STRIPE_API = "https://api.stripe.com";
 const IMPLEMENTED_PROVIDER_CODES = ["paypal", "stripe", "vietqr"];
 const VIETQR_DEFAULT_TEMPLATE = "compact2";
-const PAY_IAI_ONE_BASE_URL = "https://pay.iai.one";
+const PAY_IAI_ONE_BASE_URL = "https://pay-iai-one.tranhatam.workers.dev";
 const PAY_IAI_ONE_DEFAULT_PROVIDER = "payos";
 
 async function verifyVietQrPaymentWithProvider(env, order) {

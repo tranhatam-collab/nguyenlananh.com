@@ -95,7 +95,7 @@ check "pro-reset-en"    GET "/en/members/pro/reset/"          302
 check "pro-index-vi"    GET "/members/pro/"                   200
 check "pro-index-en"    GET "/en/members/pro/"                200
 echo "-- Checkout API gating --"
-check "checkout-no-turnstile" POST "/api/payments/create-checkout" 422
+check "checkout-no-turnstile" POST "/api/payments/create-checkout" 403
 echo ""
 echo "== RESULT: $(green "$PASS PASS"), $( [ "$FAIL" -gt 0 ] && red "$FAIL FAIL" || echo "$FAIL FAIL" ) =="
 [ "$FAIL" -eq 0 ]

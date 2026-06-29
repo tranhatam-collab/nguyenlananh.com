@@ -107,7 +107,7 @@ jobs:
           echo "--- Checkout API gating (no Turnstile) ---"
           code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$URL/api/payments/create-checkout" -H "Content-Type: application/json" -d '{}')
           echo "/api/payments/create-checkout -> $code"
-          [ "$code" != "422" ] && { echo "FAIL: create-checkout should reject without Turnstile"; ERR=1; }
+          [ "$code" != "403" ] && { echo "FAIL: create-checkout should fail closed with Turnstile (403)"; ERR=1; }
 
           echo "--- Member workspace gating (anonymous) ---"
           for path in "/members/products/" "/en/members/products/" "/members/library/" "/en/members/library/"; do

@@ -48,6 +48,31 @@
   if (!buyNow) return;
   let turnstileWidgetId = null;
   let turnstileReady = null;
+  let sessionEmail = null;
+
+  // Check if user is logged in via session API
+  async function checkSession() {
+    try {
+      var resp = await fetch("/api/auth/session", { method: "GET", credentials: "same-origin" });
+      if (resp.ok) {
+        var data = await resp.json();
+        if (data.ok && data.session && data.session.email) {
+          sessionEmail = data.session.email;
+        }
+      }
+    } catch (_) {}
+    if (sessionEmail && emailInput) {
+      // Authenticated user: hide email field, show session email
+      var emailDisplay = emailInput.closest(".field");
+      if (emailDisplay) emailDisplay.style.display = "none";
+      var info = document.createElement("div");
+      info.className = "field";
+      info.style.cssText = "padding:8px 12px;background:rgba(34,197,94,.08);border-radius:8px;font-size:14px;";
+      info.innerHTML = '<span style="opacity:.6;">Email:</span> <strong>' + sessionEmail + '</strong>';
+      if (emailInput.parentNode) emailInput.parentNode.insertBefore(info, emailInput.closest(".field").nextSibling);
+    }
+  }
+  void checkSession();
 
   // Detect country for default provider
   function guessProvider() {
@@ -143,7 +168,7 @@
       return;
     }
 
-    const email = String(emailInput?.value || "").trim();
+    const email = sessionEmail || String(emailInput?.value || "").trim();
     if (!email || !email.includes("@")) {
       setBanner(checkoutStatus, "Vui lòng nhập email hợp lệ.", "warning");
       return;

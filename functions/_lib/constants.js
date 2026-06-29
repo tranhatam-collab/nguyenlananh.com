@@ -213,6 +213,73 @@ export const CERTIFICATIONS = {
 // Curriculum (lessons, quizzes, labs) will be added in a follow-up wave.
 // ============================================================
 
+export const PRO_PLANS = {
+  pro_reset: {
+    code: "pro_reset",
+    label: "Pro — Reset Life",
+    priceUsd: 29,
+    priceVnd: 740000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_inner: {
+    code: "pro_inner",
+    label: "Pro — Nội Tâm",
+    priceUsd: 29,
+    priceVnd: 740000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_discipline: {
+    code: "pro_discipline",
+    label: "Pro — Discipline",
+    priceUsd: 29,
+    priceVnd: 740000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_environment: {
+    code: "pro_environment",
+    label: "Pro — Environment",
+    priceUsd: 29,
+    priceVnd: 740000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_creation: {
+    code: "pro_creation",
+    label: "Pro — Creation",
+    priceUsd: 29,
+    priceVnd: 740000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_wealth: {
+    code: "pro_wealth",
+    label: "Pro — Wealth",
+    priceUsd: 39,
+    priceVnd: 990000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_family: {
+    code: "pro_family",
+    label: "Pro — Family",
+    priceUsd: 39,
+    priceVnd: 990000,
+    durationDays: 365,
+    family: "pro"
+  },
+  pro_children: {
+    code: "pro_children",
+    label: "Pro — Children",
+    priceUsd: 39,
+    priceVnd: 990000,
+    durationDays: 365,
+    family: "pro"
+  }
+};
+
 export const PILOT_PROGRAMS = {
   self_trust_evidence_builder: {
     code: "self_trust_evidence_builder",
@@ -344,6 +411,7 @@ export const PLANS = {
   ...ASSESSMENTS,
   ...GUIDED_PROGRAMS,
   ...CERTIFICATIONS,
+  ...PRO_PLANS,
   ...PILOT_PROGRAMS
 };
 

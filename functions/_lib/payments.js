@@ -1,5 +1,6 @@
 import { PLANS, PROVIDER_CATALOG, TEMPLATE_IDS, planByCode, providerByCode } from "./constants.js";
 import { requireTurnstile } from "./turnstile.js";
+import { parseSessionCookie } from "./session.js";
 
 function productWelcomeTemplateFor(source) {
   const map = {
@@ -1002,7 +1003,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   assert(plan, "INVALID_PLAN", "Unknown membership plan.", 422);
 
   const isMicro = String(plan.code).startsWith("micro_");
-  const isPremium = String(plan.code).startsWith("asmt_") || String(plan.code).startsWith("prog_") || String(plan.code).startsWith("cert_") || String(plan.code).startsWith("diag_") || String(plan.code).startsWith("self_trust_") || String(plan.code).startsWith("open_loop_") || String(plan.code).startsWith("personal_after_");
+  const isPremium = String(plan.code).startsWith("asmt_") || String(plan.code).startsWith("prog_") || String(plan.code).startsWith("cert_") || String(plan.code).startsWith("diag_") || String(plan.code).startsWith("self_trust_") || String(plan.code).startsWith("open_loop_") || String(plan.code).startsWith("personal_after_") || String(plan.code).startsWith("pro_");
 
   if (!isMicro && !isPremium) {
     const baseExpiry =
@@ -1047,7 +1048,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   // Grant content_access for product purchases. Paid memberships are handled by
   // membership_type; micro/premium one-off purchases need explicit entitlement.
   if (isPremium || isMicro) {
-    const contentSlug = plan.code.replace(/^(asmt_|prog_|cert_|diag_)/, "");
+    const contentSlug = plan.code.replace(/^(asmt_|prog_|cert_|diag_|pro_)/, "");
     const expiresAt = plan.durationDays >= 36500 ? null : daysFrom(nowIso(), plan.durationDays);
     try {
       const existingAccess = await db
@@ -1476,7 +1477,18 @@ export async function createCheckoutResponse(context) {
     assert(rail.allowed, rail.code || "PAYMENT_RAIL_INVALID", rail.message || "Payment rail is not allowed for this identity country.", 422);
     assert(providerSecretsReady(provider, context.env), "PROVIDER_NOT_READY", `${provider.label} is not configured yet.`, 409);
 
-    const email = normalizeEmail(body.email);
+    // Authenticated checkout: use session email. Guest checkout: require body.email.
+    let email;
+    const cookieHeader = context.request.headers.get("Cookie") || "";
+    try {
+      const session = await parseSessionCookie(context.env, cookieHeader);
+      if (session && session.email) {
+        email = normalizeEmail(session.email);
+      }
+    } catch (_) {}
+    if (!email) {
+      email = normalizeEmail(body.email);
+    }
     assert(email && email.includes("@"), "EMAIL_INVALID", "A valid email is required.", 422);
 
     const idempotencyKey = context.request.headers.get("x-idempotency-key");

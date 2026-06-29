@@ -11,11 +11,13 @@ const ADMIN_LOGIN_PATHS = ["/admin/login", "/en/admin/login", "/admin/login/", "
 // Paths under /members/ that require active paid membership OR content_access.
 // /members/ itself, /members/start/, /members/dashboard/ stay public.
 // /members/deep/ index is public (shows list), individual lessons require entitlement.
-// /members/pro/ index is public (shows list of 8 upgrade packs), individual packs require paid membership.
+// /members/pro/ index is public (shows list of 8 upgrade packs), individual packs require purchase or active membership.
 const GATED_MEMBER_PREFIXES = ["/members/deep/", "/en/members/deep/", "/members/pro/", "/en/members/pro/"];
 
-// Public product teaser pages.
-// Product detail pages are member-only and redirect into member workspace.
+// Public product pages — detail pages are now served as public offer pages.
+// Checkout gating happens at the API level (requires login + Turnstile).
+// Product index/listing pages are also public but listed explicitly here
+// so they don't get caught by any future catch-all redirect.
 const PUBLIC_PRODUCT_PATHS = [
   "/products/",
   "/products/index.html",
@@ -72,6 +74,15 @@ const DEEP_LESSON_PLAN_MAP = {
   "self-trust-practice-lab": "self_trust_evidence_builder",
   "open-loop-closure-sprint": "open_loop_closure_sprint",
   "personal-after-action-review": "personal_after_action_review",
+    // Pro packs — each is a purchasable upgrade
+  "reset": "pro_reset",
+  "inner": "pro_inner",
+  "discipline": "pro_discipline",
+  "environment": "pro_environment",
+  "creation": "pro_creation",
+  "wealth": "pro_wealth",
+  "family": "pro_family",
+  "children": "pro_children",
   // These lessons are free-tier (no specific product needed, just membership)
   "life-system-map": null,
   "decision-clarity": null,
@@ -97,6 +108,15 @@ function getLandingUrlForLesson(lessonSlug, isEn) {
     "self-trust-practice-lab": `${prefix}/programs/self-trust-practice-lab/`,
     "open-loop-closure-sprint": `${prefix}/programs/open-loop-closure-sprint/`,
     "personal-after-action-review": `${prefix}/programs/personal-after-action-review/`,
+    // Pro pack landing pages
+    "reset": `${prefix}/members/pro/`,
+    "inner": `${prefix}/members/pro/`,
+    "discipline": `${prefix}/members/pro/`,
+    "environment": `${prefix}/members/pro/`,
+    "creation": `${prefix}/members/pro/`,
+    "wealth": `${prefix}/members/pro/`,
+    "family": `${prefix}/members/pro/`,
+    "children": `${prefix}/members/pro/`,
   };
   return map[lessonSlug] || `${prefix}/join/`;
 }
@@ -249,6 +269,14 @@ function getDeepLessonSlug(pathname) {
   }
   // /en/members/deep/<slug>/ → <slug>
   if (parts.length >= 4 && parts[0] === "en" && parts[1] === "members" && parts[2] === "deep") {
+    return parts[3];
+  }
+  // /members/pro/<slug>/ → <slug>
+  if (parts.length >= 3 && parts[0] === "members" && parts[1] === "pro") {
+    return parts[2];
+  }
+  // /en/members/pro/<slug>/ → <slug>
+  if (parts.length >= 4 && parts[0] === "en" && parts[1] === "members" && parts[2] === "pro") {
     return parts[3];
   }
   return null;
@@ -443,7 +471,7 @@ export async function onRequest(context) {
     // Gating: /members/deep/* and /members/pro/* require entitlement check
     // - index pages → public (listed in PUBLIC_MEMBER_PATHS)
     // - /members/deep/<slug>/ → check plan_code entitlement OR active membership
-    // - /members/pro/<slug>/ → requires active paid membership (no per-product entitlement)
+    // - /members/pro/<slug>/ → requires active paid membership OR individual Pro pack purchase
     if (isGatedMemberPath(url.pathname) && !isPublicMemberPath(url.pathname)) {
       const en = isEnglishPath(url.pathname);
       const joinUrl = en ? "/en/join/" : "/join/";
@@ -451,7 +479,7 @@ export async function onRequest(context) {
 
       if (!memberSession) {
         const lessonSlug = getDeepLessonSlug(url.pathname);
-        const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? (en ? "/en/members/pro/" : "/members/pro/") : joinUrl);
+        const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? `${joinUrl}?next_path=${encodeURIComponent(url.pathname)}` : joinUrl);
         logWarn({ route: url.pathname, code: "DEEP_DENY_NO_SESSION", msg: "Gated content access denied — no session, redirect to landing" });
         return new Response(null, {
           status: 302,
@@ -466,8 +494,22 @@ export async function onRequest(context) {
 
         let hasAccess = false;
         if (isProPath) {
-          // Pro packs require active paid membership only (no per-product entitlement)
-          hasAccess = isMembershipActive(user);
+          // Active membership grants all Pro content
+          if (isMembershipActive(user)) {
+            hasAccess = true;
+          } else if (requiredPlan) {
+            // Check individual Pro pack purchase via content_access
+            try {
+              const access = await db
+                .prepare("SELECT expires_at FROM content_access WHERE user_id = ? AND plan_code = ? AND (expires_at IS NULL OR expires_at > ?)")
+                .bind(memberSession.sub, requiredPlan, new Date().toISOString())
+                .first();
+              hasAccess = !!access;
+            } catch (e) {
+              console.warn("[pro-access] DB check failed:", e.message);
+              hasAccess = false;
+            }
+          }
         } else if (isMembershipActive(user)) {
           // Active paid membership (year1/2/3 or premium_purchase) grants all deep content
           hasAccess = true;
@@ -489,7 +531,16 @@ export async function onRequest(context) {
         }
 
         if (!hasAccess) {
-          const landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? (en ? "/en/members/pro/" : "/members/pro/") : (en ? "/en/join/" : "/join/"));
+          let landingUrl;
+          if (isProPath && memberSession) {
+            // Logged in but not entitled → redirect to Pro index with checkout param
+            const checkoutSlug = lessonSlug || "reset";
+            const planCode = DEEP_LESSON_PLAN_MAP[checkoutSlug] || `pro_${checkoutSlug}`;
+            const proIndex = en ? "/en/members/pro/" : "/members/pro/";
+            landingUrl = `${proIndex}?checkout=${encodeURIComponent(checkoutSlug)}&plan=${encodeURIComponent(planCode)}`;
+          } else {
+            landingUrl = lessonSlug ? getLandingUrlForLesson(lessonSlug, en) : (isProPath ? (en ? "/en/members/pro/" : "/members/pro/") : (en ? "/en/join/" : "/join/"));
+          }
           logWarn({
             route: url.pathname,
             code: "DEEP_DENY_NO_ENTITLEMENT",
@@ -508,28 +559,6 @@ export async function onRequest(context) {
         context.data.user = user;
       }
       return context.next();
-    }
-
-    // Product detail pages are member-only workspace surfaces.
-    // Public can only access teaser/index pages under /products/.
-    if (isProductPath(url.pathname) && !isPublicProductPath(url.pathname)) {
-      const en = isEnglishPath(url.pathname);
-      const slug = getProductSlug(url.pathname);
-      const workspaceBase = en ? "/en/members/products/" : "/members/products/";
-      const workspaceUrl = slug ? `${workspaceBase}?product=${encodeURIComponent(slug)}` : workspaceBase;
-
-      if (!memberSession) {
-        const joinUrl = en ? "/en/join/" : "/join/";
-        return new Response(null, {
-          status: 302,
-          headers: { Location: `${joinUrl}?next_path=${encodeURIComponent(workspaceUrl)}`, "Cache-Control": "no-store" },
-        });
-      }
-
-      return new Response(null, {
-        status: 302,
-        headers: { Location: workspaceUrl, "Cache-Control": "no-store" },
-      });
     }
 
     // Member workspace hubs require an authenticated session.

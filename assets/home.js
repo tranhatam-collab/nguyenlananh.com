@@ -1,8 +1,6 @@
 (function(){
   const lang = document.documentElement.lang || 'vi';
   const s = {
-    closeMenu: lang === 'en' ? 'Close menu' : 'Đóng menu',
-    openMenu: lang === 'en' ? 'Open menu' : 'Mở menu',
     copied: lang === 'en' ? 'Copied' : 'Đã sao chép',
     copyFailed: lang === 'en' ? 'Cannot copy' : 'Không sao chép được',
     copyEmail: lang === 'en' ? 'Copy email' : 'Sao chép email',
@@ -25,7 +23,6 @@
     btn.addEventListener("click", function(){
       var el = $(btn.getAttribute("data-jump"));
       if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-      shutDrawer();
     });
   });
 

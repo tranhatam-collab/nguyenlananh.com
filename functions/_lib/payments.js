@@ -661,6 +661,50 @@ function buildDirectVietQrCheckout(env, order, extraRaw = {}) {
   };
 }
 
+function buildFallbackVietQrQuickLink(env, order, transferNote) {
+  try {
+    return buildVietQrQuickLink({
+      bankBin: env.VIETQR_BANK_BIN,
+      accountNo: env.VIETQR_ACCOUNT_NO,
+      accountName: env.VIETQR_ACCOUNT_NAME,
+      amount: order.amount,
+      transferNote,
+      template: env.VIETQR_TEMPLATE || VIETQR_DEFAULT_TEMPLATE
+    });
+  } catch (_) {
+    return "";
+  }
+}
+
+function hydrateVietQrManualTransfer(env, order, checkout) {
+  const raw = checkout.raw || {};
+  const transferNote = String(raw.transfer_note || checkout.provider_order_id || buildVietQrTransferNote(order.internal_order_id) || "").trim();
+  const bankBin = String(raw.bank_bin || env.VIETQR_BANK_BIN || "").trim();
+  const accountNo = String(raw.account_no || env.VIETQR_ACCOUNT_NO || "").trim();
+  const accountName = String(raw.account_name || env.VIETQR_ACCOUNT_NAME || "").trim();
+  let qrUrl = "";
+
+  if (isLikelyQrImageUrl(raw.qr_url)) {
+    qrUrl = String(raw.qr_url).trim();
+  } else if (isLikelyQrImageUrl(checkout.checkout_url)) {
+    qrUrl = String(checkout.checkout_url).trim();
+  }
+
+  if (!qrUrl && bankBin && accountNo && transferNote) {
+    qrUrl = buildFallbackVietQrQuickLink(env, order, transferNote);
+  }
+
+  return {
+    bank_bin: bankBin || null,
+    account_no: accountNo || null,
+    account_name: accountName || null,
+    transfer_note: transferNote || null,
+    qr_url: qrUrl || null,
+    amount: Number(order.amount),
+    currency: order.currency
+  };
+}
+
 async function createVietQrCheckout(env, order, idempotencyKey) {
   if (vietQrViaPayIaiOne(env)) {
     try {
@@ -719,6 +763,18 @@ async function createVietQrCheckout(env, order, idempotencyKey) {
         error.code = code === "214" ? "PAY_IAI_ONE_PROVIDER_214" : code || "PAY_IAI_ONE_CHECKOUT_FAILED";
         throw error;
       }
+      const transferNote =
+        firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
+        String(providerOrderId);
+      const bankBin = firstByKeys(body, new Set(["bank_bin", "bankBin"])) || String(env.VIETQR_BANK_BIN || "");
+      const accountNo = firstByKeys(body, new Set(["account_no", "accountNo"])) || String(env.VIETQR_ACCOUNT_NO || "");
+      const accountName = firstByKeys(body, new Set(["account_name", "accountName"])) || String(env.VIETQR_ACCOUNT_NAME || "");
+      const upstreamQrUrl =
+        firstByKeys(body, new Set(["qr_url", "qrUrl", "qr_image", "qrImage", "qr_code_url", "qrCodeUrl"])) ||
+        (isLikelyQrImageUrl(checkoutUrl) ? String(checkoutUrl) : "");
+      const hydratedQrUrl = isLikelyQrImageUrl(upstreamQrUrl)
+        ? String(upstreamQrUrl)
+        : buildFallbackVietQrQuickLink(env, order, transferNote);
 
       return {
         provider_order_id: String(providerOrderId),
@@ -726,15 +782,11 @@ async function createVietQrCheckout(env, order, idempotencyKey) {
         checkout_url: String(checkoutUrl),
         raw: {
           mode: "pay_iai_one",
-          transfer_note:
-            firstByKeys(body, new Set(["transfer_note", "transferNote", "provider_order_id", "providerOrderId"])) ||
-            String(providerOrderId),
-          qr_url:
-            firstByKeys(body, new Set(["qr_url", "qrUrl", "qr_image", "qrImage", "qr_code_url", "qrCodeUrl"])) ||
-            (isLikelyQrImageUrl(checkoutUrl) ? String(checkoutUrl) : ""),
-          bank_bin: firstByKeys(body, new Set(["bank_bin", "bankBin"])) || "",
-          account_no: firstByKeys(body, new Set(["account_no", "accountNo"])) || "",
-          account_name: firstByKeys(body, new Set(["account_name", "accountName"])) || "",
+          transfer_note: transferNote,
+          qr_url: hydratedQrUrl,
+          bank_bin: bankBin,
+          account_no: accountNo,
+          account_name: accountName,
           provider_payload: body
         }
       };
@@ -1127,7 +1179,7 @@ async function fulfillOrder({ db, env, order, request, providerCaptureId, provid
   };
 }
 
-function decorateResponse({ order, checkout }) {
+function decorateResponse({ env, order, checkout }) {
   const body = {
     ok: true,
     internal_order_id: order.internal_order_id,
@@ -1144,15 +1196,7 @@ function decorateResponse({ order, checkout }) {
   };
 
   if (order.provider === "vietqr") {
-    body.manual_transfer = {
-      bank_bin: checkout.raw?.bank_bin || null,
-      account_no: checkout.raw?.account_no || null,
-      account_name: checkout.raw?.account_name || null,
-      transfer_note: checkout.raw?.transfer_note || checkout.provider_order_id || null,
-      qr_url: checkout.raw?.qr_url || checkout.checkout_url || null,
-      amount: Number(order.amount),
-      currency: order.currency
-    };
+    body.manual_transfer = hydrateVietQrManualTransfer(env, order, checkout);
   }
 
   return body;
@@ -1582,6 +1626,7 @@ export async function createCheckoutResponse(context) {
     });
 
     if (providerCode === "vietqr") {
+      const manualTransfer = hydrateVietQrManualTransfer(context.env, order, checkout);
       await createVietQrOrder(db, {
         internal_order_id: internalOrderId,
         email,
@@ -1589,18 +1634,18 @@ export async function createCheckoutResponse(context) {
         plan_code: plan.code,
         amount: Math.round(order.amount),
         currency: "VND",
-        transfer_note: checkout.raw?.transfer_note || checkout.provider_order_id,
-        bank_bin: checkout.raw?.bank_bin || String(context.env.VIETQR_BANK_BIN || ""),
-        account_no: checkout.raw?.account_no || String(context.env.VIETQR_ACCOUNT_NO || ""),
-        account_name: checkout.raw?.account_name || String(context.env.VIETQR_ACCOUNT_NAME || ""),
-        qr_url: checkout.raw?.qr_url || checkout.checkout_url,
+        transfer_note: manualTransfer.transfer_note || checkout.provider_order_id,
+        bank_bin: manualTransfer.bank_bin || "",
+        account_no: manualTransfer.account_no || "",
+        account_name: manualTransfer.account_name || "",
+        qr_url: manualTransfer.qr_url || "",
         status: "pending",
         created_at: nowIso(),
         updated_at: nowIso()
       });
     }
 
-    const responseBody = decorateResponse({ order, checkout });
+    const responseBody = decorateResponse({ env: context.env, order, checkout });
     await storeIdempotency(db, {
       route,
       idempotency_key: idempotencyKey,

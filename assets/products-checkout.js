@@ -319,6 +319,10 @@
 
         const qrImage = $("#vietqrImage");
         if (qrImage) {
+          qrImage.onerror = function() {
+            qrImage.removeAttribute("src");
+            qrImage.style.display = "none";
+          };
           if (qrUrl) {
             qrImage.src = qrUrl;
             qrImage.style.display = "";
@@ -333,7 +337,7 @@
           payNowLink.href = hostedPaymentUrl;
           payNowLink.textContent = "Mở cửa sổ thanh toán VietQR";
           payNowLink.classList.remove("hidden");
-          setBanner(checkoutStatus, "Đã tạo cổng thanh toán. Bấm mở cửa sổ thanh toán hoặc dùng thông tin chuyển khoản nếu có.", "success");
+          setBanner(checkoutStatus, "Đã tạo thanh toán. Hãy bấm mở cổng thanh toán để lấy mã VietQR trực tiếp.", "success");
         } else if (qrUrl) {
           hide(payNowLink);
           setBanner(checkoutStatus, "Đã tạo mã VietQR. Vui lòng quét mã hoặc chuyển khoản.", "success");

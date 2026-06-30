@@ -23,6 +23,9 @@ function expectIncludes(source, needle, message) {
 const payments = read("functions/_lib/payments.js");
 const proLayer = read("assets/pro-layer.js");
 const productCheckout = read("assets/products-checkout.js");
+const lifeResetHtml = read("products/life-reset-mini/index.html");
+const enLifeResetHtml = read("en/products/life-reset-mini/index.html");
+const rhythmDesignHtml = read("programs/rhythm-design-lab/index.html");
 
 expectIncludes(payments, "let sessionUserId = null;", "checkout stores session user id");
 expectIncludes(payments, "sessionUserId = String(session.sub || \"\").trim() || null;", "checkout extracts session sub");
@@ -38,7 +41,9 @@ expectIncludes(productCheckout, "function setupCheckoutModal()", "product checko
 expectIncludes(productCheckout, "id = \"productCheckoutOverlay\"", "product checkout modal overlay is created");
 expectIncludes(productCheckout, "function isQrImageUrl(value)", "product checkout distinguishes QR image URLs from hosted checkout URLs");
 expectIncludes(productCheckout, "qrImage.removeAttribute(\"src\");", "product checkout clears broken QR image src when no QR image exists");
+expectIncludes(productCheckout, "qrImage.onerror = function()", "product checkout hides QR image when browser image load fails");
 expectIncludes(productCheckout, "Mở cửa sổ thanh toán VietQR", "product checkout exposes hosted VietQR payment window link");
+expectIncludes(productCheckout, "Đã tạo thanh toán. Hãy bấm mở cổng thanh toán để lấy mã VietQR trực tiếp.", "product checkout clearly explains hosted VietQR fallback");
 if (productCheckout.includes("vi.src = body.manual_transfer.qr_url || \"\"")) {
   fail("product checkout still renders manual_transfer.qr_url blindly into an image");
 } else {
@@ -54,12 +59,25 @@ if (proLayer.includes("'<img src=\"' + data.checkout_url")) {
 }
 
 expectIncludes(payments, "function isLikelyQrImageUrl(value)", "backend distinguishes QR image URLs from hosted checkout URLs");
+expectIncludes(payments, "function hydrateVietQrManualTransfer(env, order, checkout)", "backend hydrates VietQR manual transfer payload");
+expectIncludes(payments, "buildFallbackVietQrQuickLink(env, order, transferNote)", "backend builds fallback VietQR image from env values");
+expectIncludes(payments, "body.manual_transfer = hydrateVietQrManualTransfer(env, order, checkout);", "checkout response uses hydrated VietQR payload");
+expectIncludes(payments, "const manualTransfer = hydrateVietQrManualTransfer(context.env, order, checkout);", "VietQR DB row uses hydrated VietQR payload");
 expectIncludes(payments, "isLikelyQrImageUrl(checkoutUrl) ? String(checkoutUrl) : \"\"", "backend only maps hosted checkout_url to qr_url when it is an image URL");
 if (payments.includes("qr_url: String(checkoutUrl)")) {
   fail("backend still maps every checkout_url to raw.qr_url");
 } else {
   pass("backend no longer maps every checkout_url to raw.qr_url");
 }
+if (payments.includes("checkout.raw?.qr_url || checkout.checkout_url")) {
+  fail("backend still falls back from raw qr_url to hosted checkout_url");
+} else {
+  pass("backend no longer falls back from raw qr_url to hosted checkout_url");
+}
+
+expectIncludes(lifeResetHtml, "/assets/products-checkout.js?v=20260630a", "VI life reset page cache-busts product checkout JS");
+expectIncludes(enLifeResetHtml, "/assets/products-checkout.js?v=20260630a", "EN life reset page cache-busts product checkout JS");
+expectIncludes(rhythmDesignHtml, "/assets/products-checkout.js?v=20260630a", "rhythm design checkout page cache-busts product checkout JS");
 
 if (failures) {
   console.error(`checkout account binding guard failed: ${failures}`);

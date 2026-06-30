@@ -250,7 +250,7 @@ function generatePage({ slug, category, plan, price, title, tagline, description
   <script src="/assets/site.js"></script>
   <script src="/assets/i18n-config.js"></script>
   <script src="/assets/lang-routing.js"></script>
-  <script src="/assets/products-checkout.js"></script>
+  <script src="/assets/products-checkout.js?v=20260630a"></script>
 </body>
 </html>`;
 }
